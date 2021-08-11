@@ -11,7 +11,7 @@ jobs:
         flutter-version: '2.0.5'
     - run: flutter pub get
     - run: flutter build web --web-renderer=html
-    - run: mv build/web .
+    - run: mv build/web ./page
     - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
       with:
         # The arguments for the `git add` command (see the paragraph below for more info)
@@ -32,7 +32,7 @@ jobs:
 
         # The local path to the directory where your repository is located. You should use actions/checkout first to set it up
         # Default: '.'
-        cwd: './web'
+        cwd: './page'
 
         # Determines the way the action fills missing author name and email. Three options are available:
         # - github_actor -> UserName <UserName@users.noreply.github.com>
