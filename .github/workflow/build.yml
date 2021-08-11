@@ -1,7 +1,7 @@
-on: build
-name: build
+name: Build
+on: push
 jobs:
-  deploy:
+  build:
     name: build flutter web
     runs-on: ubuntu-latest
     steps:
@@ -12,6 +12,10 @@ jobs:
     - run: flutter pub get
     - run: flutter test
     - run: flutter build web
+  deploy:
+    name: build flutter web
+    runs-on: ubuntu-latest
+    steps:
     - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
       with:
         # The arguments for the `git add` command (see the paragraph below for more info)
