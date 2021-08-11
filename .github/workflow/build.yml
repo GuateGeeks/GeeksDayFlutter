@@ -10,7 +10,6 @@ jobs:
       with:
         flutter-version: '2.0.5'
     - run: flutter pub get
-    - run: flutter test
     - run: flutter build web
     - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version
       with:
