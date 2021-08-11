@@ -19,6 +19,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(235, 235, 235, .6),
       appBar: AppBar(
         title: Text('GeeksDay'),
       ),

@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  like_button: ^2.0.2
+
   
   ## UUID Generator
   uuid: ^3.0.4

@@ -4,6 +4,9 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/post/cards/body_cards.dart';
+import 'package:geeksday/ui/post/cards/button_widget.dart';
+import 'package:geeksday/ui/post/cards/header_card.dart';
 
 class PostCard extends StatelessWidget {
   //final PostModel postData;
@@ -35,76 +38,13 @@ class PostCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(
-                elevation: 35,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 50,
-                            height: 50,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://yt3.ggpht.com/a/AATXAJyPMywRmD62sfK-1CXjwF0YkvrvnmaaHzs4uw=s900-c-k-c0xffffffff-no-rj-mo"),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: Column(
-                              children: <Widget>[
-                                Text("Username"),
-                                Text("Username")
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(post.text),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      child: StreamBuilder<String>(
-                        stream: context
-                            .read<PostCubit>()
-                            .getImageURL(post.id)
-                            .asStream(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          }
-
-                          return Image.network(snapshot.data.toString());
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          IconButton(
-                            icon: const Icon(Icons.comment),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.favorite),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    )
+                    HeaderCard(),
+                    BodyCard(post: post),
+                    ButtonWidget(),
                   ],
                 )),
           ),

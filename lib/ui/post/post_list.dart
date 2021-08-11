@@ -18,21 +18,41 @@ class PostList extends StatelessWidget {
   }
 
   Widget builder(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<PostCubit, PostState>(builder: (_, state) {
       return Center(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return ListView(
-              children: snapshot.data!.docs.map((post) {
-                return PostCard(
-                    post: Post.fromMap(
-                        post.data() as Map<String, dynamic>, post.id));
-              }).toList(),
-            );
-          },
+        child: Container(
+          width: maxWidth,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return ListView(
+                children: snapshot.data!.docs.map((post) {
+                  return PostCard(
+                      post: Post.fromMap(
+                          post.data() as Map<String, dynamic>, post.id));
+                }).toList(),
+              );
+            },
+          ),
         ),
       );
+
+      // return Center(
+      //   child: StreamBuilder<QuerySnapshot>(
+      //     stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+      //     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      //       return ListView(
+      //         children: snapshot.data!.docs.map((post) {
+      //           return PostCard(
+      //               post: Post.fromMap(
+      //                   post.data() as Map<String, dynamic>, post.id));
+      //         }).toList(),
+      //       );
+      //     },
+      //   ),
+      // );
     });
   }
 }
