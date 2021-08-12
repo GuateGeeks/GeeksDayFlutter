@@ -2,57 +2,101 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:geeksday/routes.dart';
 
-class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({Key? key}) : super(key: key);
+class ButtonWidget extends StatefulWidget {
+  ButtonWidget({Key? key}) : super(key: key);
 
   @override
+  _ButtonWidgetState createState() => _ButtonWidgetState();
+}
+
+class _ButtonWidgetState extends State<ButtonWidget> {
+  bool isLiked = false;
+  int likeCount = 0;
+  @override
   Widget build(BuildContext context) {
-    bool isLiked = false;
     return Column(
-      children: <Widget>[
-        Text(
-          "Se el primer en darle me gusta",
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w400,
-            color: Colors.grey,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Text(
+            "Se el primero en darle me gusta",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+            ),
           ),
         ),
-        SizedBox(
-          height: 10.0,
-        ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton.icon(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(235, 235, 235, .6),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 35.0, vertical: 15.0)),
-                  icon: LikeButton(
-                    isLiked: isLiked,
-                    onTap: (isLiked) async {
-                      return !isLiked;
-                    },
-                  ),
-                  label: Text("LIKE", style: TextStyle(color: Colors.grey))),
+              ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 32, vertical: 15)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromRGBO(235, 235, 235, .6)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14.0),
+                    ))),
+                child: LikeButton(
+                  likeBuilder: (bool isLiked) {
+                    return Icon(
+                      Icons.favorite,
+                      color: isLiked
+                          ? Color.fromRGBO(229, 21, 21, 1)
+                          : Colors.grey,
+                    );
+                  },
+                  likeCount: 0,
+                  countBuilder: (count, isLiked, text) {
+                    //var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
+                    Widget result;
+                    if (count == 0) {
+                      result = Text(
+                        "LIKE",
+                        style: TextStyle(
+                            color: isLiked
+                                ? Color.fromRGBO(229, 21, 21, 1)
+                                : Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      );
+                    } else
+                      result = Text("LIKE",
+                          style: TextStyle(
+                              color: isLiked
+                                  ? Color.fromRGBO(229, 21, 21, 1)
+                                  : Colors.grey,
+                              fontWeight: FontWeight.bold));
+                    return result;
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 20.0,
+              ),
               ElevatedButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.postComment);
                   },
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(235, 235, 235, .6),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 35.0, vertical: 15.0)),
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 18)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(235, 235, 235, .6)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14.0),
+                      ))),
                   icon: Icon(Icons.chat_bubble, color: Colors.grey),
                   label: Text("COMMENT", style: TextStyle(color: Colors.grey)))
             ],
           ),
-        )
+        ),
       ],
     );
   }
