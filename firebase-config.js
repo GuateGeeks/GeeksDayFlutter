@@ -1,0 +1,1 @@
+export var firebaseConfig = { apiKey: "AIzaSyBNuraWoFABbt-0R5dgJrvhsoV8b1CesII", authDomain: "geeksday-b61c9.firebaseapp.com", projectId: "geeksday-b61c9", storageBucket: "geeksday-b61c9.appspot.com", messagingSenderId: "275439003928", appId: "1:275439003928:web:dc7e6be0f5dbc7b48ed66d" };
