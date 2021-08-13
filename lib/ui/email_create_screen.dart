@@ -1,6 +1,10 @@
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/inputs_form/email_form.dart';
+import 'package:geeksday/ui/inputs_form/password_form.dart';
+import 'package:geeksday/ui/inputs_form/repeat_password_form.dart';
+import 'package:geeksday/ui/inputs_form/username_form.dart';
 
 class EmailCreate extends StatefulWidget {
   static Widget create(BuildContext context) => EmailCreate();
@@ -12,10 +16,11 @@ class EmailCreate extends StatefulWidget {
 class _EmailCreateState extends State<EmailCreate> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _repeatPasswordController = TextEditingController();
 
-  String? emailValidator(String? value) {
+  String? emailAndUsernameValidator(String? value) {
     return (value == null || value.isEmpty) ? 'This is a required field' : null;
   }
 
@@ -39,238 +44,90 @@ class _EmailCreateState extends State<EmailCreate> {
             return Center(
               child: Container(
                 width: maxWidth,
-                child: Column(
-                  children: [
-                    SizedBox(height: 30.0),
-                    Text(
-                      "Sing Up",
-                      style: TextStyle(
-                          fontSize: 35.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (state is AuthSigningIn)
-                              Center(child: CircularProgressIndicator()),
-                            if (state is AuthError)
-                              Text(
-                                state.message,
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 24),
-                              ),
-                            SizedBox(height: 8),
-                            //Show input email
-                            email(),
-                            //Show input Username
-                            SizedBox(height: 8),
-                            username(),
-                            SizedBox(height: 8),
-                            //Show input Password
-                            password(),
-
-                            SizedBox(height: 8),
-                            //Show input Repear Password
-                            repeatPassword(),
-                            SizedBox(height: 18),
-                            Center(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(vertical: 18)),
-                                ),
-                                child: Center(
-                                    child: Text(
-                                  'Sing Up',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                  ),
-                                )),
-                                onPressed: () {
-                                  if (_formKey.currentState?.validate() ==
-                                      true) {
-                                    context
-                                        .read<AuthCubit>()
-                                        .createUserWithEmailAndPassword(
-                                          _emailController.text,
-                                          _passwordController.text,
-                                        );
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
+                child: Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Sing Up",
+                          style: TextStyle(
+                              fontSize: 35.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600),
                         ),
-                      ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (state is AuthSigningIn)
+                                  Center(child: CircularProgressIndicator()),
+                                if (state is AuthError)
+                                  Text(
+                                    state.message,
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 24),
+                                  ),
+                                SizedBox(height: 8),
+                                //Show input email
+                                EmailForm(emailAndUsernameValidator,
+                                    _emailController),
+                                SizedBox(height: 8),
+                                //Show input Username
+                                UsernameForm(emailAndUsernameValidator,
+                                    _usernameController),
+                                SizedBox(height: 8),
+                                //Show input Password
+                                PasswordForm(
+                                    passwordValidator, _passwordController),
+
+                                SizedBox(height: 8),
+                                //Show input Repear Password
+                                RepeatPasswordForm(passwordValidator,
+                                    _repeatPasswordController),
+                                SizedBox(height: 22),
+                                Center(
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.symmetric(vertical: 18)),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'Sing Up',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                      ),
+                                    )),
+                                    onPressed: () {
+                                      if (_formKey.currentState?.validate() ==
+                                          true) {
+                                        context
+                                            .read<AuthCubit>()
+                                            .createUserWithEmailAndPassword(
+                                              _emailController.text,
+                                              _passwordController.text,
+                                            );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             );
           },
         ));
-  }
-
-//Create input Email
-  Widget email() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: Text(
-            "Email",
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            hintText: "Enter your email",
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Color.fromRGBO(240, 240, 240, 1),
-            contentPadding:
-                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
-              ),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
-              ),
-            ),
-          ),
-          validator: emailValidator,
-        ),
-      ],
-    );
-  }
-
-//Create input Username
-  Widget username() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: Text(
-            "Username",
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.name,
-          controller: _emailController,
-          cursorColor: Color.fromRGBO(170, 170, 170, 1),
-          decoration: InputDecoration(
-            hintText: "Enter your username",
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Color.fromRGBO(240, 240, 240, 1),
-            contentPadding:
-                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
-              ),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
-              ),
-            ),
-          ),
-          validator: emailValidator,
-        ),
-      ],
-    );
-  }
-
-//Create input Password
-  Widget password() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: Text(
-            "Password",
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18),
-          ),
-        ),
-        inputsPassword(
-            _passwordController, "Password", passwordValidator, true),
-      ],
-    );
-  }
-
-//Create input RepeatPassword
-  Widget repeatPassword() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: Text(
-            "Repear Password",
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18),
-          ),
-        ),
-        inputsPassword(_repeatPasswordController, "Repeat Password",
-            passwordValidator, true),
-      ],
-    );
-  }
-
-//This function creates the layout of the input password, and repeatpassword
-  Widget inputsPassword(controller, placeholder, validator, showText) {
-    return TextFormField(
-      obscureText: showText,
-      controller: controller,
-      cursorColor: Color.fromRGBO(170, 170, 170, 1),
-      decoration: InputDecoration(
-        suffixIcon: Icon(
-          Icons.visibility,
-        ),
-        hintText: placeholder,
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Color.fromRGBO(240, 240, 240, 1),
-        contentPadding:
-            const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
-      ),
-      validator: validator,
-    );
   }
 }
