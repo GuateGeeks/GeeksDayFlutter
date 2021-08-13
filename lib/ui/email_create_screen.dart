@@ -38,7 +38,7 @@ class _EmailCreateState extends State<EmailCreate> {
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
         appBar: AppBar(title: Text('Create account')),
-        backgroundColor: Color.fromRGBO(220, 220, 220, 1),
+        backgroundColor: Color.fromRGBO(171, 171, 171, 1),
         body: BlocBuilder<AuthCubit, AuthState>(
           builder: (_, state) {
             return Center(
