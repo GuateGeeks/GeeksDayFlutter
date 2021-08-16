@@ -16,7 +16,7 @@ class BodyCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: StreamBuilder<String>(
-            stream: state.getImageURL(state.getPost().id).asStream(),
+            stream: state.getImageURL(state.getPost()!.id).asStream(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -32,7 +32,7 @@ class BodyCard extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.all(20.0),
-          child: Text(state.getPost().text,
+          child: Text(state.getPost()!.text,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,

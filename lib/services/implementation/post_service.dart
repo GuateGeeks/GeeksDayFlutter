@@ -23,8 +23,6 @@ class PostService extends PostServiceBase {
 
   @override
   Future<void> createPost(Post post, html.Blob file) async {
-    print(post);
-    print(post.id);
     String postPath = FirestorePath.post(post.id);
     await _firestoreService.setData(
       path: postPath,

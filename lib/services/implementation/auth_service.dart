@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,8 +10,30 @@ class AuthService extends AuthServiceBase {
   final _firebaseAuth = FirebaseAuth.instance;
   final _firestoreService = FirestoreService.instance;
 
-  AuthUser? _userFromFirebase(User? user) =>
-      user == null ? null : AuthUser(user.uid, user.displayName, user.email);
+  final userRef = FirebaseFirestore.instance
+      .collection('users')
+      .withConverter<AuthUser>(
+        fromFirestore: (snapshots, _) => AuthUser.fromMap(snapshots.data()!),
+        toFirestore: (user, _) => user.toFirebaseMap(),
+      );
+
+  Future<AuthUser?> _userFromFirebase(User? user) async {
+    if (user != null) {
+      var firestoreUser = await _getUser(user.uid);
+      if (firestoreUser != null) {
+        return firestoreUser;
+      }
+      String email = user.email != null ? user.email! : "";
+      String name = user.displayName != null ? user.displayName! : "";
+      return AuthUser(user.uid, name, email);
+    }
+    return null;
+  }
+
+  Future<AuthUser?> _getUser(String uid) async {
+    var snapshot = await userRef.doc(uid).get();
+    return snapshot.data();
+  }
 
   @override
   Stream<AuthUser?> get onAuthStateChanged =>
@@ -21,14 +44,12 @@ class AuthService extends AuthServiceBase {
       String email, String username, String password) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    AuthUser? user = _userFromFirebase(authResult.user);
-    print(username);
+    AuthUser? user = await _userFromFirebase(authResult.user);
     user?.name = username;
     return _createUser(user);
   }
 
   Future<AuthUser?> _createUser(AuthUser? user) async {
-    print(user?.toFirebaseMap());
     if (user != null) {
       String userPath = FirestorePath.user(user.uid);
       await _firestoreService.setData(

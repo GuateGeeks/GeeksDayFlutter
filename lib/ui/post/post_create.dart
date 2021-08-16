@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostCreate extends StatelessWidget {
   static Widget create(BuildContext context) {
-    String userId = context.read<AuthCubit>().getUserId();
+    AuthUser user = context.read<AuthCubit>().getUser();
     return BlocProvider(
-      create: (_) => PostCubit(PostService(), Post.newPost("", userId)),
+      create: (_) => PostCubit(PostService(), Post.newPost("", user)),
       child: PostCreate(),
     );
   }

@@ -11,18 +11,9 @@ class PostCubit extends Cubit<PostState> {
 
   PostCubit(this._postService, Post post) : super(PostInitialState(post));
 
-  Future<void> createNewPost(String text, String userId) async {
-    Post newPost = Post.newPost(text, userId);
-    _postService.createPost(newPost, _pickedImage!);
-  }
-
   Future<void> createPost(String text) async {
-    print(state is PostInitialState);
     Post newPost = (state as PostInitialState).post;
-    print(text);
     newPost.text = text;
-    print(_postService);
-    print(_pickedImage);
     _postService.createPost(newPost, _pickedImage!);
   }
 
@@ -34,11 +25,11 @@ class PostCubit extends Cubit<PostState> {
     return _postService.getImageURL(uid);
   }
 
-  Post getPost() {
+  Post? getPost() {
     if (state is PostInitialState) {
       return (state as PostInitialState).post;
     }
-    return Post.newPost("", "");
+    return null;
   }
 
   String getLikesCountText() {
@@ -61,12 +52,9 @@ class PostCubit extends Cubit<PostState> {
 
   void toggleLikeToPost(String uid) {
     PostInitialState postState = state as PostInitialState;
-    print("toggleLikeToPost");
     if (postState.post.likeList.contains(uid)) {
-      print("contains");
       postState.post.likeList.remove(uid);
     } else {
-      print("not contains");
       postState.post.likeList.add(uid);
     }
     postState.post.likeCount = postState.post.likeList.length;

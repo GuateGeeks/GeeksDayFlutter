@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/post_cubit.dart';
 
 class HeaderCard extends StatelessWidget {
   const HeaderCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: Row(
@@ -28,7 +31,7 @@ class HeaderCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Username",
+                  state.getPost()!.username,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black),
                 ),
