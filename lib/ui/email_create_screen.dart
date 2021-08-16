@@ -110,9 +110,9 @@ class _EmailCreateState extends State<EmailCreate> {
                                         context
                                             .read<AuthCubit>()
                                             .createUserWithEmailAndPassword(
-                                              _emailController.text,
-                                              _passwordController.text,
-                                            );
+                                                _emailController.text,
+                                                _usernameController.text,
+                                                _passwordController.text);
                                       }
                                     },
                                   ),

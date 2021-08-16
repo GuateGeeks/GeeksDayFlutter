@@ -22,8 +22,10 @@ class AuthCubit extends Cubit<AuthState> {
   void _authStateChanged(AuthUser? user) =>
       user == null ? emit(AuthSignedOut()) : emit(AuthSignedIn(user));
 
-  Future<void> createUserWithEmailAndPassword(String email, String password) =>
-      _signIn(_authService.createUserWithEmailAndPassword(email, password));
+  Future<void> createUserWithEmailAndPassword(
+          String email, String username, String password) =>
+      _signIn(_authService.createUserWithEmailAndPassword(
+          email, username, password));
 
   Future<void> signInWithEmailAndPassword(String email, String password) =>
       _signIn(_authService.signInWithEmailAndPassword(email, password));

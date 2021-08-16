@@ -44,7 +44,7 @@ class PostCubit extends Cubit<PostState> {
   String getLikesCountText() {
     PostInitialState postState = state as PostInitialState;
     if (postState.post.likeCount > 0) {
-      return "❤️ ${postState.post.likeCount} Likess";
+      return "❤️ ${postState.post.likeCount} Likes";
     }
     return "Se el primero en darle me gusta";
   }

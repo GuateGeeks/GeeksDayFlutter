@@ -6,7 +6,7 @@ abstract class AuthServiceBase {
   Future<AuthUser?> signInWithEmailAndPassword(String email, String password);
 
   Future<AuthUser?> createUserWithEmailAndPassword(
-      String email, String password);
+      String email, String username, String password);
 
   Future<AuthUser?> signInWithGoogle();
 
