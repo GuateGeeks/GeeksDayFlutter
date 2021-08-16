@@ -59,6 +59,13 @@ class AuthCubit extends Cubit<AuthState> {
     _authSubscription.cancel();
     return super.close();
   }
+
+  String getUserId() {
+    if (state is AuthSignedIn) {
+      return (state as AuthSignedIn).user.uid;
+    }
+    return "NO USER";
+  }
 }
 
 abstract class AuthState extends Equatable {

@@ -1,14 +1,17 @@
 import 'dart:html';
 
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostCreate extends StatelessWidget {
   static Widget create(BuildContext context) {
+    String userId = context.read<AuthCubit>().getUserId();
     return BlocProvider(
-      create: (_) => PostCubit(PostService()),
+      create: (_) => PostCubit(PostService(), Post.newPost("", userId)),
       child: PostCreate(),
     );
   }
@@ -22,55 +25,37 @@ class PostCreate extends StatelessWidget {
 
   Widget builder(BuildContext context) {
     final commentController = TextEditingController();
-    return BlocBuilder<PostCubit, PostState>(
-      builder: (_, state) {
-        return Material(
-          child: Column(
+    var state = context.read<PostCubit>();
+    return Material(
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: commentController,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      uploadImage(context);
-                    },
-                    icon: const Icon(Icons.image_search),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<PostCubit>()
-                        .createPost(commentController.text);
-                    // String imageRef = 'posts/post1.jpg';
-                    // if (imageFile != null) {
-                    //   _storage
-                    //       .ref()
-                    //       .child(imageRef)
-                    //       .putBlob(imageFile)
-                    //       .then((p0) {
-                    //     newPost(commentController.text, imageRef);
-                    //     Navigator.pop(context);
-                    //   });
-                    // }
-
-                    // newPost(commentController.text, imageRef);
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Save"),
+              Expanded(
+                child: TextField(
+                  controller: commentController,
                 ),
               ),
+              IconButton(
+                onPressed: () {
+                  uploadImage(context);
+                },
+                icon: const Icon(Icons.image_search),
+              )
             ],
           ),
-        );
-      },
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+            child: ElevatedButton(
+              onPressed: () {
+                state.createPost(commentController.text);
+                Navigator.pop(context);
+              },
+              child: const Text("Save"),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -83,7 +68,6 @@ class PostCreate extends StatelessWidget {
       reader.readAsDataUrl(file);
       reader.onLoadEnd.listen((event) {
         context.read<PostCubit>().setImage(file);
-        print(file);
       });
     });
   }

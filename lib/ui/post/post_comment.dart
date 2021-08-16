@@ -5,10 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostComment extends StatelessWidget {
   static Widget create(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PostCubit(PostService()),
-      child: const PostComment(),
-    );
+    return const PostComment();
   }
 
   const PostComment({Key? key}) : super(key: key);

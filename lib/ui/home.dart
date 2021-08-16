@@ -8,10 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatelessWidget {
   static Widget create(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PostCubit(PostService()),
-      child: const Home(),
-    );
+    return const Home();
   }
 
   const Home({Key? key}) : super(key: key);

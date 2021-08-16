@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:like_button/like_button.dart';
 import 'package:geeksday/routes.dart';
 
@@ -14,13 +17,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   int likeCount = 0;
   @override
   Widget build(BuildContext context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Text(
-            "Se el primero en darle me gusta",
+            state.getLikesCountText(),
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.grey,
@@ -52,7 +56,13 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                           : Colors.grey,
                     );
                   },
-                  likeCount: 0,
+                  onTap: (bool isLiked) async {
+                    likePost(context);
+                    return true;
+                  },
+                  isLiked: BlocProvider.of<PostCubit>(context).isLiked(),
+                  likeCount:
+                      BlocProvider.of<PostCubit>(context).getLikesCount(),
                   countBuilder: (count, isLiked, text) {
                     //var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
                     Widget result;
@@ -99,5 +109,10 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         ),
       ],
     );
+  }
+
+  void likePost(BuildContext context) {
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    BlocProvider.of<PostCubit>(context).toggleLikeToPost(userId);
   }
 }

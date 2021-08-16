@@ -9,20 +9,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
-final postCollection = firestoreInstance.collection('posts');
+
+final postRef =
+    FirebaseFirestore.instance.collection('posts').withConverter<Post>(
+          fromFirestore: (snapshots, _) =>
+              Post.fromMap(snapshots.data()!, snapshots.id),
+          toFirestore: (post, _) => post.toFirebaseMap(),
+        );
 
 class PostService extends PostServiceBase {
-  // @override
-  // Future<void> createPost(Post post) async {
-  //   var element = await postCollection.add(post.toFirebaseMap());
-  //   print(element.id);
-  //   print(element.get());
-  // }
-
   final _firestoreService = FirestoreService.instance;
+  final _postCollection = FirebaseFirestore.instance.collection('posts');
 
   @override
   Future<void> createPost(Post post, html.Blob file) async {
+    print(post);
+    print(post.id);
     String postPath = FirestorePath.post(post.id);
     await _firestoreService.setData(
       path: postPath,
@@ -33,41 +35,17 @@ class PostService extends PostServiceBase {
 
   @override
   Future<void> deletePost(String uid) async {
-    await postCollection.doc(uid).delete();
-  }
-
-  @override
-  Future<Post> getPost(String uid) async {
-    postCollection.doc(uid);
-    return Post(text: "");
+    await postRef.doc(uid).delete();
   }
 
   @override
   Future<void> updatePost(Post post) async {
-    final ref = postCollection.doc(post.id);
-    await ref.set(post.toFirebaseMap(), SetOptions(merge: true));
+    final ref = postRef.doc(post.id);
+    await ref.set(post, SetOptions(merge: true));
   }
 
   @override
   Future<String> getImageURL(String uid) {
     return _firestoreService.getDownloadURL(FirestorePath.post(uid));
-  }
-
-  @override
-  Stream getPostStream() {
-    return FirebaseFirestore.instance.collection('posts').snapshots();
-  }
-
-  StreamBuilder getPostBuilder() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        return ListView(
-          children: snapshot.data!.docs.map((post) {
-            return PostCard(post: Post(text: ''));
-          }).toList(),
-        );
-      },
-    );
   }
 }

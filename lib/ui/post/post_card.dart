@@ -12,7 +12,7 @@ class PostCard extends StatelessWidget {
   //final PostModel postData;
   final Post post;
 
-  const PostCard({
+  PostCard({
     Key? key,
     required this.post,
   }) : super(key: key);
@@ -20,14 +20,14 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => PostCubit(PostService()),
+      create: (_) => PostCubit(PostService(), this.post),
       child: builder(context),
     );
   }
 
   Widget builder(BuildContext context) {
     return BlocBuilder<PostCubit, PostState>(
-      builder: (_, state) {
+      builder: (context, state) {
         return GestureDetector(
           onTap: () {
             // Navigator.push(context,
@@ -43,7 +43,7 @@ class PostCard extends StatelessWidget {
                 child: Column(
                   children: [
                     HeaderCard(),
-                    BodyCard(post: post),
+                    BodyCard(),
                     ButtonWidget(),
                   ],
                 )),

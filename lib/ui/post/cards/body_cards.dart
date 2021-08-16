@@ -4,20 +4,19 @@ import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BodyCard extends StatelessWidget {
-  final Post post;
   const BodyCard({
     Key? key,
-    required this.post,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: StreamBuilder<String>(
-            stream: context.read<PostCubit>().getImageURL(post.id).asStream(),
+            stream: state.getImageURL(state.getPost().id).asStream(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -33,7 +32,7 @@ class BodyCard extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.all(20.0),
-          child: Text(post.text,
+          child: Text(state.getPost().text,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
