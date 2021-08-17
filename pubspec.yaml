@@ -23,7 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  #like button in the posts
   like_button: ^2.0.2
+  #Choose image and take photos with the camera
+  image_picker: ^0.8.3+2
 
   
   ## UUID Generator
@@ -45,6 +48,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Support Firebase Google Signin
   google_sign_in: ^5.0.7
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

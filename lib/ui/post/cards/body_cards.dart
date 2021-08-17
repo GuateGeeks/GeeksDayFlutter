@@ -23,8 +23,22 @@ class BodyCard extends StatelessWidget {
               }
               return ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
-                child: Image.network(
-                  snapshot.data.toString(),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ImagePage(snapshot.data.toString());
+                        },
+                      ),
+                    );
+                  },
+                  child: Image.network(
+                    snapshot.data.toString(),
+                    width: 400.0,
+                    height: 400.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
             },
@@ -40,6 +54,25 @@ class BodyCard extends StatelessWidget {
               )),
         ),
       ],
+    );
+  }
+}
+
+class ImagePage extends StatelessWidget {
+  late String image;
+  ImagePage(this.image);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Image.network(
+          image,
+        ),
+      ),
     );
   }
 }

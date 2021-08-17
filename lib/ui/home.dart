@@ -23,7 +23,17 @@ class Home extends StatelessWidget {
       body: PostList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, Routes.creatPost);
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: PostCreate(),
+              ),
+            ),
+          );
+          //Navigator.pushNamed(context, Routes.creatPost);
         },
         tooltip: 'New',
         child: const Icon(Icons.add),
