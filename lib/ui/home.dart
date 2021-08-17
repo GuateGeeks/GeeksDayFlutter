@@ -23,17 +23,13 @@ class Home extends StatelessWidget {
       body: PostList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          //Show modal new post
           showModalBottomSheet(
+            backgroundColor: Colors.transparent,
             context: context,
-            builder: (context) => SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: PostCreate.create(context),
-              ),
-            ),
+            builder: (context) =>
+                SingleChildScrollView(child: PostCreate.create(context)),
           );
-          //Navigator.pushNamed(context, Routes.creatPost);
         },
         tooltip: 'New',
         child: const Icon(Icons.add),
