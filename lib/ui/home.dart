@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: PostCreate(),
+                child: PostCreate.create(context),
               ),
             ),
           );

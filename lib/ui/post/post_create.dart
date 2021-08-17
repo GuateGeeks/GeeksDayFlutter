@@ -37,106 +37,110 @@ class _PostCreateState extends State<PostCreate> {
   @override
   Widget build(BuildContext context) {
     final commentController = TextEditingController();
-    var state = context.read<PostCubit>();
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return Center(
-      child: Container(
-        width: maxWidth,
-        color: Color(0xff757575),
-        child: Container(
-          width: maxWidth,
-          padding: EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+    return BlocBuilder<PostCubit, PostState>(
+      builder: (context, state) {
+        return Center(
+          child: Container(
+            width: maxWidth,
+            color: Color(0xff757575),
+            child: Container(
+              width: maxWidth,
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    "New Post",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  /*************container mostrar preview imagen***************/
+
+                  //     Container(
+                  //       child: ListView.builder(
+                  //   key: UniqueKey(),
+                  //   itemBuilder: (context, index) {
+
+                  //     return Semantics(
+                  //       label: 'image_picker_example_picked_image',
+                  //       child: Image.file(File(_imagenFileList![index].path)),
+                  //     );
+                  //   },
+
+                  // ),
+                  //     ),
+
+                  Container(
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(230, 230, 230, 1),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Description',
+                              contentPadding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                            ),
+                            controller: commentController,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            uploadImage(context);
+                          },
+                          // onPressed: () async {
+                          //   final XFile? image = await _picker.pickImage(
+                          //     source: ImageSource.gallery,
+                          //     maxWidth: 100,
+                          //     maxHeight: 120,
+                          //     imageQuality: 100,
+                          //   );
+                          //   setState(() {
+                          //     _imageFile = image;
+                          //   });
+                          // },
+                          icon: const Icon(Icons.image_search),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<PostCubit>(context)
+                            .createPost(commentController.text);
+                        Navigator.pop(context);
+                      },
+                      child: const Text("aaa"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                "New Post",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.blue,
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              /*************container mostrar preview imagen***************/
-
-              //     Container(
-              //       child: ListView.builder(
-              //   key: UniqueKey(),
-              //   itemBuilder: (context, index) {
-
-              //     return Semantics(
-              //       label: 'image_picker_example_picked_image',
-              //       child: Image.file(File(_imagenFileList![index].path)),
-              //     );
-              //   },
-
-              // ),
-              //     ),
-
-              Container(
-                height: 50,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(230, 230, 230, 1),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Description',
-                          contentPadding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        ),
-                        controller: commentController,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        uploadImage(context);
-                      },
-                      // onPressed: () async {
-                      //   final XFile? image = await _picker.pickImage(
-                      //     source: ImageSource.gallery,
-                      //     maxWidth: 100,
-                      //     maxHeight: 120,
-                      //     imageQuality: 100,
-                      //   );
-                      //   setState(() {
-                      //     _imageFile = image;
-                      //   });
-                      // },
-                      icon: const Icon(Icons.image_search),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    state.createPost(commentController.text);
-                    Navigator.pop(context);
-                  },
-                  child: const Text("aaa"),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -150,7 +154,7 @@ class _PostCreateState extends State<PostCreate> {
         reader.readAsDataUrl(file);
         reader.onLoadEnd.listen(
           (event) {
-            context.read<PostCubit>().setImage(file);
+            BlocProvider.of<PostCubit>(context).setImage(file);
           },
         );
       },
