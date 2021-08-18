@@ -52,6 +52,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   //function like button
   Widget likeButton(width) {
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     return ElevatedButton(
       onPressed: () {},
       style: ButtonStyle(
@@ -87,7 +88,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           likePost(context);
           return !isLike;
         },
-        isLiked: BlocProvider.of<PostCubit>(context).isLiked(),
+        isLiked: BlocProvider.of<PostCubit>(context).likedByMe(userId),
         likeCount: BlocProvider.of<PostCubit>(context).getLikesCount(),
         countBuilder: (count, isLiked, text) {
           Widget result;

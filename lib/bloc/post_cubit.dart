@@ -50,6 +50,11 @@ class PostCubit extends Cubit<PostState> {
     return postState.post.likeCount > 0;
   }
 
+  bool likedByMe(String uid) {
+    PostInitialState postState = state as PostInitialState;
+    return postState.post.likeList.contains(uid);
+  }
+
   void toggleLikeToPost(String uid) {
     PostInitialState postState = state as PostInitialState;
     if (postState.post.likeList.contains(uid)) {
