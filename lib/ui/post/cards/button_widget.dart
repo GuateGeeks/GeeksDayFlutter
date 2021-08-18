@@ -15,8 +15,10 @@ class ButtonWidget extends StatefulWidget {
 class _ButtonWidgetState extends State<ButtonWidget> {
   bool isLiked = false;
   int likeCount = 0;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,80 +36,111 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13.0),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(horizontal: 32, vertical: 15)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(235, 235, 235, .6)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14.0),
-                    ))),
-                child: LikeButton(
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.favorite,
-                      color: isLiked
-                          ? Color.fromRGBO(229, 21, 21, 1)
-                          : Colors.grey,
-                    );
-                  },
-                  onTap: (bool isLiked) async {
-                    likePost(context);
-                    return true;
-                  },
-                  isLiked: BlocProvider.of<PostCubit>(context).isLiked(),
-                  likeCount:
-                      BlocProvider.of<PostCubit>(context).getLikesCount(),
-                  countBuilder: (count, isLiked, text) {
-                    //var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
-                    Widget result;
-                    if (count == 0) {
-                      result = Text(
-                        "LIKE",
-                        style: TextStyle(
-                            color: isLiked
-                                ? Color.fromRGBO(229, 21, 21, 1)
-                                : Colors.grey,
-                            fontWeight: FontWeight.bold),
-                      );
-                    } else
-                      result = Text("LIKE",
-                          style: TextStyle(
-                              color: isLiked
-                                  ? Color.fromRGBO(229, 21, 21, 1)
-                                  : Colors.grey,
-                              fontWeight: FontWeight.bold));
-                    return result;
-                  },
-                ),
-              ),
+              likeButton(width),
               SizedBox(
                 width: 20.0,
               ),
-              ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.postComment);
-                  },
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 18)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(235, 235, 235, .6)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ))),
-                  icon: Icon(Icons.chat_bubble, color: Colors.grey),
-                  label: Text("COMMENT", style: TextStyle(color: Colors.grey)))
+              commentButton(width),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  //function like button
+  Widget likeButton(width) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        padding: (width > 620)
+            // If the screen size is greater than 620
+            ? MaterialStateProperty.all(
+                EdgeInsets.symmetric(horizontal: 100, vertical: 15))
+            //If the screen size es greater than 450
+            : (width > 450
+                ? MaterialStateProperty.all(
+                    EdgeInsets.symmetric(horizontal: 60, vertical: 15))
+                //If the screen size is less than 450
+                : MaterialStateProperty.all(
+                    EdgeInsets.symmetric(horizontal: 28, vertical: 15),
+                  )),
+        backgroundColor:
+            MaterialStateProperty.all<Color>(Color.fromRGBO(235, 235, 235, .6)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+        ),
+      ),
+      //likeButton library implementation
+      child: LikeButton(
+        likeBuilder: (bool isLike) {
+          return Icon(
+            Icons.favorite,
+            color: isLike ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+          );
+        },
+        onTap: (bool isLike) async {
+          likePost(context);
+          return !isLike;
+        },
+        isLiked: BlocProvider.of<PostCubit>(context).isLiked(),
+        likeCount: BlocProvider.of<PostCubit>(context).getLikesCount(),
+        countBuilder: (count, isLiked, text) {
+          Widget result;
+          if (count == 0) {
+            result = Text(
+              "LIKE",
+              style: TextStyle(
+                  color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+                  fontWeight: FontWeight.bold),
+            );
+          } else
+            result = Text("LIKE",
+                style: TextStyle(
+                    color:
+                        isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+                    fontWeight: FontWeight.bold));
+          return result;
+        },
+      ),
+    );
+  }
+
+  Widget commentButton(width) {
+    return ElevatedButton.icon(
+      onPressed: () {
+        Navigator.pushNamed(context, Routes.postComment);
+      },
+      style: ButtonStyle(
+        padding: (width > 620)
+            // If the screen size is greater than 620
+            ? MaterialStateProperty.all(
+                EdgeInsets.symmetric(horizontal: 95, vertical: 18))
+            // If the screen size is greater than 620
+            : (width > 450
+                ? MaterialStateProperty.all(
+                    EdgeInsets.symmetric(horizontal: 48, vertical: 18))
+                // If the screen size is less than 620
+                : MaterialStateProperty.all(
+                    EdgeInsets.symmetric(horizontal: 19, vertical: 18),
+                  )),
+        backgroundColor:
+            MaterialStateProperty.all<Color>(Color.fromRGBO(235, 235, 235, .6)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+        ),
+      ),
+      icon: Icon(Icons.chat_bubble, color: Colors.grey),
+      label: Text(
+        "COMMENT",
+        style: TextStyle(color: Colors.grey),
+      ),
     );
   }
 
