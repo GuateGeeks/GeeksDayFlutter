@@ -7,6 +7,7 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/routes.dart';
 
 class PostCreate extends StatefulWidget {
   static Widget create(BuildContext context) {
@@ -71,12 +72,25 @@ class _PostCreateState extends State<PostCreate> {
 
   //Header Nuevo Post
   Widget title() {
-    return Text(
-      "New Post",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 20.0,
-        color: Colors.blue,
+    return Padding(
+      padding: EdgeInsets.all(15.0),
+      child: Row(
+        children: [
+          Text("Post",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.creatQuizz);
+              },
+              child: Text(
+                "Quizz",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
+              )),
+        ],
       ),
     );
   }

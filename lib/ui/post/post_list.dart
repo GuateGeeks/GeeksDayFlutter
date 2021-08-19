@@ -5,6 +5,7 @@ import 'package:geeksday/ui/post/post_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/post/quizz_card.dart';
 
 class PostList extends StatelessWidget {
   const PostList({Key? key}) : super(key: key);
@@ -25,9 +26,14 @@ class PostList extends StatelessWidget {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             return ListView(
               children: snapshot.data!.docs.map((post) {
-                return PostCard(
-                    post: Post.fromMap(
-                        post.data() as Map<String, dynamic>, post.id));
+                return Column(
+                  children: [
+                    QuizzCard(),
+                    PostCard(
+                        post: Post.fromMap(
+                            post.data() as Map<String, dynamic>, post.id)),
+                  ],
+                );
               }).toList(),
             );
           },

@@ -3,6 +3,7 @@ import 'package:geeksday/ui/email_signin_screen.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/intro_screen.dart';
 import 'package:geeksday/ui/post/post_create.dart';
+import 'package:geeksday/ui/post/quizz_create.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 import 'package:geeksday/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class Routes {
   static const intro = '/intro';
   static const home = '/home';
   static const creatPost = '/createPost';
+  static const creatQuizz = '/createQuizz';
+
   static const postComment = '/postComment';
   static const createAccount = '/createAccount';
   static const signInEmail = '/signInEmail';
@@ -30,6 +33,8 @@ class Routes {
         return _buildRoute(Home.create);
       case creatPost:
         return _buildRoute(PostCreate.create);
+      case creatQuizz:
+        return _buildRoute(QuizzCreate.create);
       case postComment:
         return _buildRoute(PostComment.create);
       default:

@@ -5,6 +5,7 @@ import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/post/quizz_create.dart';
 
 class Home extends StatelessWidget {
   static Widget create(BuildContext context) {
@@ -24,12 +25,23 @@ class Home extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Show modal new post
+
           showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            context: context,
-            builder: (context) =>
-                SingleChildScrollView(child: PostCreate.create(context)),
-          );
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) => Container(
+                    height: 600,
+                    child: PageView(
+                      children: [
+                        PostCreate.create(context),
+                        QuizzCreate(),
+                      ],
+                    ),
+                  )
+
+              // SingleChildScrollView(child: PostCreate.create(context)),
+
+              );
         },
         tooltip: 'New',
         child: const Icon(Icons.add),

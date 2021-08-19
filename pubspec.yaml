@@ -27,6 +27,7 @@ dependencies:
   like_button: ^2.0.2
   #Choose image and take photos with the camera
   image_picker: ^0.8.3+2
+  
 
   
   ## UUID Generator

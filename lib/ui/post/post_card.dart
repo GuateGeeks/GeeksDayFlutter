@@ -38,15 +38,16 @@ class PostCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  children: [
-                    HeaderCard(),
-                    BodyCard(),
-                    ButtonWidget(),
-                  ],
-                )),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              child: Column(
+                children: [
+                  HeaderCard(),
+                  BodyCard(),
+                  ButtonWidget(),
+                ],
+              ),
+            ),
           ),
         );
       },
