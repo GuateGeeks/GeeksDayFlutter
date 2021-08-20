@@ -18,7 +18,8 @@ class PostCreate extends StatefulWidget {
     );
   }
 
-  PostCreate({Key? key}) : super(key: key);
+  final onButtonPressed;
+  PostCreate({Key? key, this.onButtonPressed}) : super(key: key);
 
   @override
   _PostCreateState createState() => _PostCreateState();
@@ -32,42 +33,42 @@ class _PostCreateState extends State<PostCreate> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
 
-    return BlocBuilder<PostCubit, PostState>(
-      builder: (context, state) {
-        return Center(
-          child: Container(
-            width: maxWidth,
-            color: Color(0xff757575),
-            child: Container(
-              width: maxWidth,
-              padding: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
-              //header modal Nuevo Post
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  //Header Nuevo Post
-                  title(),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  //Input description Nuevo Post
-                  description(commentController),
-                  //Button save Nuevo Post
-                  buttonSave(commentController)
-                ],
-              ),
+    // return BlocBuilder<PostCubit, PostState>(
+    //   builder: (context, state) {
+    return Center(
+      child: Container(
+        width: maxWidth,
+        color: Color(0xff757575),
+        child: Container(
+          width: maxWidth,
+          padding: EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
             ),
           ),
-        );
-      },
+          //header modal Nuevo Post
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              //Header Nuevo Post
+              title(),
+              SizedBox(
+                height: 15.0,
+              ),
+              //Input description Nuevo Post
+              description(commentController),
+              //Button save Nuevo Post
+              buttonSave(commentController)
+            ],
+          ),
+        ),
+      ),
     );
+    //   },
+    // );
   }
 
   //Header Nuevo Post
@@ -80,16 +81,9 @@ class _PostCreateState extends State<PostCreate> {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
           TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.creatQuizz);
-              },
-              child: Text(
-                "Quizz",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey),
-              )),
+            onPressed: widget.onButtonPressed,
+            child: Text("Quizz"),
+          ),
         ],
       ),
     );

@@ -17,7 +17,8 @@ class QuizzCreate extends StatefulWidget {
     );
   }
 
-  QuizzCreate({Key? key}) : super(key: key);
+  final onButtonPressed;
+  QuizzCreate({Key? key, this.onButtonPressed}) : super(key: key);
 
   @override
   _QuizzCreateState createState() => _QuizzCreateState();
@@ -74,11 +75,10 @@ class _QuizzCreateState extends State<QuizzCreate> {
         padding: EdgeInsets.all(15.0),
         child: Row(
           children: [
-            Text("Post",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey)),
+            TextButton(
+              onPressed: widget.onButtonPressed,
+              child: Text("Post"),
+            ),
             Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
             TextButton(
               onPressed: () {},
