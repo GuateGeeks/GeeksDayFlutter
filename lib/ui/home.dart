@@ -33,6 +33,7 @@ class _HomeState extends State<Home> {
         pageChanged(index);
       },
       children: <Widget>[
+        //TODO: Connect button functionality
         PostCreate(
           onButtonPressed: () => pageController.animateToPage(
             1,
@@ -40,6 +41,7 @@ class _HomeState extends State<Home> {
             curve: Curves.linear,
           ),
         ),
+        //TODO: Connect button functionality
         QuizzCreate(
           onButtonPressed: () => pageController.animateToPage(
             0,

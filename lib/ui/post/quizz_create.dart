@@ -29,15 +29,24 @@ class _QuizzCreateState extends State<QuizzCreate> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return Scaffold(
-      body: Center(
+    return Center(
+      child: Container(
+        width: maxWidth,
         child: Container(
-          padding: EdgeInsets.fromLTRB(15, 20, 15, 20),
           width: maxWidth,
+          padding: EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+          ),
           child: ListView(
             children: [
               Column(
                 children: [
+                  //Title Quizz
                   title(),
                   //Show preview Image
                   previewImage(),
@@ -58,6 +67,7 @@ class _QuizzCreateState extends State<QuizzCreate> {
                   SizedBox(height: 10),
                   inputAnswers('Respuesta 4'),
                   SizedBox(height: 10),
+                  //TODO: Connect button functionality
                   buttonSave(),
                 ],
               ),
@@ -77,7 +87,10 @@ class _QuizzCreateState extends State<QuizzCreate> {
           children: [
             TextButton(
               onPressed: widget.onButtonPressed,
-              child: Text("Post"),
+              child: Text(
+                "Post",
+                style: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
             ),
             Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
             TextButton(

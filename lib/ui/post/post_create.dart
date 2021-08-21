@@ -82,7 +82,10 @@ class _PostCreateState extends State<PostCreate> {
           Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
           TextButton(
             onPressed: widget.onButtonPressed,
-            child: Text("Quizz"),
+            child: Text(
+              "Quizz",
+              style: TextStyle(color: Colors.grey, fontSize: 16.0),
+            ),
           ),
         ],
       ),
