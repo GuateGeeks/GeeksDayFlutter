@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/models/quiz.dart';
 import 'package:uuid/uuid.dart';
 
 class Post extends Equatable {
@@ -9,6 +10,7 @@ class Post extends Equatable {
   int likeCount;
   final int createdAt;
   final AuthUser user;
+  Quiz? quiz;
 
   Post(
       {required this.id,
@@ -16,7 +18,8 @@ class Post extends Equatable {
       required this.likeList,
       required this.likeCount,
       required this.createdAt,
-      required this.user});
+      required this.user,
+      this.quiz});
 
   @override
   List<Object> get props => [id, text, createdAt];
@@ -32,6 +35,7 @@ class Post extends Equatable {
       'likeCount': likeCount,
       'user': user.toFirebaseMap(),
       'createdAt': createdAt,
+      'quiz': this.quiz,
     };
   }
 
@@ -55,6 +59,7 @@ class Post extends Equatable {
     var likeList = <String>[];
     var likeCount = 0;
     var user = AuthUser.fromMap(data['user']);
+    var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
     if (data["likeList"] != null) {
       final list = data['likeList'];
 
@@ -73,6 +78,7 @@ class Post extends Equatable {
         text: text,
         createdAt: createdAt,
         likeList: likeList,
-        likeCount: likeCount);
+        likeCount: likeCount,
+        quiz: quiz);
   }
 }
