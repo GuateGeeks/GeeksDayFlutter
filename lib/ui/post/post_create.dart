@@ -9,66 +9,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
 
-class PostCreate extends StatefulWidget {
-  static Widget create(BuildContext context) {
-    AuthUser user = context.read<AuthCubit>().getUser();
-    return BlocProvider(
-      create: (_) => PostCubit(PostService(), Post.newPost("", user)),
-      child: PostCreate(),
+class PostCreate extends StatelessWidget {
+  final void Function() onButtonPressed;
+  PostCreate({Key? key, required this.onButtonPressed}) : super(key: key);
+
+  Widget _content(BuildContext context) {
+    final commentController = TextEditingController();
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 700 ? 700 : width;
+    return BlocBuilder<PostCubit, PostState>(
+      builder: (context, state) {
+        return Center(
+          child: Container(
+            width: maxWidth,
+            color: Color(0xff757575),
+            child: Container(
+              width: maxWidth,
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+              ),
+              //header modal Nuevo Post
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  //Header Nuevo Post
+                  title(),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  //Input description Nuevo Post
+                  description(commentController, context),
+                  //Button save Nuevo Post
+                  buttonSave(commentController, context)
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  final onButtonPressed;
-  PostCreate({Key? key, this.onButtonPressed}) : super(key: key);
-
-  @override
-  _PostCreateState createState() => _PostCreateState();
-}
-
-class _PostCreateState extends State<PostCreate> {
   @override
   Widget build(BuildContext context) {
-    final commentController = TextEditingController();
     //Responsive modal Nuevo post
-    double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 700 ? 700 : width;
 
-    // return BlocBuilder<PostCubit, PostState>(
-    //   builder: (context, state) {
-    return Center(
-      child: Container(
-        width: maxWidth,
-        color: Color(0xff757575),
-        child: Container(
-          width: maxWidth,
-          padding: EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-          ),
-          //header modal Nuevo Post
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              //Header Nuevo Post
-              title(),
-              SizedBox(
-                height: 15.0,
-              ),
-              //Input description Nuevo Post
-              description(commentController),
-              //Button save Nuevo Post
-              buttonSave(commentController)
-            ],
-          ),
-        ),
-      ),
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+    return BlocProvider(
+      create: (_) => PostCubit(PostService(), Post.newPost("", user)),
+      child: _content(context),
     );
-    //   },
-    // );
   }
 
   //Header Nuevo Post
@@ -81,7 +76,7 @@ class _PostCreateState extends State<PostCreate> {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
           TextButton(
-            onPressed: widget.onButtonPressed,
+            onPressed: this.onButtonPressed,
             child: Text(
               "Quizz",
               style: TextStyle(color: Colors.grey, fontSize: 16.0),
@@ -93,7 +88,7 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   //Input description
-  Widget description(commentController) {
+  Widget description(commentController, context) {
     return TextFormField(
       minLines: 1,
       maxLines: 4,
@@ -129,7 +124,7 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   //Button Guardar
-  Widget buttonSave(commentController) {
+  Widget buttonSave(commentController, context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ElevatedButton(

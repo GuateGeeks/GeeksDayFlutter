@@ -26,14 +26,9 @@ class PostList extends StatelessWidget {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             return ListView(
               children: snapshot.data!.docs.map((post) {
-                return Column(
-                  children: [
-                    QuizzCard(),
-                    PostCard(
-                        post: Post.fromMap(
-                            post.data() as Map<String, dynamic>, post.id)),
-                  ],
-                );
+                return PostCard(
+                    post: Post.fromMap(
+                        post.data() as Map<String, dynamic>, post.id));
               }).toList(),
             );
           },

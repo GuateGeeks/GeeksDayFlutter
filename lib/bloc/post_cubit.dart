@@ -1,11 +1,12 @@
 import 'dart:html';
 
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PostCubit extends Cubit<PostState> {
+class PostCubit extends Cubit<PostInitialState> {
   final PostServiceBase _postService;
   File? _pickedImage;
 
@@ -64,6 +65,11 @@ class PostCubit extends Cubit<PostState> {
     }
     postState.post.likeCount = postState.post.likeList.length;
     _postService.updatePost(postState.post);
+  }
+
+  bool isQuiz() {
+    PostInitialState postState = state as PostInitialState;
+    return postState.post.quiz != null;
   }
 }
 

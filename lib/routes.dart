@@ -31,8 +31,6 @@ class Routes {
         return _buildRoute(EmailSignIn.create);
       case home:
         return _buildRoute(Home.create);
-      case creatPost:
-        return _buildRoute(PostCreate.create);
       case creatQuizz:
         return _buildRoute(QuizzCreate.create);
       case postComment:

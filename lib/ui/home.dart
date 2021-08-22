@@ -27,27 +27,24 @@ class _HomeState extends State<Home> {
   );
 
   Widget buildPageView() {
+    Function onButtonPress = (int index) {
+      return () => pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.linear,
+          );
+    };
     return PageView(
       controller: pageController,
       onPageChanged: (index) {
         pageChanged(index);
       },
       children: <Widget>[
-        //TODO: Connect button functionality
         PostCreate(
-          onButtonPressed: () => pageController.animateToPage(
-            1,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.linear,
-          ),
+          onButtonPressed: onButtonPress(1),
         ),
-        //TODO: Connect button functionality
         QuizzCreate(
-          onButtonPressed: () => pageController.animateToPage(
-            0,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.linear,
-          ),
+          onButtonPressed: onButtonPress(0),
         )
       ],
     );
