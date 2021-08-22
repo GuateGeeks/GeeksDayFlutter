@@ -9,6 +9,7 @@ class Post extends Equatable {
   final List<String> likeList;
   int likeCount;
   final int createdAt;
+  int? updatedAt;
   final AuthUser user;
   Quiz? quiz;
 
@@ -19,7 +20,8 @@ class Post extends Equatable {
       required this.likeCount,
       required this.createdAt,
       required this.user,
-      this.quiz});
+      this.quiz,
+      this.updatedAt});
 
   @override
   List<Object> get props => [id, text, createdAt];
@@ -37,6 +39,28 @@ class Post extends Equatable {
       'createdAt': createdAt,
       'quiz': this.quiz,
     };
+  }
+
+  // Return new Post with copied values
+  Post copyWith({
+    String? id,
+    String? text,
+    List<String>? likeList,
+    int? likeCount,
+    int? createdAt,
+    AuthUser? user,
+    Quiz? quiz,
+  }) {
+    return Post(
+      id: id ?? this.id,
+      text: text ?? this.text,
+      likeList: likeList ?? this.likeList,
+      likeCount: likeCount ?? this.likeCount,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+      user: user ?? this.user,
+      quiz: quiz ?? this.quiz,
+    );
   }
 
   factory Post.newPost(String text, AuthUser user) {

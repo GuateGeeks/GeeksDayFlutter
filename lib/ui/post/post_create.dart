@@ -4,17 +4,17 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
+import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
 
 class PostCreate extends StatelessWidget {
-  final void Function() onButtonPressed;
-  PostCreate({Key? key, required this.onButtonPressed}) : super(key: key);
+  PostCreate({Key? key}) : super(key: key);
 
+  final commentController = TextEditingController();
   Widget _content(BuildContext context) {
-    final commentController = TextEditingController();
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<PostCubit, PostState>(
@@ -38,14 +38,14 @@ class PostCreate extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   //Header Nuevo Post
-                  title(),
+                  title(context),
                   SizedBox(
                     height: 15.0,
                   ),
                   //Input description Nuevo Post
-                  description(commentController, context),
-                  //Button save Nuevo Post
-                  buttonSave(commentController, context)
+                  description(context),
+                  ...inputAnswers(context),
+                  buttonSave(context)
                 ],
               ),
             ),
@@ -53,6 +53,49 @@ class PostCreate extends StatelessWidget {
         );
       },
     );
+  }
+
+  List<Widget> inputAnswers(BuildContext context) {
+    bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
+    var post = BlocProvider.of<PostCubit>(context).state.post;
+    if (isQuiz) {
+      return post.quiz!.questions[0].answers
+          .map(
+            (answer) => TextFormField(
+              onSaved: (value) {},
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.check_circle_rounded,
+                    color: Colors.grey,
+                  ),
+                ),
+                hintText: answer.text,
+                border: InputBorder.none,
+                filled: true,
+                fillColor: Color.fromRGBO(240, 240, 240, 1),
+                contentPadding:
+                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(8),
+                  borderSide: new BorderSide(
+                    color: Color.fromRGBO(240, 240, 240, 1),
+                  ),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderRadius: new BorderRadius.circular(8),
+                  borderSide: new BorderSide(
+                    color: Color.fromRGBO(240, 240, 240, 1),
+                  ),
+                ),
+              ),
+            ),
+          )
+          .toList();
+    }
+    return [];
   }
 
   @override
@@ -67,19 +110,37 @@ class PostCreate extends StatelessWidget {
   }
 
   //Header Nuevo Post
-  Widget title() {
+  Widget title(BuildContext context) {
+    bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
+    TextStyle boldStyle = TextStyle(
+        color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold);
+    TextStyle grayStyle = TextStyle(color: Colors.grey, fontSize: 16.0);
+
     return Padding(
       padding: EdgeInsets.all(15.0),
       child: Row(
         children: [
-          Text("Post",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+          TextButton(
+            onPressed: () {
+              BlocProvider.of<PostCubit>(context).unsetQuiz();
+            },
+            child: Text(
+              "Post",
+              style: isQuiz ? grayStyle : boldStyle,
+            ),
+          ),
           Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
           TextButton(
-            onPressed: this.onButtonPressed,
+            onPressed: () {
+              Question question = Question("Pregunta", [
+                Answer("Respuesta", false, 0),
+                Answer("Respuesta", false, 0),
+              ]);
+              BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question]));
+            },
             child: Text(
               "Quizz",
-              style: TextStyle(color: Colors.grey, fontSize: 16.0),
+              style: isQuiz ? boldStyle : grayStyle,
             ),
           ),
         ],
@@ -88,7 +149,7 @@ class PostCreate extends StatelessWidget {
   }
 
   //Input description
-  Widget description(commentController, context) {
+  Widget description(BuildContext context) {
     return TextFormField(
       minLines: 1,
       maxLines: 4,
@@ -124,7 +185,7 @@ class PostCreate extends StatelessWidget {
   }
 
   //Button Guardar
-  Widget buttonSave(commentController, context) {
+  Widget buttonSave(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ElevatedButton(

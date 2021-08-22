@@ -141,6 +141,7 @@ class _QuizzCreateState extends State<QuizzCreate> {
   //input Answer
   Widget inputAnswers(answer) {
     return TextFormField(
+      onSaved: (value) {},
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         suffixIcon: InkWell(

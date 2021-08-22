@@ -26,30 +26,6 @@ class _HomeState extends State<Home> {
     keepPage: true,
   );
 
-  Widget buildPageView() {
-    Function onButtonPress = (int index) {
-      return () => pageController.animateToPage(
-            index,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.linear,
-          );
-    };
-    return PageView(
-      controller: pageController,
-      onPageChanged: (index) {
-        pageChanged(index);
-      },
-      children: <Widget>[
-        PostCreate(
-          onButtonPressed: onButtonPress(1),
-        ),
-        QuizzCreate(
-          onButtonPressed: onButtonPress(0),
-        )
-      ],
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -83,7 +59,7 @@ class _HomeState extends State<Home> {
           showModalBottomSheet(
               backgroundColor: Colors.transparent,
               context: context,
-              builder: (context) => buildPageView());
+              builder: (context) => PostCreate());
         },
         tooltip: 'New',
         child: const Icon(Icons.add),
