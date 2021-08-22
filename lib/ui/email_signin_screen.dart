@@ -39,82 +39,80 @@ class _EmailSignInState extends State<EmailSignIn> {
             return Center(
               child: Container(
                 width: maxWidth,
-                child: Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Sing Up",
-                          style: TextStyle(
-                              fontSize: 35.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 50),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (state is AuthSigningIn)
-                                  Center(child: CircularProgressIndicator()),
-                                if (state is AuthError)
-                                  Text(
-                                    state.message,
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 24),
-                                  ),
-                                //Input email
-                                SizedBox(height: 8),
-                                EmailForm(emptyValidator, _emailController),
-
-                                //Input Password
-                                SizedBox(height: 8),
-                                PasswordForm(
-                                    passwordValidator, _passwordController),
-                                SizedBox(height: 22),
-
-                                //Button Login
-                                Center(
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      padding: MaterialStateProperty.all(
-                                          EdgeInsets.symmetric(vertical: 18)),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                      ),
-                                    )),
-                                    onPressed: () {
-                                      if (_formKey.currentState?.validate() ==
-                                          true) {
-                                        context
-                                            .read<AuthCubit>()
-                                            .signInWithEmailAndPassword(
-                                              _emailController.text,
-                                              _passwordController.text,
-                                            );
-                                      }
-                                    },
-                                  ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Sing Up",
+                        style: TextStyle(
+                            fontSize: 35.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (state is AuthSigningIn)
+                                Center(child: CircularProgressIndicator()),
+                              if (state is AuthError)
+                                Text(
+                                  state.message,
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 24),
                                 ),
-                              ],
-                            ),
+                              //Input email
+                              SizedBox(height: 8),
+                              EmailForm(emptyValidator, _emailController),
+
+                              //Input Password
+                              SizedBox(height: 8),
+                              PasswordForm(
+                                  passwordValidator, _passwordController),
+                              SizedBox(height: 22),
+
+                              //Button Login
+                              Center(
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.symmetric(vertical: 18)),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  )),
+                                  onPressed: () {
+                                    if (_formKey.currentState?.validate() ==
+                                        true) {
+                                      context
+                                          .read<AuthCubit>()
+                                          .signInWithEmailAndPassword(
+                                            _emailController.text,
+                                            _passwordController.text,
+                                          );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 20),
-                        singInGoogle(authCubit),
-                        SizedBox(height: 20),
-                        singUp(authCubit),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 20),
+                      singInGoogle(authCubit),
+                      SizedBox(height: 20),
+                      singUp(authCubit),
+                    ],
                   ),
                 ),
               ),
