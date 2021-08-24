@@ -6,6 +6,7 @@ import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class PostCubit extends Cubit<PostState> {
   final PostServiceBase _postService;
@@ -45,6 +46,35 @@ class PostCubit extends Cubit<PostState> {
 
   Post? getPost() {
     return state.post;
+  }
+
+  String getDatePost() {
+    var timestamp = state.post.createdAt;
+    var now = new DateTime.now();
+    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+    var time = '';
+    var diff = now.difference(date).inSeconds;
+    int seconds = 1;
+    int minutes = 60 * seconds;
+    int hour = 60 * minutes;
+    int days = 24 * hour;
+
+    if (diff < minutes) {
+      time = "Justo ahora";
+    } else if (diff < 2 * minutes) {
+      time = "Hace un minuto";
+    } else if (diff < 60 * minutes) {
+      time = "Hace ${(diff / minutes).round()} minutos";
+    } else if (diff < 2 * hour) {
+      time = "Hace una hora";
+    } else if (diff < 24 * hour) {
+      time = "Hace ${(diff / hour).round()} horas";
+    } else if (diff < 48 * hour) {
+      time = "Ayer";
+    } else {
+      time = "Hace ${(diff / days).round()} dias";
+    }
+    return time;
   }
 
   String getLikesCountText() {

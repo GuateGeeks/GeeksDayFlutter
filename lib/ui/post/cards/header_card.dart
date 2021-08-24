@@ -40,7 +40,7 @@ class HeaderCard extends StatelessWidget {
                           fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
-                      "2 days ago",
+                      state.getDatePost(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
