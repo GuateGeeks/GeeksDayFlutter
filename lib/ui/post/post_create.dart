@@ -10,10 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
 
-class PostCreate extends StatelessWidget {
+class PostCreate extends StatefulWidget {
   PostCreate({Key? key}) : super(key: key);
 
+  @override
+  _PostCreateState createState() => _PostCreateState();
+}
+
+class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
+  bool isCorrect = false;
   Widget _content(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
@@ -57,6 +63,7 @@ class PostCreate extends StatelessWidget {
 
   List<Widget> inputAnswers(BuildContext context) {
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
+
     var post = BlocProvider.of<PostCubit>(context).state.post;
     if (isQuiz) {
       return post.quiz!.questions[0].answers
@@ -66,10 +73,18 @@ class PostCreate extends StatelessWidget {
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.check_circle_rounded,
-                    color: Colors.grey,
+                  onTap: () {
+                    isCorrect = !isCorrect;
+                    setState(() {});
+                  },
+                  child: Tooltip(
+                    message: "Respuesta Correcta",
+                    child: isCorrect
+                        ? Icon(
+                            Icons.check_circle_rounded,
+                            color: Colors.green,
+                          )
+                        : Icon(Icons.check_circle_rounded),
                   ),
                 ),
                 hintText: answer.text,
@@ -109,7 +124,6 @@ class PostCreate extends StatelessWidget {
     );
   }
 
-  //Header Nuevo Post
   Widget title(BuildContext context) {
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
     TextStyle boldStyle = TextStyle(
@@ -148,7 +162,6 @@ class PostCreate extends StatelessWidget {
     );
   }
 
-  //Input description
   Widget description(BuildContext context) {
     return TextFormField(
       minLines: 1,
@@ -163,28 +176,10 @@ class PostCreate extends StatelessWidget {
           child: Icon(Icons.image_search),
         ),
         hintText: "Description",
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Color.fromRGBO(240, 240, 240, 1),
-        contentPadding:
-            const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
       ),
     );
   }
 
-  //Button Guardar
   Widget buttonSave(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
@@ -203,7 +198,6 @@ class PostCreate extends StatelessWidget {
     );
   }
 
-  //upload images from gallery
   uploadImage(BuildContext context) async {
     var uploadInput = FileUploadInputElement()..accept = 'image/*';
     uploadInput.click();

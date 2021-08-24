@@ -47,7 +47,7 @@ class BodyCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(bottom: 20, top: 20),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
             child: Text(
               state.getPost()!.text,
               style: TextStyle(

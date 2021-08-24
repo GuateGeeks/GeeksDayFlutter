@@ -164,6 +164,7 @@ class _EmailSignInState extends State<EmailSignIn> {
             fontSize: 15,
           ),
         ),
+        SizedBox(width: 5.0),
         TextButton(
           child: Text('Sing Up'),
           style: TextButton.styleFrom(

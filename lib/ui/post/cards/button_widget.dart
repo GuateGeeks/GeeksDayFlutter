@@ -34,14 +34,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13.0),
+          padding: width > 350
+              ? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 13.0)
+              : const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              likeButton(width),
-              SizedBox(
-                width: 20.0,
-              ),
+              likeButton(width, isLiked),
+              SizedBox(width: 5.0),
               commentButton(width),
             ],
           ),
@@ -51,10 +51,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   }
 
   //function like button
-  Widget likeButton(width) {
+  Widget likeButton(width, isLike) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        likePost(context);
+        isLike = !isLike;
+        setState(() {});
+      },
       style: ButtonStyle(
         padding: (width > 620)
             // If the screen size is greater than 620

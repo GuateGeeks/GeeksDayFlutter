@@ -13,10 +13,10 @@ class _PostOptionsState extends State<PostOptions> {
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) {
-        return Constants.choinces.map((String choive) {
+        return Constants.choinces.map((String choice) {
           return PopupMenuItem<String>(
-            value: choive,
-            child: Text(choive),
+            value: choice,
+            child: Text(choice),
           );
         }).toList();
       },

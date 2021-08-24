@@ -25,6 +25,7 @@ class QuizzCreate extends StatefulWidget {
 }
 
 class _QuizzCreateState extends State<QuizzCreate> {
+  bool select = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -47,25 +48,25 @@ class _QuizzCreateState extends State<QuizzCreate> {
               Column(
                 children: [
                   //Title Quizz
-                  title(),
+                  //title(),
                   //Show preview Image
-                  previewImage(),
+                  //previewImage(),
                   SizedBox(
                     height: 15,
                   ),
                   //Description Quizz
-                  description(),
+                  //description(),
                   SizedBox(
                     height: 15,
                   ),
                   //Anwers Quizz
-                  inputAnswers('Respuesta 1'),
-                  SizedBox(height: 10),
-                  inputAnswers('Respuesta 2'),
-                  SizedBox(height: 10),
-                  inputAnswers('Respuesta 3'),
-                  SizedBox(height: 10),
-                  inputAnswers('Respuesta 4'),
+                  // inputAnswers('Respuesta 1', select),
+                  // SizedBox(height: 10),
+                  // inputAnswers('Respuesta 2', select),
+                  // SizedBox(height: 10),
+                  // inputAnswers('Respuesta 3', select),
+                  // SizedBox(height: 10),
+                  // inputAnswers('Respuesta 4', select),
                   SizedBox(height: 10),
                   //TODO: Connect button functionality
                   buttonSave(),
@@ -78,100 +79,109 @@ class _QuizzCreateState extends State<QuizzCreate> {
     );
   }
 
-//Header Nuevo Post
-  Widget title() {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(15.0),
-        child: Row(
-          children: [
-            TextButton(
-              onPressed: widget.onButtonPressed,
-              child: Text(
-                "Post",
-                style: TextStyle(color: Colors.grey, fontSize: 16.0),
-              ),
-            ),
-            Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Quizz",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+// //Header Nuevo Post
+//   Widget title() {
+//     return Container(
+//       child: Padding(
+//         padding: EdgeInsets.all(15.0),
+//         child: Row(
+//           children: [
+//             TextButton(
+//               onPressed: widget.onButtonPressed,
+//               child: Text(
+//                 "Post",
+//                 style: TextStyle(color: Colors.grey, fontSize: 16.0),
+//               ),
+//             ),
+//             Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
+//             TextButton(
+//               onPressed: () {},
+//               child: Text(
+//                 "Quizz",
+//                 style: TextStyle(
+//                   fontSize: 25,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
-  //preview Image
-  Widget previewImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Image.network(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYWqVZPSOVfhq9QFwz-yKFkj9eu89xK0UGMQ&usqp=CAU',
-        height: 250,
-        width: 250,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
+//   //preview Image
+//   Widget previewImage() {
+//     return ClipRRect(
+//       borderRadius: BorderRadius.circular(15.0),
+//       child: Image.network(
+//         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYWqVZPSOVfhq9QFwz-yKFkj9eu89xK0UGMQ&usqp=CAU',
+//         height: 250,
+//         width: 250,
+//         fit: BoxFit.cover,
+//       ),
+//     );
+//   }
 
-  //Description Quizz
-  Widget description() {
-    return TextField(
-      minLines: 1,
-      maxLines: 4,
-      decoration: InputDecoration(
-        hintText: "Descripcion Quizz",
-        suffixIcon: InkWell(
-          onTap: () {},
-          child: Icon(Icons.image_search),
-        ),
-      ),
-    );
-  }
+//   //Description Quizz
+//   Widget description() {
+//     return TextField(
+//       minLines: 1,
+//       maxLines: 4,
+//       decoration: InputDecoration(
+//         hintText: "Descripcion Quizz",
+//         suffixIcon: InkWell(
+//           onTap: () {},
+//           child: Icon(
+//             Icons.image_search,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
 
-  //input Answer
-  Widget inputAnswers(answer) {
-    return TextFormField(
-      onSaved: (value) {},
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        suffixIcon: InkWell(
-          onTap: () {},
-          child: Icon(
-            Icons.check_circle_rounded,
-            color: Colors.grey,
-          ),
-        ),
-        hintText: answer,
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Color.fromRGBO(240, 240, 240, 1),
-        contentPadding:
-            const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderRadius: new BorderRadius.circular(8),
-          borderSide: new BorderSide(
-            color: Color.fromRGBO(240, 240, 240, 1),
-          ),
-        ),
-      ),
-    );
-  }
+//   //input Answer
+//   Widget inputAnswers(answer, select) {
+//     return TextFormField(
+//       onSaved: (value) {},
+//       keyboardType: TextInputType.text,
+//       decoration: InputDecoration(
+//         suffixIcon: InkWell(
+//           onTap: () {},
+//           child: Tooltip(
+//             message: "Respuesta Correcta",
+//             child: Icon(
+//               Icons.check_circle_rounded,
+//               color: select ? Colors.green : Colors.grey,
+//             ),
+//           ),
+//           // child: Icon(
+//           //   Icons.check_circle_rounded,
+//           //   color: Colors.grey,
+//           // ),
+//         ),
+//         hintText: answer,
+//         border: InputBorder.none,
+//         filled: true,
+//         fillColor: Color.fromRGBO(240, 240, 240, 1),
+//         contentPadding:
+//             const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+//         focusedBorder: OutlineInputBorder(
+//           borderRadius: new BorderRadius.circular(8),
+//           borderSide: new BorderSide(
+//             color: Color.fromRGBO(240, 240, 240, 1),
+//           ),
+//         ),
+//         enabledBorder: UnderlineInputBorder(
+//           borderRadius: new BorderRadius.circular(8),
+//           borderSide: new BorderSide(
+//             color: Color.fromRGBO(240, 240, 240, 1),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
 
   //Button Guardar
   Widget buttonSave() {
