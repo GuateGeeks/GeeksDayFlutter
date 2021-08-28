@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/ui/post/cards/post_options.dart';
 
@@ -8,6 +9,7 @@ class HeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userId = BlocProvider.of<AuthCubit>(context).getUserId();
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -52,6 +54,7 @@ class HeaderCard extends StatelessWidget {
             ],
           ),
           //TODO: Connect button functionality
+
           PostOptions(),
         ],
       ),

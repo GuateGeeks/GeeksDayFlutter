@@ -9,6 +9,7 @@ import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
+import 'package:geeksday/ui/post/add_answer.dart';
 
 class PostCreate extends StatefulWidget {
   PostCreate({Key? key}) : super(key: key);
@@ -28,32 +29,30 @@ class _PostCreateState extends State<PostCreate> {
         return Center(
           child: Container(
             width: maxWidth,
-            color: Color(0xff757575),
-            child: Container(
-              width: maxWidth,
-              padding: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
+            constraints: BoxConstraints(
+              maxHeight: double.infinity,
+            ),
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            child: ListView(
+              children: [
+                //Header Nuevo Post
+                title(context),
+                SizedBox(
+                  height: 15.0,
                 ),
-              ),
-              //header modal Nuevo Post
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  //Header Nuevo Post
-                  title(context),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  //Input description Nuevo Post
-                  description(context),
-                  ...inputAnswers(context),
-                  buttonSave(context)
-                ],
-              ),
+                //Input description Nuevo Post
+                description(context),
+                ...inputAnswers(context),
+                addAnswer(context),
+                buttonSave(context)
+              ],
             ),
           ),
         );
@@ -160,6 +159,17 @@ class _PostCreateState extends State<PostCreate> {
         ],
       ),
     );
+  }
+
+  //Add TextFromField dynamically
+  Widget addAnswer(BuildContext context) {
+    print('addAnswer');
+
+    bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
+    if (isQuiz) {
+      return AddAnswers();
+    }
+    return Text("");
   }
 
   Widget description(BuildContext context) {

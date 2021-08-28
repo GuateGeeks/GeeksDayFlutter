@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/services/implementation/post_service.dart';
 
 class PostOptions extends StatefulWidget {
   PostOptions({Key? key}) : super(key: key);
@@ -10,10 +14,17 @@ class PostOptions extends StatefulWidget {
 class _PostOptionsState extends State<PostOptions> {
   @override
   Widget build(BuildContext context) {
+    var userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    PostCubit state = BlocProvider.of<PostCubit>(context);
+    List<String> choices = [];
+
+    if (state.isOwnedBy(userId)) {
+      choices.add(Constants.Delete);
+    }
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) {
-        return Constants.choinces.map((String choice) {
+        return choices.map((String choice) {
           return PopupMenuItem<String>(
             value: choice,
             child: Text(choice),
@@ -26,7 +37,8 @@ class _PostOptionsState extends State<PostOptions> {
 
   //function to carry out the selected action
   void choiceAction(String choice) {
-    print("Eliminando");
+    var a = firestoreInstance.clearPersistence();
+    print(a);
   }
 }
 

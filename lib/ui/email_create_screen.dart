@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,95 +38,96 @@ class _EmailCreateState extends State<EmailCreate> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
-        appBar: AppBar(title: Text('Create account')),
-        backgroundColor: Color.fromRGBO(171, 171, 171, 1),
-        body: BlocBuilder<AuthCubit, AuthState>(
-          builder: (_, state) {
-            return Center(
-              child: Container(
-                width: maxWidth,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Sing Up",
-                        style: TextStyle(
-                            fontSize: 35.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 50),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (state is AuthSigningIn)
-                                Center(child: CircularProgressIndicator()),
-                              if (state is AuthError)
-                                Text(
-                                  state.message,
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 24),
-                                ),
-                              SizedBox(height: 8),
-                              //Show input email
-                              EmailForm(
-                                  emailAndUsernameValidator, _emailController),
-                              SizedBox(height: 8),
-                              //Show input Username
-                              UsernameForm(emailAndUsernameValidator,
-                                  _usernameController),
-                              SizedBox(height: 8),
-                              //Show input Password
-                              PasswordForm(
-                                  passwordValidator, _passwordController),
-
-                              SizedBox(height: 8),
-                              //Show input Repear Password
-                              RepeatPasswordForm(
-                                  passwordValidator, _repeatPasswordController),
-                              SizedBox(height: 22),
-                              Center(
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all(
-                                        EdgeInsets.symmetric(vertical: 18)),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    'Sing Up',
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                    ),
-                                  )),
-                                  onPressed: () {
-                                    if (_formKey.currentState?.validate() ==
-                                        true) {
-                                      context
-                                          .read<AuthCubit>()
-                                          .createUserWithEmailAndPassword(
-                                              _emailController.text,
-                                              _usernameController.text,
-                                              _passwordController.text);
-                                    }
-                                  },
-                                ),
+      appBar: AppBar(title: Text('Create account')),
+      backgroundColor: Color.fromRGBO(171, 171, 171, 1),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (_, state) {
+          return Center(
+            child: Container(
+              width: maxWidth,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      "Sing Up",
+                      style: TextStyle(
+                          fontSize: 35.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (state is AuthSigningIn)
+                              Center(child: CircularProgressIndicator()),
+                            if (state is AuthError)
+                              Text(
+                                state.message,
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 24),
                               ),
-                            ],
-                          ),
+                            SizedBox(height: 8),
+                            //Show input email
+                            EmailForm(
+                                emailAndUsernameValidator, _emailController),
+                            SizedBox(height: 8),
+                            //Show input Username
+                            UsernameForm(
+                                emailAndUsernameValidator, _usernameController),
+                            SizedBox(height: 8),
+                            //Show input Password
+                            PasswordForm(
+                                passwordValidator, _passwordController),
+
+                            SizedBox(height: 8),
+                            //Show input Repear Password
+                            RepeatPasswordForm(
+                                passwordValidator, _repeatPasswordController),
+                            SizedBox(height: 22),
+                            Center(
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(vertical: 18)),
+                                ),
+                                child: Center(
+                                    child: Text(
+                                  'Sing Up',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                )),
+                                onPressed: () {
+                                  if (_formKey.currentState?.validate() ==
+                                      true) {
+                                    context
+                                        .read<AuthCubit>()
+                                        .createUserWithEmailAndPassword(
+                                            _emailController.text,
+                                            _usernameController.text,
+                                            _passwordController.text);
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 }

@@ -5,7 +5,6 @@ import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/post/quizz_create.dart';
 
 class Home extends StatefulWidget {
   static Widget create(BuildContext context) {
@@ -19,32 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int bottomSelectedIndex = 0;
-
-  PageController pageController = PageController(
-    initialPage: 0,
-    keepPage: true,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void pageChanged(int index) {
-    setState(() {
-      bottomSelectedIndex = index;
-    });
-  }
-
-  void bottomTapped(int index) {
-    setState(() {
-      bottomSelectedIndex = index;
-      pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +30,10 @@ class _HomeState extends State<Home> {
         onPressed: () {
           //Show modal new post
           showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) => PostCreate());
+            backgroundColor: Colors.transparent,
+            context: context,
+            builder: (context) => PostCreate(),
+          );
         },
         tooltip: 'New',
         child: const Icon(Icons.add),

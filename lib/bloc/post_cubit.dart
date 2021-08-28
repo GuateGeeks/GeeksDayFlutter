@@ -96,6 +96,10 @@ class PostCubit extends Cubit<PostState> {
     return state.post.likeList.contains(uid);
   }
 
+  bool isOwnedBy(String uid) {
+    return state.post.user.uid == uid;
+  }
+
   void toggleLikeToPost(String uid) {
     if (state.post.likeList.contains(uid)) {
       state.post.likeList.remove(uid);
