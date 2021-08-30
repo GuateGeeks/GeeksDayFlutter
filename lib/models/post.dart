@@ -37,7 +37,7 @@ class Post extends Equatable {
       'likeCount': likeCount,
       'user': user.toFirebaseMap(),
       'createdAt': createdAt,
-      'quiz': this.quiz,
+      'quiz': this.quiz!.toFirebaseMap(),
     };
   }
 

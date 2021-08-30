@@ -1,11 +1,14 @@
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 class Quiz extends Equatable {
+  final String id = Uuid().v1();
   List<Question> questions;
   Quiz(this.questions);
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
+      'id': id,
       'questions': questions.map((question) => question.toFirebaseMap()),
     };
   }
@@ -18,7 +21,7 @@ class Quiz extends Equatable {
   }
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [id];
 }
 
 class Question extends Equatable {

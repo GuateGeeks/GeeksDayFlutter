@@ -19,6 +19,12 @@ class PostCubit extends Cubit<PostState> {
     emit(state);
   }
 
+  void addAnswer() {
+    var post = state.post.copyWith(text: "Create a Post");
+    post.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
+    emit(PostUpdatedState(post));
+  }
+
   void unsetQuiz() {
     var post = state.post.copyWith(text: "Create a Post");
     post.quiz = null;

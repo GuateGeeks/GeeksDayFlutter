@@ -9,7 +9,6 @@ import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
-import 'package:geeksday/ui/post/add_answer.dart';
 
 class PostCreate extends StatefulWidget {
   PostCreate({Key? key}) : super(key: key);
@@ -163,11 +162,22 @@ class _PostCreateState extends State<PostCreate> {
 
   //Add TextFromField dynamically
   Widget addAnswer(BuildContext context) {
-    print('addAnswer');
-
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
     if (isQuiz) {
-      return AddAnswers();
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: TextButton(
+          onPressed: () => {BlocProvider.of<PostCubit>(context).addAnswer()},
+          //     setState(() => textFormField.add(createTextField())),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(Icons.add),
+              Text("Agregar Respuesta"),
+            ],
+          ),
+        ),
+      );
     }
     return Text("");
   }
