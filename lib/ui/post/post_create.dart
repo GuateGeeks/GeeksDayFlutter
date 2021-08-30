@@ -73,19 +73,18 @@ class _PostCreateState extends State<PostCreate> {
             (answer) => TextFormField(
               onSaved: (value) {
                 var index = postCubit.indexOfAnswer(answer);
-                postCubit.updateQuizAnswer(index, value!, false);
+                postCubit.updateQuizAnswer(index, value!);
               },
               onChanged: (value) {},
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
                   onTap: () {
-                    isCorrect = !isCorrect;
-                    setState(() {});
+                    postCubit.toggleAnswerIsCorrect(answer);
                   },
                   child: Tooltip(
                     message: "Respuesta Correcta",
-                    child: isCorrect
+                    child: answer.isCorrect
                         ? Icon(
                             Icons.check_circle_rounded,
                             color: Colors.green,
