@@ -50,13 +50,14 @@ class Question extends Equatable {
 }
 
 class Answer extends Equatable {
+  final String id = Uuid().v1();
   String text;
   bool isCorrect;
   int selectedCounter;
   Answer(this.text, this.isCorrect, this.selectedCounter);
 
   @override
-  List<Object?> get props => [text, isCorrect];
+  List<Object?> get props => [id, text, isCorrect];
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{

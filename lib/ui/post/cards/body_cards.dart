@@ -67,11 +67,37 @@ class BodyCard extends StatelessWidget {
 
   List<Widget> AnswersList(PostCubit state) {
     if (state.isQuiz()) {
-      return [
-        Answers(),
-        Answers(),
-        Answers(),
-      ];
+      return state
+          .getAnswers()
+          .map((answer) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 35),
+                child: Container(
+                  margin: EdgeInsets.only(top: 10.0),
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        answer.text,
+                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                      ),
+                      Container(
+                        height: 26,
+                        width: 26,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ))
+          .toList();
     } else {
       return [];
     }
@@ -91,40 +117,6 @@ class ImagePage extends StatelessWidget {
       body: Center(
         child: Image.network(
           image,
-        ),
-      ),
-    );
-  }
-}
-
-class Answers extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 35),
-      child: Container(
-        margin: EdgeInsets.only(top: 10.0),
-        padding: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "1. Si",
-              style: TextStyle(color: Colors.grey, fontSize: 17),
-            ),
-            Container(
-              height: 26,
-              width: 26,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(color: Colors.grey),
-              ),
-            ),
-          ],
         ),
       ),
     );

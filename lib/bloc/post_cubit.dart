@@ -54,6 +54,10 @@ class PostCubit extends Cubit<PostState> {
     return state.post;
   }
 
+  List<Answer> getAnswers() {
+    return state.post.quiz!.questions[0].answers;
+  }
+
   String getDatePost() {
     var timestamp = state.post.createdAt;
     var now = new DateTime.now();
@@ -118,6 +122,15 @@ class PostCubit extends Cubit<PostState> {
 
   bool isQuiz() {
     return state.post.quiz != null && state.post.quiz!.questions.isNotEmpty;
+  }
+
+  int indexOfAnswer(Answer answer) {
+    return state.post.quiz!.questions[0].answers.indexOf(answer);
+  }
+
+  void updateQuizAnswer(int index, String text, bool isCorrect) {
+    state.post.quiz!.questions[0].answers[index].text = text;
+    state.post.quiz!.questions[0].answers[index].isCorrect = isCorrect;
   }
 }
 
