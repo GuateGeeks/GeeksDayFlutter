@@ -60,24 +60,27 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   List<Widget> inputAnswers(BuildContext context) {
-    bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
-
-    var post = BlocProvider.of<PostCubit>(context).state.post;
+    var postCubit = BlocProvider.of<PostCubit>(context);
+    bool isQuiz = postCubit.isQuiz();
+    var post = postCubit.state.post;
     if (isQuiz) {
       return post.quiz!.questions[0].answers
           .map(
             (answer) => TextFormField(
-              onSaved: (value) {},
+              onSaved: (value) {
+                var index = postCubit.indexOfAnswer(answer);
+                postCubit.updateQuizAnswer(index, value!);
+              },
+              onChanged: (value) {},
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
                   onTap: () {
-                    isCorrect = !isCorrect;
-                    setState(() {});
+                    postCubit.toggleAnswerIsCorrect(answer);
                   },
                   child: Tooltip(
                     message: "Respuesta Correcta",
-                    child: isCorrect
+                    child: answer.isCorrect
                         ? Icon(
                             Icons.check_circle_rounded,
                             color: Colors.green,
