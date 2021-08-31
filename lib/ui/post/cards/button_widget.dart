@@ -14,7 +14,6 @@ class ButtonWidget extends StatefulWidget {
 
 class _ButtonWidgetState extends State<ButtonWidget> {
   bool isLiked = false;
-  int likeCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              likeButton(width, isLiked),
+              likeButton(width),
               SizedBox(width: 5.0),
               commentButton(width),
             ],
@@ -51,13 +50,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   }
 
   //function like button
-  Widget likeButton(width, isLike) {
+  Widget likeButton(width) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
+
     return ElevatedButton(
       onPressed: () {
         likePost(context);
-        isLike = !isLike;
-        setState(() {});
+        isLiked = !isLiked;
       },
       style: ButtonStyle(
         padding: (width > 620)
@@ -81,37 +81,21 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         ),
       ),
       //likeButton library implementation
-      child: LikeButton(
-        likeBuilder: (bool isLike) {
-          return Icon(
-            Icons.favorite,
-            color: isLike ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-          );
-        },
-        onTap: (bool isLike) async {
-          likePost(context);
-          return !isLike;
-        },
-        isLiked: BlocProvider.of<PostCubit>(context).likedByMe(userId),
-        likeCount: BlocProvider.of<PostCubit>(context).getLikesCount(),
-        countBuilder: (count, isLiked, text) {
-          Widget result;
-          if (count == 0) {
-            result = Text(
-              "LIKE",
-              style: TextStyle(
-                  color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-                  fontWeight: FontWeight.bold),
-            );
-          } else
-            result = Text("LIKE",
-                style: TextStyle(
-                    color:
-                        isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-                    fontWeight: FontWeight.bold));
-          return result;
-        },
-      ),
+      child: Row(children: <Widget>[
+        Icon(
+          Icons.favorite,
+          color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 10.0),
+          child: Text(
+            "LIKE",
+            style: TextStyle(
+                color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+                fontWeight: FontWeight.bold),
+          ),
+        )
+      ]),
     );
   }
 
