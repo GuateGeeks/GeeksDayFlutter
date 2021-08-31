@@ -12,14 +12,14 @@ const RESOURCES = {
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
-"assets/NOTICES": "7503f6df995db47c5ef4ad83984a8ad3",
+"assets/NOTICES": "50e0325ab8db506dfcc1ac4b8375747f",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "firebase-config.js": "01ebaf1b69d2a21a35fc2537dfa5deaf",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "manifest.json": "cd30b6ab6774127656ea9c126369b699",
 "version.json": "da2e0573834eb2187048bf7b88f15c46",
-"main.dart.js": "350f5479a2ced9505e11e70a9215f3dc",
+"main.dart.js": "fd0cd599e9ddbbab7e57c4af7fc7914f",
 "index.html": "def919ae89fbaf4ed446d2adda969b52",
 "/": "def919ae89fbaf4ed446d2adda969b52"
 };
