@@ -5,7 +5,6 @@ import 'package:geeksday/ui/post/post_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/post/quizz_card.dart';
 
 class PostList extends StatelessWidget {
   const PostList({Key? key}) : super(key: key);

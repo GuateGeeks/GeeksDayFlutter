@@ -21,7 +21,6 @@ class HeaderCard extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                padding: EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.blue,
@@ -32,24 +31,24 @@ class HeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      state.getPost()!.username,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
-                    Text(
+              Column(
+                children: <Widget>[
+                  Text(
+                    state.getPost()!.username,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Text(
                       state.getDatePost(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

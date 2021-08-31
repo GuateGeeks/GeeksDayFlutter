@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
@@ -194,7 +192,7 @@ class _PostCreateState extends State<PostCreate> {
       decoration: InputDecoration(
         suffixIcon: InkWell(
           onTap: () {
-            uploadImage(context);
+            //uploadImage(context);
           },
           child: Icon(Icons.image_search),
         ),
@@ -221,22 +219,22 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  uploadImage(BuildContext context) async {
-    var uploadInput = FileUploadInputElement()..accept = 'image/*';
-    uploadInput.click();
-    uploadInput.onChange.listen(
-      (event) {
-        final File file = uploadInput.files!.first;
-        final reader = FileReader();
-        reader.readAsDataUrl(file);
-        reader.onLoadEnd.listen(
-          (event) {
-            BlocProvider.of<PostCubit>(context).setImage(file);
-          },
-        );
-      },
-    );
-  }
+  // uploadImage(BuildContext context) async {
+  //   var uploadInput = FileUploadInputElement()..accept = 'image/*';
+  //   uploadInput.click();
+  //   uploadInput.onChange.listen(
+  //     (event) {
+  //       final File file = uploadInput.files!.first;
+  //       final reader = FileReader();
+  //       reader.readAsDataUrl(file);
+  //       reader.onLoadEnd.listen(
+  //         (event) {
+  //           BlocProvider.of<PostCubit>(context).setImage(file);
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   final TextEditingController maxWidthController = TextEditingController();
 
