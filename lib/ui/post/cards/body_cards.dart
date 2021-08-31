@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class BodyCard extends StatefulWidget {
   const BodyCard({
@@ -86,35 +87,47 @@ class _BodyCardState extends State<BodyCard> {
               child: Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    //change color to the answers, if the answer is correct it is marked in green, otherwise it is marked in red
-                    backgroundColor: isPressed
-                        ? correctAnswer == answer.text
-                            ? Colors.green
-                            : Colors.red
-                        : btnColor,
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      //get the click a button of the answers
-                      isPressed = true;
-                    });
-                    if (correctAnswer != answer.text) {
-                      //if the selected answer is different from the correct answer, it is marked in red
-                      btnColor = Colors.red;
-                    }
-                  },
-                  child: Text(
-                    answer.text,
-                    style: TextStyle(
-                      color: isPressed ? Colors.white : Colors.grey,
-                    ),
-                  ),
-                ),
+                child: isPressed
+                    ? Container(
+                        child: new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 100,
+                          animation: true,
+                          lineHeight: 35.0,
+                          animationDuration: 2500,
+                          percent: 0.8,
+                          center: Text(
+                            "80.0% Porcentaje respuestas",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: correctAnswer == answer.text
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                      )
+                    : TextButton(
+                        style: TextButton.styleFrom(
+                          //change color to the answers, if the answer is correct it is marked in green, otherwise it is marked in red
+                          backgroundColor: btnColor,
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            //get the click a button of the answers
+                            isPressed = true;
+                          });
+                        },
+                        child: Text(
+                          answer.text,
+                          style: TextStyle(
+                            color: isPressed ? Colors.white : Colors.grey,
+                          ),
+                        ),
+                      ),
               ),
             ),
             // Padding(

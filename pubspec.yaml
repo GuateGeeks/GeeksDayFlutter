@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  percent_indicator: ^3.0.1
   #like button in the posts
   like_button: ^2.0.2
   #Choose image and take photos with the camera
@@ -49,6 +50,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Support Firebase Google Signin
   google_sign_in: ^5.0.7
+  #Porcent Indicator
+  
   
 
   # The "flutter_lints" package below contains a set of recommended lints to
