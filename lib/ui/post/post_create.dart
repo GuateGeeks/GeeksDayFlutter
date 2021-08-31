@@ -19,7 +19,6 @@ class PostCreate extends StatefulWidget {
 
 class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   bool isCorrect = false;
   Widget _content(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,22 +39,19 @@ class _PostCreateState extends State<PostCreate> {
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: [
-                  //Header Nuevo Post
-                  title(context),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  //Input description Nuevo Post
-                  description(context),
-                  ...inputAnswers(context),
-                  addAnswer(context),
-                  buttonSave(context)
-                ],
-              ),
+            child: ListView(
+              children: [
+                //Header Nuevo Post
+                title(context),
+                SizedBox(
+                  height: 15.0,
+                ),
+                //Input description Nuevo Post
+                description(context),
+                ...inputAnswers(context),
+                addAnswer(context),
+                buttonSave(context)
+              ],
             ),
           ),
         );
@@ -64,18 +60,14 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   List<Widget> inputAnswers(BuildContext context) {
-    var postCubit = BlocProvider.of<PostCubit>(context);
-    bool isQuiz = postCubit.isQuiz();
-    var post = postCubit.state.post;
+    bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
+
+    var post = BlocProvider.of<PostCubit>(context).state.post;
     if (isQuiz) {
       return post.quiz!.questions[0].answers
           .map(
             (answer) => TextFormField(
-              onSaved: (value) {
-                var index = postCubit.indexOfAnswer(answer);
-                postCubit.updateQuizAnswer(index, value!, false);
-              },
-              onChanged: (value) {},
+              onSaved: (value) {},
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
@@ -213,7 +205,6 @@ class _PostCreateState extends State<PostCreate> {
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ElevatedButton(
         onPressed: () {
-          _formKey.currentState!.save();
           BlocProvider.of<PostCubit>(context)
               .createPost(commentController.text);
           Navigator.pop(context);
