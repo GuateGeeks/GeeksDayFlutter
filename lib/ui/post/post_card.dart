@@ -29,12 +29,7 @@ class PostCard extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (BuildContext context) {
-            //   return CommentsList(comments: postData.comments);
-            // }));
-          },
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Card(

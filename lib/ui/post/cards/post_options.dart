@@ -37,8 +37,9 @@ class _PostOptionsState extends State<PostOptions> {
 
   //function to carry out the selected action
   void choiceAction(String choice) {
-    var a = firestoreInstance.clearPersistence();
-    print(a);
+    PostCubit state = BlocProvider.of<PostCubit>(context);
+    String idPostDelete = state.idPost();
+    BlocProvider.of<PostCubit>(context).postDeletion(idPostDelete);
   }
 }
 

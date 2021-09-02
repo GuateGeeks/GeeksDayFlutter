@@ -110,6 +110,15 @@ class PostCubit extends Cubit<PostState> {
     return state.post.user.uid == uid;
   }
 
+  String idPost() {
+    emit(state);
+    return state.post.id;
+  }
+
+  Future<void> postDeletion(String uid) {
+    return _postService.deletePost(uid);
+  }
+
   void toggleLikeToPost(String uid) {
     if (state.post.likeList.contains(uid)) {
       state.post.likeList.remove(uid);

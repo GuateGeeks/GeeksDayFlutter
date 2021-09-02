@@ -78,6 +78,7 @@ class _BodyCardState extends State<BodyCard> {
   }
 
   List<Widget> AnswersList(PostCubit state) {
+    double width = MediaQuery.of(context).size.width;
     if (state.isQuiz()) {
       return state
           .getAnswers()
@@ -88,76 +89,60 @@ class _BodyCardState extends State<BodyCard> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20.0),
                 child: isPressed
-                    ? Container(
-                        child: new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 100,
-                          animation: true,
-                          lineHeight: 35.0,
-                          animationDuration: 2500,
-                          percent: 0.8,
-                          center: Text(
-                            "80.0% Porcentaje respuestas",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new LinearPercentIndicator(
+                            width: width < 650
+                                ? MediaQuery.of(context).size.width - 100
+                                : 450,
+                            animation: true,
+                            lineHeight: 35.0,
+                            animationDuration: 2500,
+                            percent: 0.8,
+                            center: Text(
+                              "80.0% Porcentaje respuestas",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            linearStrokeCap: LinearStrokeCap.butt,
+                            progressColor: correctAnswer == answer.text
+                                ? Colors.green
+                                : Colors.red,
                           ),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: correctAnswer == answer.text
-                              ? Colors.green
-                              : Colors.red,
-                        ),
+                        ],
                       )
-                    : TextButton(
-                        style: TextButton.styleFrom(
-                          //change color to the answers, if the answer is correct it is marked in green, otherwise it is marked in red
-                          backgroundColor: btnColor,
-                          padding: EdgeInsets.symmetric(vertical: 20.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            //get the click a button of the answers
-                            isPressed = true;
-                          });
-                        },
-                        child: Text(
-                          answer.text,
-                          style: TextStyle(
-                            color: isPressed ? Colors.white : Colors.grey,
+                    : Padding(
+                        padding: width < 650
+                            ? (width < 500
+                                ? EdgeInsets.symmetric(horizontal: 0)
+                                : EdgeInsets.symmetric(horizontal: 10))
+                            : EdgeInsets.symmetric(horizontal: 60),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            //change color to the answers, if the answer is correct it is marked in green, otherwise it is marked in red
+                            backgroundColor: btnColor,
+                            padding: EdgeInsets.symmetric(vertical: 20.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              //get the click a button of the answers
+                              isPressed = true;
+                            });
+                          },
+                          child: Text(
+                            answer.text,
+                            style: TextStyle(
+                              color: isPressed ? Colors.white : Colors.grey,
+                            ),
                           ),
                         ),
                       ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 35),
-            //   child: Container(
-            //     margin: EdgeInsets.only(top: 10.0),
-            //     padding: EdgeInsets.all(10.0),
-            //     decoration: BoxDecoration(
-            //       border: Border.all(color: Colors.grey),
-            //       borderRadius: BorderRadius.circular(15),
-            //     ),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         Text(
-            //           answer.text,
-            //           style: TextStyle(color: Colors.grey, fontSize: 17),
-            //         ),
-            //         Container(
-            //           height: 26,
-            //           width: 26,
-            //           decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(50),
-            //             border: Border.all(color: Colors.grey),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           )
           .toList();
     } else {

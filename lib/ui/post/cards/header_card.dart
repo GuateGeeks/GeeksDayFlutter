@@ -31,29 +31,28 @@ class HeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                children: <Widget>[
-                  Text(
-                    state.getPost()!.username,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: Text(
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      state.getPost()!.username,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    Text(
                       state.getDatePost(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
-          //TODO: Connect button functionality
-
           PostOptions(),
         ],
       ),

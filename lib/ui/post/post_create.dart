@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
@@ -64,44 +66,47 @@ class _PostCreateState extends State<PostCreate> {
     if (isQuiz) {
       return post.quiz!.questions[0].answers
           .map(
-            (answer) => TextFormField(
-              onSaved: (value) {
-                var index = postCubit.indexOfAnswer(answer);
-                postCubit.updateQuizAnswer(index, value!);
-              },
-              onChanged: (value) {},
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                suffixIcon: InkWell(
-                  onTap: () {
-                    postCubit.toggleAnswerIsCorrect(answer);
-                  },
-                  child: Tooltip(
-                    message: "Respuesta Correcta",
-                    child: answer.isCorrect
-                        ? Icon(
-                            Icons.check_circle_rounded,
-                            color: Colors.green,
-                          )
-                        : Icon(Icons.check_circle_rounded),
+            (answer) => Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: TextFormField(
+                onSaved: (value) {
+                  var index = postCubit.indexOfAnswer(answer);
+                  postCubit.updateQuizAnswer(index, value!);
+                },
+                onChanged: (value) {},
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      postCubit.toggleAnswerIsCorrect(answer);
+                    },
+                    child: Tooltip(
+                      message: "Respuesta Correcta",
+                      child: answer.isCorrect
+                          ? Icon(
+                              Icons.check_circle_rounded,
+                              color: Colors.green,
+                            )
+                          : Icon(Icons.check_circle_rounded),
+                    ),
                   ),
-                ),
-                hintText: answer.text,
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Color.fromRGBO(240, 240, 240, 1),
-                contentPadding:
-                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(8),
-                  borderSide: new BorderSide(
-                    color: Color.fromRGBO(240, 240, 240, 1),
+                  hintText: answer.text,
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(8),
+                    borderSide: new BorderSide(
+                      color: Color.fromRGBO(240, 240, 240, 1),
+                    ),
                   ),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderRadius: new BorderRadius.circular(8),
-                  borderSide: new BorderSide(
-                    color: Color.fromRGBO(240, 240, 240, 1),
+                  enabledBorder: UnderlineInputBorder(
+                    borderRadius: new BorderRadius.circular(8),
+                    borderSide: new BorderSide(
+                      color: Color.fromRGBO(240, 240, 240, 1),
+                    ),
                   ),
                 ),
               ),
@@ -149,6 +154,7 @@ class _PostCreateState extends State<PostCreate> {
                 Answer("Respuesta", false, 0),
                 Answer("Respuesta", false, 0),
               ]);
+
               BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question]));
             },
             child: Text(
@@ -165,18 +171,14 @@ class _PostCreateState extends State<PostCreate> {
   Widget addAnswer(BuildContext context) {
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
     if (isQuiz) {
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: TextButton(
-          onPressed: () => {BlocProvider.of<PostCubit>(context).addAnswer()},
-          //     setState(() => textFormField.add(createTextField())),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Icon(Icons.add),
-              Text("Agregar Respuesta"),
-            ],
-          ),
+      return TextButton(
+        onPressed: () => {BlocProvider.of<PostCubit>(context).addAnswer()},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(Icons.add),
+            Text("Agregar Respuesta"),
+          ],
         ),
       );
     }
@@ -192,7 +194,7 @@ class _PostCreateState extends State<PostCreate> {
       decoration: InputDecoration(
         suffixIcon: InkWell(
           onTap: () {
-            //uploadImage(context);
+            uploadImage(context);
           },
           child: Icon(Icons.image_search),
         ),
@@ -219,22 +221,22 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  // uploadImage(BuildContext context) async {
-  //   var uploadInput = FileUploadInputElement()..accept = 'image/*';
-  //   uploadInput.click();
-  //   uploadInput.onChange.listen(
-  //     (event) {
-  //       final File file = uploadInput.files!.first;
-  //       final reader = FileReader();
-  //       reader.readAsDataUrl(file);
-  //       reader.onLoadEnd.listen(
-  //         (event) {
-  //           BlocProvider.of<PostCubit>(context).setImage(file);
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  uploadImage(BuildContext context) async {
+    var uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
+    uploadInput.onChange.listen(
+      (event) {
+        final File file = uploadInput.files!.first;
+        final reader = FileReader();
+        reader.readAsDataUrl(file);
+        reader.onLoadEnd.listen(
+          (event) {
+            BlocProvider.of<PostCubit>(context).setImage(file);
+          },
+        );
+      },
+    );
+  }
 
   final TextEditingController maxWidthController = TextEditingController();
 
