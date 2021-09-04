@@ -1,15 +1,25 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/ui/post/cards/post_options.dart';
+import 'package:multiavatar/multiavatar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HeaderCard extends StatelessWidget {
   const HeaderCard({Key? key}) : super(key: key);
 
+  Widget avatarWidget() {
+    String rawSvg = multiavatar(DateTime.now().toIso8601String());
+    return SvgPicture.string(rawSvg);
+  }
+
   @override
   Widget build(BuildContext context) {
     var userId = BlocProvider.of<AuthCubit>(context).getUserId();
+
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -21,15 +31,7 @@ class HeaderCard extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.blue,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "https://yt3.ggpht.com/a/AATXAJyPMywRmD62sfK-1CXjwF0YkvrvnmaaHzs4uw=s900-c-k-c0xffffffff-no-rj-mo"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                child: avatarWidget(),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),

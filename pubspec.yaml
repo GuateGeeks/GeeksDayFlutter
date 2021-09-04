@@ -23,12 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  #Porcent Indicator
   percent_indicator: ^3.0.1
   #like button in the posts
   like_button: ^2.0.2
   #Choose image and take photos with the camera
   image_picker: ^0.8.3+2
-  
+  # Avatars
+  multiavatar: ^0.1.5
 
   
   ## UUID Generator
@@ -50,7 +52,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Support Firebase Google Signin
   google_sign_in: ^5.0.7
-  #Porcent Indicator
   
   
 
@@ -60,6 +61,7 @@ dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  flutter_svg: ^0.22.0
 
 
 dev_dependencies:
