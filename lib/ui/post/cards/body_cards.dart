@@ -4,21 +4,10 @@ import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class BodyCard extends StatefulWidget {
+class BodyCard extends StatelessWidget {
   const BodyCard({
     Key? key,
   }) : super(key: key);
-
-  @override
-  _BodyCardState createState() => _BodyCardState();
-}
-
-class _BodyCardState extends State<BodyCard> {
-  bool isPressed = false;
-  //color of the quizz answers
-  Color btnColor = Color(0xffE4E4E4);
-  //temporary correct answer
-  String correctAnswer = "rp1";
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +60,54 @@ class _BodyCardState extends State<BodyCard> {
           // In this way you can add list members as part of other list
           // https://www.woolha.com/tutorials/dart-using-triple-dot-spread-operator-examples
 
-          ...AnswersList(state),
+          ProgressBar(),
+          // ...AnswersList(state),
         ],
       ),
+    );
+  }
+}
+
+class ImagePage extends StatelessWidget {
+  late String image;
+  ImagePage(this.image);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Image.network(
+          image,
+        ),
+      ),
+    );
+  }
+}
+
+class ProgressBar extends StatefulWidget {
+  ProgressBar({Key? key}) : super(key: key);
+
+  @override
+  _ProgressBarState createState() => _ProgressBarState();
+}
+
+class _ProgressBarState extends State<ProgressBar> {
+  bool isPressed = false;
+  //color of the quizz answers
+  Color btnColor = Color(0xffE4E4E4);
+  //temporary correct answer
+  String correctAnswer = "rp1";
+
+  @override
+  Widget build(BuildContext context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
+    return Column(
+      children: [
+        ...AnswersList(state),
+      ],
     );
   }
 
@@ -97,7 +131,7 @@ class _BodyCardState extends State<BodyCard> {
                                 ? MediaQuery.of(context).size.width - 100
                                 : 450,
                             animation: true,
-                            lineHeight: 35.0,
+                            lineHeight: 40.0,
                             animationDuration: 2500,
                             percent: 0.8,
                             center: Text(
@@ -106,7 +140,7 @@ class _BodyCardState extends State<BodyCard> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            linearStrokeCap: LinearStrokeCap.butt,
+                            linearStrokeCap: LinearStrokeCap.roundAll,
                             progressColor: correctAnswer == answer.text
                                 ? Colors.green
                                 : Colors.red,
@@ -148,24 +182,5 @@ class _BodyCardState extends State<BodyCard> {
     } else {
       return [];
     }
-  }
-}
-
-class ImagePage extends StatelessWidget {
-  late String image;
-  ImagePage(this.image);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Image.network(
-          image,
-        ),
-      ),
-    );
   }
 }
