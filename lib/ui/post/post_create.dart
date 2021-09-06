@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/routes.dart';
 
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
+
 class PostCreate extends StatefulWidget {
   PostCreate({Key? key}) : super(key: key);
 
@@ -20,6 +23,9 @@ class PostCreate extends StatefulWidget {
 class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
   bool isCorrect = false;
+
+  List<XFile>? _imageFileList;
+
   Widget _content(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
@@ -28,6 +34,7 @@ class _PostCreateState extends State<PostCreate> {
         return Center(
           child: Container(
             width: maxWidth,
+            height: 900,
             constraints: BoxConstraints(
               maxHeight: double.infinity,
             ),
@@ -40,23 +47,66 @@ class _PostCreateState extends State<PostCreate> {
               ),
             ),
             child: ListView(
+              shrinkWrap: true,
               children: [
                 //Header Nuevo Post
                 title(context),
                 SizedBox(
-                  height: 15.0,
+                  height: 10.0,
+                ),
+                _previewImages(),
+                SizedBox(
+                  height: 10.0,
                 ),
                 //Input description Nuevo Post
                 description(context),
                 ...inputAnswers(context),
                 addAnswer(context),
-                buttonSave(context)
+                buttonSave(context),
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  set _imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  void _onImageButtonPressed(ImageSource source,
+      {BuildContext? context}) async {
+    final pickedFile = await _picker.pickImage(
+      source: source,
+    );
+    setState(() {
+      _imageFile = pickedFile;
+    });
+  }
+
+  Widget _previewImages() {
+    if (_imageFileList != null) {
+      return Container(
+        child: ListView.builder(
+          shrinkWrap: true,
+          key: UniqueKey(),
+          itemBuilder: (context, index) {
+            return Container(
+              child: kIsWeb
+                  ? Image.network(_imageFileList![index].path,
+                      width: 50, height: 250)
+                  : Image.file(File(_imageFileList![index].path),
+                      width: 50, height: 250),
+            );
+          },
+          itemCount: _imageFileList!.length,
+        ),
+      );
+    }
+    return Text("");
   }
 
   List<Widget> inputAnswers(BuildContext context) {
@@ -194,7 +244,8 @@ class _PostCreateState extends State<PostCreate> {
       decoration: InputDecoration(
         suffixIcon: InkWell(
           onTap: () {
-            uploadImage(context);
+            _onImageButtonPressed(ImageSource.gallery, context: context);
+            // uploadImage(context);
           },
           child: Icon(Icons.image_search),
         ),
@@ -222,20 +273,20 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   uploadImage(BuildContext context) async {
-    var uploadInput = FileUploadInputElement()..accept = 'image/*';
-    uploadInput.click();
-    uploadInput.onChange.listen(
-      (event) {
-        final File file = uploadInput.files!.first;
-        final reader = FileReader();
-        reader.readAsDataUrl(file);
-        reader.onLoadEnd.listen(
-          (event) {
-            BlocProvider.of<PostCubit>(context).setImage(file);
-          },
-        );
-      },
-    );
+    // var uploadInput = FileUploadInputElement()..accept = 'image/*';
+    // uploadInput.click();
+    // uploadInput.onChange.listen(
+    //   (event) {
+    //     final File file = uploadInput.files!.first;
+    //     final reader = FileReader();
+    //     reader.readAsDataUrl(file);
+    //     reader.onLoadEnd.listen(
+    //       (event) {
+    //         BlocProvider.of<PostCubit>(context).setImage(file);
+    //       },
+    //     );
+    //   },
+    // );
   }
 
   final TextEditingController maxWidthController = TextEditingController();
