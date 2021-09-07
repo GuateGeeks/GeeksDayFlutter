@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:html';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
@@ -7,10 +7,8 @@ import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/routes.dart';
-
+import 'package:image_whisperer/image_whisperer.dart';
 import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PostCreate extends StatefulWidget {
   PostCreate({Key? key}) : super(key: key);
@@ -21,11 +19,7 @@ class PostCreate extends StatefulWidget {
 
 class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
-  bool isCorrect = false;
-
-  // List<XFile>? _imageFileList;
-  XFile? imageFile;
-  late File imagen;
+  File? uploadedImage;
 
   Widget _content(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -72,25 +66,36 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  Future getImage(context) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      imageFile = image;
-    });
+  uploadImage(BuildContext context) async {
+    var uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
+    uploadInput.onChange.listen(
+      (event) {
+        final File file = uploadInput.files!.first;
+        final reader = FileReader();
+        reader.readAsDataUrl(file);
+        reader.onLoadEnd.listen(
+          (event) {
+            setState(() {
+              uploadedImage = file;
+            });
+            BlocProvider.of<PostCubit>(context).setImage(file);
+          },
+        );
+      },
+    );
   }
 
   Widget previewImages(context) {
-    if (imageFile != null) {
-      // BlocProvider.of<PostCubit>(context).setImage(File(imageFile!.path));
-
+    if (uploadedImage != null) {
+      BlobImage blobImage =
+          new BlobImage(uploadedImage, name: uploadedImage!.name);
+      //Uint8List image = Base64Codec().decode(uploadedImage.toString());
       return Container(
-        child: kIsWeb
-            ? Image.network(imageFile!.path, width: 50, height: 250)
-            : Image.file(File(imageFile!.path), width: 50, height: 250),
+        child: Image.network(blobImage.url, width: 50, height: 250),
       );
     }
-    return Text("");
+    return Container();
   }
 
   List<Widget> inputAnswers(BuildContext context) {
@@ -228,9 +233,7 @@ class _PostCreateState extends State<PostCreate> {
       decoration: InputDecoration(
         suffixIcon: InkWell(
           onTap: () {
-            getImage(context);
-            // _onImageButtonPressed(ImageSource.gallery, context: context);
-            // uploadImage(context);
+            uploadImage(context);
           },
           child: Icon(Icons.image_search),
         ),
@@ -262,65 +265,4 @@ class _PostCreateState extends State<PostCreate> {
   final TextEditingController maxHeightController = TextEditingController();
 
   final TextEditingController qualityController = TextEditingController();
-
-  Future<void> _displayPickImageDialog(
-      BuildContext context, OnPickImageCallback onPick) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Add optional parameters'),
-          content: Column(
-            children: <Widget>[
-              TextField(
-                controller: maxWidthController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration:
-                    InputDecoration(hintText: "Enter maxWidth if desired"),
-              ),
-              TextField(
-                controller: maxHeightController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration:
-                    InputDecoration(hintText: "Enter maxHeight if desired"),
-              ),
-              TextField(
-                controller: qualityController,
-                keyboardType: TextInputType.number,
-                decoration:
-                    InputDecoration(hintText: "Enter quality if desired"),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('PICK'),
-              onPressed: () {
-                double? width = maxWidthController.text.isNotEmpty
-                    ? double.parse(maxWidthController.text)
-                    : null;
-                double? height = maxHeightController.text.isNotEmpty
-                    ? double.parse(maxHeightController.text)
-                    : null;
-                int? quality = qualityController.text.isNotEmpty
-                    ? int.parse(qualityController.text)
-                    : null;
-                onPick(width, height, quality);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
-
-typedef void OnPickImageCallback(
-    double? maxWidth, double? maxHeight, int? quality);
