@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
@@ -24,7 +23,9 @@ class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
   bool isCorrect = false;
 
-  List<XFile>? _imageFileList;
+  // List<XFile>? _imageFileList;
+  XFile? imageFile;
+  late File imagen;
 
   Widget _content(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -54,7 +55,7 @@ class _PostCreateState extends State<PostCreate> {
                 SizedBox(
                   height: 10.0,
                 ),
-                _previewImages(),
+                previewImages(context),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -71,39 +72,22 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  set _imageFile(XFile? value) {
-    _imageFileList = value == null ? null : [value];
-  }
+  Future getImage(context) async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-  final ImagePicker _picker = ImagePicker();
-
-  void _onImageButtonPressed(ImageSource source,
-      {BuildContext? context}) async {
-    final pickedFile = await _picker.pickImage(
-      source: source,
-    );
     setState(() {
-      _imageFile = pickedFile;
+      imageFile = image;
     });
   }
 
-  Widget _previewImages() {
-    if (_imageFileList != null) {
+  Widget previewImages(context) {
+    if (imageFile != null) {
+      // BlocProvider.of<PostCubit>(context).setImage(File(imageFile!.path));
+
       return Container(
-        child: ListView.builder(
-          shrinkWrap: true,
-          key: UniqueKey(),
-          itemBuilder: (context, index) {
-            return Container(
-              child: kIsWeb
-                  ? Image.network(_imageFileList![index].path,
-                      width: 50, height: 250)
-                  : Image.file(File(_imageFileList![index].path),
-                      width: 50, height: 250),
-            );
-          },
-          itemCount: _imageFileList!.length,
-        ),
+        child: kIsWeb
+            ? Image.network(imageFile!.path, width: 50, height: 250)
+            : Image.file(File(imageFile!.path), width: 50, height: 250),
       );
     }
     return Text("");
@@ -244,7 +228,8 @@ class _PostCreateState extends State<PostCreate> {
       decoration: InputDecoration(
         suffixIcon: InkWell(
           onTap: () {
-            _onImageButtonPressed(ImageSource.gallery, context: context);
+            getImage(context);
+            // _onImageButtonPressed(ImageSource.gallery, context: context);
             // uploadImage(context);
           },
           child: Icon(Icons.image_search),
@@ -270,23 +255,6 @@ class _PostCreateState extends State<PostCreate> {
         child: const Text("Guardar"),
       ),
     );
-  }
-
-  uploadImage(BuildContext context) async {
-    // var uploadInput = FileUploadInputElement()..accept = 'image/*';
-    // uploadInput.click();
-    // uploadInput.onChange.listen(
-    //   (event) {
-    //     final File file = uploadInput.files!.first;
-    //     final reader = FileReader();
-    //     reader.readAsDataUrl(file);
-    //     reader.onLoadEnd.listen(
-    //       (event) {
-    //         BlocProvider.of<PostCubit>(context).setImage(file);
-    //       },
-    //     );
-    //   },
-    // );
   }
 
   final TextEditingController maxWidthController = TextEditingController();
