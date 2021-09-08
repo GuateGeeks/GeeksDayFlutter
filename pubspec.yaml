@@ -62,6 +62,7 @@ dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_svg: ^0.22.0
+  random_color: ^1.0.5
 
 
 dev_dependencies:
