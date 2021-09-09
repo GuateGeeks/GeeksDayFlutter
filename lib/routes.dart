@@ -6,11 +6,13 @@ import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 import 'package:geeksday/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geeksday/ui/user_profile.dart';
 
 class Routes {
   static const splash = '/';
   static const intro = '/intro';
   static const home = '/home';
+  static const userProfile = '/userPrifile';
   static const creatPost = '/createPost';
 
   static const postComment = '/postComment';
@@ -29,6 +31,8 @@ class Routes {
         return _buildRoute(EmailSignIn.create);
       case home:
         return _buildRoute(Home.create);
+      case userProfile:
+        return _buildRoute(UserProfile.create);
       case postComment:
         return _buildRoute(PostComment.create);
       default:

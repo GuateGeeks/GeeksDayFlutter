@@ -1,6 +1,7 @@
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/routes.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
+import 'package:geeksday/ui/main_drawer.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,9 @@ class _HomeState extends State<Home> {
       backgroundColor: Color.fromRGBO(235, 235, 235, .6),
       appBar: AppBar(
         title: Text('GeeksDay'),
+      ),
+      drawer: Drawer(
+        child: MainDrawer(),
       ),
       body: PostList(),
       floatingActionButton: FloatingActionButton(
