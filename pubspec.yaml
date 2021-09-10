@@ -52,6 +52,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   # Support Firebase Google Signin
   google_sign_in: ^5.0.7
+  #provider pack for light and dark theme
+  provider: ^6.0.0
   
   
 
