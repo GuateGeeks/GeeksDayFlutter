@@ -33,7 +33,7 @@ class _PostCreateState extends State<PostCreate> {
             ),
             padding: EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
@@ -93,21 +93,13 @@ class _PostCreateState extends State<PostCreate> {
                   hintText: answer.text,
                   border: InputBorder.none,
                   filled: true,
-                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                  fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                   contentPadding:
                       const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: new BorderRadius.circular(8),
-                    borderSide: new BorderSide(
-                      color: Color.fromRGBO(240, 240, 240, 1),
-                    ),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderRadius: new BorderRadius.circular(8),
-                    borderSide: new BorderSide(
-                      color: Color.fromRGBO(240, 240, 240, 1),
-                    ),
-                  ),
+                  focusedBorder:
+                      Theme.of(context).inputDecorationTheme.focusedBorder,
+                  enabledBorder:
+                      Theme.of(context).inputDecorationTheme.enabledBorder,
                 ),
               ),
             ),
@@ -131,7 +123,9 @@ class _PostCreateState extends State<PostCreate> {
   Widget title(BuildContext context) {
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
     TextStyle boldStyle = TextStyle(
-        color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold);
+        color: Theme.of(context).primaryColorDark,
+        fontSize: 25,
+        fontWeight: FontWeight.bold);
     TextStyle grayStyle = TextStyle(color: Colors.grey, fontSize: 16.0);
 
     return Padding(

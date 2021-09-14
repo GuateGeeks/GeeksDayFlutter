@@ -16,7 +16,6 @@ class UserProfile extends StatelessWidget {
         elevation: 0.0,
         title: Text("You Profile"),
         centerTitle: true,
-        // backgroundColor: Color(0xff555555),
         actions: [
           IconButton(
             onPressed: () {},
@@ -39,8 +38,6 @@ class BodyUserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 700 ? 700 : width;
     return Container(
       child: Stack(
         alignment: Alignment.center,
@@ -96,7 +93,6 @@ class BodyUserProfile extends StatelessWidget {
             "User name",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
               fontSize: 22.0,
             ),
           ),
@@ -122,7 +118,7 @@ class BodyUserProfile extends StatelessWidget {
           Column(children: [
             Text(
               "60",
-              style: styleText(22.0, FontWeight.bold, Colors.black),
+              style: styleText(22.0, FontWeight.bold, null),
             ),
             Text(
               "Post",
@@ -132,7 +128,7 @@ class BodyUserProfile extends StatelessWidget {
           Column(children: [
             Text(
               "60",
-              style: styleText(22.0, FontWeight.bold, Colors.black),
+              style: styleText(22.0, FontWeight.bold, null),
             ),
             Text(
               "You Like",
@@ -142,7 +138,7 @@ class BodyUserProfile extends StatelessWidget {
           Column(children: [
             Text(
               "10",
-              style: styleText(22.0, FontWeight.bold, Colors.black),
+              style: styleText(22.0, FontWeight.bold, null),
             ),
             Text(
               "Followers",

@@ -53,7 +53,7 @@ class BodyCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),

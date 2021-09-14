@@ -49,8 +49,13 @@ class ScaffoldHome extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Color.fromRGBO(235, 235, 235, .6),
       appBar: AppBar(
-        iconTheme: Theme.of(context).iconTheme,
-        title: Text('GeeksDay'),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'GeeksDay',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       drawer: Drawer(
         child: MainDrawer(),
@@ -62,7 +67,10 @@ class ScaffoldHome extends StatelessWidget {
           showModalBottomSheet(
             backgroundColor: Colors.transparent,
             context: context,
-            builder: (context) => PostCreate(),
+            builder: (context) => Container(
+              width: 800,
+              child: PostCreate(),
+            ),
           );
         },
         tooltip: 'New',

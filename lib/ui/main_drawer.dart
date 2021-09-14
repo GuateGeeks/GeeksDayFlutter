@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/routes.dart';
+import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:provider/provider.dart';
 
@@ -43,21 +44,30 @@ class MainDrawer extends StatelessWidget {
         SizedBox(height: 20.0),
         ListTile(
           onTap: () {
-            Navigator.pushNamed(context, Routes.userProfile);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return UserProfile();
+                },
+              ),
+            );
           },
-          leading: Icon(Icons.person, color: Colors.black),
+          leading:
+              Icon(Icons.person, color: Theme.of(context).primaryColorDark),
           title: Text("Profile"),
         ),
         ListTile(
           onTap: () {
             Navigator.pushNamed(context, Routes.settings);
           },
-          leading: Icon(Icons.settings, color: Colors.black),
+          leading:
+              Icon(Icons.settings, color: Theme.of(context).primaryColorDark),
           title: Text("Settings"),
         ),
         ListTile(
           onTap: () {},
-          leading: Icon(Icons.logout, color: Colors.black),
+          leading:
+              Icon(Icons.logout, color: Theme.of(context).primaryColorDark),
           title: Text("Logout"),
         ),
         Switch(
