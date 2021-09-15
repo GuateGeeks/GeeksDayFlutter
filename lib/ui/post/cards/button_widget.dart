@@ -73,7 +73,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     EdgeInsets.symmetric(horizontal: 28, vertical: 15),
                   )),
         backgroundColor:
-            MaterialStateProperty.all<Color>(Color.fromRGBO(235, 235, 235, .6)),
+            MaterialStateProperty.all<Color>(Theme.of(context).backgroundColor),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),
@@ -118,7 +118,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     EdgeInsets.symmetric(horizontal: 19, vertical: 18),
                   )),
         backgroundColor:
-            MaterialStateProperty.all<Color>(Color.fromRGBO(235, 235, 235, .6)),
+            MaterialStateProperty.all<Color>(Theme.of(context).backgroundColor),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),

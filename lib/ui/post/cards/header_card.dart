@@ -41,7 +41,9 @@ class HeaderCard extends StatelessWidget {
                     Text(
                       state.getPost()!.username,
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
                     ),
                     Text(
                       state.getDatePost(),

@@ -53,7 +53,7 @@ class BodyCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
@@ -122,59 +122,42 @@ class _ProgressBarState extends State<ProgressBar> {
               child: Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20.0),
-                child: isPressed
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new LinearPercentIndicator(
-                            width: width < 650
-                                ? MediaQuery.of(context).size.width - 100
-                                : 450,
-                            animation: true,
-                            lineHeight: 40.0,
-                            animationDuration: 2500,
-                            percent: 0.8,
-                            center: Text(
-                              "80.0% Porcentaje respuestas",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            linearStrokeCap: LinearStrokeCap.roundAll,
-                            progressColor: correctAnswer == answer.text
-                                ? Colors.green
-                                : Colors.red,
-                          ),
-                        ],
-                      )
-                    : Padding(
-                        padding: width < 650
-                            ? (width < 500
-                                ? EdgeInsets.symmetric(horizontal: 0)
-                                : EdgeInsets.symmetric(horizontal: 10))
-                            : EdgeInsets.symmetric(horizontal: 60),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            //change color to the answers, if the answer is correct it is marked in green, otherwise it is marked in red
-                            backgroundColor: btnColor,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              //get the click a button of the answers
-                              isPressed = true;
-                            });
-                          },
-                          child: Text(
-                            answer.text,
-                            style: TextStyle(
-                              color: isPressed ? Colors.white : Colors.grey,
-                            ),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      //get the click a button of the answers
+                      isPressed = true;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new LinearPercentIndicator(
+                        width: width < 650
+                            ? MediaQuery.of(context).size.width - 100
+                            : 450,
+                        animation: true,
+                        lineHeight: 40.0,
+                        animationDuration: 2500,
+                        percent: isPressed ? 0.8 : 0,
+                        center: Text(
+                          isPressed
+                              ? "80.0% Porcentaje respuestas"
+                              : answer.text,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                        linearStrokeCap: LinearStrokeCap.roundAll,
+                        progressColor: isPressed
+                            ? correctAnswer == answer.text
+                                ? Colors.green
+                                : Colors.red
+                            : Colors.transparent,
                       ),
+                    ],
+                  ),
+                ),
               ),
             ),
           )
