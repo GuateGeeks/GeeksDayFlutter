@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/models/post.dart';
+import 'package:geeksday/ui/post/post_comment.dart';
 import 'package:like_button/like_button.dart';
 import 'package:geeksday/routes.dart';
 
@@ -41,7 +44,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             children: [
               likeButton(width),
               SizedBox(width: 5.0),
-              commentButton(width),
+              commentButton(width, state.getPost()!),
             ],
           ),
         ),
@@ -99,10 +102,20 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     );
   }
 
-  Widget commentButton(width) {
+  Widget commentButton(width, Post post) {
+    var callback = (String comment) {
+      AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+      BlocProvider.of<PostCubit>(context).makeComment(user, comment);
+    };
     return ElevatedButton.icon(
       onPressed: () {
-        Navigator.pushNamed(context, Routes.postComment);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return PostComment(post, callback);
+            },
+          ),
+        );
       },
       style: ButtonStyle(
         padding: (width > 620)

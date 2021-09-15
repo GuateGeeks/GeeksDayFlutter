@@ -37,8 +37,6 @@ class Routes {
         return _buildRoute(UserProfile.create);
       case settings:
         return _buildRoute(Settings.create);
-      case postComment:
-        return _buildRoute(PostComment.create);
       default:
         throw Exception('Route does not exists');
     }

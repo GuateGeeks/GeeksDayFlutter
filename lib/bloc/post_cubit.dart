@@ -129,6 +129,13 @@ class PostCubit extends Cubit<PostState> {
     _postService.updatePost(state.post);
   }
 
+  void makeComment(AuthUser user, String text) {
+    var comment = Comment.newComment(text, user);
+    state.post.commentList.add(comment);
+    _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
+  }
+
   bool isQuiz() {
     return state.post.quiz != null && state.post.quiz!.questions.isNotEmpty;
   }
