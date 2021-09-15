@@ -28,7 +28,7 @@ class PostService extends PostServiceBase {
       path: postPath,
       data: post.toFirebaseMap(),
     );
-    await _firestoreService.storeFile(path: postPath, blob: file);
+    await _firestoreService.storeBlob(path: postPath, blob: file);
   }
 
   @override

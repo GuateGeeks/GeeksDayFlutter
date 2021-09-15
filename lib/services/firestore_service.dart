@@ -1,4 +1,6 @@
 import 'dart:html' as html;
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -17,7 +19,11 @@ class FirestoreService {
     await reference.set(data, SetOptions(merge: merge));
   }
 
-  Future<void> storeFile(
+  Future<void> storeFile({required String path, required File file}) async {
+    await storage.ref().child(path).putFile(file);
+  }
+
+  Future<void> storeBlob(
       {required String path, required html.Blob blob}) async {
     await storage.ref().child(path).putBlob(blob);
   }
