@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/routes.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
-
   Widget avatarWidget() {
     String rawSvg = multiavatar(DateTime.now().toIso8601String());
     return SvgPicture.string(rawSvg);
@@ -15,6 +16,7 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authCubit = AuthCubit(AuthService());
     return Column(
       children: [
         SizedBox(height: 100.0),
@@ -73,7 +75,9 @@ class MainDrawer extends StatelessWidget {
           ),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            authCubit.signOut();
+          },
           leading: Icon(Icons.logout, color: Theme.of(context).iconTheme.color),
           title: Text(
             "Logout",
