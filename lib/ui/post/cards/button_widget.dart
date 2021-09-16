@@ -21,34 +21,39 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    PostCubit state = BlocProvider.of<PostCubit>(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Text(
-            state.getLikesCountText(),
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
+    PostCubit cubit = BlocProvider.of<PostCubit>(context);
+    return BlocBuilder<PostCubit, PostState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Text(
+                cubit.getLikesCountText(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                ),
+              ),
             ),
-          ),
-        ),
-        Padding(
-          padding: width > 350
-              ? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 13.0)
-              : const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              likeButton(width),
-              SizedBox(width: 5.0),
-              commentButton(width, state.getPost()!),
-            ],
-          ),
-        ),
-      ],
+            Padding(
+              padding: width > 350
+                  ? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 13.0)
+                  : const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 13.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  likeButton(width),
+                  SizedBox(width: 5.0),
+                  commentButton(width, state.post),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

@@ -26,26 +26,22 @@ class PostCard extends StatelessWidget {
   }
 
   Widget builder(BuildContext context) {
-    return BlocBuilder<PostCubit, PostState>(
-      builder: (context, state) {
-        return GestureDetector(
-          onTap: () {},
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              child: Column(
-                children: [
-                  HeaderCard(),
-                  BodyCard(),
-                  ButtonWidget(),
-                ],
-              ),
-            ),
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: Column(
+            children: [
+              HeaderCard(),
+              BodyCard(),
+              ButtonWidget(),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -127,6 +127,7 @@ class PostCubit extends Cubit<PostState> {
     }
     state.post.likeCount = state.post.likeList.length;
     _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
   }
 
   void makeComment(AuthUser user, String text) {
