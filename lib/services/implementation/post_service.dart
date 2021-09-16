@@ -46,4 +46,15 @@ class PostService extends PostServiceBase {
   Future<String> getImageURL(String uid) {
     return _firestoreService.getDownloadURL(FirestorePath.post(uid));
   }
+
+  @override
+  Future<List<Post>> getPostList() async {
+    var _feedlist = <Post>[];
+    return postRef.get().then((value) {
+      value.docs.forEach((element) {
+        _feedlist.add(element.data());
+      });
+      return _feedlist;
+    });
+  }
 }

@@ -6,4 +6,5 @@ abstract class PostServiceBase {
   Future<void> updatePost(Post post);
   Future<void> deletePost(String uid);
   Future<String> getImageURL(String uid);
+  Future<List<Post>> getPostList();
 }

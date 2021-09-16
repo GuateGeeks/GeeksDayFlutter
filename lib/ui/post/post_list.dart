@@ -1,3 +1,4 @@
+import 'package:geeksday/bloc/feed_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
@@ -11,28 +12,26 @@ class PostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return builder(context);
+    return BlocProvider(
+      create: (_) => FeedCubit(PostService()),
+      child: builder(context),
+    );
   }
 
   Widget builder(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return Center(
-      child: Container(
-        width: maxWidth,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return ListView(
-              children: snapshot.data!.docs.map((post) {
-                return PostCard(
-                    post: Post.fromMap(
-                        post.data() as Map<String, dynamic>, post.id));
-              }).toList(),
-            );
-          },
+    return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
+      return Center(
+        child: Container(
+          width: maxWidth,
+          child: ListView(
+            children: state.postList.map((post) {
+              return PostCard(post: post);
+            }).toList(),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
