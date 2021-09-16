@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/routes.dart';
+import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
-import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -16,8 +15,6 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
     return Column(
       children: [
         SizedBox(height: 100.0),
@@ -60,7 +57,13 @@ class MainDrawer extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            Navigator.pushNamed(context, Routes.settings);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Settings();
+                },
+              ),
+            );
           },
           leading:
               Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
@@ -76,13 +79,6 @@ class MainDrawer extends StatelessWidget {
             "Logout",
             style: Theme.of(context).textTheme.headline6,
           ),
-        ),
-        Switch(
-          value: themeProvider.isDarkMode,
-          onChanged: (value) {
-            final provider = Provider.of<ThemeProvider>(context, listen: false);
-            provider.toggleTheme(value);
-          },
         ),
       ],
     );

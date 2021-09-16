@@ -77,12 +77,6 @@ class MyThemes {
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
-
-    // primaryColor: Colors.black,
-    // primaryColorDark: Colors.white,
-    // backgroundColor: Color.fromRGBO(0, 0, 0, 0),
-    // accentColor: Colors.white,
-    // iconTheme: IconThemeData(color: Colors.white),
   );
 
   static final lightTheme = ThemeData(
