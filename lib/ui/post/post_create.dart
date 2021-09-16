@@ -90,7 +90,6 @@ class _PostCreateState extends State<PostCreate> {
     if (uploadedImage != null) {
       BlobImage blobImage =
           new BlobImage(uploadedImage, name: uploadedImage!.name);
-      //Uint8List image = Base64Codec().decode(uploadedImage.toString());
       return Container(
         child: Image.network(blobImage.url, width: 50, height: 250),
       );
@@ -161,11 +160,8 @@ class _PostCreateState extends State<PostCreate> {
 
   Widget title(BuildContext context) {
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
-    TextStyle boldStyle = TextStyle(
-        color: Theme.of(context).primaryColorDark,
-        fontSize: 25,
-        fontWeight: FontWeight.bold);
-    TextStyle grayStyle = TextStyle(color: Colors.grey, fontSize: 16.0);
+    var boldStyle = Theme.of(context).textTheme.headline2;
+    var grayStyle = Theme.of(context).textTheme.headline5;
 
     return Padding(
       padding: EdgeInsets.all(15.0),

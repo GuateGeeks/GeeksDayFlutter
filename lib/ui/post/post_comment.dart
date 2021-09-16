@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PostComment extends StatelessWidget {
   Post post;
   PostComment(this.post, {Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -38,12 +37,12 @@ class PostComment extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListView(
                       children: [
-                        headerComment(),
+                        headerComment(context),
                         const Divider(
                           height: 25,
                           thickness: 1,
                         ),
-                        ...comments(),
+                        ...comments(context),
                         SizedBox(
                           height: 70,
                         )
@@ -60,7 +59,7 @@ class PostComment extends StatelessWidget {
     });
   }
 
-  Widget headerComment() {
+  Widget headerComment(context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -87,16 +86,12 @@ class PostComment extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "User name",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
+                      post.username,
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
                       "Hace 2 horas",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
                 ),
@@ -108,18 +103,14 @@ class PostComment extends StatelessWidget {
           ),
           Text(
             post.text,
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey,
-            ),
+            style: Theme.of(context).textTheme.headline4,
           ),
         ],
       ),
     );
   }
 
-  List<Widget> comments() {
+  List<Widget> comments(context) {
     return post.commentList
         .map((comment) => Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -148,16 +139,11 @@ class PostComment extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               comment.user.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: Theme.of(context).textTheme.headline1,
                             ),
                             Text(
                               comment.createdAt.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
+                              style: Theme.of(context).textTheme.subtitle2,
                             ),
                           ],
                         ),
@@ -169,11 +155,7 @@ class PostComment extends StatelessWidget {
                   ),
                   Text(
                     comment.text,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ],
               ),
@@ -188,32 +170,28 @@ class PostComment extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: Container(
-        color: Colors.white,
+        //color: Colors.white,
         child: Row(
           children: [
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  minLines: 1,
+                  maxLines: 2,
                   controller: _controller,
                   decoration: InputDecoration(
                     hintText: "Agregar un comentario",
                     border: InputBorder.none,
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                     contentPadding: const EdgeInsets.only(
                         left: 14.0, bottom: 8.0, top: 8.0),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(8),
-                      borderSide: new BorderSide(
-                        color: Color.fromRGBO(240, 240, 240, 1),
-                      ),
                     ),
                     enabledBorder: UnderlineInputBorder(
                       borderRadius: new BorderRadius.circular(8),
-                      borderSide: new BorderSide(
-                        color: Color.fromRGBO(240, 240, 240, 1),
-                      ),
                     ),
                   ),
                 ),

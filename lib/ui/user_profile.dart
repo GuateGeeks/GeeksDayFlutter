@@ -74,9 +74,9 @@ class BodyUserProfile extends StatelessWidget {
                   child: avatarWidget(),
                 ),
                 SizedBox(height: 5.0),
-                userData(),
+                userData(context),
                 SizedBox(height: 30.0),
-                userInformation(),
+                userInformation(context),
               ],
             ),
           ),
@@ -85,31 +85,24 @@ class BodyUserProfile extends StatelessWidget {
     );
   }
 
-  Widget userData() {
+  Widget userData(context) {
     return Container(
       child: Column(
         children: [
           Text(
             "User name",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22.0,
-            ),
+            style: Theme.of(context).textTheme.headline3,
           ),
           Text(
             "emailaddress@gmail.com",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
-              fontSize: 18.0,
-            ),
+            style: Theme.of(context).textTheme.caption,
           ),
         ],
       ),
     );
   }
 
-  Widget userInformation() {
+  Widget userInformation(context) {
     return Container(
       width: 300,
       child: Row(
@@ -118,40 +111,36 @@ class BodyUserProfile extends StatelessWidget {
           Column(children: [
             Text(
               "60",
-              style: styleText(22.0, FontWeight.bold, null),
+              style: Theme.of(context).textTheme.headline2,
             ),
             Text(
               "Post",
-              style: styleText(17.0, FontWeight.w600, Colors.grey),
+              style: Theme.of(context).textTheme.caption,
             )
           ]),
           Column(children: [
             Text(
               "60",
-              style: styleText(22.0, FontWeight.bold, null),
+              style: Theme.of(context).textTheme.headline2,
             ),
             Text(
               "You Like",
-              style: styleText(17.0, FontWeight.w600, Colors.grey),
+              style: Theme.of(context).textTheme.caption,
             )
           ]),
           Column(children: [
             Text(
               "10",
-              style: styleText(22.0, FontWeight.bold, null),
+              style: Theme.of(context).textTheme.headline2,
             ),
             Text(
               "Followers",
-              style: styleText(17.0, FontWeight.w600, Colors.grey),
+              style: Theme.of(context).textTheme.caption,
             )
           ]),
         ],
       ),
     );
-  }
-
-  TextStyle styleText(fontSize, FontWeight fontWeight, color) {
-    return TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color);
   }
 }
 

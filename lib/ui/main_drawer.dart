@@ -35,7 +35,7 @@ class MainDrawer extends StatelessWidget {
                 ),
                 Text(
                   "User name",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w800),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
               ],
             ),
@@ -52,23 +52,30 @@ class MainDrawer extends StatelessWidget {
               ),
             );
           },
-          leading:
-              Icon(Icons.person, color: Theme.of(context).primaryColorDark),
-          title: Text("Profile"),
+          leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Profile",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         ListTile(
           onTap: () {
             Navigator.pushNamed(context, Routes.settings);
           },
           leading:
-              Icon(Icons.settings, color: Theme.of(context).primaryColorDark),
-          title: Text("Settings"),
+              Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Settings",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         ListTile(
           onTap: () {},
-          leading:
-              Icon(Icons.logout, color: Theme.of(context).primaryColorDark),
-          title: Text("Logout"),
+          leading: Icon(Icons.logout, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Logout",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         Switch(
           value: themeProvider.isDarkMode,
