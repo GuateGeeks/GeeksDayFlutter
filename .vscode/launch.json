@@ -8,7 +8,7 @@
             "name": "geeksday",
             "request": "launch",
             "type": "dart",
-            "args": [ "--web-renderer=html"]
+            "args": [ "--web-renderer=html", "--web-hostname=localhost", "--web-port=8080", "--no-sound-null-safety"],
         },
         {
             "name": "geeksday (profile mode)",
