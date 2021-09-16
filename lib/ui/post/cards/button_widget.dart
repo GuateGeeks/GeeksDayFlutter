@@ -103,16 +103,12 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   }
 
   Widget commentButton(width, Post post) {
-    var callback = (String comment) {
-      AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
-      BlocProvider.of<PostCubit>(context).makeComment(user, comment);
-    };
     return ElevatedButton.icon(
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              return PostComment(post, callback);
+              return PostComment(post);
             },
           ),
         );

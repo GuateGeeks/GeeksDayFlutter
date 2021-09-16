@@ -7,48 +7,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostComment extends StatelessWidget {
-  Function(String comment) callback;
   Post post;
-  PostComment(this.post, this.callback, {Key? key}) : super(key: key);
+  PostComment(this.post, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => PostCubit(PostService(), this.post),
+      child: builder(context),
+    );
+  }
+
+  @override
+  Widget builder(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          width: maxWidth,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: ListView(
-                    children: [
-                      headerComment(),
-                      const Divider(
-                        height: 25,
-                        thickness: 1,
-                      ),
-                      ...comments(),
-                      SizedBox(
-                        height: 70,
-                      )
-                    ],
+    return BlocBuilder<PostCubit, PostState>(builder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Container(
+            width: maxWidth,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: ListView(
+                      children: [
+                        headerComment(),
+                        const Divider(
+                          height: 25,
+                          thickness: 1,
+                        ),
+                        ...comments(),
+                        SizedBox(
+                          height: 70,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                textFormFielComment(context)
-              ],
+                  textFormFielComment(context)
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget headerComment() {
@@ -212,7 +221,9 @@ class PostComment extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                callback(_controller.text);
+                AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+                BlocProvider.of<PostCubit>(context)
+                    .makeComment(user, _controller.text);
               },
               icon: Icon(Icons.send),
             ),
