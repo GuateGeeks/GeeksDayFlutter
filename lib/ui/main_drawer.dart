@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geeksday/provider/theme_provider.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/routes.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
-import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
-
   Widget avatarWidget() {
     String rawSvg = multiavatar(DateTime.now().toIso8601String());
     return SvgPicture.string(rawSvg);
@@ -16,8 +16,7 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
+    final authCubit = AuthCubit(AuthService());
     return Column(
       children: [
         SizedBox(height: 100.0),
@@ -35,7 +34,7 @@ class MainDrawer extends StatelessWidget {
                 ),
                 Text(
                   "User name",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w800),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
               ],
             ),
@@ -52,30 +51,38 @@ class MainDrawer extends StatelessWidget {
               ),
             );
           },
-          leading:
-              Icon(Icons.person, color: Theme.of(context).primaryColorDark),
-          title: Text("Profile"),
+          leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Profile",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         ListTile(
           onTap: () {
-            Navigator.pushNamed(context, Routes.settings);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Settings();
+                },
+              ),
+            );
           },
           leading:
-              Icon(Icons.settings, color: Theme.of(context).primaryColorDark),
-          title: Text("Settings"),
+              Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Settings",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         ListTile(
-          onTap: () {},
-          leading:
-              Icon(Icons.logout, color: Theme.of(context).primaryColorDark),
-          title: Text("Logout"),
-        ),
-        Switch(
-          value: themeProvider.isDarkMode,
-          onChanged: (value) {
-            final provider = Provider.of<ThemeProvider>(context, listen: false);
-            provider.toggleTheme(value);
+          onTap: () {
+            authCubit.signOut();
           },
+          leading: Icon(Icons.logout, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Logout",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
       ],
     );

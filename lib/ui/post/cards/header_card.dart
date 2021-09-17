@@ -40,17 +40,11 @@ class HeaderCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       state.getPost()!.username,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColorDark,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
                       state.getDatePost(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
                 ),

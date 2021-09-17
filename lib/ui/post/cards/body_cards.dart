@@ -50,11 +50,7 @@ class BodyCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
             child: Text(
               state.getPost()!.text,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).iconTheme.color,
-              ),
+              style: Theme.of(context).textTheme.headline4,
             ),
           ),
           // In this way you can add list members as part of other list
@@ -96,8 +92,6 @@ class ProgressBar extends StatefulWidget {
 
 class _ProgressBarState extends State<ProgressBar> {
   bool isPressed = false;
-  //color of the quizz answers
-  Color btnColor = Color(0xffE4E4E4);
   //temporary correct answer
   String correctAnswer = "rp1";
 

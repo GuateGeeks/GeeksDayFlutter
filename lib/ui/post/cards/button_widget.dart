@@ -31,10 +31,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Text(
                 cubit.getLikesCountText(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
             Padding(
@@ -81,7 +78,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     EdgeInsets.symmetric(horizontal: 28, vertical: 15),
                   )),
         backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).backgroundColor),
+            MaterialStateProperty.all<Color>(Theme.of(context).buttonColor),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),
@@ -132,7 +129,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                     EdgeInsets.symmetric(horizontal: 19, vertical: 18),
                   )),
         backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).backgroundColor),
+            MaterialStateProperty.all<Color>(Theme.of(context).buttonColor),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.0),
