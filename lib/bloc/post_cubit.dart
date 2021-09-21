@@ -38,7 +38,6 @@ class PostCubit extends Cubit<PostState> {
 
   Future<void> createPost(String text) async {
     Post newPost = state.post;
-    newPost.text = text;
     _postService.createPost(newPost, _pickedImage!);
   }
 
@@ -58,8 +57,8 @@ class PostCubit extends Cubit<PostState> {
     return state.post.quiz!.questions[0].answers;
   }
 
-  String getDatePost() {
-    var timestamp = state.post.createdAt;
+  String getDatePost(createdAt) {
+    var timestamp = createdAt;
     var now = new DateTime.now();
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
     var time = '';

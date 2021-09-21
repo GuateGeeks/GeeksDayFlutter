@@ -24,7 +24,9 @@ class PostComment extends StatelessWidget {
   Widget builder(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
+
     return BlocBuilder<PostCubit, PostState>(builder: (context, state) {
+      PostCubit statePostcubit = BlocProvider.of<PostCubit>(context);
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -40,7 +42,7 @@ class PostComment extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListView(
                       children: [
-                        headerComment(context, state),
+                        headerComment(context),
                         const Divider(
                           height: 25,
                           thickness: 1,
@@ -62,7 +64,8 @@ class PostComment extends StatelessWidget {
     });
   }
 
-  Widget headerComment(context, state) {
+  Widget headerComment(context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -87,7 +90,7 @@ class PostComment extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
-                      "Hace 2 horas",
+                      state.getDatePost(post.createdAt),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
@@ -108,6 +111,7 @@ class PostComment extends StatelessWidget {
   }
 
   List<Widget> comments(context) {
+    PostCubit state = BlocProvider.of<PostCubit>(context);
     return post.commentList
         .map((comment) => Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -131,7 +135,7 @@ class PostComment extends StatelessWidget {
                               style: Theme.of(context).textTheme.headline1,
                             ),
                             Text(
-                              comment.createdAt.toString(),
+                              state.getDatePost(comment.createdAt),
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
                           ],

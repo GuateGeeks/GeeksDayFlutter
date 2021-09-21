@@ -41,7 +41,7 @@ class HeaderCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
-                      state.getDatePost(),
+                      state.getDatePost(state.getPost()!.createdAt),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
