@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/services/firestore_service.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthServiceBase _authService;
   late StreamSubscription _authSubscription;
+  final users = FirebaseFirestore.instance.collection('users');
 
   AuthCubit(this._authService) : super(AuthInitialState());
 
@@ -23,9 +26,9 @@ class AuthCubit extends Cubit<AuthState> {
       user == null ? emit(AuthSignedOut()) : emit(AuthSignedIn(user));
 
   Future<void> createUserWithEmailAndPassword(
-          String email, String username, String password) =>
+          String email, String username, String password, String image) =>
       _signIn(_authService.createUserWithEmailAndPassword(
-          email, username, password));
+          email, username, password, image));
 
   Future<void> signInWithEmailAndPassword(String email, String password) =>
       _signIn(_authService.signInWithEmailAndPassword(email, password));
@@ -66,11 +69,20 @@ class AuthCubit extends Cubit<AuthState> {
     return (state as AuthSignedIn).user;
   }
 
+  String getUserImage() {
+    return (state as AuthSignedIn).user.image;
+  }
+
   String getUserId() {
     if (state is AuthSignedIn) {
       return (state as AuthSignedIn).user.uid;
     }
     return "NO USER";
+  }
+
+  //Edit User Profile
+  Future<void> editUser(uid, userName, randomAvatar) {
+    return users.doc(uid).update({'name': userName, 'image': randomAvatar});
   }
 }
 

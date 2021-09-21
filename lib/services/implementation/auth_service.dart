@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
@@ -19,13 +21,18 @@ class AuthService extends AuthServiceBase {
 
   Future<AuthUser?> _userFromFirebase(User? user) async {
     if (user != null) {
+      //generate random image
+      var random = List.generate(12, (_) => Random().nextInt(100));
+      String randomAvatar = random.join();
+
       var firestoreUser = await _getUser(user.uid);
       if (firestoreUser != null) {
         return firestoreUser;
       }
       String email = user.email != null ? user.email! : "";
       String name = user.displayName != null ? user.displayName! : "";
-      return AuthUser(user.uid, name, email);
+      String image = randomAvatar;
+      return AuthUser(user.uid, name, email, image);
     }
     return null;
   }
@@ -41,7 +48,7 @@ class AuthService extends AuthServiceBase {
 
   @override
   Future<AuthUser?> createUserWithEmailAndPassword(
-      String email, String username, String password) async {
+      String email, String username, String password, String image) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     AuthUser? user = await _userFromFirebase(authResult.user);

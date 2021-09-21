@@ -1,3 +1,4 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
@@ -5,10 +6,12 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
   Post post;
   PostComment(this.post, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -37,7 +40,7 @@ class PostComment extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListView(
                       children: [
-                        headerComment(context),
+                        headerComment(context, state),
                         const Divider(
                           height: 25,
                           thickness: 1,
@@ -59,7 +62,7 @@ class PostComment extends StatelessWidget {
     });
   }
 
-  Widget headerComment(context) {
+  Widget headerComment(context, state) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -70,15 +73,9 @@ class PostComment extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.blue,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "https://yt3.ggpht.com/a/AATXAJyPMywRmD62sfK-1CXjwF0YkvrvnmaaHzs4uw=s900-c-k-c0xffffffff-no-rj-mo"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                child: post.userimage == null
+                    ? Container()
+                    : SvgPicture.string(multiavatar(post.userimage)),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
@@ -120,18 +117,10 @@ class PostComment extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue,
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                "https://yt3.ggpht.com/a/AATXAJyPMywRmD62sfK-1CXjwF0YkvrvnmaaHzs4uw=s900-c-k-c0xffffffff-no-rj-mo"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
+                          width: 50,
+                          height: 50,
+                          child: SvgPicture.string(
+                              multiavatar(comment.user.image))),
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Column(
@@ -200,8 +189,10 @@ class PostComment extends StatelessWidget {
             IconButton(
               onPressed: () {
                 AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+                String userImage =
+                    BlocProvider.of<AuthCubit>(context).getUserImage();
                 BlocProvider.of<PostCubit>(context)
-                    .makeComment(user, _controller.text);
+                    .makeComment(user, _controller.text, userImage);
               },
               icon: Icon(Icons.send),
             ),

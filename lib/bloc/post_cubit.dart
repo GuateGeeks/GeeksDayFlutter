@@ -130,8 +130,8 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
-  void makeComment(AuthUser user, String text) {
-    var comment = Comment.newComment(text, user);
+  void makeComment(AuthUser user, String text, String image) {
+    var comment = Comment.newComment(text, user, image);
     state.post.commentList.add(comment);
     _postService.updatePost(state.post);
     emit(PostUpdatedState(state.post));

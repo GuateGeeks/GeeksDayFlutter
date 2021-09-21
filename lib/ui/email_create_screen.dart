@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +9,7 @@ import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 import 'package:geeksday/ui/inputs_form/repeat_password_form.dart';
 import 'package:geeksday/ui/inputs_form/username_form.dart';
+import 'package:multiavatar/multiavatar.dart';
 
 class EmailCreate extends StatefulWidget {
   static Widget create(BuildContext context) => EmailCreate();
@@ -32,6 +36,8 @@ class _EmailCreateState extends State<EmailCreate> {
       return 'Password do not match';
     return null;
   }
+
+  String randomAvatar = "";
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +111,19 @@ class _EmailCreateState extends State<EmailCreate> {
                                   ),
                                 )),
                                 onPressed: () {
+                                  var random = List.generate(
+                                      12, (_) => Random().nextInt(100));
+                                  randomAvatar = random.join();
                                   if (_formKey.currentState?.validate() ==
                                       true) {
                                     context
                                         .read<AuthCubit>()
                                         .createUserWithEmailAndPassword(
-                                            _emailController.text,
-                                            _usernameController.text,
-                                            _passwordController.text);
+                                          _emailController.text,
+                                          _usernameController.text,
+                                          _passwordController.text,
+                                          randomAvatar,
+                                        );
                                   }
                                 },
                               ),

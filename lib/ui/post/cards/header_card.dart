@@ -11,11 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HeaderCard extends StatelessWidget {
   const HeaderCard({Key? key}) : super(key: key);
 
-  Widget avatarWidget() {
-    String rawSvg = multiavatar(DateTime.now().toIso8601String());
-    return SvgPicture.string(rawSvg);
-  }
-
   @override
   Widget build(BuildContext context) {
     var userId = BlocProvider.of<AuthCubit>(context).getUserId();
@@ -31,7 +26,10 @@ class HeaderCard extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                child: avatarWidget(),
+                child: state.getPost()!.userimage == null
+                    ? Container()
+                    : SvgPicture.string(
+                        multiavatar(state.getPost()!.userimage)),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/routes.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/setting.dart';
@@ -9,14 +11,17 @@ import 'package:multiavatar/multiavatar.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
-  Widget avatarWidget() {
-    String rawSvg = multiavatar(DateTime.now().toIso8601String());
+  Widget avatarWidget(randomAvatar) {
+    String rawSvg = multiavatar(randomAvatar);
     return SvgPicture.string(rawSvg);
   }
 
   @override
   Widget build(BuildContext context) {
     final authCubit = AuthCubit(AuthService());
+    var userData = BlocProvider.of<AuthCubit>(context).getUser();
+    String randomAvatar = userData.image;
+
     return Column(
       children: [
         SizedBox(height: 100.0),
@@ -27,13 +32,13 @@ class MainDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50.0,
-                  child: avatarWidget(),
+                  child: avatarWidget(randomAvatar),
                 ),
                 SizedBox(
                   height: 5.0,
                 ),
                 Text(
-                  "User name",
+                  userData.name,
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ],

@@ -32,6 +32,10 @@ class Post extends Equatable {
     return this.user.name;
   }
 
+  String get userimage {
+    return this.user.image;
+  }
+
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
       'text': text,
@@ -126,19 +130,23 @@ class Post extends Equatable {
 class Comment extends Equatable {
   final String id;
   String text;
+  String image;
   final int createdAt;
   final AuthUser user;
 
-  Comment(
-      {required this.id,
-      required this.text,
-      required this.createdAt,
-      required this.user});
+  Comment({
+    required this.id,
+    required this.text,
+    required this.createdAt,
+    required this.user,
+    required this.image,
+  });
 
-  factory Comment.newComment(String text, AuthUser user) {
+  factory Comment.newComment(String text, AuthUser user, String image) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
-    return Comment(id: id, text: text, createdAt: createdAt, user: user);
+    return Comment(
+        id: id, text: text, createdAt: createdAt, user: user, image: image);
   }
 
   @override
@@ -157,7 +165,9 @@ class Comment extends Equatable {
     var id = documentId;
     var text = data['text'];
     var createdAt = data['createdAt'];
+    var image = data['image'];
     var user = AuthUser.fromMap(data['user']);
-    return Comment(id: id, text: text, createdAt: createdAt, user: user);
+    return Comment(
+        id: id, text: text, createdAt: createdAt, user: user, image: image);
   }
 }
