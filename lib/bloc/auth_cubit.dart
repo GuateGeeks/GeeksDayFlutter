@@ -9,7 +9,6 @@ import 'package:geeksday/services/firestore_service.dart';
 class AuthCubit extends Cubit<AuthState> {
   final AuthServiceBase _authService;
   late StreamSubscription _authSubscription;
-  final users = FirebaseFirestore.instance.collection('users');
 
   AuthCubit(this._authService) : super(AuthInitialState());
 
@@ -81,8 +80,12 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   //Edit User Profile
-  Future<void> editUser(uid, userName, randomAvatar) {
-    return users.doc(uid).update({'name': userName, 'image': randomAvatar});
+  void updateUser(uid, userName, avatar) {
+    AuthUser user =
+        (state as AuthSignedIn).user.copyWith(name: userName, image: avatar);
+    _authService.updateUser(user).then((value) {
+      emit(AuthSignedIn(user));
+    });
   }
 }
 

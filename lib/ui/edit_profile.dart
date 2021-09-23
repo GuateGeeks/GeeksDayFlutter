@@ -164,7 +164,7 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
       child: ElevatedButton(
         onPressed: () {
           BlocProvider.of<AuthCubit>(context)
-              .editUser(userData.uid, _usernameController.text, randomAvatar);
+              .updateUser(userData.uid, _usernameController.text, randomAvatar);
         },
         child: Text("Guardar"),
         style: ButtonStyle(

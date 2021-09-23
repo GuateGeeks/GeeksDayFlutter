@@ -114,4 +114,10 @@ class AuthService extends AuthServiceBase {
     // await googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
+
+  @override
+  Future<void> updateUser(AuthUser user) async {
+    final ref = userRef.doc(user.uid);
+    await ref.set(user, SetOptions(merge: true));
+  }
 }

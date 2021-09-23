@@ -27,4 +27,8 @@ class AuthUser extends Equatable {
     var image = data['image'];
     return AuthUser(id, name, email, image);
   }
+
+  AuthUser copyWith({String? name, String? image}) {
+    return AuthUser(uid, name ?? this.name, email, image ?? this.image);
+  }
 }

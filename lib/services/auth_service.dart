@@ -15,4 +15,6 @@ abstract class AuthServiceBase {
   Future<AuthUser?> signInAnonymously();
 
   Future<void> signOut();
+
+  Future<void> updateUser(AuthUser user);
 }
