@@ -1,11 +1,9 @@
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/ui/edit_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class EditProfile extends StatelessWidget {
@@ -25,7 +23,7 @@ class EditProfile extends StatelessWidget {
 }
 
 class BodyEditUserProfile extends StatefulWidget {
-  const BodyEditUserProfile({Key? key}) : super(key: key);
+  BodyEditUserProfile({Key? key}) : super(key: key);
 
   @override
   _BodyEditUserProfileState createState() => _BodyEditUserProfileState();
@@ -38,98 +36,89 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
 
   Widget avatarWidget(String randomAvatar) {
     String rawSvg = multiavatar(randomAvatar);
-
     return SvgPicture.string(rawSvg);
   }
-
   @override
   Widget build(BuildContext context) {
     var userData = BlocProvider.of<AuthCubit>(context).getUser();
 
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 400 ? 400 : width;
+
     return Center(
-      child: Container(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: 450,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: []),
-                )
-              ],
-            ),
-            CustomPaint(
+      child: ListView(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomPaint(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                height: 200.0,
               ),
               painter: HeaderCurvedContainer(),
-            ),
-            Container(
-              width: maxWidth,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 120.0,
-                  ),
-                  CircleAvatar(
-                    radius: 60.0,
-                    child: randomAvatar == ""
-                        ? avatarWidget(userData.image)
-                        : avatarWidget(randomAvatar),
-                  ),
-                  SizedBox(height: 20.0),
-                  randomButton(context),
-                  SizedBox(height: 10.0),
-                  userDataProfile(
-                    context,
-                    userData,
-                  ),
-                  SizedBox(height: 20.0),
-                  buttonSave(userData),
-                ],
               ),
+              Container(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 120.0,
+                    ),
+                    CircleAvatar(
+                      radius: 60.0,
+                      child: randomAvatar == ""
+                          ? avatarWidget(userData.image)
+                          : avatarWidget(randomAvatar),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            child: Column(   
+              children: [
+              SizedBox(height: 20.0),
+               randomButton(context),
+               SizedBox(height: 10.0),
+              userDataProfile(context, userData, maxWidth),
+              SizedBox(height: 20.0),
+              buttonSave(userData, maxWidth),
+              ],
             ),
-          ],
-        ),
+          ),
+
+        ],  
       ),
     );
   }
-
-  Widget randomButton(context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        color: Colors.white10,
-        child: IconButton(
-          onPressed: () {
-            var random = List.generate(12, (_) => Random().nextInt(100));
-            randomAvatar = random.join();
-            setState(() {
-              avatarWidget(randomAvatar);
-            });
-          },
-          icon: Icon(
-            Icons.refresh,
-            size: 25.0,
-            color: Colors.white60,
+    Widget randomButton(context) {
+    return Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          color: Colors.white10,
+          child: IconButton(
+            onPressed: () {
+              var random = List.generate(12, (_) => Random().nextInt(100));
+              randomAvatar = random.join();
+              setState(() {
+                avatarWidget(randomAvatar);
+              });
+            },
+            icon: Icon(
+              Icons.refresh,
+              size: 25.0,
+              color: Colors.white60,
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget userDataProfile(context, userData) {
+    Widget userDataProfile(context, userData, maxWidth) {
     _usernameController = TextEditingController(text: userData.name);
 
     String? usernameValidator(String? value) {
@@ -139,6 +128,7 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
     }
 
     return Container(
+      width: maxWidth,
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
@@ -156,11 +146,10 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
       ),
     );
   }
-
-  Widget buttonSave(userData) {
+  Widget buttonSave(userData, maxWidth) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
-      width: double.infinity,
+      width: maxWidth,
       child: ElevatedButton(
         onPressed: () {
           BlocProvider.of<AuthCubit>(context)

@@ -47,7 +47,6 @@ class ScaffoldHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(235, 235, 235, .6),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(

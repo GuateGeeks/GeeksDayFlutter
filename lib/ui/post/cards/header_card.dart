@@ -17,15 +17,14 @@ class HeaderCard extends StatelessWidget {
 
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+      padding: const EdgeInsets.fromLTRB(25, 15, 15, 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
             children: [
-              Container(
-                width: 50,
-                height: 50,
+              CircleAvatar(
+                radius: 25,
                 child: state.getPost()!.userimage == null
                     ? Container()
                     : SvgPicture.string(

@@ -26,9 +26,7 @@ class PostCard extends StatelessWidget {
   }
 
   Widget builder(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Padding(
+    return  Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
           shape:
@@ -41,7 +39,6 @@ class PostCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }
