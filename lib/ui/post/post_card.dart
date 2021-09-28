@@ -27,10 +27,10 @@ class PostCard extends StatelessWidget {
 
   Widget builder(BuildContext context) {
     return  Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(vertical: 2.0),
         child: Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           child: Column(
             children: [
               HeaderCard(),

@@ -16,7 +16,6 @@ class BodyCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: StreamBuilder<String>(
               stream: state.getImageURL(state.getPost()!.id).asStream(),
               builder: (context, snapshot) {
@@ -24,7 +23,6 @@ class BodyCard extends StatelessWidget {
                   return Center(child: CircularProgressIndicator());
                 }
                 return ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
@@ -37,7 +35,7 @@ class BodyCard extends StatelessWidget {
                     },
                     child: Image.network(
                       snapshot.data.toString(),
-                      width: 400.0,
+                      width: MediaQuery.of(context).size.width,
                       height: 400.0,
                       fit: BoxFit.cover,
                     ),

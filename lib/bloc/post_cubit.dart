@@ -38,6 +38,7 @@ class PostCubit extends Cubit<PostState> {
 
   Future<void> createPost(String text) async {
     Post newPost = state.post;
+    newPost.text = text;
     _postService.createPost(newPost, _pickedImage!);
   }
 
