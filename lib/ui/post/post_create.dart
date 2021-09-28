@@ -232,20 +232,25 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  Widget buttonSave(BuildContext context) {
+   Widget buttonSave(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-      child: ElevatedButton(
-        onPressed: () {
-          BlocProvider.of<PostCubit>(context)
-              .createPost(commentController.text);
-          Navigator.pop(context);
+      child: ValueListenableBuilder<TextEditingValue>(
+        valueListenable: commentController,
+        builder: (context, value, child){
+          return ElevatedButton(
+            onPressed: value.text.isNotEmpty ? () {
+              BlocProvider.of<PostCubit>(context)
+            .createPost(commentController.text);
+            Navigator.pop(context);
+            } : null,
+            style: ButtonStyle(
+              padding:
+                  MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+            ),
+            child: Text("Guardar"),
+          );
         },
-        style: ButtonStyle(
-          padding:
-              MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
-        ),
-        child: const Text("Guardar"),
       ),
     );
   }
