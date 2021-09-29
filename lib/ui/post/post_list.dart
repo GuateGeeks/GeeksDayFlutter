@@ -27,14 +27,21 @@ class PostList extends StatelessWidget {
           width: maxWidth,
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: ListView(
-              children: state.postList.map((post) {
-                return PostCard(post: post);
-              }).toList(),
+            child: RefreshIndicator(
+              onRefresh: _refresh,
+              child: ListView(
+                children: state.postList.map((post) {
+                  return PostCard(post: post);
+                }).toList(),
+              ),
             ),
           ),
         ),
       );
     });
+  }
+
+  Future<void> _refresh (){
+    return Future.delayed(Duration(seconds: 1));
   }
 }
