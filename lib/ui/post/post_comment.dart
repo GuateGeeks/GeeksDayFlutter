@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
@@ -109,7 +111,6 @@ class PostComment extends StatelessWidget {
       ),
     );
   }
-
   List<Widget> comments(context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return post.commentList
@@ -119,28 +120,36 @@ class PostComment extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                          width: 50,
-                          height: 50,
-                          child: SvgPicture.string(
-                              multiavatar(comment.user.image))),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              comment.user.name,
-                              style: Theme.of(context).textTheme.headline1,
+                      Row(
+                        children: [
+                          Container(
+                              width: 50,
+                              height: 50,
+                              child: SvgPicture.string(
+                                  multiavatar(comment.user.image),
+                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  comment.user.name,
+                                  style: Theme.of(context).textTheme.headline1,
+                                ),
+                                Text(
+                                  state.getDatePost(comment.createdAt),
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                ),
+                              ],
                             ),
-                            Text(
-                              state.getDatePost(comment.createdAt),
-                              style: Theme.of(context).textTheme.subtitle2,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                      deleteCommentButton()
                     ],
                   ),
                   SizedBox(
@@ -152,8 +161,20 @@ class PostComment extends StatelessWidget {
                   ),
                 ],
               ),
-            ))
-        .toList();
+            ),
+        ).toList();
+  }
+
+
+  Widget deleteCommentButton(){
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: "Eliminar",
+          child: Text("Eliminar"),
+        ),
+      ],
+    );
   }
 
   Widget textFormFielComment(BuildContext context) {
