@@ -22,30 +22,35 @@ class BodyCard extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
-                return ClipRRect(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ImagePage(snapshot.data.toString());
-                          },
-                        ),
-                      );
-                    },
-                    child: Image.network(
-                      snapshot.data.toString(),
-                      width: MediaQuery.of(context).size.width,
-                      height: 400.0,
-                      fit: BoxFit.cover,
+                return snapshot.data.toString() != "null" 
+                ? Container(
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
+                  child: ClipRRect(  
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ImagePage(snapshot.data.toString());
+                            },
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        snapshot.data.toString(),
+                        width: MediaQuery.of(context).size.width,
+                        height: 400.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                );
+                )
+                : Container();
               },
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 15, 20),
             child: Text(
               state.getPost()!.text,
               style: Theme.of(context).textTheme.headline4,
@@ -73,9 +78,7 @@ class ImagePage extends StatelessWidget {
       ),
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.network(
-          image,
-        ),
+        child: Image.network(image)
       ),
     );
   }

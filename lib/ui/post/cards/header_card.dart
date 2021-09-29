@@ -17,7 +17,7 @@ class HeaderCard extends StatelessWidget {
 
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Container(
-      padding: const EdgeInsets.fromLTRB(25, 15, 15, 15),
+      padding: const EdgeInsets.fromLTRB(25, 15, 15, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

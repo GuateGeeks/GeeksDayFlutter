@@ -31,6 +31,14 @@ class PostService extends PostServiceBase {
     await _firestoreService.storeBlob(path: postPath, blob: file);
   }
 
+  Future<void> createPostText(Post post) async{
+    String postPath = FirestorePath.post(post.id);
+    await _firestoreService.setData(
+      path: postPath,
+      data: post.toFirebaseMap(),
+    );
+  }
+
   @override
   Future<void> deletePost(String uid) async {
     await postRef.doc(uid).delete();

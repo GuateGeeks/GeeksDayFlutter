@@ -39,10 +39,14 @@ class PostCubit extends Cubit<PostState> {
   Future<void> createPost(String text) async {
     Post newPost = state.post;
     newPost.text = text;
-    _postService.createPost(newPost, _pickedImage!);
+    if(_pickedImage == null){
+      _postService.createPostText(newPost);
+    }else{
+      _postService.createPost(newPost, _pickedImage!);
+    }
   }
 
-  void setImage(File image) {
+  void setImage(File? image) {
     _pickedImage = image;
   }
 
@@ -89,7 +93,7 @@ class PostCubit extends Cubit<PostState> {
 
   String getLikesCountText() {
     if (state.post.likeCount > 0) {
-      return "❤️ ${state.post.likeCount} Likes";
+      return "❤ ${state.post.likeCount} Likes";
     }
     return "Se el primero en darle me gusta";
   }

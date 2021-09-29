@@ -29,7 +29,7 @@ class Settings extends StatelessWidget {
           child: ListView(
             children: [
               ListTile(
-                title: Text('Cambiar tema',
+                title: Text('Modo Oscuro',
                     style: Theme.of(context).textTheme.headline6),
                 trailing: changeTheme(context),
               ),
