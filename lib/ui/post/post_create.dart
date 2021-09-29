@@ -41,24 +41,27 @@ class _PostCreateState extends State<PostCreate> {
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                //Header Nuevo Post
-                title(context),
-                SizedBox(
-                  height: 10.0,
-                ),
-                previewImages(context),
-                SizedBox(
-                  height: 10.0,
-                ),
-                //Input description Nuevo Post
-                description(context),
-                ...inputAnswers(context),
-                addAnswer(context),
-                buttonSave(context),
-              ],
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  //Header Nuevo Post
+                  title(context),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  previewImages(context),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  //Input description Nuevo Post
+                  description(context),
+                  ...inputAnswers(context),
+                  addAnswer(context),
+                  buttonSave(context),
+                ],
+              ),
             ),
           ),
         );

@@ -25,10 +25,13 @@ class PostList extends StatelessWidget {
       return Center(
         child: Container(
           width: maxWidth,
-          child: ListView(
-            children: state.postList.map((post) {
-              return PostCard(post: post);
-            }).toList(),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: ListView(
+              children: state.postList.map((post) {
+                return PostCard(post: post);
+              }).toList(),
+            ),
           ),
         ),
       );
