@@ -111,7 +111,7 @@ class Post extends Equatable {
     var commentList = <Comment>[];
     if (data["commentList"] != null) {
       commentList = (data['commentList'] as List)
-          .map((comment) => Comment.fromMap(comment, "id-id-id"))
+          .map((comment) => Comment.fromMap(comment))
           .toList();
     }
 
@@ -161,8 +161,8 @@ class Comment extends Equatable {
     };
   }
 
-  factory Comment.fromMap(Map<String, dynamic> data, String documentId) {
-    var id = documentId;
+  factory Comment.fromMap(Map<String, dynamic> data) {
+    var id = data['id'];
     var text = data['text'];
     var createdAt = data['createdAt'];
     var image = data['image'];
