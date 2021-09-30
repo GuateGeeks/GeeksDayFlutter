@@ -71164,9 +71164,9 @@ F.a4Q.prototype={
 $1:function(a){if(typeof a=="string")this.a.push(a)},
 $S:11}
 F.a4R.prototype={
-$1:function(a){var s=J.aj(a),r=s.h(a,"text"),q=s.h(a,"createdAt")
+$1:function(a){var s=J.aj(a),r=s.h(a,"id"),q=s.h(a,"text"),p=s.h(a,"createdAt")
 s.h(a,"image")
-return new F.hh("id-id-id",r,q,K.anR(s.h(a,"user")))},
+return new F.hh(r,q,p,K.anR(s.h(a,"user")))},
 $S:459}
 F.hh.prototype={
 geU:function(){return[this.a,this.b,this.d]}}
