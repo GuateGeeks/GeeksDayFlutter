@@ -1,5 +1,6 @@
 import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
+import 'package:geeksday/ui/event_registration.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/intro_screen.dart';
 import 'package:geeksday/ui/post/post_create.dart';
@@ -12,6 +13,7 @@ import 'package:geeksday/ui/user_profile.dart';
 class Routes {
   static const splash = '/';
   static const intro = '/intro';
+  static const eventRegistration = '/eventRegistration';
   static const home = '/home';
   static const userProfile = '/userProfile';
   static const settings = '/settings';
@@ -26,11 +28,13 @@ class Routes {
       case splash:
         return _buildRoute(SplashScreen.create);
       case intro:
-        return _buildRoute(IntroScreen.create);
+        return _buildRoute(IntroScreen.create); 
       case createAccount:
         return _buildRoute(EmailCreate.create);
       case signInEmail:
         return _buildRoute(EmailSignIn.create);
+      case eventRegistration:
+        return _buildRoute(EventRegistration.create);
       case home:
         return _buildRoute(Home.create);
       case userProfile:
