@@ -1,5 +1,6 @@
 import 'dart:js';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
@@ -29,6 +30,7 @@ class PostComment extends StatelessWidget {
 
     return BlocBuilder<PostCubit, PostState>(builder: (context, state) {
       PostCubit statePostcubit = BlocProvider.of<PostCubit>(context);
+      String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -49,7 +51,7 @@ class PostComment extends StatelessWidget {
                           height: 25,
                           thickness: 1,
                         ),
-                        ...comments(context),
+                        ...comments(context, user),
                         SizedBox(
                           height: 70,
                         )
@@ -111,7 +113,7 @@ class PostComment extends StatelessWidget {
       ),
     );
   }
-  List<Widget> comments(context) {
+  List<Widget> comments(context, userId) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return post.commentList
         .map((comment) => Padding(
@@ -129,6 +131,7 @@ class PostComment extends StatelessWidget {
                               height: 50,
                               child: SvgPicture.string(
                                   multiavatar(comment.user.image),
+                                
                               ),
                           ),
                           Padding(
@@ -149,7 +152,10 @@ class PostComment extends StatelessWidget {
                           ),
                         ],
                       ),
-                      deleteCommentButton()
+                      userId == comment.user.uid
+                      ? deleteCommentButton(comment.id, context)
+                      : Container(),
+                      
                     ],
                   ),
                   SizedBox(
@@ -166,7 +172,13 @@ class PostComment extends StatelessWidget {
   }
 
 
-  Widget deleteCommentButton(){
+  Widget deleteCommentButton(commentId, context){
+    final postRef =
+    FirebaseFirestore.instance.collection('posts').withConverter<Post>(
+          fromFirestore: (snapshots, _) =>
+              Post.fromMap(snapshots.data()!, snapshots.id),
+          toFirestore: (post, _) => post.toFirebaseMap(),
+        );
     return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
@@ -174,6 +186,9 @@ class PostComment extends StatelessWidget {
           child: Text("Eliminar"),
         ),
       ],
+      onSelected: (_){
+        BlocProvider.of<PostCubit>(context).commentDeletion(post, commentId);
+      },
     );
   }
 

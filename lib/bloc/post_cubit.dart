@@ -123,6 +123,10 @@ class PostCubit extends Cubit<PostState> {
     return _postService.deletePost(uid);
   }
 
+  Future<void> commentDeletion(Post post, String commentid){
+    return _postService.deleteComment(post, commentid);
+  }
+
   void toggleLikeToPost(String uid) {
     if (state.post.likeList.contains(uid)) {
       state.post.likeList.remove(uid);

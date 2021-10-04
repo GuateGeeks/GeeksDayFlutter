@@ -38,10 +38,20 @@ class PostService extends PostServiceBase {
       data: post.toFirebaseMap(),
     );
   }
-
+  //Delete post 
   @override
   Future<void> deletePost(String uid) async {
     await postRef.doc(uid).delete();
+  }
+  //Delete post comments
+  @override
+  Future<void> deleteComment(Post post, String commentid) async{
+    var commentListid = post.commentList.map((e) => e.id);
+    for(final commentItem in commentListid){
+      if(commentItem == commentid){
+        postRef.doc(post.id).update({"commentList": FieldValue.delete()});
+      }
+    }
   }
 
   @override
