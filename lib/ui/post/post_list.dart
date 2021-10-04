@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:geeksday/bloc/feed_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
@@ -7,9 +9,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PostList extends StatelessWidget {
+class PostList extends StatefulWidget {
   const PostList({Key? key}) : super(key: key);
 
+  @override
+  State<PostList> createState() => _PostListState();
+}
+
+class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,7 +35,13 @@ class PostList extends StatelessWidget {
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
             child: RefreshIndicator(
-              onRefresh: _refresh,
+              onRefresh: (){
+                final duration = new Duration(seconds: 2);
+                new Timer(duration, () {
+                  BlocProvider.of<FeedCubit>(context).getPostList();
+                });
+                return Future.delayed(duration);
+              },
               child: ListView(
                 children: state.postList.map((post) {
                   return PostCard(post: post);
