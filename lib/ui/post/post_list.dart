@@ -33,14 +33,11 @@ class _PostListState extends State<PostList> {
         child: Container(
           width: maxWidth,
           child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
             child: RefreshIndicator(
-              onRefresh: (){
-                final duration = new Duration(seconds: 2);
-                new Timer(duration, () {
-                  BlocProvider.of<FeedCubit>(context).getPostList();
-                });
-                return Future.delayed(duration);
+              onRefresh: () {
+                return BlocProvider.of<FeedCubit>(context).getPostList();
               },
               child: ListView(
                 children: state.postList.map((post) {
@@ -54,7 +51,7 @@ class _PostListState extends State<PostList> {
     });
   }
 
-  Future<void> _refresh (){
+  Future<void> _refresh() {
     return Future.delayed(Duration(seconds: 1));
   }
 }

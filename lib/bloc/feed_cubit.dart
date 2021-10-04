@@ -10,16 +10,17 @@ class FeedCubit extends Cubit<FeedState> {
     getPostList();
   }
   List<Post> _list = [];
+
   /// contain tweet list for home page
-  void getPostList() async {
+  Future<void> getPostList() async {
     _list = await _postService.getPostList();
     _list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    print(_list);
-    state.postList.clear();
-    state.postList.addAll(_list);
-    emit(state);
+    var _state = FeedInitialState();
+    _state.postList.addAll(_list);
+    emit(_state);
   }
-  void recargar() async{
+
+  void recargar() async {
     _list.clear();
     _list = await _postService.getPostList();
     _list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
