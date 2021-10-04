@@ -173,12 +173,6 @@ class PostComment extends StatelessWidget {
 
 
   Widget deleteCommentButton(commentId, context){
-    final postRef =
-    FirebaseFirestore.instance.collection('posts').withConverter<Post>(
-          fromFirestore: (snapshots, _) =>
-              Post.fromMap(snapshots.data()!, snapshots.id),
-          toFirestore: (post, _) => post.toFirebaseMap(),
-        );
     return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
