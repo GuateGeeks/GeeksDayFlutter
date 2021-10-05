@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/ui/event_registration.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
@@ -40,6 +41,22 @@ class MainDrawer extends StatelessWidget {
           leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
           title: Text(
             "Profile",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return EventRegistration();
+                },
+              ),
+            );
+          },
+          leading: Icon(Icons.event_available, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Eventos",
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

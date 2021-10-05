@@ -1,12 +1,8 @@
-import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/provider/theme_provider.dart';
-import 'package:geeksday/routes.dart';
-import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/main_drawer.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {

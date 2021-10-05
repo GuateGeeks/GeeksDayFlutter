@@ -1,54 +1,70 @@
 import 'dart:math';
 
-import '../routes.dart';
 import 'package:flutter/material.dart';
-
+import 'package:geeksday/provider/theme_provider.dart';
+import 'package:geeksday/ui/home.dart';
+import 'package:provider/provider.dart';
 
 class EventRegistration extends StatefulWidget {
   static Widget create(BuildContext context) {
     return EventRegistration();
   }
-  const EventRegistration({Key? key}) : super(key: key);
+  EventRegistration({Key? key}) : super(key: key);
 
   @override
-  State<EventRegistration> createState() => _EventRegistrationState();
+  _EventRegistrationState createState() => _EventRegistrationState();
 }
 
 class _EventRegistrationState extends State<EventRegistration> {
-
   @override
   void initState() {
     super.initState();
     cards.add(createCard());
   }
-
   List cards = [];  
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Eventos"),
-      ),
-      body: bodyEvents(context),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          //Show modal new post
-          showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            context: context,
-            builder: (context) => Container(
-              width: 800,
-              child: registerEvent(),
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      builder: (context, _) {
+        final themeProvider = Provider.of<ThemeProvider>(context);
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: themeProvider.themeMode,
+          theme: MyThemes.lightTheme,
+          darkTheme: MyThemes.darkTheme,
+          home: Scaffold(
+            appBar: new AppBar(
+              title: new Text("Eventos"),
             ),
-          );
-        },
-        tooltip: "Agregar Evento",
-      ),
+            body: bodyEvents(context),
+            floatingActionButton: floatinBottom(),
+          ),
+          
+        );
+      },
     );
   }
- 
-  Widget bodyEvents (context){
+
+  Widget floatinBottom(){
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        //Show modal new post
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) => Container(
+            width: 800,
+            child: registerEvent(),
+          ),
+        );
+      },
+      tooltip: "Agregar Evento",
+    );
+  }
+
+    Widget bodyEvents (context){
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
     return Center(
@@ -57,8 +73,6 @@ class _EventRegistrationState extends State<EventRegistration> {
         child: new GridView.count(
           crossAxisCount: 3,
           childAspectRatio: 0.6,
-
-
           scrollDirection: Axis.vertical,
           children: cards.map((value) {
             return createCard();
@@ -68,6 +82,7 @@ class _EventRegistrationState extends State<EventRegistration> {
     );
   }
 
+  
   Widget createCard(){
     final rnd = new Random();
 
@@ -78,7 +93,13 @@ class _EventRegistrationState extends State<EventRegistration> {
       padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
       child: GestureDetector(
         onTap: (){
-          Navigator.pushNamed(context, Routes.home);
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Home();
+                },
+              ),
+            );
         },
         child: Container(
           child: Center(
