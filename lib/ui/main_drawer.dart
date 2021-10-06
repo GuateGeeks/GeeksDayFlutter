@@ -60,6 +60,18 @@ class MainDrawer extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
+        userData.isadmin == true ?
+        ListTile(
+          onTap: () {
+            
+          },
+          leading: Icon(Icons.admin_panel_settings, color: Theme.of(context).iconTheme.color),
+          title: Text(
+            "Admin",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        )
+        : Container(),
         ListTile(
           onTap: () {
             Navigator.of(context).push(

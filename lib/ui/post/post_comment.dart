@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
+  //get the data from the posts
   Post post;
   PostComment(this.post, {Key? key}) : super(key: key);
 
@@ -25,15 +26,17 @@ class PostComment extends StatelessWidget {
 
   @override
   Widget builder(BuildContext context) {
+    //define screen width
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
 
     return BlocBuilder<PostCubit, PostState>(builder: (context, state) {
-      PostCubit statePostcubit = BlocProvider.of<PostCubit>(context);
+      //get user id
       String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
       return Scaffold(
         appBar: AppBar(),
         body: Center(
+          //Main Container
           child: Container(
             width: maxWidth,
             child: Card(
@@ -46,11 +49,13 @@ class PostComment extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListView(
                       children: [
-                        headerComment(context),
+                        //function to show the image, the date and the description of the post
+                        postDescription(context),
                         const Divider(
                           height: 25,
                           thickness: 1,
                         ),
+                        //function to display the image, name, date and comment
                         ...comments(context, user),
                         SizedBox(
                           height: 70,
@@ -58,6 +63,7 @@ class PostComment extends StatelessWidget {
                       ],
                     ),
                   ),
+                  //Function to create a new comment
                   textFormFielComment(context)
                 ],
               ),
@@ -67,8 +73,8 @@ class PostComment extends StatelessWidget {
       );
     });
   }
-
-  Widget headerComment(context) {
+  //post description
+  Widget postDescription(context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
@@ -80,6 +86,7 @@ class PostComment extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
+                //verify that the user has an avatar as a profile picture and display it
                 child: post.userimage == null
                     ? Container()
                     : SvgPicture.string(multiavatar(post.userimage)),
@@ -94,6 +101,7 @@ class PostComment extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
+                      //get the date the post was made
                       state.getDatePost(post.createdAt),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
@@ -113,79 +121,88 @@ class PostComment extends StatelessWidget {
       ),
     );
   }
+  //Comments
   List<Widget> comments(context, userId) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return post.commentList
-        .map((comment) => Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                              width: 50,
-                              height: 50,
-                              child: SvgPicture.string(
-                                  multiavatar(comment.user.image),
-                                
-                              ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  comment.user.name,
-                                  style: Theme.of(context).textTheme.headline1,
-                                ),
-                                Text(
-                                  state.getDatePost(comment.createdAt),
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                ),
-                              ],
+      .map((comment) => Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            width: 50,
+                            height: 50,
+                            child: SvgPicture.string(
+                                multiavatar(comment.user.image),
                             ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                comment.user.name,
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
+                              Text(
+                                //function to show the date the comment was made
+                                state.getDatePost(comment.createdAt),
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      userId == comment.user.uid
-                      ? deleteCommentButton(comment.id, context)
-                      : Container(),
-                      
-                    ],
-                  ),
-                  SizedBox(
-                    height: 7.0,
-                  ),
-                  Text(
-                    comment.text,
-                    style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
+                    ),
+                  //button to delete comment
+                  deleteCommentButton(
+                    comment.id, 
+                    comment.user.uid, 
+                    context,
                   ),
                 ],
               ),
+            SizedBox(
+              height: 7.0,
             ),
-        ).toList();
-  }
-
-
-  Widget deleteCommentButton(commentId, context){
-    return PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: "Eliminar",
-          child: Text("Eliminar"),
+            Text(
+              comment.text,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ],
         ),
-      ],
-      onSelected: (_){
-        BlocProvider.of<PostCubit>(context).commentDeletion(post, commentId);
-      },
-    );
+      ),
+    ).toList();
   }
 
+  //function to delete comment
+  Widget deleteCommentButton(commentId, commentUserId, context){
+    //validate if the user is an administrator or the user has made a comment to show the delete comment button
+    var user = BlocProvider.of<AuthCubit>(context).getUser();
+    if(user.uid == commentUserId || user.isadmin == true){
+      return PopupMenuButton(
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: "Eliminar",
+            child: Text("Eliminar"),
+          ),
+        ],
+        onSelected: (_){
+          BlocProvider.of<PostCubit>(context).commentDeletion(post, commentId);
+        },
+      );
+    }
+    return Container();
+  }
+
+  //make a comment
   Widget textFormFielComment(BuildContext context) {
     TextEditingController _controller = TextEditingController();
     return Positioned(
@@ -222,6 +239,7 @@ class PostComment extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
+                //get the information of who is making the comment
                 AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
                 String userImage =
                     BlocProvider.of<AuthCubit>(context).getUserImage();

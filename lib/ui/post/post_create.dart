@@ -22,10 +22,12 @@ class _PostCreateState extends State<PostCreate> {
   File? uploadedImage;
 
   Widget _content(BuildContext context) {
+    //responsive modal
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
+        //main container
         return Center(
           child: Container(
             width: maxWidth,
@@ -41,6 +43,7 @@ class _PostCreateState extends State<PostCreate> {
                 topRight: Radius.circular(20.0),
               ),
             ),
+            //ocultar la barra de scroll
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: ListView(
@@ -51,14 +54,18 @@ class _PostCreateState extends State<PostCreate> {
                   SizedBox(
                     height: 10.0,
                   ),
+                  //feature to preview images before posting
                   previewImages(context),
                   SizedBox(
                     height: 10.0,
                   ),
                   //Input description Nuevo Post
                   description(context),
+                  //show answers
                   ...inputAnswers(context),
+                  //function to add more answers
                   addAnswer(context),
+                  //function to make the publication
                   buttonSave(context),
                 ],
               ),
@@ -152,8 +159,6 @@ class _PostCreateState extends State<PostCreate> {
 
   @override
   Widget build(BuildContext context) {
-    //Responsive modal Nuevo post
-
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return BlocProvider(
       create: (_) => PostCubit(PostService(), Post.newPost("", user)),
@@ -162,41 +167,42 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   Widget title(BuildContext context) {
+    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser();
     bool isQuiz = BlocProvider.of<PostCubit>(context).isQuiz();
     var boldStyle = Theme.of(context).textTheme.headline2;
     var grayStyle = Theme.of(context).textTheme.headline5;
 
-    return Padding(
-      padding: EdgeInsets.all(15.0),
-      child: Row(
-        children: [
-          TextButton(
-            onPressed: () {
-              BlocProvider.of<PostCubit>(context).unsetQuiz();
-            },
-            child: Text(
-              "Post",
-              style: isQuiz ? grayStyle : boldStyle,
+      return Padding(
+        padding: EdgeInsets.fromLTRB(0, 15, 15, 15),
+        child: Row(
+          children: [
+            TextButton(
+              onPressed: () => BlocProvider.of<PostCubit>(context).unsetQuiz(),
+              child: Text("Post", style: isQuiz ? grayStyle : boldStyle,),
             ),
-          ),
-          Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
-          TextButton(
-            onPressed: () {
-              Question question = Question("Pregunta", [
-                Answer("Respuesta", false, 0),
-                Answer("Respuesta", false, 0),
-              ]);
 
-              BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question]));
-            },
-            child: Text(
-              "Quizz",
-              style: isQuiz ? boldStyle : grayStyle,
-            ),
-          ),
-        ],
-      ),
-    );
+            userData.isadmin == true ?
+            Row(
+              children: [
+                Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
+                TextButton(
+                  onPressed: () {
+                    Question question = Question(
+                      "Pregunta", [
+                        Answer("Respuesta", false, 0),
+                        Answer("Respuesta", false, 0),
+                      ],
+                    );
+                    BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question]));
+                  },
+                  child: Text("Quizz", style: isQuiz ? boldStyle : grayStyle),
+                ),
+              ],
+            )
+            : Container(),
+          ],
+        ),
+      );
   }
 
   //Add TextFromField dynamically
@@ -257,10 +263,4 @@ class _PostCreateState extends State<PostCreate> {
       ),
     );
   }
-
-  final TextEditingController maxWidthController = TextEditingController();
-
-  final TextEditingController maxHeightController = TextEditingController();
-
-  final TextEditingController qualityController = TextEditingController();
 }

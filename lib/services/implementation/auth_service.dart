@@ -32,7 +32,8 @@ class AuthService extends AuthServiceBase {
       String email = user.email != null ? user.email! : "";
       String name = user.displayName != null ? user.displayName! : "";
       String image = randomAvatar;
-      return AuthUser(user.uid, name, email, image);
+      bool isadmin = false;
+      return AuthUser(user.uid, name, email, image, isadmin);
     }
     return null;
   }

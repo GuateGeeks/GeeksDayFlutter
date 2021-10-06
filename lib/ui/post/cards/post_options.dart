@@ -14,12 +14,15 @@ class PostOptions extends StatefulWidget {
 class _PostOptionsState extends State<PostOptions> {
   @override
   Widget build(BuildContext context) {
-    var userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    var userData = BlocProvider.of<AuthCubit>(context).getUser();
     PostCubit state = BlocProvider.of<PostCubit>(context);
     List<String> choices = [];
 
-    if (state.isOwnedBy(userId)) {
+    if (state.isOwnedBy(userData.uid) || userData.isadmin == true) {
       choices.add(Constants.Delete);
+    }
+    if(userData.isadmin == true){
+      choices.add(Constants.DeleteUser);
     }
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
@@ -46,8 +49,10 @@ class _PostOptionsState extends State<PostOptions> {
 //List of possible actions that can be performed on the post, at the moment it can only be eliminated
 class Constants {
   static const String Delete = "Eliminar";
+  static const String DeleteUser = "Bannear Usuario";
 
   static const List<String> choinces = <String>[
     Delete,
+    DeleteUser,
   ];
 }
