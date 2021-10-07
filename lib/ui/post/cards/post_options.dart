@@ -51,7 +51,7 @@ class Constants {
   static const String Delete = "Eliminar";
   static const String DeleteUser = "Bannear Usuario";
 
-  static const List<String> choinces = <String>[
+  static const List<String> choices = <String>[
     Delete,
     DeleteUser,
   ];

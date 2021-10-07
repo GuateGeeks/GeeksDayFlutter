@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/ui/admin/admin_metric.dart';
 import 'package:geeksday/ui/event_registration.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
@@ -63,7 +64,13 @@ class MainDrawer extends StatelessWidget {
         userData.isadmin == true ?
         ListTile(
           onTap: () {
-            
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return AdminMetric();
+                },
+              ),
+            );
           },
           leading: Icon(Icons.admin_panel_settings, color: Theme.of(context).iconTheme.color),
           title: Text(

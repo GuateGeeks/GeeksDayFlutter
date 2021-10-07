@@ -77,6 +77,8 @@ class MyThemes {
     iconTheme: IconThemeData(
       color: Colors.white,
     ),
+    //DropdownButton color (admin)
+    selectedRowColor: Colors.white10,
   );
 
   static final lightTheme = ThemeData(
@@ -146,5 +148,7 @@ class MyThemes {
     iconTheme: IconThemeData(
       color: Colors.black,
     ),
+    //DropdownButton color (admin)
+    selectedRowColor: Colors.black12,
   );
 }

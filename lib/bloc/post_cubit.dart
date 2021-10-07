@@ -6,6 +6,7 @@ import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/admin/admin_metric.dart';
 import 'package:intl/intl.dart';
 
 class PostCubit extends Cubit<PostState> {
@@ -123,6 +124,8 @@ class PostCubit extends Cubit<PostState> {
     return _postService.deletePost(uid);
   }
 
+
+
   Future<void> commentDeletion(Post post, String commentid){
     return _postService.deleteComment(post, commentid);
   }
@@ -163,7 +166,11 @@ class PostCubit extends Cubit<PostState> {
         !state.post.quiz!.questions[0].answers[index].isCorrect;
     emit(PostUpdatedState(state.post));
   }
+
 }
+
+
+
 
 abstract class PostState extends Equatable {
   final Post post;
