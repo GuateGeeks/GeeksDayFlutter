@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/admin_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/implementation/admin_service.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +19,12 @@ class AdminMetric extends StatefulWidget {
 }
 List<String> categories = ['Más publicaciones', 'Más me gusta', 'Más comentarios', 'Mayor Puntuacion en los Quiz',];
 String categorieDefault = "Más publicaciones";
-var option = 0;
+
 class _AdminMetricState extends State<AdminMetric> {
   @override
   Widget build(BuildContext context) {
       return BlocProvider(
-        create: (_) => AdminCubit(AdminService()),
+        create: (_) => AdminCubit(AdminService(), PostService(), AuthService()),
         child: Scaffold(
         appBar: AppBar(
           title: Text("Admin"),
@@ -36,27 +39,32 @@ class _AdminMetricState extends State<AdminMetric> {
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<AdminCubit, AdminState>(
       builder: (context, state){
-        return Center(
-        child: Container(
-          width: maxWidth,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: ListView(
-              children: [
-                _crearDropdown(context),
-                getUsers(),
-              ],
+        return Container(
+        child: Column(
+          children: [
+            Container(
+              width: maxWidth,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: _crearDropdown(context),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+            ListView(
+              shrinkWrap: true,
+              children: state.postList.map((post){
+                return Text(post.text);
+              }).toList(),
+            )
+          ],
         ),
       );
       },
@@ -83,18 +91,17 @@ class _AdminMetricState extends State<AdminMetric> {
             color: Theme.of(context).selectedRowColor,
             ),
         child: DropdownButtonHideUnderline(
-          child: DropdownButton(
+          child: DropdownButton<PostFilterOptions>(
               isExpanded: true,
-              value: categorieDefault,
-              items: getOpcionesDropdown(),
-              onChanged: (String? value) {
-                setState(() {
-                  categorieDefault = value!;
-                  option = categories.indexOf(categorieDefault);
-                  
-                  BlocProvider.of<AdminCubit>(context).userList().then((value) => print(value));
-
-                });
+              value: PostFilterOptions.BY_CREATION_DATE,
+              items: PostFilterOptions.values.map((options) {
+                return DropdownMenuItem<PostFilterOptions>(
+                  value: options,
+                  child: Text(options.toString()),
+                );
+              }).toList(),
+              onChanged: (PostFilterOptions? option) {
+                BlocProvider.of<AdminCubit>(context).sortPostList(option);
               },
               
           ),
@@ -104,71 +111,57 @@ class _AdminMetricState extends State<AdminMetric> {
   }
 
   Widget getUsers(){
-    return Padding(
-      padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-      child: Column(
-        children: [
-          user(),
-          user(),
-          user(),
-          user(),
-          user(),
-          user(),
-          user(),
-          user(),
-          user(),
-        ],
-      ),
-    );
+    return Container();
+    
   }
 
   Widget user(){
-    return Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: 50,
-                            height: 50,
-                            child: SvgPicture.string(
-                                multiavatar("0000000000"),
-                            ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "User name",
-                                style: Theme.of(context).textTheme.headline1,
-                              ),
-                              Text(
-                                "33",
-                                style: Theme.of(context).textTheme.subtitle2,
-                              ),
-                            ],
+  return Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                          width: 50,
+                          height: 50,
+                          child: SvgPicture.string(
+                              multiavatar("0000000000"),
                           ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "User name",
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                            Text(
+                              "33",
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  
-                ],
-              ),
-              const Divider(
-                height: 25,
-                thickness: 1,
-              ),
-           
-          ],
-        ),
-      );
+                      ),
+                    ],
+                  ),
+                
+              ],
+            ),
+            const Divider(
+              height: 25,
+              thickness: 1,
+            ),
+          
+        ],
+      ),
+    );
   }
 
 }

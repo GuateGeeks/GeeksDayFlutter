@@ -20,13 +20,6 @@ class FeedCubit extends Cubit<FeedState> {
     emit(_state);
   }
 
-  void recargar() async {
-    _list.clear();
-    _list = await _postService.getPostList();
-    _list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    state.postList.addAll(_list);
-    emit(state);
-  }
 }
 
 abstract class FeedState {
