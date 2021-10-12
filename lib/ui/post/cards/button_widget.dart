@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
-import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
-import 'package:like_button/like_button.dart';
-import 'package:geeksday/routes.dart';
 
 class ButtonWidget extends StatefulWidget {
   ButtonWidget({Key? key}) : super(key: key);
@@ -16,6 +13,7 @@ class ButtonWidget extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<ButtonWidget> {
+  //variable to check if the user has clicked the like button
   bool isLiked = false;
 
   @override
@@ -30,20 +28,19 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Text(
+                //show the number of likes of the post
                 cubit.getLikesCountText(),
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
             Padding(
-              padding: width > 350
-                  ? const EdgeInsets.symmetric(horizontal: 40.0, vertical: 13.0)
-                  : const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 13.0),
+              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //Like button
                   likeButton(width),
                   SizedBox(width: 5.0),
+                  //Comment button
                   commentButton(width, state.post),
                 ],
               ),
@@ -54,59 +51,28 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     );
   }
 
-  //function like button
+  //function to add a like to the post
   Widget likeButton(width) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
-
-    return ElevatedButton(
-      onPressed: () {
+    return IconButton(
+      hoverColor: Colors.transparent,
+      onPressed: (){
         likePost(context);
         isLiked = !isLiked;
       },
-      style: ButtonStyle(
-        padding: (width > 620)
-            // If the screen size is greater than 620
-            ? MaterialStateProperty.all(
-                EdgeInsets.symmetric(horizontal: 100, vertical: 15))
-            //If the screen size es greater than 450
-            : (width > 450
-                ? MaterialStateProperty.all(
-                    EdgeInsets.symmetric(horizontal: 60, vertical: 15))
-                //If the screen size is less than 450
-                : MaterialStateProperty.all(
-                    EdgeInsets.symmetric(horizontal: 28, vertical: 15),
-                  )),
-        backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).buttonColor),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.0),
-          ),
-        ),
+      icon: Icon(
+        isLiked ? Icons.favorite : Icons.favorite_border,
+        color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
       ),
-      //likeButton library implementation
-      child: Row(children: <Widget>[
-        Icon(
-          Icons.favorite,
-          color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Text(
-            "LIKE",
-            style: TextStyle(
-                color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-                fontWeight: FontWeight.bold),
-          ),
-        )
-      ]),
     );
   }
 
+  //function to add comments to the post
   Widget commentButton(width, Post post) {
-    return ElevatedButton.icon(
-      onPressed: () {
+    return IconButton(
+      hoverColor: Colors.transparent,
+      onPressed: (){
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
@@ -115,35 +81,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           ),
         );
       },
-      style: ButtonStyle(
-        padding: (width > 620)
-            // If the screen size is greater than 620
-            ? MaterialStateProperty.all(
-                EdgeInsets.symmetric(horizontal: 95, vertical: 18))
-            // If the screen size is greater than 620
-            : (width > 450
-                ? MaterialStateProperty.all(
-                    EdgeInsets.symmetric(horizontal: 48, vertical: 18))
-                // If the screen size is less than 620
-                : MaterialStateProperty.all(
-                    EdgeInsets.symmetric(horizontal: 19, vertical: 18),
-                  )),
-        backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).buttonColor),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.0),
-          ),
-        ),
-      ),
-      icon: Icon(Icons.chat_bubble, color: Colors.grey),
-      label: Text(
-        "COMMENT",
-        style: TextStyle(color: Colors.grey),
+      icon: Icon(
+        Icons.chat_bubble, color: Colors.grey,
+        size: 20,
       ),
     );
   }
 
+  //function to know which user has liked the post
   void likePost(BuildContext context) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     BlocProvider.of<PostCubit>(context).toggleLikeToPost(userId);
