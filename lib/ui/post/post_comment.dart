@@ -195,7 +195,7 @@ class PostComment extends StatelessWidget {
           ),
         ],
         onSelected: (_){
-          BlocProvider.of<PostCubit>(context).commentDeletion(post, commentId);
+            BlocProvider.of<PostCubit>(context).commentDeletion(commentId);
         },
       );
     }

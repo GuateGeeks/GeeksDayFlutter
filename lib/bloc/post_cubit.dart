@@ -126,8 +126,9 @@ class PostCubit extends Cubit<PostState> {
 
 
 
-  Future<void> commentDeletion(Post post, String commentid){
-    return _postService.deleteComment(post, commentid);
+  void commentDeletion(String commentid){
+    _postService.deleteComment(state.post, commentid);
+    emit(PostUpdatedState(state.post));
   }
 
   void toggleLikeToPost(String uid) {

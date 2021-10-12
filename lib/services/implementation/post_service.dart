@@ -46,12 +46,10 @@ class PostService extends PostServiceBase {
   //Delete post comments
   @override
   Future<void> deleteComment(Post post, String commentid) async{
-    var commentListid = post.commentList.map((e) => e.id);
-    for(final commentItem in commentListid){
-      if(commentItem == commentid){
-        postRef.doc(post.id).update({"commentList": FieldValue.delete()});
-      }
-    }
+    
+    post.commentList.removeWhere((element) => element.id == commentid);
+    updatePost(post);
+
   }
 
   @override
