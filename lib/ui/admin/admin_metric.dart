@@ -61,11 +61,7 @@ class _AdminMetricState extends State<AdminMetric> {
             ListView(
               shrinkWrap: true,
               children: state.postList.map((post){
-                int a = 0;
-                if(post.user.name == post.user.name){
-                  a++;
-                }
-                return Text(post.user.name);
+                return Text(post.text);
               }).toList(),
             )
           ],

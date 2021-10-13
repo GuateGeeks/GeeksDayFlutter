@@ -25,7 +25,13 @@ class MyThemes {
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
-      //Fecha y likes
+      //likes and comments
+      subtitle1: TextStyle(
+        fontSize: 16.5,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey,
+      ),
+      //Fecha
       subtitle2: TextStyle(
         fontSize: 13.0,
         fontWeight: FontWeight.bold,

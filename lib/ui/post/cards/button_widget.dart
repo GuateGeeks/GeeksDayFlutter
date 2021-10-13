@@ -26,22 +26,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Text(
-                //show the number of likes of the post
-                cubit.getLikesCountText(),
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-            ),
-            Padding(
               padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
               child: Row(
                 children: [
                   //Like button
-                  likeButton(width),
+                  likeButton(width, cubit),
                   SizedBox(width: 5.0),
                   //Comment button
-                  commentButton(width, state.post),
+                  commentButton(width, state.post, cubit),
                 ],
               ),
             ),
@@ -52,39 +44,57 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   }
 
   //function to add a like to the post
-  Widget likeButton(width) {
+  Widget likeButton(width, cubit) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
-    return IconButton(
-      hoverColor: Colors.transparent,
-      onPressed: (){
-        likePost(context);
-        isLiked = !isLiked;
-      },
-      icon: Icon(
-        isLiked ? Icons.favorite : Icons.favorite_border,
-        color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-      ),
+    return Row(
+      children: [
+        IconButton(
+          hoverColor: Colors.transparent,
+          onPressed: (){
+            likePost(context);
+            isLiked = !isLiked;
+          },
+          icon: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
+          ),
+        ),
+        Text(
+          //show the number of likes of the post
+          cubit.getLikesCountText(),
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+      ],
     );
   }
 
   //function to add comments to the post
-  Widget commentButton(width, Post post) {
-    return IconButton(
-      hoverColor: Colors.transparent,
-      onPressed: (){
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return PostComment(post);
-            },
+  Widget commentButton(width, Post post, PostCubit cubit) {
+    return Row(
+      children: [
+        IconButton(
+          hoverColor: Colors.transparent,
+          onPressed: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return PostComment(post);
+                },
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.comment_sharp, color: Colors.grey,
+            size: 20,
           ),
-        );
-      },
-      icon: Icon(
-        Icons.chat_bubble, color: Colors.grey,
-        size: 20,
-      ),
+        ),
+        Text(
+          //show the number of comments of the post
+          cubit.countComments(),
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+      ],
     );
   }
 

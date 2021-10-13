@@ -92,19 +92,19 @@ class PostCubit extends Cubit<PostState> {
     return time;
   }
 
-  String getLikesCountText() {
-    if (state.post.likeCount > 0) {
-      return "❤ ${state.post.likeCount} Likes";
+  void toggleLikeToPost(String uid) {
+    if (state.post.likeList.contains(uid)) {
+      state.post.likeList.remove(uid);
+    } else {
+      state.post.likeList.add(uid);
     }
-    return "Se el primero en darle me gusta";
+    state.post.likeCount = state.post.likeList.length;
+    _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
   }
 
-  int getLikesCount() {
-    return state.post.likeCount;
-  }
-
-  bool isLiked() {
-    return state.post.likeCount > 0;
+  String getLikesCountText() {
+    return "${state.post.likeCount}";
   }
 
   bool likedByMe(String uid) {
@@ -125,29 +125,23 @@ class PostCubit extends Cubit<PostState> {
   }
 
 
+  void makeComment(AuthUser user, String text, String image) {
+    var comment = Comment.newComment(text, user, image);
+    state.post.commentList.add(comment);
+    state.post.commentCount = state.post.commentList.length;
+    _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
+  }
+
+  String countComments(){
+    return "${state.post.commentCount}";
+  }
 
   void commentDeletion(String commentid){
     _postService.deleteComment(state.post, commentid);
     emit(PostUpdatedState(state.post));
   }
 
-  void toggleLikeToPost(String uid) {
-    if (state.post.likeList.contains(uid)) {
-      state.post.likeList.remove(uid);
-    } else {
-      state.post.likeList.add(uid);
-    }
-    state.post.likeCount = state.post.likeList.length;
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
-  }
-
-  void makeComment(AuthUser user, String text, String image) {
-    var comment = Comment.newComment(text, user, image);
-    state.post.commentList.add(comment);
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
-  }
 
   bool isQuiz() {
     return state.post.quiz != null && state.post.quiz!.questions.isNotEmpty;

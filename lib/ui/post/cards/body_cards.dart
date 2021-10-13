@@ -50,7 +50,7 @@ class BodyCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 0, 15, 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 15, 5),
             child: Text(
               state.getPost()!.text,
               style: Theme.of(context).textTheme.headline4,

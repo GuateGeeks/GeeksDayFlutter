@@ -8,6 +8,7 @@ class Post extends Equatable {
   String text;
   final List<String> likeList;
   int likeCount;
+  int commentCount;
   final int createdAt;
   int? updatedAt;
   final AuthUser user;
@@ -19,6 +20,7 @@ class Post extends Equatable {
       required this.text,
       required this.likeList,
       required this.likeCount,
+      required this.commentCount,
       required this.createdAt,
       required this.user,
       required this.commentList,
@@ -41,6 +43,7 @@ class Post extends Equatable {
       'text': text,
       'likeList': likeList,
       'likeCount': likeCount,
+      'commentCount': commentCount,
       'user': user.toFirebaseMap(),
       'createdAt': createdAt,
       'commentList': commentList.map((comment) => comment.toFirebaseMap()),
@@ -54,6 +57,7 @@ class Post extends Equatable {
     String? text,
     List<String>? likeList,
     int? likeCount,
+    int? commentCount,
     int? createdAt,
     AuthUser? user,
     List<Comment>? commentList,
@@ -64,6 +68,7 @@ class Post extends Equatable {
       text: text ?? this.text,
       likeList: likeList ?? this.likeList,
       likeCount: likeCount ?? this.likeCount,
+      commentCount: commentCount ?? this.commentCount,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: DateTime.now().millisecondsSinceEpoch,
       commentList: commentList ?? this.commentList,
@@ -77,6 +82,7 @@ class Post extends Equatable {
     var createdAt = DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
     var likeCount = 0;
+    var commentCount = 0;
     var commentList = <Comment>[];
     return Post(
         id: id,
@@ -85,6 +91,7 @@ class Post extends Equatable {
         createdAt: createdAt,
         likeList: likeList,
         likeCount: likeCount,
+        commentCount: commentCount,
         commentList: commentList);
   }
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
@@ -93,6 +100,7 @@ class Post extends Equatable {
     var createdAt = data['createdAt'];
     var likeList = <String>[];
     var likeCount = 0;
+    var commentCount = 0;
     var user = AuthUser.fromMap(data['user']);
     var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
     if (data["likeList"] != null) {
@@ -113,6 +121,7 @@ class Post extends Equatable {
       commentList = (data['commentList'] as List)
           .map((comment) => Comment.fromMap(comment))
           .toList();
+      commentCount = commentList.length;
     }
 
     return Post(
@@ -122,6 +131,7 @@ class Post extends Equatable {
         createdAt: createdAt,
         likeList: likeList,
         likeCount: likeCount,
+        commentCount: commentCount,
         commentList: commentList,
         quiz: quiz);
   }
