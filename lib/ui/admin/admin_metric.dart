@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/admin_cubit.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/implementation/admin_service.dart';
@@ -37,6 +39,7 @@ class _AdminMetricState extends State<AdminMetric> {
   Widget _body(BuildContext context){
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
+    
     return BlocBuilder<AdminCubit, AdminState>(
       builder: (context, state){
         return Container(
@@ -60,9 +63,9 @@ class _AdminMetricState extends State<AdminMetric> {
             ),
             ListView(
               shrinkWrap: true,
-              children: state.postList.map((post){
-                return Text(post.text);
-              }).toList(),
+              children: state.postList.entries.map((e) {
+                return Text(e.key);
+              }).toList()
             )
           ],
         ),
@@ -82,6 +85,7 @@ class _AdminMetricState extends State<AdminMetric> {
     return lista;
   }
     Widget _crearDropdown(BuildContext context) {
+      var user = BlocProvider.of<AuthCubit>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -93,7 +97,7 @@ class _AdminMetricState extends State<AdminMetric> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<PostFilterOptions>(
               isExpanded: true,
-              value: PostFilterOptions.BY_CREATION_DATE,
+              value: PostFilterOptions.MOST_POST,
               items: PostFilterOptions.values.map((options) {
                 return DropdownMenuItem<PostFilterOptions>(
                   value: options,
@@ -102,6 +106,7 @@ class _AdminMetricState extends State<AdminMetric> {
               }).toList(),
               onChanged: (PostFilterOptions? option) {
                 BlocProvider.of<AdminCubit>(context).sortPostList(option);
+                
               },
               
           ),

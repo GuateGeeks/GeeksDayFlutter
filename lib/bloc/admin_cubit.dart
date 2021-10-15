@@ -1,14 +1,18 @@
 
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/auth_service.dart';
+import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/post_service.dart';
+import 'package:geeksday/ui/post/post_list.dart';
 
 
   enum PostFilterOptions{
-    BY_CREATION_DATE, BY_LIKES, 
+    MOST_POST, MOST_LIKES, MOST_COMMENTS, 
   }
 
 class AdminCubit extends Cubit<AdminState>{
@@ -20,35 +24,95 @@ class AdminCubit extends Cubit<AdminState>{
   AdminCubit(this._adminService, this._postService, this._authServiceBase) : super(InitialAdminState());
 
   List<Post> _list = [];
+  List<AuthUser> _listUsers = [];
+  Map<dynamic, int> mapa = {};
 
-  Future<List> userList(){
-    return _adminService.higherScoreUserList();
-  }
+  Future<void> userList(Map mapa) async {
+    var userList = await _adminService.higherScoreUserList();
+    for(var user in userList){
+      if(mapa.containsKey(user.uid)){
+        _listUsers.add(user);
+      }
+    }
 
-  Future<void> sortByCreationDate() async {
-    _list = await _postService.getPostList();
-    _list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     var _state = SortedPost();
-    _state.postList.addAll(_list);
+      _state.userList.addAll(_listUsers);
     emit(_state);
+
   }
 
-  Future<void> sortByLikesCount() async {
+  Future sortByPostCount() async {
     _list = await _postService.getPostList();
-    _list.sort((a, b) => b.likeCount.compareTo(a.createdAt));
+
+    for(Post post in _list){
+      if(mapa.containsKey(post.user.uid)){
+        mapa[post.user.uid] = mapa[post.user.uid]! + 1;
+      }else{
+        mapa[post.user.uid] = 1;
+      }
+    }
     var _state = SortedPost();
-    _state.postList.addAll(_list);
+    _state.postList.addAll(mapa);
     emit(_state);
+    userList(mapa);
+    mapa = {};
   }
+
+  Future sortByLikesCount() async {
+    
+    _list = await _postService.getPostList();
+
+    for(Post post in _list){
+      for(var likeList in post.likeList){
+        if(mapa.containsKey(likeList)){
+          mapa[likeList] = mapa[likeList]! + 1;
+        }else{
+          mapa[likeList] = 1;
+        }
+      }
+    }
+    var _state = SortedPost();
+      _state.postList.addAll(mapa);
+    emit(_state);
+
+    userList(mapa);
+    mapa = {};
+  }
+
+  Future sortByCommentCount() async {
+    _list = await _postService.getPostList();
+
+    for(Post post in _list){
+      for(Comment comment in post.commentList){
+        if(mapa.containsKey(comment.user.uid)){
+        mapa[comment.user.uid] = mapa[comment.user.uid]! + 1;
+      }else{
+        mapa[comment.user.uid] = 1;
+      }
+      }
+    }
+    var _state = SortedPost();
+      _state.postList.addAll(mapa);
+    emit(_state);
+    userList(mapa);
+
+    mapa = {};
+ 
+  }
+
+
+ 
 
   void sortPostList(PostFilterOptions? option) {
-    print(option);
     switch (option) {
-      case PostFilterOptions.BY_CREATION_DATE:
-        sortByCreationDate();
+      case PostFilterOptions.MOST_POST:
+        sortByPostCount();
         break;
-      case PostFilterOptions.BY_LIKES:
+      case PostFilterOptions.MOST_LIKES:
         sortByLikesCount();
+        break;
+      case PostFilterOptions.MOST_COMMENTS:
+        sortByCommentCount();
         break;
       default:
     }
@@ -59,7 +123,8 @@ class AdminCubit extends Cubit<AdminState>{
 
 abstract class AdminState{
   bool isBusy = false;
-  List<Post> postList = [];
+  Map postList = {};
+  List<AuthUser> userList = [];
 }
 
 class SortedPost extends AdminState{
@@ -71,5 +136,6 @@ class InitialAdminState extends AdminState{
   bool isBusy = false;
 
   @override
-  List<Post> postList = [];
+  Map postList = {};
+  List<AuthUser> userList = [];
 }

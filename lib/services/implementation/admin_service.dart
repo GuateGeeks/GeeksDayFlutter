@@ -29,8 +29,6 @@ class AdminService extends AdminServiceBase{
       });
       return userList;
     });
-  }
-  
-   
+  }   
   
 }
