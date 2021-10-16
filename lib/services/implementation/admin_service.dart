@@ -4,21 +4,19 @@ import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/admin_service.dart';
 
-class AdminService extends AdminServiceBase{
-
-   final userRef = FirebaseFirestore.instance
-    .collection('users')
-    .withConverter<AuthUser>(
-      fromFirestore: (snapshots, _) => AuthUser.fromMap(snapshots.data()!),
-      toFirestore: (user, _) => user.toFirebaseMap(),
-    );
-  final postRef =
-  FirebaseFirestore.instance.collection('posts').withConverter<Post>(
-        fromFirestore: (snapshots, _) =>
-            Post.fromMap(snapshots.data()!, snapshots.id),
-        toFirestore: (post, _) => post.toFirebaseMap(),
+class AdminService extends AdminServiceBase {
+  final userRef = FirebaseFirestore.instance
+      .collection('users')
+      .withConverter<AuthUser>(
+        fromFirestore: (snapshots, _) => AuthUser.fromMap(snapshots.data()!),
+        toFirestore: (user, _) => user.toFirebaseMap(),
       );
-
+  final postRef =
+      FirebaseFirestore.instance.collection('posts').withConverter<Post>(
+            fromFirestore: (snapshots, _) =>
+                Post.fromMap(snapshots.data()!, snapshots.id),
+            toFirestore: (post, _) => post.toFirebaseMap(),
+          );
 
   @override
   Future<List<AuthUser>> higherScoreUserList() {
@@ -29,6 +27,16 @@ class AdminService extends AdminServiceBase{
       });
       return userList;
     });
-  }   
-  
+  }
+
+  @override
+  Future<Map<String, AuthUser>> getUserMap() {
+    Map<String, AuthUser> _userMap = {};
+    return userRef.get().then((value) {
+      value.docs.forEach((element) {
+        _userMap[element.data().uid] = element.data();
+      });
+      return _userMap;
+    });
+  }
 }
