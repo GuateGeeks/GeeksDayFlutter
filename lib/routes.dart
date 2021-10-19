@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:geeksday/ui/user_profile.dart';
 
 class Routes {
-  static const splash = '/';
+  // static const splash = '/';
   static const intro = '/';
   static const eventRegistration = '/eventRegistration';
   static const home = '/home';
@@ -25,8 +25,8 @@ class Routes {
 
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case splash:
-        return _buildRoute(SplashScreen.create);
+      // case splash:
+      //   return _buildRoute(SplashScreen.create);
       case intro:
         return _buildRoute(IntroScreen.create); 
       case createAccount:
