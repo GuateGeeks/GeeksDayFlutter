@@ -12,7 +12,7 @@ import 'package:geeksday/ui/user_profile.dart';
 
 class Routes {
   static const splash = '/';
-  static const intro = '/intro';
+  static const intro = '/';
   static const eventRegistration = '/eventRegistration';
   static const home = '/home';
   static const userProfile = '/userProfile';

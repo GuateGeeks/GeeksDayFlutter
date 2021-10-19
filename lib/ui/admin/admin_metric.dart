@@ -47,37 +47,91 @@ class _AdminMetricState extends State<AdminMetric> {
 
     return BlocBuilder<AdminCubit, AdminState>(
       builder: (context, state) {
-        return Container(
-          child: Column(
-            children: [
-              Container(
-                width: maxWidth,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: _crearDropdown(context),
-                      ),
-                    ],
-                  ),
-                ),
+        return Center(
+          child: Container(
+            width: maxWidth,
+            child: Card(  
+              child: ListView(  
+                children: [
+                  _crearDropdown(context),
+                  showUsers(context),
+                ],
               ),
-              ListView(
-                  shrinkWrap: true,
-                  children: state.postList.entries.map((e) {
-                    AuthUser user = state.userList[e.key] as AuthUser;
-                    return Text("${e.key} ${user.email}");
-                  }).toList())
-            ],
+            ),
+            // child: Column(
+            //   children: [
+            //     Container(
+            //       width: maxWidth,
+            //       child: Card(
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(5),
+            //         ),
+            //         child: Stack(
+            //           children: [
+            //             Padding(
+            //               padding: EdgeInsets.symmetric(horizontal: 20),
+            //               child: _crearDropdown(context),
+            //             ),
+            //             showUsers(context), 
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+               
+            //   ],
+            // ),
           ),
         );
       },
     );
   }
+
+  Widget showUsers(BuildContext context){
+    return BlocBuilder<AdminCubit, AdminState>(builder: (context, state){
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: state.postList.entries.map((e) {
+            AuthUser user = state.userList[e.key] as AuthUser;
+            return users(user, e.value,);
+          }).toList());
+      },
+    );
+  }
+
+  Widget users(AuthUser user, estate){
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: Row(
+        children: [
+          Container(
+              width: 50,
+              height: 50,
+              child: SvgPicture.string(
+                  multiavatar(user.image),
+              ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user.name,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                Text(
+                  "${estate}",
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   List<DropdownMenuItem<String>> getOpcionesDropdown() {
     List<DropdownMenuItem<String>> lista = [];
@@ -91,7 +145,6 @@ class _AdminMetricState extends State<AdminMetric> {
   }
 
   Widget _crearDropdown(BuildContext context) {
-    var user = BlocProvider.of<AuthCubit>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -115,57 +168,6 @@ class _AdminMetricState extends State<AdminMetric> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  Widget getUsers() {
-    return Container();
-  }
-
-  Widget user() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    child: SvgPicture.string(
-                      multiavatar("0000000000"),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "User name",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          "33",
-                          style: Theme.of(context).textTheme.subtitle2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Divider(
-            height: 25,
-            thickness: 1,
-          ),
-        ],
       ),
     );
   }

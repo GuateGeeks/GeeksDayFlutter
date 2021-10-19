@@ -28,58 +28,50 @@ class AdminCubit extends Cubit<AdminState> {
   List<AuthUser> _listUsers = [];
   Map<dynamic, int> mapa = {};
 
-  Future<void> userList(Map mapa) async {
-    var userList = await _adminService.higherScoreUserList();
-    for (var user in userList) {
-      if (mapa.containsKey(user.uid)) {
-        _listUsers.add(user);
-      }
-    }
-
-    var _state = SortedPost();
-    emit(_state);
-  }
 
   Future sortByPostCount() async {
-    _list = await _postService.getPostList();
-
-    for (Post post in _list) {
-      if (mapa.containsKey(post.user.uid)) {
-        mapa[post.user.uid] = mapa[post.user.uid]! + 1;
-      } else {
-        mapa[post.user.uid] = 1;
-      }
-    }
-    var _state = SortedPost();
-    _state.postList.addAll(mapa);
-    emit(_state);
-    mapa = {};
-  }
-
-  Future sortByLikesCount() async {
-    _list = await _postService.getPostList();
-
-    for (Post post in _list) {
-      for (var userId in post.likeList) {
-        if (mapa.containsKey(userId)) {
-          mapa[userId] = mapa[userId]! + 1;
-        } else {
-          mapa[userId] = 1;
-        }
-      }
-    }
-    var _state = SortedPost();
-    _state.postList.addAll(mapa);
-    emit(_state);
-
-    mapa = {};
-  }
-
-  Future sortByCommentCount() async {
     _list = await _postService.getPostList();
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
     Map<dynamic, int> resultMap = {};
     Map<String, AuthUser> resultUsersMap = {};
+
+    for (Post post in _list) {
+      if (resultMap.containsKey(post.user.uid)) {
+        resultMap[post.user.uid] = resultMap[post.user.uid]! + 1;
+      } else {
+        resultMap[post.user.uid] = 1;
+      }
+      resultUsersMap[post.user.uid] = _usersMap[post.user.uid]!;
+    }
+    addMaps(resultMap, resultUsersMap);
+  }
+
+  Future sortByLikesCount() async {
+    _list = await _postService.getPostList();
+    Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
+    Map<dynamic, int> resultMap = {};
+    Map<String, AuthUser> resultUsersMap = {};
+    
+    for (Post post in _list) {
+      for (var userId in post.likeList) {
+        if (resultMap.containsKey(userId)) {
+          resultMap[userId] = resultMap[userId]! + 1;
+        } else {
+          resultMap[userId] = 1;
+        }
+        resultUsersMap[userId] = _usersMap[userId]!;
+      }
+    }
+    addMaps(resultMap, resultUsersMap);
+  }
+
+  Future sortByCommentCount() async {
+    _list = await _postService.getPostList();
+
+    Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
+    Map<dynamic, int> resultMap = {};
+    Map<String, AuthUser> resultUsersMap = {};
+    
     for (Post post in _list) {
       for (Comment comment in post.commentList) {
         if (resultMap.containsKey(comment.user.uid)) {
@@ -90,12 +82,15 @@ class AdminCubit extends Cubit<AdminState> {
         resultUsersMap[comment.user.uid] = _usersMap[comment.user.uid]!;
       }
     }
+    addMaps(resultMap, resultUsersMap);
+  }
+
+
+  void addMaps(resultMap, resultUsersMap){
     var _state = SortedPost();
     _state.postList.addAll(resultMap);
     _state.userList.addAll(resultUsersMap);
-
     emit(_state);
-    mapa = {};
   }
 
   void sortPostList(PostFilterOptions? option) {
