@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,14 +21,6 @@ class AdminMetric extends StatefulWidget {
   @override
   State<AdminMetric> createState() => _AdminMetricState();
 }
-
-List<String> categories = [
-  'Más publicaciones',
-  'Más me gusta',
-  'Más comentarios',
-  'Mayor Puntuacion en los Quiz',
-];
-String categorieDefault = "Más publicaciones";
 
 class _AdminMetricState extends State<AdminMetric> {
   @override
@@ -58,28 +52,6 @@ class _AdminMetricState extends State<AdminMetric> {
                 ],
               ),
             ),
-            // child: Column(
-            //   children: [
-            //     Container(
-            //       width: maxWidth,
-            //       child: Card(
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(5),
-            //         ),
-            //         child: Stack(
-            //           children: [
-            //             Padding(
-            //               padding: EdgeInsets.symmetric(horizontal: 20),
-            //               child: _crearDropdown(context),
-            //             ),
-            //             showUsers(context), 
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-               
-            //   ],
-            // ),
           ),
         );
       },
@@ -92,13 +64,13 @@ class _AdminMetricState extends State<AdminMetric> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: state.postList.entries.map((e) {
             AuthUser user = state.userList[e.key] as AuthUser;
-            return users(user, e.value,);
+            return users(context, user, e.value,);
           }).toList());
       },
     );
   }
 
-  Widget users(AuthUser user, estate){
+  Widget users(BuildContext context, AuthUser user, estate){
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Row(
@@ -120,7 +92,7 @@ class _AdminMetricState extends State<AdminMetric> {
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Text(
-                  "${estate}",
+                  estate.toString(),
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
               ],
@@ -133,39 +105,39 @@ class _AdminMetricState extends State<AdminMetric> {
 
 
 
-  List<DropdownMenuItem<String>> getOpcionesDropdown() {
-    List<DropdownMenuItem<String>> lista = [];
-    categories.forEach((option) {
-      lista.add(DropdownMenuItem(
-        child: Text(option),
-        value: option,
-      ));
-    });
-    return lista;
-  }
+
 
   Widget _crearDropdown(BuildContext context) {
+
+    var optionsList = BlocProvider.of<AdminCubit>(context).optionsList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Theme.of(context).selectedRowColor,
         ),
         child: DropdownButtonHideUnderline(
-          child: DropdownButton<PostFilterOptions>(
+          child: DropdownButton(
+            hint: Text("Seleccionar opcion"),
             isExpanded: true,
-            value: PostFilterOptions.MOST_POST,
-            items: PostFilterOptions.values.map((options) {
-              return DropdownMenuItem<PostFilterOptions>(
-                value: options,
-                child: Text(options.toString()),
+          
+            items: optionsList.entries.map((option) {
+              return DropdownMenuItem(
+                value: option.key,
+                child: Text(option.value.toString()),
               );
             }).toList(),
-            onChanged: (PostFilterOptions? option) {
-              BlocProvider.of<AdminCubit>(context).sortPostList(option);
+
+            onChanged: (optionKey){
+              setState(() {
+                BlocProvider.of<AdminCubit>(context).sortPostList(optionKey);
+              });
             },
+
           ),
         ),
       ),

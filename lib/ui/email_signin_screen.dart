@@ -30,6 +30,7 @@ class _EmailSignInState extends State<EmailSignIn> {
   @override
   Widget build(BuildContext context) {
     final authCubit = context.watch<AuthCubit>();
+    
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
 

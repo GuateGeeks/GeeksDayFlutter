@@ -9,7 +9,9 @@ import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 
+
 enum PostFilterOptions {
+  DEFAULT,
   MOST_POST,
   MOST_LIKES,
   MOST_COMMENTS,
@@ -25,13 +27,25 @@ class AdminCubit extends Cubit<AdminState> {
       : super(InitialAdminState());
 
   List<Post> _list = [];
-  List<AuthUser> _listUsers = [];
-  Map<dynamic, int> mapa = {};
 
 
+  Map<PostFilterOptions, String?> optionsList(){
+    Map<PostFilterOptions, String?> options = {
+      PostFilterOptions.MOST_POST: "Más publicaciones",
+      PostFilterOptions.MOST_LIKES: "Más me gusta",
+      PostFilterOptions.MOST_COMMENTS: "Más Comentarios",
+    };
+    return options;
+  }
+
+
+
+  
+  //function to show users with more posts
   Future sortByPostCount() async {
     _list = await _postService.getPostList();
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
+    
     Map<dynamic, int> resultMap = {};
     Map<String, AuthUser> resultUsersMap = {};
 
@@ -93,7 +107,7 @@ class AdminCubit extends Cubit<AdminState> {
     emit(_state);
   }
 
-  void sortPostList(PostFilterOptions? option) {
+  void sortPostList(option) {
     switch (option) {
       case PostFilterOptions.MOST_POST:
         sortByPostCount();
@@ -113,6 +127,7 @@ abstract class AdminState {
   bool isBusy = false;
   Map postList = {};
   Map userList = {};
+  Map optionList = {};
 }
 
 class SortedPost extends AdminState {}
@@ -124,4 +139,5 @@ class InitialAdminState extends AdminState {
   @override
   Map postList = {};
   Map userList = {};
+  Map optionList = {};
 }
