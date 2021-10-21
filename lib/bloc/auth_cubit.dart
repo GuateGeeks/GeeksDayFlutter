@@ -14,7 +14,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> init() async {
     // Just for testing. Allows the splash screen to be shown a few seconds
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
     _authSubscription =
         _authService.onAuthStateChanged.listen(_authStateChanged);
   }
