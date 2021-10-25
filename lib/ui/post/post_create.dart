@@ -21,6 +21,9 @@ class _PostCreateState extends State<PostCreate> {
   final commentController = TextEditingController();
   File? uploadedImage;
 
+  Map<int, String> answersMap = {};
+
+
   Widget _content(BuildContext context) {
     //responsive modal
     double width = MediaQuery.of(context).size.width;
@@ -108,6 +111,7 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   List<Widget> inputAnswers(BuildContext context) {
+    
     var postCubit = BlocProvider.of<PostCubit>(context);
     bool isQuiz = postCubit.isQuiz();
     var post = postCubit.state.post;
@@ -117,11 +121,10 @@ class _PostCreateState extends State<PostCreate> {
             (answer) => Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: TextFormField(
-                onSaved: (value) {
-                  var index = postCubit.indexOfAnswer(answer);
-                  postCubit.updateQuizAnswer(index, value!);
+                onChanged: (value) {
+                  int index = postCubit.indexOfAnswer(answer);
+                  saveAnswers(context, index, value);
                 },
-                onChanged: (value) {},
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   suffixIcon: InkWell(
@@ -155,6 +158,16 @@ class _PostCreateState extends State<PostCreate> {
           .toList();
     }
     return [];
+  }
+
+  void saveAnswers(BuildContext context, int index, String value){
+    var postCubit = BlocProvider.of<PostCubit>(context);
+    answersMap[index] = value;
+    answersMap.forEach((key, value) { 
+      setState(() {
+        postCubit.updateQuizAnswer(key, value);
+      });
+    });
   }
 
   @override
@@ -220,7 +233,7 @@ class _PostCreateState extends State<PostCreate> {
         ),
       );
     }
-    return Text("");
+    return Container();
   }
 
   Widget description(BuildContext context) {
@@ -249,9 +262,11 @@ class _PostCreateState extends State<PostCreate> {
         builder: (context, value, child){
           return ElevatedButton(
             onPressed: value.text.isNotEmpty ? () {
-              BlocProvider.of<PostCubit>(context)
-            .createPost(commentController.text);
-            Navigator.pop(context);
+              
+            //   BlocProvider.of<PostCubit>(context)
+            // .createPost(commentController.text);
+            // Navigator.pop(context);
+
             } : null,
             style: ButtonStyle(
               padding:

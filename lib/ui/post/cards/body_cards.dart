@@ -94,7 +94,7 @@ class ProgressBar extends StatefulWidget {
 class _ProgressBarState extends State<ProgressBar> {
   bool isPressed = false;
   //temporary correct answer
-  String correctAnswer = "rp1";
+  bool correctAnswer = true;
 
   @override
   Widget build(BuildContext context) {
@@ -133,19 +133,17 @@ class _ProgressBarState extends State<ProgressBar> {
                             : 450,
                         animation: true,
                         lineHeight: 40.0,
-                        animationDuration: 2500,
+                        animationDuration: 1000,
                         percent: isPressed ? 0.8 : 0,
                         center: Text(
-                          isPressed
-                              ? "80.0% Porcentaje respuestas"
-                              : answer.text,
+                          answer.text,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: isPressed
-                            ? correctAnswer == answer.text
+                            ? correctAnswer == answer.isCorrect
                                 ? Colors.green
                                 : Colors.red
                             : Colors.transparent,
