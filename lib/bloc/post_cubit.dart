@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz.dart';
+import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
