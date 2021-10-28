@@ -100,6 +100,9 @@ class AdminCubit extends Cubit<AdminState> {
     addMaps(resultMap, resultUsersMap);
   }
 
+  Future sortByAnswersCorrect() async {
+    
+  }
 
   void addMaps(resultMap, resultUsersMap){
     var _state = SortedPost();

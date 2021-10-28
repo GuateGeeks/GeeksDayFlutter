@@ -262,11 +262,8 @@ class _PostCreateState extends State<PostCreate> {
         builder: (context, value, child){
           return ElevatedButton(
             onPressed: value.text.isNotEmpty ? () {
-              
-            //   BlocProvider.of<PostCubit>(context)
-            // .createPost(commentController.text);
-            // Navigator.pop(context);
-
+              BlocProvider.of<PostCubit>(context).createPost(commentController.text);
+              Navigator.pop(context);
             } : null,
             style: ButtonStyle(
               padding:

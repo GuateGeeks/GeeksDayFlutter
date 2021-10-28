@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/quiz_records_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/models/quiz_records.dart';
+import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class BodyCard extends StatelessWidget {
-  const BodyCard({
+  const BodyCard( {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    return Container(
+    return BlocProvider(  
+      create: (_) => QuizRecordsCubit(QuizRecordsService()),
+      child: Container(
       child: Column(
         children: [
           Container(
@@ -63,9 +69,14 @@ class BodyCard extends StatelessWidget {
           // ...AnswersList(state),
         ],
       ),
+    ),
     );
   }
 }
+
+
+
+
 
 class ImagePage extends StatelessWidget {
   late String image;
@@ -99,15 +110,18 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    return Column(
-      children: [
-        ...AnswersList(state),
-      ],
-    );
+     return Column(
+       children: [
+         ...AnswersList(state)
+       ],
+     );
   }
+
+ 
 
   List<Widget> AnswersList(PostCubit state) {
     double width = MediaQuery.of(context).size.width;
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     if (state.isQuiz()) {
       return state
           .getAnswers()
@@ -120,6 +134,8 @@ class _ProgressBarState extends State<ProgressBar> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
+                      var mostrar = BlocProvider.of<QuizRecordsCubit>(context);
+                     mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
                       //get the click a button of the answers
                       isPressed = true;
                     });
@@ -128,11 +144,13 @@ class _ProgressBarState extends State<ProgressBar> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       new LinearPercentIndicator(
+                        backgroundColor: Colors.black12,
                         width: width < 650
                             ? MediaQuery.of(context).size.width - 100
                             : 450,
                         animation: true,
                         lineHeight: 40.0,
+                        
                         animationDuration: 1000,
                         percent: isPressed ? 0.8 : 0,
                         center: Text(

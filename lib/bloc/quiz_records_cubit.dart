@@ -1,6 +1,6 @@
-
-
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/quiz_records_service.dart';
 
 class QuizRecordsCubit extends Cubit<QuizRecordsState> {
@@ -10,9 +10,16 @@ class QuizRecordsCubit extends Cubit<QuizRecordsState> {
       : super(QuizRecordsInitialState());
 
 
-  Future mostrar() async{
-    return await _quizRecordsService.getQuizRecordsList();
+  void answeredQuiz(String answer, bool iscorrect, String idpost, String iduser){
+    var a = QuizRecords.newQuizRecords(answer, iscorrect, idpost, iduser);
+    _quizRecordsService.quizAnswered(a);
+    
   }
+
+  mostrar(){
+    print("Hila mundo");
+  }
+ 
   
 }
 
@@ -20,8 +27,9 @@ abstract class QuizRecordsState {
 
 }
 
-class SortedPost extends QuizRecordsState {}
+class SortedPost extends QuizRecordsState {
+}
 
 class QuizRecordsInitialState extends QuizRecordsState {
- 
+
 }
