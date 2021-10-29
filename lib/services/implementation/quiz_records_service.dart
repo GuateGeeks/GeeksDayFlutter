@@ -27,20 +27,14 @@ class QuizRecordsService extends QuizRecordsServiceBase{
     );
   }
 
-
-
-
-
   @override
   Future<List<QuizRecords>> getQuizRecordsList() async {
-    
     var _feedlist = <QuizRecords>[];
     return quizRecordsRef.get().then((value) {
       value.docs.forEach((element) {
-        _feedlist.add(element.data());
+        _feedlist.add(element.data()); 
       });
       return _feedlist;
     });
   }
-
 }

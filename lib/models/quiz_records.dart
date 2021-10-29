@@ -1,15 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:geeksday/models/auth_user.dart';
-import 'package:geeksday/models/post.dart';
+import 'package:geeksday/bloc/quiz_records_cubit.dart';
 import 'package:uuid/uuid.dart';
 
-class QuizRecords{
+class QuizRecords extends Equatable{
   final String id;
   String answer;
   bool iscorrect;
   String idpost;
   String iduser;
-  bool answered; 
 
   QuizRecords({
     required this.id,
@@ -17,16 +15,14 @@ class QuizRecords{
     required this.iscorrect,
     required this.idpost,
     required this.iduser,
-    required this.answered,
   });
 
   @override
-  List<Object> get props => [id, answer, iscorrect];
+  List<Object> get props => [id, answer, iscorrect, idpost, iduser];
 
   factory QuizRecords.newQuizRecords(String answer, bool iscorrect, String idpost,  String iduser){
     var id = Uuid().v1();
-    var answered = false;
-    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser, answered: answered);
+    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser);
   }
 
   Map<String, Object?> toFirebaseMap() {
@@ -36,7 +32,6 @@ class QuizRecords{
       'iscorrect': iscorrect,
       'idpost': idpost,
       'iduser': iduser,
-      'answered': answered,
     };
   }
 
@@ -46,7 +41,23 @@ class QuizRecords{
     var iscorrect = data['iscorrect'];
     var idpost = data['idpost'];
     var iduser = data['iduser'];
-    var answered = data['answered'];
-    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser, answered: answered);
+    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser);
   }
+
+  QuizRecords copyWith({
+    String? id,
+    String? answer,
+    bool? iscorrect,
+    String? idpost,
+    String? iduser
+  }) {
+    return QuizRecords(
+      id: id ?? this.id,
+      answer: answer ?? this.answer,
+      iscorrect: iscorrect ?? this.iscorrect,
+      idpost: idpost ?? this.idpost,
+      iduser: iduser ?? this.iduser
+    );
+  }
+
 }

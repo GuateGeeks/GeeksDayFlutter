@@ -4,9 +4,7 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/firestore_path.dart';
 import 'package:geeksday/services/firestore_service.dart';
 import 'package:geeksday/services/post_service.dart';
-import 'package:geeksday/ui/post/post_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
@@ -45,11 +43,24 @@ class PostService extends PostServiceBase {
   }
   //Delete post comments
   @override
-  Future<void> deleteComment(Post post, String commentid) async{
-    
+  Future<void> deleteComment(Post post, String commentid) async{  
     post.commentList.removeWhere((element) => element.id == commentid);
     updatePost(post);
+  }
 
+  Future<void> updateIsAnswered(Post post) async {
+    final ref = postRef.doc(post.id);
+
+  }
+
+  @override
+  Future<void> selectedCounter(Post post, int index, int counter) async{
+    int countertoFirebase = counter + 1;
+    var editar = post.quiz!.questions[0].answers;
+    final ref = postRef.doc(post.id);
+    ref.update({
+      'quiz.questions.$index.selectedCounter': countertoFirebase,
+    });
   }
 
   @override

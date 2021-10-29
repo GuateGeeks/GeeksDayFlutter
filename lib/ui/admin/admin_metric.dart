@@ -12,6 +12,7 @@ import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/implementation/admin_service.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
+import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class _AdminMetricState extends State<AdminMetric> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AdminCubit(AdminService(), PostService(), AuthService()),
+      create: (_) => AdminCubit(AdminService(), PostService(), AuthService(), QuizRecordsService()),
       child: Scaffold(
           appBar: AppBar(
             title: Text("Admin"),

@@ -158,13 +158,27 @@ class PostCubit extends Cubit<PostState> {
     state.post.quiz!.questions[0].answers[index].text = text;
   }
 
- 
+  void updateIsAnswered(){
+    _postService.updateIsAnswered(state.post);
+    emit(PostUpdatedState(state.post));
+  }
+
+  bool isanswered(){
+    return state.post.quiz!.isanswered;
+  }
 
   void toggleAnswerIsCorrect(Answer answer) {
     int index = indexOfAnswer(answer);
     state.post.quiz!.questions[0].answers[index].isCorrect =
         !state.post.quiz!.questions[0].answers[index].isCorrect;
     emit(PostUpdatedState(state.post));
+  }
+
+  void selectCounter(Answer answer){
+    int index = indexOfAnswer(answer);
+    int counter = state.post.quiz!.questions[0].answers[index].selectedCounter;
+
+    _postService.selectedCounter(state.post, index, counter);
   }
 
 }

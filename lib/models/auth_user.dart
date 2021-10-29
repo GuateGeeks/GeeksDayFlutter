@@ -6,7 +6,7 @@ class AuthUser extends Equatable {
   String image;
   final String email;
   bool isadmin;
-
+ 
   AuthUser(this.uid, this.name, this.email, this.image, this.isadmin);
 
   @override

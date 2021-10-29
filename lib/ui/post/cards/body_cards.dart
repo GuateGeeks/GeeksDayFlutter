@@ -135,7 +135,7 @@ class _ProgressBarState extends State<ProgressBar> {
                   onTap: () {
                     setState(() {
                       var mostrar = BlocProvider.of<QuizRecordsCubit>(context);
-                     mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
+                      mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
                       //get the click a button of the answers
                       isPressed = true;
                     });

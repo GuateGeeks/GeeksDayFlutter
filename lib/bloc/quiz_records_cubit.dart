@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/quiz_records_service.dart';
 
@@ -15,6 +16,11 @@ class QuizRecordsCubit extends Cubit<QuizRecordsState> {
     _quizRecordsService.quizAnswered(a);
     
   }
+
+  Future<List> getQuizRecordsList(){
+    return _quizRecordsService.getQuizRecordsList();
+  }
+
 
   mostrar(){
     print("Hila mundo");

@@ -3,28 +3,31 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
+import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/auth_service.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:geeksday/services/post_service.dart';
+import 'package:geeksday/services/quiz_records_service.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 
 
 enum PostFilterOptions {
-  DEFAULT,
   MOST_POST,
   MOST_LIKES,
   MOST_COMMENTS,
+  MOST_CORRECT_ANSWERS
 }
 
 class AdminCubit extends Cubit<AdminState> {
   final AdminServiceBase _adminService;
 
   final PostServiceBase _postService;
+  final QuizRecordsServiceBase _quizRecordsServiceBase;
   final AuthServiceBase _authServiceBase;
 
-  AdminCubit(this._adminService, this._postService, this._authServiceBase)
+  AdminCubit(this._adminService, this._postService, this._authServiceBase, this._quizRecordsServiceBase)
       : super(InitialAdminState());
 
   List<Post> _list = [];
@@ -35,6 +38,7 @@ class AdminCubit extends Cubit<AdminState> {
       PostFilterOptions.MOST_POST: "Más publicaciones",
       PostFilterOptions.MOST_LIKES: "Más me gusta",
       PostFilterOptions.MOST_COMMENTS: "Más Comentarios",
+      PostFilterOptions.MOST_CORRECT_ANSWERS: "Más respuestas correctas",
     };
     return options;
   }
@@ -101,7 +105,22 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   Future sortByAnswersCorrect() async {
-    
+    var list = await _quizRecordsServiceBase.getQuizRecordsList();
+    Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
+    Map<dynamic, int> resultMap = {};
+    Map<String, AuthUser> resultUsersMap = {};
+
+    for (QuizRecords quizRecord in list) {
+      if(resultMap.containsKey(quizRecord.iduser)){
+        if(quizRecord.iscorrect){
+          resultMap[quizRecord.iduser] = resultMap[quizRecord.iduser]! + 1;
+        }
+      }else{
+        resultMap[quizRecord.iduser] = 1;
+      }
+      resultUsersMap[quizRecord.iduser] = _usersMap[quizRecord.iduser]!;
+    }
+    addMaps(resultMap, resultUsersMap);    
   }
 
   void addMaps(resultMap, resultUsersMap){
@@ -121,6 +140,9 @@ class AdminCubit extends Cubit<AdminState> {
         break;
       case PostFilterOptions.MOST_COMMENTS:
         sortByCommentCount();
+        break;
+      case PostFilterOptions.MOST_CORRECT_ANSWERS:
+        sortByAnswersCorrect();
         break;
       default:
     }
