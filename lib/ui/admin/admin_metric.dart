@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/admin_cubit.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/events_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
@@ -134,7 +135,7 @@ class _AdminMetricState extends State<AdminMetric> {
             }).toList(),
 
             onChanged: (optionKey){
-              setState(() {
+              setState(() {                
                 BlocProvider.of<AdminCubit>(context).sortPostList(optionKey);
               });
             },
