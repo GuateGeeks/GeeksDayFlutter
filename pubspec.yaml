@@ -33,6 +33,8 @@ dependencies:
   multiavatar: ^0.1.5
   #Circular Loader
   progress_indicators: ^1.0.0
+  #Password generator
+  random_password_generator: ^0.2.1
 
   
   ## UUID Generator

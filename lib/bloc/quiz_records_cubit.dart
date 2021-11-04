@@ -12,20 +12,14 @@ class QuizRecordsCubit extends Cubit<QuizRecordsState> {
 
 
   void answeredQuiz(String answer, bool iscorrect, String idpost, String iduser){
-    var a = QuizRecords.newQuizRecords(answer, iscorrect, idpost, iduser);
-    _quizRecordsService.quizAnswered(a);
+    var answeredQuiz = QuizRecords.newQuizRecords(answer, iscorrect, idpost, iduser);
+    _quizRecordsService.quizAnswered(answeredQuiz);
     
   }
 
   Future<List> getQuizRecordsList(){
     return _quizRecordsService.getQuizRecordsList();
   }
-
-
-  mostrar(){
-    print("Hila mundo");
-  }
- 
   
 }
 

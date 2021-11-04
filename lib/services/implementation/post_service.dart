@@ -50,6 +50,9 @@ class PostService extends PostServiceBase {
 
   Future<void> updateIsAnswered(Post post) async {
     final ref = postRef.doc(post.id);
+    ref.update({
+      'quiz.isanswered': true,
+    });
 
   }
 

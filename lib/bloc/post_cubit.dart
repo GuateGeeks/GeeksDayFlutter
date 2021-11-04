@@ -164,7 +164,10 @@ class PostCubit extends Cubit<PostState> {
   }
 
   bool isanswered(){
-    return state.post.quiz!.isanswered;
+    if(isQuiz()){
+      return state.post.quiz!.isanswered;
+    }
+    return false;
   }
 
   void toggleAnswerIsCorrect(Answer answer) {

@@ -15,10 +15,11 @@ class EventsCubit extends Cubit<EventsState>{
 
 }
 
-abstract class EventsState{
+abstract class EventsState {
 
 }
 
-class EventsInitialState extends EventsState{
+
+class EventsInitialState extends EventsState {
 
 }

@@ -103,8 +103,6 @@ class ProgressBar extends StatefulWidget {
 }
 
 class _ProgressBarState extends State<ProgressBar> {
-  bool isPressed = false;
-  //temporary correct answer
   bool correctAnswer = true;
 
   @override
@@ -120,6 +118,7 @@ class _ProgressBarState extends State<ProgressBar> {
  
 
   List<Widget> AnswersList(PostCubit state) {
+    bool isAnswered = state.isanswered();
     double width = MediaQuery.of(context).size.width;
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     if (state.isQuiz()) {
@@ -132,12 +131,11 @@ class _ProgressBarState extends State<ProgressBar> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20.0),
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: isAnswered ? null : () {
                     setState(() {
-                      var mostrar = BlocProvider.of<QuizRecordsCubit>(context);
-                      mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
-                      //get the click a button of the answers
-                      isPressed = true;
+                      var quizRecords = BlocProvider.of<QuizRecordsCubit>(context);
+                      quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
+                      state.updateIsAnswered();
                     });
                   },
                   child: Row(
@@ -152,7 +150,7 @@ class _ProgressBarState extends State<ProgressBar> {
                         lineHeight: 40.0,
                         
                         animationDuration: 1000,
-                        percent: isPressed ? 0.8 : 0,
+                        percent: isAnswered ? 0.8 : 0,
                         center: Text(
                           answer.text,
                           style: TextStyle(
@@ -160,7 +158,7 @@ class _ProgressBarState extends State<ProgressBar> {
                           ),
                         ),
                         linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: isPressed
+                        progressColor: isAnswered
                             ? correctAnswer == answer.isCorrect
                                 ? Colors.green
                                 : Colors.red
