@@ -103,11 +103,9 @@ class _EventsCreateState extends State<EventsCreate> {
             decoration: InputDecoration(
               suffixIcon: InkWell(
               onTap: (){
-                
+
               },
-              
-              child: Icon( Icons.visibility_off,
-              ),
+              child: Icon( Icons.replay_outlined),
             ),
               hintText: "Generar Código",
             ),

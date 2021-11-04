@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
-import 'package:geeksday/ui/event_registration.dart';
 import 'package:geeksday/ui/events_create.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/intro_screen.dart';
