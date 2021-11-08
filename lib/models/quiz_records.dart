@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:geeksday/bloc/quiz_records_cubit.dart';
 import 'package:uuid/uuid.dart';
 
 class QuizRecords extends Equatable{

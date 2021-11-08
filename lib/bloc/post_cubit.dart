@@ -179,9 +179,10 @@ class PostCubit extends Cubit<PostState> {
 
   void selectCounter(Answer answer){
     int index = indexOfAnswer(answer);
-    int counter = state.post.quiz!.questions[0].answers[index].selectedCounter;
-
-    _postService.selectedCounter(state.post, index, counter);
+    state.post.quiz!.questions[0].answers[index].selectedCounter = 
+      state.post.quiz!.questions[0].answers[index].selectedCounter + 1;
+    _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
   }
 
 }

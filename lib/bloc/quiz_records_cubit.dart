@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/quiz_records_service.dart';
 
@@ -14,7 +12,6 @@ class QuizRecordsCubit extends Cubit<QuizRecordsState> {
   void answeredQuiz(String answer, bool iscorrect, String idpost, String iduser){
     var answeredQuiz = QuizRecords.newQuizRecords(answer, iscorrect, idpost, iduser);
     _quizRecordsService.quizAnswered(answeredQuiz);
-    
   }
 
   Future<List> getQuizRecordsList(){
@@ -24,10 +21,6 @@ class QuizRecordsCubit extends Cubit<QuizRecordsState> {
 }
 
 abstract class QuizRecordsState {
-
-}
-
-class SortedPost extends QuizRecordsState {
 }
 
 class QuizRecordsInitialState extends QuizRecordsState {

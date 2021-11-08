@@ -1,7 +1,8 @@
 
+import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
-class Events{
+class Events extends Equatable{
   final String id;
   final String name;
   final String code;
@@ -9,10 +10,13 @@ class Events{
 
   Events({
     required this.id,
-    required this.name,
+    required this.name, 
     required this.code,
     required this.createAt
   });
+
+  @override
+  List<Object> get props => [id, name, code, createAt];
 
 
   Map<String, Object> toFirebaseMap(){
@@ -61,6 +65,4 @@ class Events{
       createAt: createAt,
     );
   }
-
-
 }

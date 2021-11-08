@@ -6,12 +6,8 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/auth_service.dart';
-import 'package:geeksday/services/implementation/post_service.dart';
-import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:geeksday/services/quiz_records_service.dart';
-import 'package:geeksday/ui/post/post_list.dart';
-
 
 enum PostFilterOptions {
   MOST_POST,

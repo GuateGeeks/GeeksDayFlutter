@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 
@@ -9,8 +8,11 @@ class EventsCubit extends Cubit<EventsState>{
 
   Future<List> getEventsList(){
     return _eventsService.getEventsList();
-  }
+  } 
 
+  String mostrar(){
+    return 'Hola mundo desde events cubit';
+  }
 
 
 }

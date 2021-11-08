@@ -1,4 +1,4 @@
 
 abstract class EventsServiceBase{
-  Future<List> getEventsList();
+  Future<List> getEventsList(); 
 }
