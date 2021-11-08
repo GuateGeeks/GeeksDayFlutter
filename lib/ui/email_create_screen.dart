@@ -45,7 +45,7 @@ class _EmailCreateState extends State<EmailCreate> {
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
       appBar: AppBar(title: Text('Create account')),
-      backgroundColor: Color.fromRGBO(171, 171, 171, 1),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (_, state) {
           return Center(
@@ -56,10 +56,7 @@ class _EmailCreateState extends State<EmailCreate> {
                   children: [
                     Text(
                       "Sing Up",
-                      style: TextStyle(
-                          fontSize: 35.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
                       height: 10,

@@ -21,8 +21,7 @@ class _EmailFormState extends State<EmailForm> {
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Text(
             "Email",
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Colors.white, fontSize: 18),
+            style: Theme.of(context).textTheme.headline1,
           ),
         ),
         TextFormField(
@@ -33,19 +32,19 @@ class _EmailFormState extends State<EmailForm> {
             hintText: "Enter your email",
             border: InputBorder.none,
             filled: true,
-            fillColor: Color.fromRGBO(240, 240, 240, 1),
+            fillColor: Theme.of(context).inputDecorationTheme.fillColor,
             contentPadding:
                 const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
             focusedBorder: OutlineInputBorder(
               borderRadius: new BorderRadius.circular(8),
               borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
+                color: Colors.transparent,
               ),
             ),
             enabledBorder: UnderlineInputBorder(
               borderRadius: new BorderRadius.circular(8),
               borderSide: new BorderSide(
-                color: Color.fromRGBO(240, 240, 240, 1),
+                color: Colors.transparent,
               ),
             ),
           ),

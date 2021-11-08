@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/quiz_records_cubit.dart';
-import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -131,11 +129,12 @@ class _ProgressBarState extends State<ProgressBar> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20.0),
                 child: GestureDetector(
-                  onTap: isAnswered ? null : () {
+                  onTap: () {
                     setState(() {
                       var quizRecords = BlocProvider.of<QuizRecordsCubit>(context);
                       quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
                       state.updateIsAnswered();
+                      state.selectCounter(answer);
                     });
                   },
                   child: Row(

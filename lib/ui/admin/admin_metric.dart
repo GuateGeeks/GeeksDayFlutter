@@ -4,18 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/admin_cubit.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/events_cubit.dart';
-import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
-import 'package:geeksday/models/post.dart';
-import 'package:geeksday/services/admin_service.dart';
 import 'package:geeksday/services/implementation/admin_service.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:multiavatar/multiavatar.dart';
-import 'package:provider/provider.dart';
 
 class AdminMetric extends StatefulWidget {
   const AdminMetric({Key? key}) : super(key: key);

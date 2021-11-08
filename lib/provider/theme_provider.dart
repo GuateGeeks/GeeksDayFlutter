@@ -72,6 +72,12 @@ class MyThemes {
         fontWeight: FontWeight.w600,
         color: Colors.grey,
       ),
+      //text style Sing up and login
+      overline: TextStyle(
+        fontSize: 30.0,
+        color: Colors.white,
+        fontWeight: FontWeight.w600
+      ), 
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
@@ -85,6 +91,17 @@ class MyThemes {
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
+    //Style textbutton singup
+    textButtonTheme: TextButtonThemeData(  
+      style: TextButton.styleFrom(
+        primary: Colors.white,
+        textStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 17,
+        ),
+      )
+    ),
+    accentColor: Colors.white, 
   );
 
   static final lightTheme = ThemeData(
@@ -143,6 +160,12 @@ class MyThemes {
         fontWeight: FontWeight.w600,
         color: Colors.grey,
       ),
+      //text style Sing up and login
+      overline: TextStyle(
+        fontSize: 30.0,
+        color: Colors.black,
+        fontWeight: FontWeight.w600
+      ),
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
@@ -156,5 +179,16 @@ class MyThemes {
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.black12,
+    //Style textbutton singup
+    textButtonTheme: TextButtonThemeData(  
+      style: TextButton.styleFrom(
+        primary: Colors.black,
+        textStyle: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 17,
+        ),
+      )
+    ),
+    accentColor: Colors.black, 
   );
 }

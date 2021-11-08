@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/services.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,7 @@ class _EmailSignInState extends State<EmailSignIn> {
 
     return Scaffold(
       appBar: AppBar(title: Text('Login with Email')),
-      backgroundColor: Color.fromRGBO(171, 171, 171, 1),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (_, state) {
           return Center(
@@ -47,10 +49,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                   children: [
                     Text(
                       "Sing Up",
-                      style: TextStyle(
-                          fontSize: 35.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
                       height: 10,
@@ -112,9 +111,9 @@ class _EmailSignInState extends State<EmailSignIn> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    singInGoogle(authCubit),
+                    singInGoogle(context, authCubit),
                     SizedBox(height: 20),
-                    singUp(authCubit),
+                    singUp(context, authCubit),
                   ],
                 ),
               ),
@@ -126,13 +125,12 @@ class _EmailSignInState extends State<EmailSignIn> {
   }
 
   //Button Sing In whith google
-  Widget singInGoogle(authCubit) {
+  Widget singInGoogle(context, authCubit) {
     return Column(
       children: [
         Text(
           "Sing in with",
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.headline1,
         ),
         SizedBox(height: 20),
         ElevatedButton(
@@ -156,28 +154,19 @@ class _EmailSignInState extends State<EmailSignIn> {
   }
 
   //Button Sing Up
-  Widget singUp(authCubit) {
+  Widget singUp(BuildContext context, authCubit) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           "Don't have an Account?",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-          ),
+          style: Theme.of(context).textTheme.headline1,
         ),
         SizedBox(width: 5.0),
         TextButton(
           child: Text('Sing Up'),
-          style: TextButton.styleFrom(
-            primary: Colors.white,
-            textStyle: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 17,
-            ),
-          ),
+          style: Theme.of(context).textButtonTheme.style,
           onPressed: () {
             authCubit.reset();
             Navigator.pushNamed(context, Routes.createAccount);

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/events_cubit.dart';
+import 'package:geeksday/services/implementation/events_service.dart';
+import 'package:geeksday/ui/home.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
 class EventsCreate extends StatefulWidget {
@@ -12,18 +16,24 @@ class EventsCreate extends StatefulWidget {
 }
 
 class _EventsCreateState extends State<EventsCreate> {
-  String codigo = ''; 
+  TextEditingController nameEvent = TextEditingController();
+  TextEditingController codigoEvent = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(  
-        title: Text("Eventos"),
+    return BlocProvider(
+      create: (_) => EventsCubit(EventsService()),
+      child: Scaffold(
+        appBar: AppBar(  
+          title: Text("Eventos"),
+        ),
+        body: bodyEventsCreate(),
+        floatingActionButton: floatingActionButton(context),
       ),
-      body: bodyEventsCreate(),
-      floatingActionButton: floatingActionButton(context),
     );
   }
+
+  
 
   Widget bodyEventsCreate(){
     return Container();
@@ -79,7 +89,7 @@ class _EventsCreateState extends State<EventsCreate> {
               ),
               //Input description Nuevo Post
               eventsCreateForm(),
-              
+              buttonSave(context),
             ],
           ),
         ),
@@ -98,15 +108,13 @@ class _EventsCreateState extends State<EventsCreate> {
             ),
           ),
           TextFormField(
-            initialValue: codigo,
+            controller: codigoEvent,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              suffixIcon: InkWell(
-              onTap: (){
-
-              },
-              child: Icon( Icons.replay_outlined),
-            ),
+              suffixIcon: GestureDetector(
+                onTap: codigoRandom,
+                child: Icon(Icons.replay_circle_filled_outlined),
+              ),
               hintText: "Generar Código",
             ),
           ),
@@ -115,16 +123,33 @@ class _EventsCreateState extends State<EventsCreate> {
     );
   }
 
-  // random() {
-  //   String randomCodigo = RandomPasswordGenerator().randomPassword(
-  //     letters: true,
-  //     numbers: true,
-  //     specialChar: false,
-  //     uppercase: false,
-  //     passwordLength: 15
-  //   );
-  //   setState(() {
-  //     codigo = randomCodigo;
-  //   });
-  // }
+  Widget buttonSave(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+      child:  ElevatedButton(
+        onPressed: () {
+         
+        },
+        style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+        ),
+        child: Text("Guardar"),
+      ),
+    );
+  }
+
+  void codigoRandom(){
+    final codigo = RandomPasswordGenerator();
+    String generateCodigo = codigo.randomPassword(
+      letters: true,
+      numbers: true,
+      passwordLength: 16,
+      uppercase: true,
+      specialChar: false,
+    );
+    setState(() {
+      codigoEvent.text = generateCodigo;
+    });
+  }
 }

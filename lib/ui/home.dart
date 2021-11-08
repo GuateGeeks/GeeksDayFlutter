@@ -3,42 +3,12 @@ import 'package:geeksday/ui/main_drawer.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
-  static Widget create(BuildContext context) {
+class Home extends StatelessWidget {
+   static Widget create(BuildContext context) {
     return Home();
   }
-
-  Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      builder: (context, _) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          themeMode: themeProvider.themeMode,
-          theme: MyThemes.lightTheme,
-          darkTheme: MyThemes.darkTheme,
-          home: ScaffoldHome(),
-        );
-      },
-    );
-  }
-}
-
-class ScaffoldHome extends StatelessWidget {
-  const ScaffoldHome({
-    Key? key,
-  }) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
