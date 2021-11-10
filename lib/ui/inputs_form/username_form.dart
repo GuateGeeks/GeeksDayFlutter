@@ -29,6 +29,7 @@ class _UsernameFormState extends State<UsernameForm> {
           controller: widget.usernameController,
           validator: widget.emailAndUsernameValidator,
           cursorColor: Color.fromRGBO(170, 170, 170, 1),
+          
           decoration: InputDecoration(
             hintText: "Enter your username",
             border: InputBorder.none,

@@ -10,6 +10,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/quiz_records_service.dart';
 import 'package:geeksday/ui/admin/admin_metric.dart';
+import 'package:geeksday/ui/post/post_create.dart';
 import 'package:intl/intl.dart';
 
 class PostCubit extends Cubit<PostState> {
@@ -174,6 +175,7 @@ class PostCubit extends Cubit<PostState> {
     int index = indexOfAnswer(answer);
     state.post.quiz!.questions[0].answers[index].isCorrect =
         !state.post.quiz!.questions[0].answers[index].isCorrect;
+    _postService.updatePost(state.post);
     emit(PostUpdatedState(state.post));
   }
 
@@ -185,6 +187,13 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
+  List<int> counter(a){
+    List<int> counter = [];
+    for (Answer item in a) {
+      counter.add(item.selectedCounter.toInt());
+    }
+    return counter;
+  }
 }
 
 

@@ -80,12 +80,26 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   //Edit User Profile
-  void updateUser(uid, userName, avatar) {
+  void updateUser(userName, avatar) {
     AuthUser user =
         (state as AuthSignedIn).user.copyWith(name: userName, image: avatar);
     _authService.updateUser(user).then((value) {
       emit(AuthSignedIn(user));
     });
+  }
+
+  //changeTheme
+  void changeTheme(){
+    bool darkMode = (state as AuthSignedIn).user.darkmode;
+    bool changeTheme = !darkMode;
+  
+    AuthUser user = (state as AuthSignedIn).user.copyWith(darkmode: changeTheme);
+    _authService.updateUser(user);
+    emit(AuthSignedIn(user));
+  }
+
+  bool getTheme(){
+    return (state as AuthSignedIn).user.darkmode; 
   }
 }
 

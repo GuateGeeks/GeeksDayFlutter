@@ -1,4 +1,5 @@
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/routes.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
               ?.pushNamedAndRemoveUntil(Routes.intro, (r) => false);
         } else if (state is AuthSignedIn) {
           _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.eventsCreate, (r) => false);
+              ?.pushNamedAndRemoveUntil(Routes.home, (r) => false);
         }
       },
       child: MyApp(),
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          themeMode: themeProvider.themeMode,
+          themeMode: themeProvider.toggleTheme(true),
           theme: MyThemes.lightTheme,
           darkTheme: MyThemes.darkTheme,
           navigatorKey: _navigatorKey,

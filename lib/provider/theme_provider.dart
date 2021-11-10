@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/services/auth_service.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.dark;
 
-  bool get isDarkMode => themeMode == ThemeMode.dark;
-
-  void toggleTheme(bool isOn) {
-    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
+  toggleTheme(theme) {
+    return theme ? ThemeMode.dark : ThemeMode.light;
   }
 }
 
