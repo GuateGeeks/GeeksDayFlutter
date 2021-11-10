@@ -9,6 +9,7 @@ class EventsCreate extends StatefulWidget {
   static Widget create(BuildContext context) {
     return EventsCreate();
   }
+
   const EventsCreate({Key? key}) : super(key: key);
 
   @override
@@ -16,30 +17,22 @@ class EventsCreate extends StatefulWidget {
 }
 
 class _EventsCreateState extends State<EventsCreate> {
-  TextEditingController nameEvent = TextEditingController();
-  TextEditingController codigoEvent = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => EventsCubit(EventsService()),
-      child: Scaffold(
-        appBar: AppBar(  
-          title: Text("Eventos"),
-        ),
-        body: bodyEventsCreate(),
-        floatingActionButton: floatingActionButton(context),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Eventos"),
       ),
+      body: bodyEventsCreate(),
+      floatingActionButton: floatingActionButton(context),
     );
   }
 
-  
-
-  Widget bodyEventsCreate(){
+  Widget bodyEventsCreate() {
     return Container();
   }
 
-  Widget floatingActionButton(BuildContext context){
+  Widget floatingActionButton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () {
@@ -49,19 +42,34 @@ class _EventsCreateState extends State<EventsCreate> {
           context: context,
           builder: (context) => Container(
             width: 800,
-            child: createEvent(context),
+            child: CreateForm(),
           ),
         );
       },
       tooltip: "Agregar Evento",
     );
   }
+}
 
-  Widget createEvent(BuildContext context){
-    double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 700 ? 700 : width;
-    return Center(
-      child: Container(
+class CreateForm extends StatelessWidget {
+  CreateForm({Key? key}) : super(key: key);
+  TextEditingController nameEvent = TextEditingController();
+  TextEditingController codigoEvent = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => EventsCubit(EventsService()),
+      child: builder(context),
+    );
+  }
+
+  Widget builder(BuildContext context) {
+    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state) {
+      double width = MediaQuery.of(context).size.width;
+      double maxWidth = width > 700 ? 700 : width;
+
+      return Container(
         width: maxWidth,
         height: 900,
         constraints: BoxConstraints(
@@ -75,29 +83,27 @@ class _EventsCreateState extends State<EventsCreate> {
             topRight: Radius.circular(20.0),
           ),
         ),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              //Header Nuevo Post
-              Text("Agregar Evento",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              //Input description Nuevo Post
-              eventsCreateForm(),
-              buttonSave(context),
-            ],
-          ),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            //Header Nuevo Post
+            Text(
+              "Agregar Evento",
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            //Input description Nuevo Post
+            eventsCreateForm(),
+            buttonSave(context),
+          ],
         ),
-      ),
-    );
+      );
+    });
   }
 
-  Widget eventsCreateForm(){
+  Widget eventsCreateForm() {
     return Form(
       child: Column(
         children: [
@@ -112,7 +118,6 @@ class _EventsCreateState extends State<EventsCreate> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               suffixIcon: GestureDetector(
-                onTap: codigoRandom,
                 child: Icon(Icons.replay_circle_filled_outlined),
               ),
               hintText: "Generar Código",
@@ -126,9 +131,9 @@ class _EventsCreateState extends State<EventsCreate> {
   Widget buttonSave(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-      child:  ElevatedButton(
+      child: ElevatedButton(
         onPressed: () {
-         
+          print(BlocProvider.of<EventsCubit>(context).mostrar());
         },
         style: ButtonStyle(
           padding:
@@ -139,7 +144,7 @@ class _EventsCreateState extends State<EventsCreate> {
     );
   }
 
-  void codigoRandom(){
+  void codigoRandom() {
     final codigo = RandomPasswordGenerator();
     String generateCodigo = codigo.randomPassword(
       letters: true,
@@ -148,8 +153,5 @@ class _EventsCreateState extends State<EventsCreate> {
       uppercase: true,
       specialChar: false,
     );
-    setState(() {
-      codigoEvent.text = generateCodigo;
-    });
   }
 }
