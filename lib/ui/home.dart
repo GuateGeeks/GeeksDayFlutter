@@ -1,4 +1,7 @@
+import 'package:geeksday/models/events.dart';
 import 'package:geeksday/provider/theme_provider.dart';
+import 'package:geeksday/routes.dart';
+import 'package:geeksday/ui/events/events_create.dart';
 import 'package:geeksday/ui/main_drawer.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
@@ -9,6 +12,7 @@ class Home extends StatelessWidget {
     return Home();
   }
   const Home({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

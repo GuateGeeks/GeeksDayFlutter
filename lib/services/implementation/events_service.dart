@@ -1,8 +1,8 @@
-
-
+import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/events_service.dart';
+import 'package:geeksday/services/firestore_path.dart';
 import 'package:geeksday/services/firestore_service.dart';
 
 
@@ -18,15 +18,38 @@ class EventsService extends EventsServiceBase{
   final _firestoreService = FirestoreService.instance;
   final _eventsCollection = FirebaseFirestore.instance.collection('events');
 
+
+  Future<void> createEvent(Events createEvent) async {
+    String createEventPath = FirestorePath.events(createEvent.id);
+    await _firestoreService.setData(
+      path: createEventPath,
+      data: createEvent.toFirebaseMap()
+    );
+  } 
+
+  Future<void> createEventImage(Events createEvent, html.Blob file) async {
+    String createEventPath = FirestorePath.events(createEvent.id);
+    await _firestoreService.setData(
+      path: createEventPath, 
+      data: createEvent.toFirebaseMap(), 
+    );
+    await _firestoreService.storeBlob(path: createEventPath, blob: file);
+  }
+
   @override
   Future<List<Events>> getEventsList() async {
     var _feedlist = <Events>[];
     return eventsRef.get().then((value) {
       value.docs.forEach((element) {
-        _feedlist.add(element.data()); 
+        _feedlist.add(element.data());
       });
       return _feedlist;
     });
+  }
+
+  @override
+  Future<String> getImageURL(String uid) {
+    return _firestoreService.getDownloadURL(FirestorePath.events(uid));
   }
   
 }

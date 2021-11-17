@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:geeksday/bloc/feed_cubit.dart';
-import 'package:geeksday/bloc/post_cubit.dart';
-import 'package:geeksday/models/post.dart';
+import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
+import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/post/post_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
