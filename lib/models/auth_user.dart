@@ -6,12 +6,11 @@ class AuthUser extends Equatable {
   String image;
   final String email;
   bool isadmin;
-  bool darkmode;
  
-  AuthUser(this.uid, this.name, this.email, this.image, this.isadmin, this.darkmode);
+  AuthUser(this.uid, this.name, this.email, this.image, this.isadmin);
 
   @override
-  List<Object> get props => [uid, name, email, image, isadmin, darkmode];
+  List<Object> get props => [uid, name, email, image, isadmin];
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
@@ -20,7 +19,6 @@ class AuthUser extends Equatable {
       'email': email,
       'image': image,
       'admin' : isadmin,
-      'darkmode': darkmode,
     };
   }
 
@@ -30,11 +28,10 @@ class AuthUser extends Equatable {
     var email = data['email'];
     var image = data['image'];
     var isadmin = data['admin'];
-    var darkmode = data['darkmode'];
-    return AuthUser(id, name, email, image, isadmin, darkmode);
+    return AuthUser(id, name, email, image, isadmin);
   }
 
-  AuthUser copyWith({String? name, String? image, bool? darkmode}) {
-    return AuthUser(uid, name ?? this.name, email, image ?? this.image, this.isadmin, darkmode ?? this.darkmode);
+  AuthUser copyWith({String? name, String? image}) {
+    return AuthUser(uid, name ?? this.name, email, image ?? this.image, this.isadmin);
   }
 }

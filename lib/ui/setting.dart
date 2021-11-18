@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -47,13 +45,14 @@ class Settings extends StatelessWidget {
   }
 
   Widget changeTheme(context) {
-    var theme = BlocProvider.of<AuthCubit>(context);
-    return Switch(
-      value: theme.getTheme(),
-      onChanged: (value) {
-        print(value);
-        theme.changeTheme();
-       
+    return Consumer<ThemeProvider>(
+      builder: (context, notifier, child){
+        return Switch(
+          onChanged: (val){
+            notifier.toogleTheme();
+          },
+          value: notifier.darkTheme,
+        );
       },
     );
   }

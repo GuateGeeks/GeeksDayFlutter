@@ -1,5 +1,4 @@
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/routes.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +26,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      builder: (context, _) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          themeMode: themeProvider.toggleTheme(true),
-          theme: MyThemes.lightTheme,
-          darkTheme: MyThemes.darkTheme,
+      create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, notifier, child){
+          return MaterialApp(
+          title: 'GeeksDay', 
+          debugShowCheckedModeBanner: false, 
+          theme: notifier.darkTheme ? MyThemes.darkTheme : MyThemes.lightTheme,
           navigatorKey: _navigatorKey,
-          title: 'GeeksDay',
           onGenerateRoute: Routes.routes,
-        );
-      },
+          );
+        }, 
+      ),
     );
   }
 }

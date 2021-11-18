@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/models/auth_user.dart';
-import 'package:geeksday/services/auth_service.dart';
-import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
+  bool _darkTheme = false;
+  //key to access the system preferences and know if the dark theme is active or not
+  String keyPreferences = "darkmode";
 
-  toggleTheme(theme) {
-    return theme ? ThemeMode.dark : ThemeMode.light;
+  ThemeProvider(){
+    _darkTheme = false;
+    _loadFromPrefs();
   }
-}
+  
+  bool get darkTheme => _darkTheme;
 
+  //function to change the theme of the application and save it in the preferences
+  toogleTheme(){
+    _darkTheme = !_darkTheme;
+    _saveToPrefs();
+    notifyListeners();
+  }
+
+  //bring the boolean value from the preferences, to know if the dark theme is active or not
+ _loadFromPrefs() async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   _darkTheme = prefs.getBool(keyPreferences) ?? true;
+   notifyListeners();
+ }
+
+  //save in preferences if the dark theme is active or not
+ _saveToPrefs() async {
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   prefs.setBool(keyPreferences, _darkTheme);
+ }
+}
 class MyThemes {
   static final darkTheme = ThemeData(
     //BackgroundColor

@@ -87,20 +87,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSignedIn(user));
     });
   }
-
-  //changeTheme
-  void changeTheme(){
-    bool darkMode = (state as AuthSignedIn).user.darkmode;
-    bool changeTheme = !darkMode;
-  
-    AuthUser user = (state as AuthSignedIn).user.copyWith(darkmode: changeTheme);
-    _authService.updateUser(user);
-    emit(AuthSignedIn(user));
-  }
-
-  bool getTheme(){
-    return (state as AuthSignedIn).user.darkmode; 
-  }
 }
 
 abstract class AuthState extends Equatable {
