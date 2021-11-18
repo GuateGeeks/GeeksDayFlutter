@@ -82,6 +82,18 @@
 .loading div:nth-child(5){
   animation-delay:1s;
 }
+@media (min-width: 600px) {
+  .logo{
+    width: 400px;
+  }
+  .loading div {
+    height: 13px;
+    width: 13px;
+    border-radius:50%;
+    transform: scale(0);
+  }
+}
+  
 
 @keyframes scaling{
   0%, 100%{
@@ -137,7 +149,7 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = '3827039714';
+    var serviceWorkerVersion = '1123856433';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
