@@ -7,4 +7,5 @@ abstract class EventsServiceBase{
   Future<void> createEvent(Events createEvent);
   Future<void> createEventImage(Events createEvent, Blob image);
   Future<String> getImageURL(String uid);
-} 
+  Future<void> updateEvent(Events event);
+}  

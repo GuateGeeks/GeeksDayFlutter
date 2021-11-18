@@ -1,22 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/events_cubit.dart';
+import 'package:geeksday/bloc/feed_events_cubit.dart';
+import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:provider/provider.dart';
 
 class AdminEvents extends StatelessWidget {
-  final EventsState events;
+  final FeedEventsState events;
   const AdminEvents({Key? key, required this.events}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var eventsCubit = Provider.of<EventsCubit>(context);
     //Gridview is used to be able to show 3 events per row
-    return GridView.count(
-      crossAxisCount: 3,
-      childAspectRatio: 0.9,
-      //we go through the events and show them (the information comes from the events_create file)we go through the events and show them (the information comes from the events_create file)
-      children: events.listEvents.map((event) {
+    return BlocProvider(
+      create: (_) => EventsCubit(EventsService()),
+      child: provider(context),
+    );
+  }
+
+  Widget provider(BuildContext context){
+    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state){ 
+      var eventsCubit = Provider.of<EventsCubit>(context);
+      return GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 0.9,
+        //we go through the events and show them (the information comes from the events_create file)we go through the events and show them (the information comes from the events_create file)
+        children: events.listEvents.map((event) {
           return StreamBuilder(
             stream: eventsCubit.getImageURL(event.id).asStream(),
             builder: (context, snapshot){
@@ -40,10 +51,15 @@ class AdminEvents extends StatelessWidget {
               );
             },
           );
-        },
-      ).toList(),
-    );
+        }).toList(),
+      );
+    });
   }
+
+
+
+
+
   //widget to display the event image
   Widget backgroundImage(snapshot, event){
     return Stack(

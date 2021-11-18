@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/events_cubit.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
-import 'package:geeksday/ui/ayudas/preview_images.dart';
+import 'package:geeksday/ui/helpers/preview_images.dart';
 import 'package:provider/provider.dart';
 
 class FormCreateEvent extends StatefulWidget {
@@ -20,7 +20,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   File? uploadedImage;
   TextEditingController nameEvent = TextEditingController();
   TextEditingController codigoEvent = TextEditingController();
-
+  var event;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

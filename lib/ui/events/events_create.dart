@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/events_cubit.dart';
+import 'package:geeksday/bloc/feed_events_cubit.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/events/user_events.dart';
 import 'package:provider/provider.dart';
@@ -23,29 +24,29 @@ class EventsCreate extends StatelessWidget {
         title: Text("Eventos"),
       ),
       body: BlocProvider(
-        create: (_) => EventsCubit(EventsService()),
+        create: (_) => FeedEventsCubit(EventsService()),
         child: bodyEventsCreate(context),
       ),
       floatingActionButton: floatingActionButton(context),
     );
   }
-  
+
   Widget bodyEventsCreate(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
-    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state){
+    return BlocBuilder<FeedEventsCubit, FeedEventsState>(builder: (context, state){
       var isAdmin = Provider.of<AuthCubit>(context).getUser().isadmin;
         return Center(
-          child: Container(  
+          child: Container(
             width: maxWidth,
-            child: isAdmin 
+            child: isAdmin
               ? AdminEvents(events: state)
-              : userEvents()   
-       ),
-     ); 
+              : userEvents()
+          ),
+        );
     });
   }
-  
+
   Widget floatingActionButton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.add),
@@ -63,4 +64,5 @@ class EventsCreate extends StatelessWidget {
       tooltip: "Agregar Evento",
     );
   }
+  
 }

@@ -36,6 +36,12 @@ class EventsService extends EventsServiceBase{
     await _firestoreService.storeBlob(path: createEventPath, blob: file);
   }
 
+  @override 
+  Future<void> updateEvent(Events event) async {
+    final ref = eventsRef.doc(event.id);
+    await ref.set(event, SetOptions(merge: true));
+  }
+
   @override
   Future<List<Events>> getEventsList() async {
     var _feedlist = <Events>[];
