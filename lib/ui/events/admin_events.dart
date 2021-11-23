@@ -1,14 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/events_cubit.dart';
-import 'package:geeksday/bloc/feed_events_cubit.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:provider/provider.dart';
 
 class AdminEvents extends StatelessWidget {
-  final FeedEventsState events;
+  final EventsState events;
   const AdminEvents({Key? key, required this.events}) : super(key: key);
 
   @override
@@ -40,7 +38,7 @@ class AdminEvents extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return Home();
+                        return Home(idEvent: event.id);
                       },
                     ),
                   );

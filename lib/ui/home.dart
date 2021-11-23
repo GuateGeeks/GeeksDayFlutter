@@ -8,10 +8,11 @@ import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
+  final String idEvent;
    static Widget create(BuildContext context) {
-    return Home();
+    return Home(idEvent: "");
   }
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key, required this.idEvent}) : super(key: key);
 
 
   @override
@@ -29,7 +30,7 @@ class Home extends StatelessWidget {
       drawer: Drawer(
         child: MainDrawer(),
       ),
-      body: PostList(),
+      body: PostList(idEvent: idEvent),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Show modal new post
@@ -38,7 +39,7 @@ class Home extends StatelessWidget {
             context: context,
             builder: (context) => Container(
               width: 800,
-              child: PostCreate(),
+              child: PostCreate(idEvent: idEvent),
             ),
           );
         },

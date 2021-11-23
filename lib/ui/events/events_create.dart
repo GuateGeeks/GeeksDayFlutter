@@ -24,7 +24,7 @@ class EventsCreate extends StatelessWidget {
         title: Text("Eventos"),
       ),
       body: BlocProvider(
-        create: (_) => FeedEventsCubit(EventsService()),
+        create: (_) => EventsCubit(EventsService()),
         child: bodyEventsCreate(context),
       ),
       floatingActionButton: floatingActionButton(context),
@@ -34,7 +34,7 @@ class EventsCreate extends StatelessWidget {
   Widget bodyEventsCreate(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
-    return BlocBuilder<FeedEventsCubit, FeedEventsState>(builder: (context, state){
+    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state){
       var isAdmin = Provider.of<AuthCubit>(context).getUser().isadmin;
         return Center(
           child: Container(

@@ -20,7 +20,6 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   File? uploadedImage;
   TextEditingController nameEvent = TextEditingController();
   TextEditingController codigoEvent = TextEditingController();
-  var event;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -143,6 +142,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
 
   //button to save in new event
   Widget buttonSave(BuildContext context) {
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ValueListenableBuilder<TextEditingValue>(
@@ -155,7 +155,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
                 if(nameEvent.text.isNotEmpty){
                   BlocProvider.of<EventsCubit>(context).createEvent(nameEvent.text, codigoEvent.text);
                 }else{
-                   BlocProvider.of<EventsCubit>(context).addUserToEvent(codigoEvent.text);
+                   BlocProvider.of<EventsCubit>(context).addUserToEvent(codigoEvent.text, userId);
                 }
               }
               : null,

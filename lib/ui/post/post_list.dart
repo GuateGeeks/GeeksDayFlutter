@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostList extends StatefulWidget {
-  const PostList({Key? key}) : super(key: key);
+  final String idEvent;
+  const PostList({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   State<PostList> createState() => _PostListState();
@@ -17,7 +18,7 @@ class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FeedCubit(PostService()),
+      create: (_) => FeedCubit(PostService(), widget.idEvent),
       child: builder(context),
     );
   }
@@ -38,7 +39,10 @@ class _PostListState extends State<PostList> {
               },
               child: ListView(
                 children: state.postList.map((post) {
+                 
+                  
                   return PostCard(post: post);
+
                 }).toList(),
               ),
             ),
@@ -48,7 +52,37 @@ class _PostListState extends State<PostList> {
     });
   }
 
-  Future<void> _refresh() {
-    return Future.delayed(Duration(seconds: 1));
+  Widget showEvents(FeedState state){
+    if(state.postList.isEmpty){
+      return emptyPostList();
+    }else{
+      return postList(state);
+    }
   }
+
+  Widget emptyPostList(){
+    return Center(child: Text("Este evento no contiene publicaciones"));
+  }
+
+  Widget postList(FeedState state){
+    return  ScrollConfiguration(
+      behavior:
+          ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: RefreshIndicator(
+        onRefresh: () {
+          return BlocProvider.of<FeedCubit>(context).getPostList();
+        },
+        
+        child: ListView(
+          
+          children: state.postList.map((post) {
+            return PostCard(post: post);
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+
+
 }

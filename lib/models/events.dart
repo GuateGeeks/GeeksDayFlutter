@@ -1,6 +1,5 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:geeksday/models/auth_user.dart';
 import 'package:uuid/uuid.dart';
 
 class Events extends Equatable{
@@ -63,9 +62,20 @@ class Events extends Equatable{
   factory Events.fromMap(Map<String, dynamic> data, String documentId){
     var id = documentId;
     var name = data['name'];
-    var code = data['code'];
+    var code = data['code']; 
     var createAt = data['createAt'];
     var usersList = <String>[];
+
+    if(data["usersList"] != null){
+      final list = data["usersList"];
+      if(list is List){
+        data["usersList"].forEach((user){
+          if(user is String){
+            usersList.add(user);
+          }
+        }); 
+      } 
+    }
 
     return Events(
       id: id,

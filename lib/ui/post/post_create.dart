@@ -11,7 +11,8 @@ import 'package:image_whisperer/image_whisperer.dart';
 import 'package:flutter/foundation.dart';
 
 class PostCreate extends StatefulWidget {
-  PostCreate({Key? key}) : super(key: key);
+  final String idEvent;
+  PostCreate({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   _PostCreateState createState() => _PostCreateState();
@@ -174,7 +175,7 @@ class _PostCreateState extends State<PostCreate> {
   Widget build(BuildContext context) {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return BlocProvider(
-      create: (_) => PostCubit(PostService(), Post.newPost("", user)),
+      create: (_) => PostCubit(PostService(), Post.newPost("", user, widget.idEvent)),
       child: _content(context),
     );
   }

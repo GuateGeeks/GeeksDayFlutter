@@ -3,9 +3,7 @@ import 'dart:html';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/models/events.dart';
-import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
@@ -13,7 +11,19 @@ import 'package:random_password_generator/random_password_generator.dart';
 class EventsCubit extends Cubit<EventsState>{
   final EventsService _eventsService;
   File? _pickedImage;
-  EventsCubit(this._eventsService) : super(EventsInitalState());
+  Events? events;
+  EventsCubit(this._eventsService) : super(EventsInitialState()){
+    getEventsList();
+  }
+
+  List<Events> _list = [];
+
+  Future<void> getEventsList() async{
+    _list = await _eventsService.getEventsList();
+    var _state = EventsInitialState();
+    _state.listEvents.addAll(_list);
+    emit(_state);
+  }
 
   Future<void> createEvent(String eventName, String eventCodigo) async {
     var createEvent = Events.newEvents(eventName, eventCodigo);
@@ -23,15 +33,40 @@ class EventsCubit extends Cubit<EventsState>{
       _eventsService.createEventImage(createEvent, _pickedImage!);
     }
   }
+ 
 
-  void addUserToEvent(String eventCode){
-    List<String> addEvent = [];
-    addEvent.add(eventCode);
-    Events event = (state as EventsUpdate).event.copyWith(
-      usersList: addEvent
-    );
+  void addUserToEvent(String eventCode, String userId){
 
-    _eventsService.updateEvent(event);
+    var a = (state as EventUpdate);
+
+    // _list.forEach((event) { 
+    //   if(event.code == eventCode){
+    //     List<String> usersList = event.usersList;
+    //     event.usersList.forEach((user) { 
+    //       if(user != userId){
+    //         usersList.add(user);
+
+              
+
+
+
+    //       }
+    //     });
+
+
+
+
+    //   }
+    // });
+
+
+    // List<String> addEvent = [];
+    // addEvent.add(eventCode);
+    // Events event = (state as EventUpdate).event.copyWith(
+    //   usersList: addEvent
+    // );
+
+    // _eventsService.updateEvent(event);
 
   }
 
@@ -58,20 +93,32 @@ class EventsCubit extends Cubit<EventsState>{
 }
 
 abstract class EventsState extends Equatable{
+ 
+  List<Events> listEvents = [];
 
   @override
   List<Object?> get props => [];
-
 }
+class EventsInitialState extends EventsState{
 
-class EventsInitalState extends EventsState{
-  
+
+  @override  
+  List<Events> listEvents = [];
 }
+// class EventsInitalState implements EventsState{
+//   @override 
+//   bool isBusy = false;
 
-class EventsUpdate extends AuthState {
+//   @override  
+//   List<Events> listEvents = [];
+// }
+
+
+
+class EventUpdate extends EventsState {
   final Events event;
 
-  EventsUpdate(this.event);
+  EventUpdate(this.event);
 
   @override
   List<Object?> get props => [event];

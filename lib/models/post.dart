@@ -14,6 +14,7 @@ class Post extends Equatable {
   final AuthUser user;
   Quiz? quiz;
   final List<Comment> commentList;
+  final String idEvent;
 
   Post(
       {required this.id,
@@ -25,7 +26,10 @@ class Post extends Equatable {
       required this.user,
       required this.commentList,
       this.quiz,
-      this.updatedAt});
+      this.updatedAt,
+      required this.idEvent,
+    }
+  );
 
   @override
   List<Object> get props => [id, text, createdAt];
@@ -48,6 +52,7 @@ class Post extends Equatable {
       'createdAt': createdAt,
       'commentList': commentList.map((comment) => comment.toFirebaseMap()),
       'quiz': this.quiz != null ? this.quiz!.toFirebaseMap() : null,
+      'idEvent': this.idEvent,
     };
   }
 
@@ -62,6 +67,7 @@ class Post extends Equatable {
     AuthUser? user,
     List<Comment>? commentList,
     Quiz? quiz,
+    String? idEvent,
   }) {
     return Post(
       id: id ?? this.id,
@@ -74,10 +80,11 @@ class Post extends Equatable {
       commentList: commentList ?? this.commentList,
       user: user ?? this.user,
       quiz: quiz ?? this.quiz,
+      idEvent: idEvent ?? this.idEvent,
     );
   }
 
-  factory Post.newPost(String text, AuthUser user) {
+  factory Post.newPost(String text, AuthUser user, String idEvent) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
@@ -92,7 +99,9 @@ class Post extends Equatable {
         likeList: likeList,
         likeCount: likeCount,
         commentCount: commentCount,
-        commentList: commentList);
+        commentList: commentList,
+        idEvent: idEvent,
+    );
   }
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
     var id = documentId;
@@ -103,6 +112,7 @@ class Post extends Equatable {
     var commentCount = 0;
     var user = AuthUser.fromMap(data['user']);
     var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
+    var idEvent = data['idEvent'];
     if (data["likeList"] != null) {
       final list = data['likeList'];
 
@@ -133,7 +143,9 @@ class Post extends Equatable {
         likeCount: likeCount,
         commentCount: commentCount,
         commentList: commentList,
-        quiz: quiz);
+        quiz: quiz,
+        idEvent: idEvent
+    );
   }
 }
 
