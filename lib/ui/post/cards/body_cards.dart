@@ -119,19 +119,17 @@ class _ProgressBarState extends State<ProgressBar> {
  
 
   List<Widget> AnswersList(PostCubit state) {
-    int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
-    bool isPressed = state.isAnswered(userId);
     double width = MediaQuery.of(context).size.width;
 
     if (state.isQuiz()) {
+      bool isPressed = state.isAnswered(userId);
+      int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
       return state
           .getAnswers()
           .map(
             (answer) {
-              int porcentage = total > 0 ?
-                                 ((answer.selectedCounter.toDouble() / total) * 100).round()
-                                 : 0;
+              int porcentage = state.porcentage(total, answer.selectedCounter);
               return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35.0),
               child: Container(

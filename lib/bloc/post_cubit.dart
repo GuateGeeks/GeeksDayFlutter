@@ -13,31 +13,19 @@ class PostCubit extends Cubit<PostState> {
 
   PostCubit(this._postService, Post post) : super(PostInitialState(post));
 
+  /*-----------------------------------------Post General-------------------------------------------*/
+
+  //edit post or quiz
   void updatePost(String text) {
     state.post.text = text;
     emit(state);
   }
 
-  void addAnswer() {
-    var post = state.post.copyWith(text: "Create a Post");
-    post.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
-    emit(PostUpdatedState(post));
-  }
-
-  void unsetQuiz() {
-    var post = state.post.copyWith(text: "Create a Post");
-    post.quiz = null;
-    emit(PostUpdatedState(post));
-  }
-
-  void setQuiz(Quiz? quiz) {
-    var post = state.post.copyWith(text: "Create a Quiz", quiz: quiz);
-    emit(PostUpdatedState(post));
-  }
-
+  //create post or quiz
   Future<void> createPost(String text) async { 
     Post newPost = state.post;
     newPost.text = text;
+    //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
     if(_pickedImage == null){
       _postService.createPostText(newPost);
     }else{
@@ -45,22 +33,12 @@ class PostCubit extends Cubit<PostState> {
     }
   }
 
-  void setImage(File? image) {
-    _pickedImage = image;
-  }
-
-  Future<String> getImageURL(String uid) {
-    return _postService.getImageURL(uid);
-  }
-
+  //get the post
   Post? getPost() {
     return state.post;
   }
 
-  List<Answer> getAnswers() {
-    return state.post.quiz!.questions[0].answers;
-  }
-
+  //function to show when a post, quiz or comment was made
   String getDatePost(createdAt) {
     var timestamp = createdAt;
     var now = new DateTime.now();
@@ -90,7 +68,19 @@ class PostCubit extends Cubit<PostState> {
     return time;
   }
 
+  //function to display image in preview
+  void setImage(File? image) {
+    _pickedImage = image;
+  }
+
+  //we get the image of the publication from the database
+  Future<String> getImageURL(String uid) {
+    return _postService.getImageURL(uid);
+  }
+
+  //function to save the id of the user who likes a post
   void toggleLikeToPost(String uid) {
+    //We verify if the user had already liked it, if so, the id of the database is eliminated, otherwise it is added
     if (state.post.likeList.contains(uid)) {
       state.post.likeList.remove(uid);
     } else {
@@ -101,6 +91,7 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
+  //show the number of likes of the post
   String getLikesCountText() {
     return "${state.post.likeCount}";
   }
@@ -108,19 +99,47 @@ class PostCubit extends Cubit<PostState> {
   bool likedByMe(String uid) {
     return state.post.likeList.contains(uid);
   }
-
+  //function to show the options button in posts, this button only appears in posts made by the user
   bool isOwnedBy(String uid) {
     return state.post.user.uid == uid;
   }
-
+  //get the id of the post or quiz
   String idPost() {
-    emit(state);
     return state.post.id;
   }
 
+  //delete post or quiz
   Future<void> postDeletion(String uid) {
     return _postService.deletePost(uid);
   }
+  //this function shows in the modal the option to create the post
+  void unsetQuiz() {
+    var post = state.post.copyWith(text: "Create a Post");
+    post.quiz = null;
+    emit(PostUpdatedState(post));
+  }
+
+  /*---------------------------------------Quiz----------------------------------------*/
+
+  //add quiz answers
+  void addAnswer() {
+    var post = state.post.copyWith(text: "Create a Post");
+    post.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
+    emit(PostUpdatedState(post));
+  }
+  //this function shows in the modal the option to  create a quiz
+  void setQuiz(Quiz? quiz) {
+    var post = state.post.copyWith(text: "Create a Quiz", quiz: quiz);
+    emit(PostUpdatedState(post));
+  }
+
+
+  List<Answer> getAnswers() {
+    return state.post.quiz!.questions[0].answers;
+  }
+
+
+
 
 
   void makeComment(AuthUser user, String text, String image) {
@@ -169,7 +188,14 @@ class PostCubit extends Cubit<PostState> {
     state.post.quiz!.usersresponded.add(userId);
     _postService.updatePost(state.post);
     emit(PostUpdatedState(state.post));
-    
+  }
+
+  int porcentage(int total, selectedCounter){
+    if(total > 0){
+      return ((selectedCounter.toDouble() / total) * 100).round();
+    }else{
+      return 0;
+    }
   }
 
 
@@ -189,13 +215,7 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
-  List<int> counter(a){
-    List<int> counter = [];
-    for (Answer item in a) {
-      counter.add(item.selectedCounter.toInt());
-    }
-    return counter;
-  }
+
 
   int totalresponses(PostCubit state){
     var answers = state.getAnswers();
