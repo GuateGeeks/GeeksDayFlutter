@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/quiz_records_cubit.dart';
+import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/models/quiz.dart';
+import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -102,10 +103,8 @@ class ProgressBar extends StatefulWidget {
 }
 
 class _ProgressBarState extends State<ProgressBar> {
+  //temporary correct answer
   bool correctAnswer = true;
-  Color a = Colors.white12;
-  String selected = '';
-  bool isAnswered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -120,81 +119,73 @@ class _ProgressBarState extends State<ProgressBar> {
  
 
   List<Widget> AnswersList(PostCubit state) {
-    int answerNumber = 1;
+    int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
-    print(selected);
+    bool isPressed = state.isAnswered(userId);
+    double width = MediaQuery.of(context).size.width;
+
     if (state.isQuiz()) {
       return state
           .getAnswers()
           .map(
-            (answer) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.0),
-              child: GestureDetector(
-                onTap: (){
-
-                  setState(() {
-                    // var quizRecords = BlocProvider.of<QuizRecordsCubit>(context);
-                    // quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
-                    // state.updateIsAnswered();
-                   a = changeColorAnswer(answer, answer.text);
-                    isAnswered = true;
-                  selected = answer.text;
-                  });
-                  
-                },
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  margin: EdgeInsets.only(top: 10),
-                  decoration: BoxDecoration(  
-                    border: Border.all(
+            (answer) {
+              int porcentage = total > 0 ?
+                                 ((answer.selectedCounter.toDouble() / total) * 100).round()
+                                 : 0;
+              return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35.0),
+              child: Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 20.0),
+                child: GestureDetector(
+                  onTap: isPressed ? null : () {
+                    setState(() {
+                      var mostrar = BlocProvider.of<QuizRecordsCubit>(context);
+                     mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
+                      //get the click a button of the answers
+                      state.usersResponded(userId);
+                      state.selectCounter(answer);
                       
-                      color: isAnswered ?
-                                selected == answer.text && answer.isCorrect ? Colors.green :
-                                selected == answer.text && answer.isCorrect == false ? Colors.red :
-                                Colors.white12
-                              : Colors.white12
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(  
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${answerNumber++}. ${answer.text}"
-                        ),
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(  
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: Colors.white12),
+                      
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new LinearPercentIndicator(
+                        
+                        backgroundColor: Colors.black12,
+                        width: width < 650
+                            ? MediaQuery.of(context).size.width - 100
+                            : 450,
+                        animation: true,
+                        lineHeight: 40.0,
+                        
+                        animationDuration: 1000,
+                        percent: isPressed ? answer.selectedCounter.toDouble() / total : 0,
+                        center: Text(
+                          isPressed ? "$porcentage%" : answer.text,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                        linearStrokeCap: LinearStrokeCap.roundAll,
+                        progressColor: isPressed
+                            ? correctAnswer == answer.isCorrect
+                                ? Colors.green
+                                : Colors.red
+                            : Colors.transparent,
+                      ),
+                    ],
                   ),
                 ),
-              )
-            ),
+              ),
+            );
+            },
           )
           .toList();
     } else {
       return [];
     }
-  }
-
-  Color changeColorAnswer(Answer answer, texto){
-    
-    if(isAnswered){
-      if(selected == texto && answer.isCorrect){
-        return Colors.green;
-      }
-    }
-
-    return Colors.white12;
- 
   }
 }

@@ -153,17 +153,25 @@ class PostCubit extends Cubit<PostState> {
     state.post.quiz!.questions[0].answers[index].text = text;
   }
 
-  void updateIsAnswered(){
-    _postService.updateIsAnswered(state.post);
-    emit(PostUpdatedState(state.post));
+  //function to check if the quiz was answered, if so we return true otherwise false
+  bool isAnswered(String userId){
+    bool userResponded = false;
+    var usersResponded = state.post.quiz!.usersresponded;
+    usersResponded.forEach((user) { 
+      if(user == userId){
+        userResponded = true;
+      }
+    });
+    return userResponded;
   }
 
-  bool isanswered(){
-    if(isQuiz()){
-      return state.post.quiz!.isanswered;
-    }
-    return false;
+  void usersResponded(String userId){
+    state.post.quiz!.usersresponded.add(userId);
+    _postService.updatePost(state.post);
+    emit(PostUpdatedState(state.post));
+    
   }
+
 
   void toggleAnswerIsCorrect(Answer answer) {
     int index = indexOfAnswer(answer);
@@ -188,6 +196,19 @@ class PostCubit extends Cubit<PostState> {
     }
     return counter;
   }
+
+  int totalresponses(PostCubit state){
+    var answers = state.getAnswers();
+    int total = 0;
+    answers.forEach((element) { 
+      total += element.selectedCounter;
+    });
+    return total;
+  }
+
+  
+
+
 }
 
 

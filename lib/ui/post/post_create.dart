@@ -201,14 +201,14 @@ class _PostCreateState extends State<PostCreate> {
                 Text("/", style: TextStyle(fontSize: 25, color: Colors.grey)),
                 TextButton(
                   onPressed: () {
-                    bool isanswered = false;
+           
                     Question question = Question(
                       "Pregunta", [
                         Answer("Respuesta", false, 0),
                         Answer("Respuesta", false, 0),
                       ],
                     );
-                    BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question], isanswered));
+                    BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question], []));
                   },
                   child: Text("Quizz", style: isQuiz ? boldStyle : grayStyle),
                 ),

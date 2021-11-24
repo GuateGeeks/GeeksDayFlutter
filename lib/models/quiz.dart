@@ -4,14 +4,14 @@ import 'package:uuid/uuid.dart';
 class Quiz extends Equatable {
   final String id = Uuid().v1();
   List<Question> questions;
-  bool isanswered;
-  Quiz(this.questions, this.isanswered);
+  List<String> usersresponded;
+  Quiz(this.questions, this.usersresponded);
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
       'id': id,
       'questions': questions.map((question) => question.toFirebaseMap()),
-      'isanswered': isanswered,
+      'usersresponded': this.usersresponded,
     };
   }
 
@@ -19,12 +19,23 @@ class Quiz extends Equatable {
     var questions = (data['questions'] as List)
         .map((question) => Question.fromMap(question))
         .toList();
-    var isanswered = data['isanswered'];
-    return Quiz(questions, isanswered);
+    var usersresponded = <String>[];
+
+    if(data['usersresponded'] != null){
+      final list = data['usersresponded'];
+      if(list is List){
+        data["usersresponded"].forEach((value){
+          if(value is String){
+            usersresponded.add(value);
+          }
+        });
+      }
+    }
+    return Quiz(questions, usersresponded);
   }
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, usersresponded];
 }
 
 class Question extends Equatable {

@@ -78,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
     return "NO USER";
   }
-
+  
   //Edit User Profile
   void updateUser(userName, avatar) {
     AuthUser user =
