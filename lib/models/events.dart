@@ -18,7 +18,7 @@ class Events extends Equatable{
   });
 
   @override
-  List<Object> get props => [id, name, code, createAt];
+  List<Object> get props => [id, name, code, createAt, usersList];
 
 
   Map<String, Object> toFirebaseMap(){

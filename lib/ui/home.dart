@@ -1,3 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/events_cubit.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/routes.dart';
@@ -8,11 +10,11 @@ import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  final String idEvent;
+  final Events? event;
    static Widget create(BuildContext context) {
-    return Home(idEvent: "");
+    return Home();
   }
-  const Home({Key? key, required this.idEvent}) : super(key: key);
+  const Home({Key? key, this.event}) : super(key: key);
 
 
   @override
@@ -21,7 +23,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          'GeeksDay',
+          event!.name,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -30,7 +32,7 @@ class Home extends StatelessWidget {
       drawer: Drawer(
         child: MainDrawer(),
       ),
-      body: PostList(idEvent: idEvent),
+      body: PostList(idEvent: event!.id),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Show modal new post
@@ -39,7 +41,7 @@ class Home extends StatelessWidget {
             context: context,
             builder: (context) => Container(
               width: 800,
-              child: PostCreate(idEvent: idEvent),
+              child: PostCreate(idEvent: event!.id,),
             ),
           );
         },

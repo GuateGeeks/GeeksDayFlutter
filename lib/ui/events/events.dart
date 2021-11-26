@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/events_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +14,10 @@ class AdminEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     //Gridview is used to be able to show 3 events per row
     return BlocProvider(
-      create: (_) => EventsCubit(EventsService()),
+      create: (_) => EventsCubit(EventsService(), user),
       child: provider(context),
     );
   }
@@ -21,6 +25,9 @@ class AdminEvents extends StatelessWidget {
   Widget provider(BuildContext context){
     return BlocBuilder<EventsCubit, EventsState>(builder: (context, state){ 
       var eventsCubit = Provider.of<EventsCubit>(context);
+      if(state.listEvents.isEmpty){
+        return listEventsEmpty(context);
+      }
       return GridView.count(
         crossAxisCount: 3,
         childAspectRatio: 0.9,
@@ -38,7 +45,7 @@ class AdminEvents extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return Home(idEvent: event.id);
+                        return Home(event: event);
                       },
                     ),
                   );
@@ -54,9 +61,13 @@ class AdminEvents extends StatelessWidget {
     });
   }
 
-
-
-
+  Widget listEventsEmpty(BuildContext context){
+    return Center(
+      child: Text("Aún no hay eventos",
+        style: Theme.of(context).textTheme.headline4
+      ),
+    );
+  }
 
   //widget to display the event image
   Widget backgroundImage(snapshot, event){

@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:random_password_generator/random_password_generator.dart';
@@ -11,8 +12,8 @@ import 'package:random_password_generator/random_password_generator.dart';
 class EventsCubit extends Cubit<EventsState>{
   final EventsService _eventsService;
   File? _pickedImage;
-  Events? events;
-  EventsCubit(this._eventsService) : super(EventsInitialState()){
+  AuthUser user;
+  EventsCubit(this._eventsService, this.user) : super(EventsInitialState()){
     getEventsList();
   }
 
@@ -20,9 +21,21 @@ class EventsCubit extends Cubit<EventsState>{
 
   Future<void> getEventsList() async{
     _list = await _eventsService.getEventsList();
-    var _state = EventsInitialState();
-    _state.listEvents.addAll(_list);
-    emit(_state);
+    if(user.isadmin){
+      var _state = EventsInitialState();
+      _state.listEvents.addAll(_list);
+      emit(_state);
+    }else{
+      List<Events> events = [];
+      _list.forEach((event) { 
+        if(event.usersList.contains(user.uid)){
+          events.add(event);
+        }
+      });
+      var _state = EventsInitialState();
+      _state.listEvents.addAll(events);
+      emit(_state);
+    }
   }
 
   Future<void> createEvent(String eventName, String eventCodigo) async {
@@ -33,41 +46,29 @@ class EventsCubit extends Cubit<EventsState>{
       _eventsService.createEventImage(createEvent, _pickedImage!);
     }
   }
+
+  String getEventName(String idEvent){
+    String eventName = "";
+    _list.forEach((event) { 
+      if(event.id == idEvent){
+        eventName = event.name;
+      }
+    });
+    return eventName;
+  }
  
 
   void addUserToEvent(String eventCode, String userId){
-
-    var a = (state as EventUpdate);
-
-    // _list.forEach((event) { 
-    //   if(event.code == eventCode){
-    //     List<String> usersList = event.usersList;
-    //     event.usersList.forEach((user) { 
-    //       if(user != userId){
-    //         usersList.add(user);
-
-              
-
-
-
-    //       }
-    //     });
-
-
-
-
-    //   }
-    // });
-
-
-    // List<String> addEvent = [];
-    // addEvent.add(eventCode);
-    // Events event = (state as EventUpdate).event.copyWith(
-    //   usersList: addEvent
-    // );
-
-    // _eventsService.updateEvent(event);
-
+    _list.forEach((event) { 
+      if(event.code == eventCode){
+        if(!event.usersList.contains(userId)){
+          event.usersList.add(userId);
+         _eventsService.updateEvent(event).then((value) {
+          emit(EventUpdate(event));
+         }); 
+        }
+      }
+    });
   }
 
 
@@ -92,34 +93,22 @@ class EventsCubit extends Cubit<EventsState>{
 
 }
 
-abstract class EventsState extends Equatable{
- 
+abstract class EventsState{
+  bool isBusy = false;
   List<Events> listEvents = [];
+  List<Events> listEventsUser = [];
 
-  @override
-  List<Object?> get props => [];
 }
 class EventsInitialState extends EventsState{
-
-
+  @override
+  bool isBusy = false;
   @override  
-  List<Events> listEvents = [];
+  List<Events> listEvents = []; 
+  List<Events> listEventsUser = [];
 }
-// class EventsInitalState implements EventsState{
-//   @override 
-//   bool isBusy = false;
-
-//   @override  
-//   List<Events> listEvents = [];
-// }
-
-
 
 class EventUpdate extends EventsState {
   final Events event;
 
   EventUpdate(this.event);
-
-  @override
-  List<Object?> get props => [event];
 }

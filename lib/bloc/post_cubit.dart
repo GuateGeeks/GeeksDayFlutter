@@ -133,14 +133,9 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(post));
   }
 
-
   List<Answer> getAnswers() {
     return state.post.quiz!.questions[0].answers;
   }
-
-
-
-
 
   void makeComment(AuthUser user, String text, String image) {
     var comment = Comment.newComment(text, user, image);

@@ -138,8 +138,8 @@ class _ProgressBarState extends State<ProgressBar> {
                 child: GestureDetector(
                   onTap: isPressed ? null : () {
                     setState(() {
-                      var mostrar = BlocProvider.of<QuizRecordsCubit>(context);
-                     mostrar.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
+                      var quizRecords = BlocProvider.of<QuizRecordsCubit>(context);
+                      quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
                       //get the click a button of the answers
                       state.usersResponded(userId);
                       state.selectCounter(answer);

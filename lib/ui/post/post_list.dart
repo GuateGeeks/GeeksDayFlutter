@@ -37,7 +37,11 @@ class _PostListState extends State<PostList> {
               onRefresh: () {
                 return BlocProvider.of<FeedCubit>(context).getPostList();
               },
-              child: ListView(
+              
+              child: state.postList.isEmpty 
+                  ? Center(child: Text("Aun no hay posts para este evento")) 
+              
+              : ListView(
                 children: state.postList.map((post) {
                  
                   
