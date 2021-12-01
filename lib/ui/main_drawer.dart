@@ -19,9 +19,12 @@ class MainDrawer extends StatelessWidget {
     return ListView(
       children: [
         SizedBox(height: 60,),
-        CircleAvatar(
-          radius: 60,
-          child: SvgPicture.string(multiavatar(userData.image)),
+        Container(
+          color: Colors.transparent,
+          child: SvgPicture.string(
+            multiavatar(userData.image),
+            width: 140.0,  
+          ),
         ),
         SizedBox(height: 5,),
         Center(
