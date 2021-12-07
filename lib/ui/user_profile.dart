@@ -41,12 +41,6 @@ class UserProfile extends StatelessWidget {
 
 class BodyUserProfile extends StatelessWidget {
   const BodyUserProfile({Key? key}) : super(key: key);
-
-  Widget avatarWidget(randomAvatar) {
-    String rawSvg = multiavatar(randomAvatar);
-    return SvgPicture.string(rawSvg);
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
@@ -56,19 +50,6 @@ class BodyUserProfile extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    height: 450,
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: []),
-                  )
-                ],
-              ),
               CustomPaint(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -99,6 +80,11 @@ class BodyUserProfile extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget avatarWidget(randomAvatar) {
+    String rawSvg = multiavatar(randomAvatar);
+    return SvgPicture.string(rawSvg);
   }
 
   Widget userDataProfile(context, userData) {

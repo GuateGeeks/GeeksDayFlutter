@@ -174,7 +174,7 @@ class MyThemes {
       headline3: TextStyle(
         fontSize: 20.0,
         fontWeight: FontWeight.w800,
-        color: Colors.white,
+        color: Colors.black,
       ),
       //Numeros perfil de usuario
       caption: TextStyle(
