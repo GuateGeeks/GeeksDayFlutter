@@ -5,16 +5,8 @@ import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
-class ButtonWidget extends StatefulWidget {
-  ButtonWidget({Key? key}) : super(key: key);
-
-  @override
-  _ButtonWidgetState createState() => _ButtonWidgetState();
-}
-
-class _ButtonWidgetState extends State<ButtonWidget> {
-  //variable to check if the user has clicked the like button
-  bool isLiked = false;
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,31 +14,25 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     PostCubit cubit = BlocProvider.of<PostCubit>(context);
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-              child: Row(
-                children: [
-                  //Like button
-                  likeButton(width, cubit),
-                  SizedBox(width: 5.0),
-                  //Comment button
-                  commentButton(width, state.post, cubit),
-                ],
-              ),
-            ),
-          ],
-        );
+        return Container(
+          padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+          child: Row(
+            children: [
+              //Like button
+              likeButton(context, width, cubit),
+              SizedBox(width: 5.0),
+              //Comment button
+              commentButton(context, width, state.post, cubit),
+            ],
+          ),
+        );   
       },
     );
   }
-
-  //function to add a like to the post
-  Widget likeButton(width, cubit) {
+  //   //function to add a like to the post
+  Widget likeButton(BuildContext context, width, cubit) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
-    isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
+    bool isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
     return Row(
       children: [
         IconButton(
@@ -68,9 +54,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       ],
     );
   }
-
-  //function to add comments to the post
-  Widget commentButton(width, Post post, PostCubit cubit) {
+  //   //function to add comments to the post
+  Widget commentButton(BuildContext context, width, Post post, PostCubit cubit) {
     return Row(
       children: [
         IconButton(

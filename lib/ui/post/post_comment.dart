@@ -193,7 +193,7 @@ class PostComment extends StatelessWidget {
         itemBuilder: (context) => [
           PopupMenuItem(
             value: "Eliminar",
-            child: Text("Eliminar"),
+            child: Text("Eliminar"), 
           ),
         ],
         onSelected: (_){

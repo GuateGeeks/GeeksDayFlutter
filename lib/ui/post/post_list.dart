@@ -55,38 +55,4 @@ class _PostListState extends State<PostList> {
       );
     });
   }
-
-  Widget showEvents(FeedState state){
-    if(state.postList.isEmpty){
-      return emptyPostList();
-    }else{
-      return postList(state);
-    }
-  }
-
-  Widget emptyPostList(){
-    return Center(child: Text("Este evento no contiene publicaciones"));
-  }
-
-  Widget postList(FeedState state){
-    return  ScrollConfiguration(
-      behavior:
-          ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: RefreshIndicator(
-        onRefresh: () {
-          return BlocProvider.of<FeedCubit>(context).getPostList();
-        },
-        
-        child: ListView(
-          
-          children: state.postList.map((post) {
-            return PostCard(post: post);
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-
-
 }

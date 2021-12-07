@@ -46,16 +46,6 @@ class EventsCubit extends Cubit<EventsState>{
       _eventsService.createEventImage(createEvent, _pickedImage!);
     }
   }
-
-  String getEventName(String idEvent){
-    String eventName = "";
-    _list.forEach((event) { 
-      if(event.id == idEvent){
-        eventName = event.name;
-      }
-    });
-    return eventName;
-  }
  
 
   void addUserToEvent(String eventCode, String userId){
