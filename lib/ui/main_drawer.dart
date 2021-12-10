@@ -23,11 +23,11 @@ class MainDrawer extends StatelessWidget {
         Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 10.0),
+              margin: EdgeInsets.only(top: 50.0),
               color: Colors.transparent,
-              width: 150,
+              width: 115,
               child: Container(
-              height: 200,
+              height: 150,
                 child: SvgPicture.string(
                   multiavatar(userData.image),
                 ),
