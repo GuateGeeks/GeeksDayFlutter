@@ -14,6 +14,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double modalHeight = width > 500 ? height / 2 : height / 1.3;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -25,16 +28,18 @@ class Home extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-        child: MainDrawer(),
+        child: MainDrawer(idEvent: event!.id),
       ),
       body: PostList(idEvent: event!.id),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //Show modal new post
           showModalBottomSheet(
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: context,
             builder: (context) => Container(
+              height: modalHeight,
               width: 800,
               child: PostCreate(idEvent: event!.id,),
             ),

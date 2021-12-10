@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +12,8 @@ import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key? key}) : super(key: key);
+  String idEvent;
+  MainDrawer({Key? key, required this.idEvent}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final authCubit = AuthCubit(AuthService());
@@ -78,7 +81,7 @@ class MainDrawer extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return AdminMetric();
+                        return AdminMetric(idEvent: idEvent);
                       },
                     ),
                   );

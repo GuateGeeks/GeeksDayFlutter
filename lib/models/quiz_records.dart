@@ -7,6 +7,7 @@ class QuizRecords extends Equatable{
   bool iscorrect;
   String idpost;
   String iduser;
+  String idEvent;
 
   QuizRecords({
     required this.id,
@@ -14,14 +15,15 @@ class QuizRecords extends Equatable{
     required this.iscorrect,
     required this.idpost,
     required this.iduser,
+    required this.idEvent,
   });
 
   @override
   List<Object> get props => [id, answer, iscorrect, idpost, iduser];
 
-  factory QuizRecords.newQuizRecords(String answer, bool iscorrect, String idpost,  String iduser){
+  factory QuizRecords.newQuizRecords(String answer, bool iscorrect, String idpost,  String iduser, String idEvent){
     var id = Uuid().v1();
-    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser);
+    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser, idEvent: idEvent);
   }
 
   Map<String, Object?> toFirebaseMap() {
@@ -31,6 +33,7 @@ class QuizRecords extends Equatable{
       'iscorrect': iscorrect,
       'idpost': idpost,
       'iduser': iduser,
+      'idEvent': idEvent,
     };
   }
 
@@ -40,7 +43,8 @@ class QuizRecords extends Equatable{
     var iscorrect = data['iscorrect'];
     var idpost = data['idpost'];
     var iduser = data['iduser'];
-    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser);
+    var idEvent = data['idEvent'];
+    return QuizRecords(id: id, answer: answer, iscorrect: iscorrect, idpost: idpost, iduser: iduser, idEvent: idEvent);
   }
 
   QuizRecords copyWith({
@@ -48,14 +52,16 @@ class QuizRecords extends Equatable{
     String? answer,
     bool? iscorrect,
     String? idpost,
-    String? iduser
+    String? iduser,
+    String? idEvent,
   }) {
     return QuizRecords(
       id: id ?? this.id,
       answer: answer ?? this.answer,
       iscorrect: iscorrect ?? this.iscorrect,
       idpost: idpost ?? this.idpost,
-      iduser: iduser ?? this.iduser
+      iduser: iduser ?? this.iduser,
+      idEvent: idEvent ?? this.idEvent,
     );
   }
 

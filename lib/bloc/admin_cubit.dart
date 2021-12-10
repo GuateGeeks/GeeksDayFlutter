@@ -23,13 +23,13 @@ class AdminCubit extends Cubit<AdminState> {
   final QuizRecordsServiceBase _quizRecordsServiceBase;
   final AuthServiceBase _authServiceBase;
 
-  AdminCubit(this._adminService, this._postService, this._authServiceBase, this._quizRecordsServiceBase)
+  AdminCubit(this._adminService, this._postService, this._authServiceBase,
+      this._quizRecordsServiceBase)
       : super(InitialAdminState());
 
   List<Post> _list = [];
 
-
-  Map<PostFilterOptions, String?> optionsList(){
+  Map<PostFilterOptions, String?> optionsList() {
     Map<PostFilterOptions, String?> options = {
       PostFilterOptions.MOST_POST: "Más publicaciones",
       PostFilterOptions.MOST_LIKES: "Más me gusta",
@@ -39,106 +39,110 @@ class AdminCubit extends Cubit<AdminState> {
     return options;
   }
 
-
-
-  
   //function to show users with more posts
-  Future sortByPostCount() async {
+  Future sortByPostCount(String idEvent) async {
     _list = await _postService.getPostList();
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
-    
+
     Map<dynamic, int> resultMap = {};
     Map<String, AuthUser> resultUsersMap = {};
 
     for (Post post in _list) {
-      if (resultMap.containsKey(post.user.uid)) {
-        resultMap[post.user.uid] = resultMap[post.user.uid]! + 1;
-      } else {
-        resultMap[post.user.uid] = 1;
-      }
-      resultUsersMap[post.user.uid] = _usersMap[post.user.uid]!;
-    }
-    addMaps(resultMap, resultUsersMap);
-  }
-
-  Future sortByLikesCount() async {
-    _list = await _postService.getPostList();
-    Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
-    Map<dynamic, int> resultMap = {};
-    Map<String, AuthUser> resultUsersMap = {};
-    
-    for (Post post in _list) {
-      for (var userId in post.likeList) {
-        if (resultMap.containsKey(userId)) {
-          resultMap[userId] = resultMap[userId]! + 1;
+      if (post.idEvent == idEvent) {
+        if (resultMap.containsKey(post.user.uid)) {
+          resultMap[post.user.uid] = resultMap[post.user.uid]! + 1;
         } else {
-          resultMap[userId] = 1;
+          resultMap[post.user.uid] = 1;
         }
-        resultUsersMap[userId] = _usersMap[userId]!;
+        resultUsersMap[post.user.uid] = _usersMap[post.user.uid]!;
       }
     }
     addMaps(resultMap, resultUsersMap);
   }
 
-  Future sortByCommentCount() async {
+  Future sortByLikesCount(String idEvent) async {
+    _list = await _postService.getPostList();
+    Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
+    Map<dynamic, int> resultMap = {};
+    Map<String, AuthUser> resultUsersMap = {};
+
+    for (Post post in _list) {
+      if (post.idEvent == idEvent) {
+        for (var userId in post.likeList) {
+          if (resultMap.containsKey(userId)) {
+            resultMap[userId] = resultMap[userId]! + 1;
+          } else {
+            resultMap[userId] = 1;
+          }
+          resultUsersMap[userId] = _usersMap[userId]!;
+        }
+      }
+    }
+    addMaps(resultMap, resultUsersMap);
+  }
+
+  Future sortByCommentCount(String idEvent) async {
     _list = await _postService.getPostList();
 
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
     Map<dynamic, int> resultMap = {};
     Map<String, AuthUser> resultUsersMap = {};
-    
+
     for (Post post in _list) {
-      for (Comment comment in post.commentList) {
-        if (resultMap.containsKey(comment.user.uid)) {
-          resultMap[comment.user.uid] = resultMap[comment.user.uid]! + 1;
-        } else {
-          resultMap[comment.user.uid] = 1;
+      if (post.idEvent == idEvent) {
+        for (Comment comment in post.commentList) {
+          if (resultMap.containsKey(comment.user.uid)) {
+            resultMap[comment.user.uid] = resultMap[comment.user.uid]! + 1;
+          } else {
+            resultMap[comment.user.uid] = 1;
+          }
+          resultUsersMap[comment.user.uid] = _usersMap[comment.user.uid]!;
         }
-        resultUsersMap[comment.user.uid] = _usersMap[comment.user.uid]!;
       }
     }
     addMaps(resultMap, resultUsersMap);
   }
 
-  Future sortByAnswersCorrect() async {
-    var list = await _quizRecordsServiceBase.getQuizRecordsList();
+  Future sortByAnswersCorrect(String idEvent) async {
+    var listQuiz = await _quizRecordsServiceBase.getQuizRecordsList();
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
     Map<dynamic, int> resultMap = {};
     Map<String, AuthUser> resultUsersMap = {};
 
-    for (QuizRecords quizRecord in list) {
-      if(resultMap.containsKey(quizRecord.iduser)){
-        if(quizRecord.iscorrect){
+    for (QuizRecords quizRecord in listQuiz) {
+      if (quizRecord.idEvent == idEvent) {
+        if (resultMap.containsKey(quizRecord.iduser) && quizRecord.iscorrect) {
           resultMap[quizRecord.iduser] = resultMap[quizRecord.iduser]! + 1;
+        } else {
+          resultMap[quizRecord.iduser] = 1;
         }
-      }else{
-        resultMap[quizRecord.iduser] = 1;
+        resultUsersMap[quizRecord.iduser] = _usersMap[quizRecord.iduser]!;
       }
-      resultUsersMap[quizRecord.iduser] = _usersMap[quizRecord.iduser]!;
     }
-    addMaps(resultMap, resultUsersMap);    
+
+    addMaps(resultMap, resultUsersMap);
   }
 
-  void addMaps(resultMap, resultUsersMap){
+  void addMaps(resultMap, resultUsersMap) {
     var _state = SortedPost();
     _state.postList.addAll(resultMap);
     _state.userList.addAll(resultUsersMap);
     emit(_state);
   }
 
-  void sortPostList(option) {
+  void sortPostList(option, idEvent) {
     switch (option) {
       case PostFilterOptions.MOST_POST:
-        sortByPostCount();
+        sortByPostCount(idEvent);
         break;
       case PostFilterOptions.MOST_LIKES:
-        sortByLikesCount();
+        sortByLikesCount(idEvent);
         break;
       case PostFilterOptions.MOST_COMMENTS:
-        sortByCommentCount();
+        sortByCommentCount(idEvent);
         break;
       case PostFilterOptions.MOST_CORRECT_ANSWERS:
-        sortByAnswersCorrect();
+        sortByAnswersCorrect(idEvent);
         break;
       default:
     }

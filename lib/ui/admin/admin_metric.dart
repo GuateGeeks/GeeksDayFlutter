@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/admin_cubit.dart';
+import 'package:geeksday/bloc/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/implementation/admin_service.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
@@ -12,7 +13,8 @@ import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class AdminMetric extends StatefulWidget {
-  const AdminMetric({Key? key}) : super(key: key);
+  String idEvent;
+  AdminMetric({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   State<AdminMetric> createState() => _AdminMetricState();
@@ -104,7 +106,6 @@ class _AdminMetricState extends State<AdminMetric> {
 
 
   Widget _crearDropdown(BuildContext context) {
-
     var optionsList = BlocProvider.of<AdminCubit>(context).optionsList();
 
     return Padding(
@@ -130,7 +131,7 @@ class _AdminMetricState extends State<AdminMetric> {
 
             onChanged: (optionKey){
               setState(() {                
-                BlocProvider.of<AdminCubit>(context).sortPostList(optionKey);
+                BlocProvider.of<AdminCubit>(context).sortPostList(optionKey, widget.idEvent);
               });
             },
 

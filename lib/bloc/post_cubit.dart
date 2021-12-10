@@ -110,6 +110,10 @@ class PostCubit extends Cubit<PostState> {
     return state.post.id;
   }
 
+  String idEvent(){
+    return state.post.idEvent;
+  }
+
   //delete post or quiz
   void postDeletion(String uid) {
     _postService.deletePost(uid);

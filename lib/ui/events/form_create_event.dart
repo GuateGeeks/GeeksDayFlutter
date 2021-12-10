@@ -35,52 +35,56 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<EventsCubit, EventsState>(builder: (context, state) {
-      return Container(
-        width: maxWidth,
-        height: 900,
-        constraints: BoxConstraints(
-          maxHeight: double.infinity,
-        ),
-        padding: EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+      return Center(
+        child: Container(
+          width: maxWidth,
+          height: 900,
+          constraints: BoxConstraints(
+            maxHeight: double.infinity,
           ),
-        ),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Text(
-              "Agregar Evento",
-              style: Theme.of(context).textTheme.headline5,
+          padding: EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
             ),
-            SizedBox(
-              height: 20.0,
-            ),
-            //image preview
-            PreviewImage(uploadedImage: uploadedImage),
-            isAdmin
-                //form to create a new event
-                ? formCreateEvent(context)
-                //form to register for an event
-                : formRegistrationEvent(),
-            //button to save in new event
-            buttonSave(context),
-          ],
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              Text(
+                "Agregar Evento",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              //image preview
+              PreviewImage(uploadedImage: uploadedImage),
+              isAdmin
+                  //form to create a new event
+                  ? formCreateEvent(context, maxWidth)
+                  //form to register for an event
+                  : formRegistrationEvent(),
+              //button to save in new event
+              buttonSave(context),
+            ],
+          ),
         ),
       );
     });
   }
 
   //form to create a new event
-  Widget formCreateEvent(BuildContext context) {
-    return SingleChildScrollView(
+  Widget formCreateEvent(BuildContext context, maxWidth) {
+    return Container(
+      width: maxWidth,
       child: Form(
         child: Column(
           children: [
             TextFormField(
+              autofocus: true,
               controller: nameEvent,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -117,6 +121,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   Widget formRegistrationEvent() {
     return Form(
       child: TextFormField(
+        autofocus: true,
         controller: codigoEvent,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(

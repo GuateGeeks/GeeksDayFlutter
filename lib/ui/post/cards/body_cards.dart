@@ -139,7 +139,7 @@ class _ProgressBarState extends State<ProgressBar> {
                   onTap: isPressed ? null : () {
                     setState(() {
                       var quizRecords = BlocProvider.of<QuizRecordsCubit>(context);
-                      quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId);
+                      quizRecords.answeredQuiz(answer.text, answer.isCorrect, state.idPost(), userId, state.idEvent());
                       //get the click a button of the answers
                       state.usersResponded(userId);
                       state.selectCounter(answer);
