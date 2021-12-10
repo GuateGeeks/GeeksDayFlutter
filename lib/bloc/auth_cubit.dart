@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/services/firestore_service.dart';
+
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthServiceBase _authService;
@@ -78,6 +77,8 @@ class AuthCubit extends Cubit<AuthState> {
     }
     return "NO USER";
   }
+
+
   
   //Edit User Profile
   void updateUser(userName, avatar) {

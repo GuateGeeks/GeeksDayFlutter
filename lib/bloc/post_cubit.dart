@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz.dart';
+import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,7 @@ class PostCubit extends Cubit<PostState> {
     //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
     if(_pickedImage == null){
       _postService.createPostText(newPost);
+      emit(CreatePost(newPost));
     }else{
       _postService.createPost(newPost, _pickedImage!);
     }
@@ -109,8 +111,9 @@ class PostCubit extends Cubit<PostState> {
   }
 
   //delete post or quiz
-  Future<void> postDeletion(String uid) {
-    return _postService.deletePost(uid);
+  void postDeletion(String uid) {
+    _postService.deletePost(uid);
+    emit(PostUpdatedState(state.post));
   }
   //this function shows in the modal the option to create the post
   void unsetQuiz() {
@@ -245,6 +248,10 @@ class PostUpdatedState extends PostState {
   PostUpdatedState(Post post) : super(post);
   @override
   List<Object?> get props => [updatedAt];
+}
+
+class CreatePost extends PostState{
+  CreatePost(Post post) : super(post);
 }
 
 class QuizPostState extends PostUpdatedState {

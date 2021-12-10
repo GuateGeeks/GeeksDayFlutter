@@ -40,6 +40,7 @@ class PostService extends PostServiceBase {
   @override
   Future<void> deletePost(String uid) async {
     await postRef.doc(uid).delete();
+    getPostList();
   }
   //Delete post comments
   @override

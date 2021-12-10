@@ -11,27 +11,32 @@ import 'package:multiavatar/multiavatar.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final authCubit = AuthCubit(AuthService());
     var userData = BlocProvider.of<AuthCubit>(context).getUser();
     return ListView(
       children: [
-        Center(
-          child: Container(
-            margin: EdgeInsets.only(top: 50.0),
-            width: 130,
-            height: 130.0,
-            child: SvgPicture.string(
-              multiavatar(userData.image),
-            )
-          ),
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 10.0),
+              color: Colors.transparent,
+              width: 150,
+              child: Container(
+              height: 200,
+                child: SvgPicture.string(
+                  multiavatar(userData.image),
+                ),
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 5.0),
         Center(
-          child: Text(userData.name,
-            style: Theme.of(context).textTheme.headline3,),
+          child: Text(
+            userData.name,
+            style: Theme.of(context).textTheme.headline3,
+          ),
         ),
         SizedBox(height: 20.0),
         ListTile(
@@ -60,30 +65,32 @@ class MainDrawer extends StatelessWidget {
               ),
             );
           },
-          leading: Icon(Icons.event_available, color: Theme.of(context).iconTheme.color),
+          leading: Icon(Icons.event_available,
+              color: Theme.of(context).iconTheme.color),
           title: Text(
             "Eventos",
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        userData.isadmin == true ?
-        ListTile(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return AdminMetric();
+        userData.isadmin == true
+            ? ListTile(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return AdminMetric();
+                      },
+                    ),
+                  );
                 },
-              ),
-            );
-          },
-          leading: Icon(Icons.admin_panel_settings, color: Theme.of(context).iconTheme.color),
-          title: Text(
-            "Admin",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        )
-        : Container(),
+                leading: Icon(Icons.admin_panel_settings,
+                    color: Theme.of(context).iconTheme.color),
+                title: Text(
+                  "Admin",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              )
+            : Container(),
         ListTile(
           onTap: () {
             Navigator.of(context).push(
@@ -111,7 +118,7 @@ class MainDrawer extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         )
-      ]
+      ],
     );
   }
 }

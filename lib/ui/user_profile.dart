@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/ui/edit_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 
