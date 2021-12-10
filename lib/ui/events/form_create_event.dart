@@ -14,7 +14,6 @@ class FormCreateEvent extends StatefulWidget {
 
   @override
   _FormCreateEventState createState() => _FormCreateEventState();
-  
 }
 
 class _FormCreateEventState extends State<FormCreateEvent> {
@@ -31,11 +30,11 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   }
 
   //Function that shows the modal when clicking on the floatingActionButton
-  Widget modalForm(){
+  Widget modalForm() {
     bool isAdmin = Provider.of<AuthCubit>(context).getUser().isadmin;
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state){
+    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state) {
       return Container(
         width: maxWidth,
         height: 900,
@@ -62,57 +61,61 @@ class _FormCreateEventState extends State<FormCreateEvent> {
             ),
             //image preview
             PreviewImage(uploadedImage: uploadedImage),
-            isAdmin 
-            //form to create a new event
-              ? formCreateEvent(context)
-            //form to register for an event
-              : formRegistrationEvent(),
+            isAdmin
+                //form to create a new event
+                ? formCreateEvent(context)
+                //form to register for an event
+                : formRegistrationEvent(),
             //button to save in new event
             buttonSave(context),
           ],
         ),
-      ); 
+      );
     });
   }
+
   //form to create a new event
   Widget formCreateEvent(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          TextFormField(
-            controller: nameEvent,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              suffixIcon: InkWell(
-                onTap: () {
-                  uploadImage(context);
-                },
-                child: Icon(Icons.image_search),
+    return SingleChildScrollView(
+      child: Form(
+        child: Column(
+          children: [
+            TextFormField(
+              controller: nameEvent,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () {
+                    uploadImage(context);
+                  },
+                  child: Icon(Icons.image_search),
+                ),
+                hintText: "Nombre del Evento",
               ),
-              hintText: "Nombre del Evento",
             ),
-          ),
-          TextFormField(
-            controller: codigoEvent,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              suffixIcon: GestureDetector(
-                child: Icon(Icons.replay_circle_filled_outlined),
-                onTap: (){
-                  //the ramdon code of is generating from the cubit
-                  codigoEvent.text = BlocProvider.of<EventsCubit>(context).codigoRandom(); 
-                },
+            TextFormField(
+              controller: codigoEvent,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  child: Icon(Icons.replay_circle_filled_outlined),
+                  onTap: () {
+                    //the ramdon code of is generating from the cubit
+                    codigoEvent.text =
+                        BlocProvider.of<EventsCubit>(context).codigoRandom();
+                  },
+                ),
+                hintText: "Generar Código",
               ),
-              hintText: "Generar Código",
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget formRegistrationEvent(){
-    return Form( 
+  Widget formRegistrationEvent() {
+    return Form(
       child: TextFormField(
         controller: codigoEvent,
         keyboardType: TextInputType.text,
@@ -124,50 +127,60 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   }
 
   //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
-  uploadImage(BuildContext context){
+  uploadImage(BuildContext context) {
     var uploadInput = FileUploadInputElement()..accept = 'image/*';
     uploadInput.click();
-    uploadInput.onChange.listen(
-      (event){
-        final File file = uploadInput.files!.first;
-        final reader = FileReader();
-        reader.readAsDataUrl(file);
-        reader.onLoadEnd.listen((event) {
-          setState(() {
-            uploadedImage = file;
-          });
-           BlocProvider.of<EventsCubit>(context).setImage(file);
+    uploadInput.onChange.listen((event) {
+      final File file = uploadInput.files!.first;
+      final reader = FileReader();
+      reader.readAsDataUrl(file);
+      reader.onLoadEnd.listen((event) {
+        setState(() {
+          uploadedImage = file;
         });
-      }
-    );
+        BlocProvider.of<EventsCubit>(context).setImage(file);
+      });
+    });
   }
 
   //button to save in new event
   Widget buttonSave(BuildContext context) {
-    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ValueListenableBuilder<TextEditingValue>(
         valueListenable: codigoEvent,
-        builder: (context, value, child){
+        builder: (context, value, child) {
           return ElevatedButton(
-            onPressed: (value.text.isNotEmpty)
-            //We check if the entry of the name of the event is empty, we register the user to an event, otherwise a new event is created
-              ? (){
-                if(nameEvent.text.isNotEmpty){
-                  BlocProvider.of<EventsCubit>(context).createEvent(nameEvent.text, codigoEvent.text);
-                }else{
-                   BlocProvider.of<EventsCubit>(context).addUserToEvent(codigoEvent.text, userId);
-                }
-              }
-              : null,
+            //We validate that the event has an image, otherwise the save button is not enabled
+            onPressed: user.isadmin && uploadedImage == null
+                ? null
+                : () {
+                    saveEvent(context, value, user.uid);
+                  },
             style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
+              padding:
+                  MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
             ),
             child: Text("Guardar"),
           );
         },
       ),
     );
+  }
+
+  //Function to save an event
+  void saveEvent(BuildContext context, TextEditingValue value, String userId) {
+    //If the event name is empty, we validate that the user joins an event. If the event name  is not empty, we create an event
+    if (value.text.isNotEmpty) {
+      if (nameEvent.text.isNotEmpty) {
+        BlocProvider.of<EventsCubit>(context)
+            .createEvent(nameEvent.text, codigoEvent.text);
+      } else {
+        BlocProvider.of<EventsCubit>(context)
+            .addUserToEvent(codigoEvent.text, userId);
+      }
+      Navigator.of(context).pop();
+    }
   }
 }
