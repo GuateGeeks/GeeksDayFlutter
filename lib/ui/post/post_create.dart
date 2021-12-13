@@ -210,7 +210,7 @@ class _PostCreateState extends State<PostCreate> {
                     );
                     BlocProvider.of<PostCubit>(context).setQuiz(Quiz([question], []));
                   },
-                  child: Text("Quizz", style: isQuiz ? boldStyle : grayStyle),
+                  child: Text("Quiz", style: isQuiz ? boldStyle : grayStyle),
                 ),
               ],
             )
