@@ -110,10 +110,10 @@ class AdminCubit extends Cubit<AdminState> {
     Map<String, AuthUser> resultUsersMap = {};
 
     for (QuizRecords quizRecord in listQuiz) {
-      if (quizRecord.idEvent == idEvent) {
-        if (resultMap.containsKey(quizRecord.iduser) && quizRecord.iscorrect) {
+      if(quizRecord.iscorrect && quizRecord.idEvent ==idEvent){
+        if(resultMap.containsKey(quizRecord.iduser)){
           resultMap[quizRecord.iduser] = resultMap[quizRecord.iduser]! + 1;
-        } else {
+        }else{
           resultMap[quizRecord.iduser] = 1;
         }
         resultUsersMap[quizRecord.iduser] = _usersMap[quizRecord.iduser]!;
