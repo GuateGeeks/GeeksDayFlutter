@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
             ),
             JumpingDotsProgressIndicator(
               fontSize: 30.0,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).primaryColor,
             ),
             
           ],

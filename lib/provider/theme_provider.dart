@@ -123,7 +123,7 @@ class MyThemes {
         ),
       )
     ),
-    accentColor: Colors.white, 
+    primaryColor: Colors.black, 
   );
 
   static final lightTheme = ThemeData(
@@ -211,6 +211,6 @@ class MyThemes {
         ),
       )
     ),
-    accentColor: Colors.black, 
+    primaryColor: Colors.black,
   );
 }
