@@ -73912,7 +73912,7 @@ H:function(a,b){var s=t.b.a(R.b4(b,t.L).b)
 return R.kD(this.a_m(0,b),new N.akx(this,s.a),t.F)},
 agR:function(a,b){var s=null,r=t.b.a(R.b4(b,t.L).b),q=R.b4(b,t.F).xm(),p=K.P(b).T.b,o=K.P(b).T.e,n=U.ady(L.aA("Post",s,s,s,q?o:p,s,s),new N.akG(b),s)
 if(r.a.e===!0){r=L.aA("/",s,s,s,A.bN(s,s,C.aL,s,s,s,s,s,s,s,s,25,s,s,s,s,!0,s,s,s,s,s,s,s),s,s)
-r=T.dz(H.a([r,U.ady(L.aA("Quizz",s,s,s,q?p:o,s,s),new N.akH(b),s)],t.p),C.F,C.w,C.u)}else r=M.aw(s,s,C.j,s,s,s,s,s,s,s,s,s,s)
+r=T.dz(H.a([r,U.ady(L.aA("Quiz",s,s,s,q?p:o,s,s),new N.akH(b),s)],t.p),C.F,C.w,C.u)}else r=M.aw(s,s,C.j,s,s,s,s,s,s,s,s,s,s)
 return new T.bf(new V.am(0,15,15,15),T.dz(H.a([n,r],t.p),C.F,C.w,C.u),s)},
 a8K:function(a){var s=null
 if(R.b4(a,t.F).xm())return U.ady(T.dz(H.a([L.dF(C.ig,s,s),L.aA("Agregar Respuesta",s,s,s,s,s,s)],t.p),C.F,C.mA,C.u),new N.akw(a),s)
