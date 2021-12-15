@@ -44,6 +44,19 @@ class AuthService extends AuthServiceBase {
     return snapshot.data();
   }
 
+  Future<List<AuthUser>> getUsersList(){
+    var userList = <AuthUser>[];
+    return userRef.get().then((value) {
+      value.docs.forEach((element) {
+        userList.add(element.data());
+      });
+      return userList;
+    });
+  } 
+
+
+
+
   @override
   Stream<AuthUser?> get onAuthStateChanged =>
       _firebaseAuth.authStateChanges().asyncMap(_userFromFirebase);
@@ -68,6 +81,8 @@ class AuthService extends AuthServiceBase {
     }
     return user;
   }
+
+
 
   @override
   Future<AuthUser?> signInWithEmailAndPassword(

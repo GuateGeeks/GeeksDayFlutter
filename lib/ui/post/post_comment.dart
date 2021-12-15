@@ -84,23 +84,23 @@ class PostComment extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                //verify that the user has an avatar as a profile picture and display it
-                child: post.userimage == null
-                    ? Container()
-                    : SvgPicture.string(multiavatar(post.userimage)),
-              ),
+              // Container(
+              //   width: 50,
+              //   height: 50,
+              //   //verify that the user has an avatar as a profile picture and display it
+              //   child: post.userimage == null
+              //       ? Container()
+              //       : SvgPicture.string(multiavatar(post.userimage)),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      post.username,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
+                    // Text(
+                    //   post.username,
+                    //   style: Theme.of(context).textTheme.headline1,
+                    // ),
                     Text(
                       //get the date the post was made
                       state.getDatePost(post.createdAt),

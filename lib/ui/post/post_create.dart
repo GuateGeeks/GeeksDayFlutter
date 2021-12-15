@@ -173,9 +173,9 @@ class _PostCreateState extends State<PostCreate> {
 
   @override
   Widget build(BuildContext context) {
-    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+    String idUser = BlocProvider.of<AuthCubit>(context).getUserId();
     return BlocProvider(
-      create: (_) => PostCubit(PostService(), Post.newPost("", user, widget.idEvent)),
+      create: (_) => PostCubit(PostService(), Post.newPost("", idUser, widget.idEvent)),
       child: _content(context),
     );
   }

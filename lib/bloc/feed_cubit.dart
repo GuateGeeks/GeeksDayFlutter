@@ -27,7 +27,7 @@ class FeedCubit extends Cubit<FeedState> {
     _state.postList.addAll(_listPosts);
     emit(_state);
   }
-
+ 
 }
 
 abstract class FeedState {

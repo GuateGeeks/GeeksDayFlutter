@@ -11,7 +11,7 @@ class Post extends Equatable {
   int commentCount;
   final int createdAt;
   int? updatedAt;
-  final AuthUser user;
+  final String idUser;
   Quiz? quiz;
   final List<Comment> commentList;
   final String idEvent;
@@ -23,7 +23,7 @@ class Post extends Equatable {
       required this.likeCount,
       required this.commentCount,
       required this.createdAt,
-      required this.user,
+      required this.idUser,
       required this.commentList,
       this.quiz,
       this.updatedAt,
@@ -34,21 +34,13 @@ class Post extends Equatable {
   @override
   List<Object> get props => [id, text, createdAt];
 
-  String get username {
-    return this.user.name;
-  }
-
-  String get userimage {
-    return this.user.image;
-  }
-
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
       'text': text,
       'likeList': likeList,
       'likeCount': likeCount,
       'commentCount': commentCount,
-      'user': user.toFirebaseMap(),
+      'idUser': idUser,
       'createdAt': createdAt,
       'commentList': commentList.map((comment) => comment.toFirebaseMap()),
       'quiz': this.quiz != null ? this.quiz!.toFirebaseMap() : null,
@@ -64,7 +56,7 @@ class Post extends Equatable {
     int? likeCount,
     int? commentCount,
     int? createdAt,
-    AuthUser? user,
+    String? idUser,
     List<Comment>? commentList,
     Quiz? quiz,
     String? idEvent,
@@ -78,13 +70,13 @@ class Post extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: DateTime.now().millisecondsSinceEpoch,
       commentList: commentList ?? this.commentList,
-      user: user ?? this.user,
+      idUser: idUser ?? this.idUser,
       quiz: quiz ?? this.quiz,
       idEvent: idEvent ?? this.idEvent,
     );
   }
 
-  factory Post.newPost(String text, AuthUser user, String idEvent) {
+  factory Post.newPost(String text, String idUser, String idEvent) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
@@ -93,7 +85,7 @@ class Post extends Equatable {
     var commentList = <Comment>[];
     return Post(
         id: id,
-        user: user,
+        idUser: idUser,
         text: text,
         createdAt: createdAt,
         likeList: likeList,
@@ -110,7 +102,7 @@ class Post extends Equatable {
     var likeList = <String>[];
     var likeCount = 0;
     var commentCount = 0;
-    var user = AuthUser.fromMap(data['user']);
+    var idUser = data["idUser"];
     var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
     var idEvent = data['idEvent'];
     if (data["likeList"] != null) {
@@ -136,7 +128,7 @@ class Post extends Equatable {
 
     return Post(
         id: id,
-        user: user,
+        idUser: idUser,
         text: text,
         createdAt: createdAt,
         likeList: likeList,

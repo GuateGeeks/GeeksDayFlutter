@@ -17,4 +17,5 @@ abstract class AuthServiceBase {
   Future<void> signOut();
 
   Future<void> updateUser(AuthUser user);
+  Future<List<AuthUser>> getUsersList();
 }

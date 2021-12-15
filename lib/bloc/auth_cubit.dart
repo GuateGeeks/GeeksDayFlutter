@@ -9,7 +9,12 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthServiceBase _authService;
   late StreamSubscription _authSubscription;
 
-  AuthCubit(this._authService) : super(AuthInitialState());
+  AuthCubit(this._authService) : super(AuthInitialState()){
+    getUsersList();
+  }
+
+  List<AuthUser> _list = [];
+  AuthUser? user;
 
   Future<void> init() async {
     // Just for testing. Allows the splash screen to be shown a few seconds
@@ -52,6 +57,24 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> getUsersList() async {
+    List<AuthUser> users = [];
+    _list = await _authService.getUsersList();
+    _list.forEach((user) { 
+      users.add(user);
+    });
+  }
+
+  AuthUser getUserByPost(String userId){
+    var user;
+    _list.forEach((element) {
+      if(element.uid == userId){
+        user = element;
+      }
+    });
+    return user;
+  }
+
   Future<void> signOut() async {
     await _authService.signOut();
     emit(AuthSignedOut());
@@ -78,14 +101,14 @@ class AuthCubit extends Cubit<AuthState> {
     return "NO USER";
   }
 
-
-  
   //Edit User Profile
   void updateUser(userName, avatar) {
+    getUsersList();
     AuthUser user =
         (state as AuthSignedIn).user.copyWith(name: userName, image: avatar);
     _authService.updateUser(user).then((value) {
       emit(AuthSignedIn(user));
+
     });
   }
 }

@@ -103,7 +103,7 @@ class PostCubit extends Cubit<PostState> {
   }
   //function to show the options button in posts, this button only appears in posts made by the user
   bool isOwnedBy(String uid) {
-    return state.post.user.uid == uid;
+    return state.post.idUser == uid;
   }
   //get the id of the post or quiz
   String idPost() {
