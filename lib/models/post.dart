@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/quiz.dart';
 import 'package:uuid/uuid.dart';
 
@@ -144,23 +143,21 @@ class Post extends Equatable {
 class Comment extends Equatable {
   final String id;
   String text;
-  String image;
   final int createdAt;
-  final AuthUser user;
+  final String idUser;
 
   Comment({
     required this.id,
     required this.text,
     required this.createdAt,
-    required this.user,
-    required this.image,
+    required this.idUser,
   });
 
-  factory Comment.newComment(String text, AuthUser user, String image) {
+  factory Comment.newComment(String text, String idUser) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
     return Comment(
-        id: id, text: text, createdAt: createdAt, user: user, image: image);
+        id: id, text: text, createdAt: createdAt, idUser: idUser);
   }
 
   @override
@@ -170,7 +167,7 @@ class Comment extends Equatable {
     return <String, Object?>{
       'id': id,
       'text': text,
-      'user': user.toFirebaseMap(),
+      'idUser': idUser,
       'createdAt': createdAt,
     };
   }
@@ -179,9 +176,8 @@ class Comment extends Equatable {
     var id = data['id'];
     var text = data['text'];
     var createdAt = data['createdAt'];
-    var image = data['image'];
-    var user = AuthUser.fromMap(data['user']);
+    var idUser = data['idUser'];
     return Comment(
-        id: id, text: text, createdAt: createdAt, user: user, image: image);
+        id: id, text: text, createdAt: createdAt, idUser: idUser);
   }
 }

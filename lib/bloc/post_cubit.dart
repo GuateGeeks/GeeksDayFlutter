@@ -1,9 +1,7 @@
 import 'dart:html';
 
-import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz.dart';
-import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/post_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,8 +142,8 @@ class PostCubit extends Cubit<PostState> {
     return state.post.quiz!.questions[0].answers;
   }
 
-  void makeComment(AuthUser user, String text, String image) {
-    var comment = Comment.newComment(text, user, image);
+  void makeComment(String idUser, String text) {
+    var comment = Comment.newComment(text, idUser);
     state.post.commentList.add(comment);
     state.post.commentCount = state.post.commentList.length;
     _postService.updatePost(state.post);

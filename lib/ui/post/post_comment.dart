@@ -1,6 +1,3 @@
-import 'dart:js';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/post_cubit.dart';
@@ -9,7 +6,6 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/services/implementation/quiz_records_service.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
@@ -77,6 +73,8 @@ class PostComment extends StatelessWidget {
   //post description
   Widget postDescription(context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
+    String userId = state.getPost()!.idUser;
+    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUserByPost(userId);
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -84,23 +82,21 @@ class PostComment extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Container(
-              //   width: 50,
-              //   height: 50,
-              //   //verify that the user has an avatar as a profile picture and display it
-              //   child: post.userimage == null
-              //       ? Container()
-              //       : SvgPicture.string(multiavatar(post.userimage)),
-              // ),
+              Container(
+                width: 50,
+                height: 50,
+                //verify that the user has an avatar as a profile picture and display it
+                child: SvgPicture.string(multiavatar(userData.image)),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Text(
-                    //   post.username,
-                    //   style: Theme.of(context).textTheme.headline1,
-                    // ),
+                    Text(
+                      userData.name,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                     Text(
                       //get the date the post was made
                       state.getDatePost(post.createdAt),
@@ -127,7 +123,9 @@ class PostComment extends StatelessWidget {
   List<Widget> comments(context, userId) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     return post.commentList
-      .map((comment) => Padding(
+      .map((comment){
+        AuthUser userData = BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
+        return Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +139,7 @@ class PostComment extends StatelessWidget {
                             width: 50,
                             height: 50,
                             child: SvgPicture.string(
-                                multiavatar(comment.user.image),
+                                multiavatar(userData.image),
                             ),
                         ),
                         Padding(
@@ -150,7 +148,7 @@ class PostComment extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                comment.user.name,
+                                userData.name,
                                 style: Theme.of(context).textTheme.headline1,
                               ),
                               Text(
@@ -166,7 +164,7 @@ class PostComment extends StatelessWidget {
                   //button to delete comment
                   deleteCommentButton(
                     comment.id, 
-                    comment.user.uid, 
+                    comment.idUser,
                     context,
                   ),
                 ],
@@ -180,7 +178,8 @@ class PostComment extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      );
+      }
     ).toList();
   }
 
@@ -242,11 +241,9 @@ class PostComment extends StatelessWidget {
             IconButton(
               onPressed: () {
                 //get the information of who is making the comment
-                AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
-                String userImage =
-                    BlocProvider.of<AuthCubit>(context).getUserImage();
+                String idUser = BlocProvider.of<AuthCubit>(context).getUserId();
                 BlocProvider.of<PostCubit>(context)
-                    .makeComment(user, _controller.text, userImage);
+                    .makeComment(idUser, _controller.text);
               },
               icon: Icon(Icons.send),
             ),

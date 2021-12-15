@@ -91,12 +91,12 @@ class AdminCubit extends Cubit<AdminState> {
     for (Post post in _list) {
       if (post.idEvent == idEvent) {
         for (Comment comment in post.commentList) {
-          if (resultMap.containsKey(comment.user.uid)) {
-            resultMap[comment.user.uid] = resultMap[comment.user.uid]! + 1;
+          if (resultMap.containsKey(comment.idUser)) {
+            resultMap[comment.idUser] = resultMap[comment.idUser]! + 1;
           } else {
-            resultMap[comment.user.uid] = 1;
+            resultMap[comment.idUser] = 1;
           }
-          resultUsersMap[comment.user.uid] = _usersMap[comment.user.uid]!;
+          resultUsersMap[comment.idUser] = _usersMap[comment.idUser]!;
         }
       }
     }
