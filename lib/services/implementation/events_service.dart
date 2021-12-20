@@ -27,13 +27,15 @@ class EventsService extends EventsServiceBase{
     );
   } 
 
-  Future<void> createEventImage(Events createEvent, html.Blob file) async {
+  Future<Events> createEventImage(Events createEvent, html.Blob file) async {
     String createEventPath = FirestorePath.events(createEvent.id);
+    await _firestoreService.storeBlob(path: createEventPath, blob: file);
     await _firestoreService.setData(
       path: createEventPath, 
       data: createEvent.toFirebaseMap(), 
     );
-    await _firestoreService.storeBlob(path: createEventPath, blob: file);
+
+    return Events.fromMap(createEvent.toFirebaseMap(), createEvent.id);
   }
 
   @override 

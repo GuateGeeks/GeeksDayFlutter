@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/admin/admin_metric.dart';
-import 'package:geeksday/ui/events/events_create.dart';
+import 'package:geeksday/ui/events/main_events.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:geeksday/ui/user_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
@@ -63,7 +63,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return EventsCreate();
+                  return MainEvents();
                 },
               ),
             );

@@ -1,8 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
-import 'package:geeksday/ui/events/events_create.dart';
+import 'package:geeksday/ui/events/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/intro_screen.dart';
 import 'package:geeksday/ui/setting.dart';
@@ -14,7 +12,7 @@ class Routes {
   static const splash = '/';
   static const intro = '/intro';
   static const home = '/home';
-  static const eventsCreate = '/eventsCreate';
+  static const mainEvents = '/mainEvents';
   static const userProfile = '/userProfile';
   static const settings = '/settings';
   static const creatPost = '/createPost';
@@ -35,8 +33,8 @@ class Routes {
         return _buildRoute(EmailSignIn.create);
       case home:
         return _buildRoute(Home.create);
-      case eventsCreate: 
-        return _buildRoute(EventsCreate.create);
+      case mainEvents: 
+        return _buildRoute(MainEvents.create);
       case userProfile:
         return _buildRoute(UserProfile.create);
       case settings:

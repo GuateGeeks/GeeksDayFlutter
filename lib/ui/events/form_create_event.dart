@@ -3,15 +3,16 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/events_cubit.dart';
+import 'package:geeksday/bloc/events/events_cubit.dart';
+import 'package:geeksday/bloc/events/show_events_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 import 'package:provider/provider.dart';
 
 class FormCreateEvent extends StatefulWidget {
-  FormCreateEvent({Key? key}) : super(key: key);
-
+  FormCreateEvent({Key? key, required this.showEvents}) : super(key: key);
+  final ShowEventsCubit showEvents;
   @override
   _FormCreateEventState createState() => _FormCreateEventState();
 }
@@ -24,7 +25,19 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   Widget build(BuildContext context) {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return BlocProvider(
-      create: (_) => EventsCubit(EventsService(), user),
+      create: (_) => EventsCubit(EventsService(), user, widget.showEvents),
+      child: principal(),
+    );
+  }
+
+  Widget principal(){
+    return BlocListener<EventsCubit, EventsState>(
+      listener: (context, state){
+        if(state is EventAdded){
+          Navigator.pop(context);
+          return;
+        }
+      },
       child: modalForm(),
     );
   }
@@ -68,7 +81,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
                   //form to register for an event
                   : formRegistrationEvent(),
               //button to save in new event
-              buttonSave(context),
+              buttonSave(context, state),
             ],
           ),
         ),
@@ -149,7 +162,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   }
 
   //button to save in new event
-  Widget buttonSave(BuildContext context) {
+  Widget buttonSave(BuildContext context, EventsState state) {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
@@ -167,7 +180,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
               padding:
                   MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
             ),
-            child: Text("Guardar"),
+            child: (state is AddingEvent) ? CircularProgressIndicator(color: Colors.white) : Text("Guardar"),
           );
         },
       ),
@@ -185,7 +198,6 @@ class _FormCreateEventState extends State<FormCreateEvent> {
         BlocProvider.of<EventsCubit>(context)
             .addUserToEvent(codigoEvent.text, userId);
       }
-      Navigator.of(context).pop();
     }
   }
 }

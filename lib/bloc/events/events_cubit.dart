@@ -1,8 +1,9 @@
 
+import 'dart:async';
 import 'dart:html';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/events/show_events_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
@@ -13,38 +14,23 @@ class EventsCubit extends Cubit<EventsState>{
   final EventsService _eventsService;
   File? _pickedImage;
   AuthUser user;
-  EventsCubit(this._eventsService, this.user) : super(EventsInitialState()){
-    getEventsList();
+  ShowEventsCubit _showEventsCubit;
+  EventsCubit(this._eventsService, this.user, this._showEventsCubit) : super(EventsInitialState()){
+    // getEventsList();
   }
 
   List<Events> _list = [];
 
-  Future<void> getEventsList() async{
-    _list = await _eventsService.getEventsList();
-    if(user.isadmin){
-      var _state = EventsInitialState();
-      _state.listEvents.addAll(_list);
-      emit(_state);
-    }else{
-      List<Events> events = [];
-      _list.forEach((event) { 
-        if(event.usersList.contains(user.uid)){
-          events.add(event);
-        }
-      });
-      var _state = EventsInitialState();
-      _state.listEvents.addAll(events);
-      emit(_state);
-    }
-  }
-
   Future<void> createEvent(String eventName, String eventCodigo) async {
     var createEvent = Events.newEvents(eventName, eventCodigo);
-    if(_pickedImage == null ){
-      _eventsService.createEvent(createEvent);
-    }else{
-      _eventsService.createEventImage(createEvent, _pickedImage!);
-    }
+    emit(AddingEvent());
+
+    
+    _eventsService.createEventImage(createEvent, _pickedImage!).then((event){
+      _showEventsCubit.addEvents(event);
+      emit(EventAdded());
+    });
+
   }
  
 
@@ -59,11 +45,6 @@ class EventsCubit extends Cubit<EventsState>{
         }
       }
     });
-  }
-
-
-  Future<String> getImageURL(String uid) {
-    return _eventsService.getImageURL(uid);
   }
 
   void setImage(File? image) { 
@@ -96,6 +77,10 @@ class EventsInitialState extends EventsState{
   List<Events> listEvents = []; 
   List<Events> listEventsUser = [];
 }
+
+class AddingEvent extends EventsState{}
+
+class EventAdded extends EventsState{}
 
 class EventUpdate extends EventsState {
   final Events event;
