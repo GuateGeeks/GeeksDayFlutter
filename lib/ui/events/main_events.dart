@@ -60,10 +60,13 @@ class MainEvents extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         final events = state.event;
-        if (events.isEmpty) {
-          return listEventsEmpty(context);
-        }
-        return gridViewImage(events, context);
+
+        return RefreshIndicator(
+          onRefresh: (){
+            return   BlocProvider.of<ShowEventsCubit>(context).getEventsList();
+          },
+          child: (events.isEmpty) ? listEventsEmpty(context) : gridViewImage(events, context),
+        );
       },
     );
   }
