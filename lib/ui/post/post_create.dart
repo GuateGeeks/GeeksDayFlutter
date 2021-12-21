@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz.dart';

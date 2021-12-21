@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/quiz_records_cubit.dart';
 import 'package:geeksday/models/post.dart';
-import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/models/quiz_records.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';

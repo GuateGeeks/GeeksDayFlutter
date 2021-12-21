@@ -1,4 +1,4 @@
-import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';

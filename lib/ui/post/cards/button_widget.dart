@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/post_cubit.dart';
+import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
