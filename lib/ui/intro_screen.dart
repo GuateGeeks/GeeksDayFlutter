@@ -19,73 +19,78 @@ class _LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authCubit = context.watch<AuthCubit>();
     final isSigningIn = authCubit.state is AuthSigningIn;
-
-    return Container(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            'assets/icon.png',
-            width: 200,
-            height: 200,
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                'Sign in or create an account',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 24.0, fontWeight: FontWeight.bold),
+        
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 500 ? 500 : width;
+    return Center(
+      child: Container( 
+        width: maxWidth,
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              'assets/icon.png',
+              width: 200,
+              height: 200,
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign in or create an account',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 24.0, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-          if (isSigningIn) CircularProgressIndicator(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Column(
-              children: [
-                SizedBox(height: 8),
-                _LoginButton(
-                  text: 'Sign in with Google',
-                  imagePath: 'assets/icon_google.png',
-                  color: Colors.white,
-                  textColor: Colors.grey,
-                  onTap: () => authCubit.signInWithGoogle(),
-                ),
-                SizedBox(height: 8),
-                _LoginButton(
-                  text: 'Sign in with Email',
-                  imagePath: 'assets/icon_email.png',
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  onTap: () {
-                    authCubit.reset();
-                    Navigator.pushNamed(context, Routes.signInEmail);
-                  },
-                ),
-                SizedBox(height: 8),
-                _LoginButton(
-                  text: 'Sign in Anonymously',
-                  imagePath: 'assets/icon_question.png',
-                  color: Colors.deepPurpleAccent,
-                  textColor: Colors.white,
-                  onTap: () => authCubit.signInAnonymously(),
-                ),
-                SizedBox(height: 48),
-                OutlinedButton(
-                  child: Text('Create account'),
-                  onPressed: () {
-                    authCubit.reset();
-                    Navigator.pushNamed(context, Routes.createAccount);
-                  },
-                ),
-                SizedBox(height: 48),
-              ],
-            ),
-          )
-        ],
+            if (isSigningIn) CircularProgressIndicator(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 8),
+                  _LoginButton(
+                    text: 'Sign in with Google',
+                    imagePath: 'assets/icon_google.png',
+                    color: Colors.white,
+                    textColor: Colors.grey,
+                    onTap: () => authCubit.signInWithGoogle(),
+                  ),
+                  SizedBox(height: 8),
+                  _LoginButton(
+                    text: 'Sign in with Email',
+                    imagePath: 'assets/icon_email.png',
+                    color: Colors.red,
+                    textColor: Colors.white,
+                    onTap: () {
+                      authCubit.reset();
+                      Navigator.pushNamed(context, Routes.signInEmail);
+                    },
+                  ),
+                  SizedBox(height: 8),
+                  _LoginButton(
+                    text: 'Sign in Anonymously',
+                    imagePath: 'assets/icon_question.png',
+                    color: Colors.deepPurpleAccent,
+                    textColor: Colors.white,
+                    onTap: () => authCubit.signInAnonymously(),
+                  ),
+                  SizedBox(height: 48),
+                  OutlinedButton(
+                    child: Text('Create account'),
+                    onPressed: () {
+                      authCubit.reset();
+                      Navigator.pushNamed(context, Routes.createAccount);
+                    },
+                  ),
+                  SizedBox(height: 48),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
