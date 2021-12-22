@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
-import 'package:geeksday/services/implementation/post_service.dart';
 
 class PostOptions extends StatefulWidget {
   PostOptions({Key? key}) : super(key: key);
@@ -26,6 +25,7 @@ class _PostOptionsState extends State<PostOptions> {
     }
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
+      tooltip: "Ver Opciones",
       itemBuilder: (BuildContext context) {
         return choices.map((String choice) {
           return PopupMenuItem<String>(

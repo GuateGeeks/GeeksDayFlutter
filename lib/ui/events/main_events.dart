@@ -49,6 +49,7 @@ class MainEvents extends StatelessWidget {
           builder: (_) => FormCreateEvent(showEvents: showEvents),
         );
       },
+      tooltip: "Agregar Nuevo Evento",
       child: Icon(Icons.add),
     );
   }

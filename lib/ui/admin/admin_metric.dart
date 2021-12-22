@@ -23,12 +23,15 @@ class _AdminMetricState extends State<AdminMetric> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AdminCubit(AdminService(), PostService(), AuthService(), QuizRecordsService()),
+      create: (_) => AdminCubit(
+          AdminService(), PostService(), AuthService(), QuizRecordsService()),
       child: Scaffold(
-          appBar: AppBar(
-            title: Text("Admin"),
-          ),
-          body: _body(context)),
+        appBar: AppBar(
+          title: Text("Admin"),
+          leading: BackButton(),
+        ),
+        body: _body(context),
+      ),
     );
   }
 
@@ -41,8 +44,8 @@ class _AdminMetricState extends State<AdminMetric> {
         return Center(
           child: Container(
             width: maxWidth,
-            child: Card(  
-              child: ListView(  
+            child: Card(
+              child: ListView(
                 children: [
                   _crearDropdown(context),
                   showUsers(context),
@@ -55,29 +58,34 @@ class _AdminMetricState extends State<AdminMetric> {
     );
   }
 
-  Widget showUsers(BuildContext context){
-    return BlocBuilder<AdminCubit, AdminState>(builder: (context, state){
+  Widget showUsers(BuildContext context) {
+    return BlocBuilder<AdminCubit, AdminState>(
+      builder: (context, state) {
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: state.postList.entries.map((e) {
-            AuthUser user = state.userList[e.key] as AuthUser;
-            return users(context, user, e.value,);
-          }).toList());
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: state.postList.entries.map((e) {
+              AuthUser user = state.userList[e.key] as AuthUser;
+              return users(
+                context,
+                user,
+                e.value,
+              );
+            }).toList());
       },
     );
   }
 
-  Widget users(BuildContext context, AuthUser user, estate){
+  Widget users(BuildContext context, AuthUser user, estate) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Row(
         children: [
           Container(
-              width: 50,
-              height: 50,
-              child: SvgPicture.string(
-                  multiavatar(user.image),
-              ),
+            width: 50,
+            height: 50,
+            child: SvgPicture.string(
+              multiavatar(user.image),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 10.0),
@@ -100,10 +108,6 @@ class _AdminMetricState extends State<AdminMetric> {
     );
   }
 
-
-
-
-
   Widget _crearDropdown(BuildContext context) {
     var optionsList = BlocProvider.of<AdminCubit>(context).optionsList();
 
@@ -120,20 +124,18 @@ class _AdminMetricState extends State<AdminMetric> {
           child: DropdownButton(
             hint: Text("Seleccionar opcion"),
             isExpanded: true,
-          
             items: optionsList.entries.map((option) {
               return DropdownMenuItem(
                 value: option.key,
                 child: Text(option.value.toString()),
               );
             }).toList(),
-
-            onChanged: (optionKey){
-              setState(() {                
-                BlocProvider.of<AdminCubit>(context).sortPostList(optionKey, widget.idEvent);
+            onChanged: (optionKey) {
+              setState(() {
+                BlocProvider.of<AdminCubit>(context)
+                    .sortPostList(optionKey, widget.idEvent);
               });
             },
-
           ),
         ),
       ),

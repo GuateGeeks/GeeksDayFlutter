@@ -86,6 +86,7 @@ class ImagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: BackButton(),
       ),
       backgroundColor: Colors.black,
       body: Center(

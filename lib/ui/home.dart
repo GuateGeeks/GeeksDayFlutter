@@ -26,6 +26,17 @@ class Home extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+        leading: Builder(  
+          builder: (context){
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: 'Menú de Navegación',
+            );
+          }
+        ),
       ),
       drawer: Drawer(
         child: MainDrawer(idEvent: event!.id),
@@ -45,7 +56,7 @@ class Home extends StatelessWidget {
             ),
           );
         },
-        tooltip: 'New',
+        tooltip: 'Crear Nuevo Post',
         child: const Icon(Icons.add),
       ),
     );

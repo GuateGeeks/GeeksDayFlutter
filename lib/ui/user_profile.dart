@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/posts/post_cubit.dart';
-import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/ui/edit_profile.dart';
 import 'package:multiavatar/multiavatar.dart';
 
@@ -21,8 +19,10 @@ class UserProfile extends StatelessWidget {
         elevation: 0.0,
         title: Text("You Profile"),
         centerTitle: true,
+        leading: BackButton(),
         actions: [
           IconButton(
+            tooltip: "Editar Perfil",
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

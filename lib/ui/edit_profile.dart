@@ -16,6 +16,7 @@ class EditProfile extends StatelessWidget {
         elevation: 0.0,
         title: Text("Edit your profile"),
         centerTitle: true,
+        leading: BackButton(),
       ),
       body: BodyEditUserProfile(),
     );
@@ -95,6 +96,7 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
           padding: EdgeInsets.all(10.0),
           color: Theme.of(context).selectedRowColor,
           child: IconButton(
+            tooltip: "Crear Avatar",
             onPressed: () {
               var random = List.generate(12, (_) => Random().nextInt(100));
               randomAvatar = random.join();
