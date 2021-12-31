@@ -21,40 +21,40 @@ class BodyCard extends StatelessWidget {
       child: Container(
       child: Column(
         children: [
-          Container(
-            child: StreamBuilder<String>(
-              stream: state.getImageURL(state.getPost()!.id).asStream(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return snapshot.data.toString() != "null" 
-                ? Container(
-                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                  child: ClipRRect(  
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ImagePage(snapshot.data.toString());
-                            },
-                          ),
-                        );
-                      },
-                      child:  Image.network(
-                        snapshot.data.toString(),
-                        width: MediaQuery.of(context).size.width,
-                        height: 400.0,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                )
-                : Container();
-              },
-            ),
-          ),
+          // Container(
+          //   child: StreamBuilder<String>(
+          //     stream: state.getImageURL(state.getPost()!.id).asStream(),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.waiting) {
+          //         return Center(child: CircularProgressIndicator());
+          //       }
+          //       return snapshot.data.toString() != "null" 
+          //       ? Container(
+          //         padding: EdgeInsets.symmetric(vertical: 15.0),
+          //         child: ClipRRect(  
+          //           child: GestureDetector(
+          //             onTap: () {
+          //               Navigator.of(context).push(
+          //                 MaterialPageRoute(
+          //                   builder: (context) {
+          //                     return ImagePage(snapshot.data.toString());
+          //                   },
+          //                 ),
+          //               );
+          //             },
+          //             child:  Image.network(
+          //               snapshot.data.toString(),
+          //               width: MediaQuery.of(context).size.width,
+          //               height: 400.0,
+          //               fit: BoxFit.cover,
+          //             ),
+          //           ),
+          //         ),
+          //       )
+          //       : Container();
+          //     },
+          //   ),
+          // ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 0, 15, 5),
             child: Text(
