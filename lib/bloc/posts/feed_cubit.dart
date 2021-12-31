@@ -18,6 +18,7 @@ class FeedCubit extends Cubit<FeedState> {
       posts.forEach((post) {
         if(post.idEvent == idEvent){
           _listPost.add(post);
+          _listPost.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         }
       });
       emit(PostLoaded(post: _listPost));
