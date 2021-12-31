@@ -251,7 +251,7 @@ class _PostCreateState extends State<PostCreate> {
           },
           child: Icon(Icons.image_search),
         ),
-        hintText: "Description",
+        hintText: "Descripcion",
       ),
     );
   }

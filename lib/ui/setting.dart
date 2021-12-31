@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geeksday/provider/theme_provider.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
@@ -16,7 +17,7 @@ class Settings extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Configuracion'),
-        leading: BackButton(),
+        leading: ReturnButton(),
       ),
       body: settings(maxWidth, context),
     );

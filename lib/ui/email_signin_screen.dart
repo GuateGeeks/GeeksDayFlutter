@@ -1,10 +1,8 @@
-import 'dart:js';
-
-import 'package:flutter/services.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 
@@ -21,11 +19,11 @@ class _EmailSignInState extends State<EmailSignIn> {
   final _passwordController = TextEditingController();
 
   String? emptyValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'This is a required field' : null;
+    return (value == null || value.isEmpty) ? 'Este es un campo requerido' : null;
   }
 
   String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) return 'This is a required field';
+    if (value == null || value.isEmpty) return 'Este es un campo requerido';
     return null;
   }
 
@@ -37,7 +35,10 @@ class _EmailSignInState extends State<EmailSignIn> {
     double maxWidth = width > 500 ? 500 : width;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Login with Email')),
+      appBar: AppBar(
+        title: Text('Iniciar sesión con Email'),
+        leading: ReturnButton(),
+      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (_, state) {
@@ -48,7 +49,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                 child: Column(
                   children: [
                     Text(
-                      "Sing Up",
+                      "Iniciar Sesión",
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
@@ -88,7 +89,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  'Login',
+                                  'Iniciar Sesión',
                                   style: TextStyle(
                                     fontSize: 17,
                                   ),
@@ -129,7 +130,7 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Column(
       children: [
         Text(
-          "Sing in with",
+          "Iniciar Sesión con",
           style: Theme.of(context).textTheme.headline1,
         ),
         SizedBox(height: 20),
@@ -160,12 +161,12 @@ class _EmailSignInState extends State<EmailSignIn> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "Don't have an Account?",
+          "¿Aún no tienes una cuenta?",
           style: Theme.of(context).textTheme.headline1,
         ),
         SizedBox(width: 5.0),
         TextButton(
-          child: Text('Sing Up'),
+          child: Text('Registrate'),
           style: Theme.of(context).textButtonTheme.style,
           onPressed: () {
             authCubit.reset();

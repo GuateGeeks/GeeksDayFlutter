@@ -24,6 +24,7 @@ class MainEvents extends StatelessWidget {
       value: showEvents,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text("Eventos"),
         ),
         floatingActionButton: floatingButton(context, showEvents),

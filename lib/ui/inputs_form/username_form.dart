@@ -20,7 +20,7 @@ class _UsernameFormState extends State<UsernameForm> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Text(
-            "Username",
+            "Nombre de Usuario",
             style: Theme.of(context).textTheme.headline1,
           ),
         ),
@@ -31,7 +31,7 @@ class _UsernameFormState extends State<UsernameForm> {
           cursorColor: Color.fromRGBO(170, 170, 170, 1),
           
           decoration: InputDecoration(
-            hintText: "Enter your username",
+            hintText: "Ingresa tu nombre de usuario",
             border: InputBorder.none,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,

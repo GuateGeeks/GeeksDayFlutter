@@ -9,6 +9,7 @@ import 'package:geeksday/services/implementation/admin_service.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class AdminMetric extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AdminMetricState extends State<AdminMetric> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Admin"),
-          leading: BackButton(),
+          leading: ReturnButton(),
         ),
         body: _body(context),
       ),

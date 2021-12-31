@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/ui/edit_profile.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatelessWidget {
@@ -17,9 +18,9 @@ class UserProfile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("You Profile"),
+        title: Text("Tu Perfil"),
         centerTitle: true,
-        leading: BackButton(),
+        leading: ReturnButton(),
         actions: [
           IconButton(
             tooltip: "Editar Perfil",
@@ -128,7 +129,7 @@ class BodyUserProfile extends StatelessWidget {
               style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              "You Like",
+              "Me Gusta",
               style: Theme.of(context).textTheme.caption,
             )
           ]),
@@ -138,7 +139,7 @@ class BodyUserProfile extends StatelessWidget {
               style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              "Followers",
+              "Seguidores",
               style: Theme.of(context).textTheme.caption,
             )
           ]),

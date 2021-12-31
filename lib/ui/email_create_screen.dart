@@ -1,15 +1,13 @@
 import 'dart:math';
 
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 import 'package:geeksday/ui/inputs_form/repeat_password_form.dart';
 import 'package:geeksday/ui/inputs_form/username_form.dart';
-import 'package:multiavatar/multiavatar.dart';
 
 class EmailCreate extends StatefulWidget {
   static Widget create(BuildContext context) => EmailCreate();
@@ -26,14 +24,14 @@ class _EmailCreateState extends State<EmailCreate> {
   final _repeatPasswordController = TextEditingController();
 
   String? emailAndUsernameValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'This is a required field' : null;
+    return (value == null || value.isEmpty) ? 'Este es un campo requerido' : null;
   }
 
   String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) return 'This is a required field';
-    if (value.length < 6) return 'Password should be at least 6 letters';
+    if (value == null || value.isEmpty) return 'Este es un campo requerido';
+    if (value.length < 6) return 'La contraseña debe tener al menos 6 letras';
     if (_passwordController.text != _repeatPasswordController.text)
-      return 'Password do not match';
+      return 'Las contraseñas no coinciden';
     return null;
   }
 
@@ -44,7 +42,10 @@ class _EmailCreateState extends State<EmailCreate> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
-      appBar: AppBar(title: Text('Create account')),
+      appBar: AppBar(
+        title: Text('Crear una cuenta'),
+        leading: ReturnButton(),
+      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (_, state) {
@@ -55,7 +56,7 @@ class _EmailCreateState extends State<EmailCreate> {
                 child: Column(
                   children: [
                     Text(
-                      "Sing Up",
+                      "Registrarse",
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
@@ -102,7 +103,7 @@ class _EmailCreateState extends State<EmailCreate> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  'Sing Up',
+                                  'Registrarse',
                                   style: TextStyle(
                                     fontSize: 17,
                                   ),

@@ -29,7 +29,7 @@ class _EmailFormState extends State<EmailForm> {
           validator: widget.emailAndUsernameValidator,
           controller: widget.emailController,
           decoration: InputDecoration(
-            hintText: "Enter your email",
+            hintText: "Ingresa tu email",
             border: InputBorder.none,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,

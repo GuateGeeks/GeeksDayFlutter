@@ -24,7 +24,7 @@ class _PasswordFormState extends State<PasswordForm> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Text(
-            "Password",
+            "Contraseña",
             style: Theme.of(context).textTheme.headline1,
           ),
         ),
@@ -42,7 +42,7 @@ class _PasswordFormState extends State<PasswordForm> {
                 showPassword ? Icons.visibility : Icons.visibility_off,
               ),
             ),
-            hintText: "Enter your Password",
+            hintText: "Ingresa tu contraseña",
             border: InputBorder.none,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,

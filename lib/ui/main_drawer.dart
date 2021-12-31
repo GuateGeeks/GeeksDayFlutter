@@ -54,7 +54,7 @@ class MainDrawer extends StatelessWidget {
           },
           leading: Icon(Icons.person, color: Theme.of(context).iconTheme.color),
           title: Text(
-            "Profile",
+            "Perfil",
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -107,7 +107,7 @@ class MainDrawer extends StatelessWidget {
           leading:
               Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
           title: Text(
-            "Settings",
+            "Configuración",
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -117,7 +117,7 @@ class MainDrawer extends StatelessWidget {
           },
           leading: Icon(Icons.logout, color: Theme.of(context).iconTheme.color),
           title: Text(
-            "Logout",
+            "Cerrar sesión",
             style: Theme.of(context).textTheme.headline6,
           ),
         )

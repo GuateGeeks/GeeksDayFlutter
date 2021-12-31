@@ -38,7 +38,7 @@ class _LoginPage extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  'Sign in or create an account',
+                  'Registrate o crea una cuenta',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 24.0, fontWeight: FontWeight.bold),
@@ -52,7 +52,7 @@ class _LoginPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 8),
                   _LoginButton(
-                    text: 'Sign in with Google',
+                    text: 'Iniciar Sesion con Google',
                     imagePath: 'assets/icon_google.png',
                     color: Colors.white,
                     textColor: Colors.grey,
@@ -60,7 +60,7 @@ class _LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   _LoginButton(
-                    text: 'Sign in with Email',
+                    text: 'Iniciar Sesion con Email',
                     imagePath: 'assets/icon_email.png',
                     color: Colors.red,
                     textColor: Colors.white,
@@ -71,7 +71,7 @@ class _LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   _LoginButton(
-                    text: 'Sign in Anonymously',
+                    text: 'Anonimo',
                     imagePath: 'assets/icon_question.png',
                     color: Colors.deepPurpleAccent,
                     textColor: Colors.white,
@@ -79,7 +79,7 @@ class _LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 48),
                   OutlinedButton(
-                    child: Text('Create account'),
+                    child: Text('Crear una cuenta'),
                     onPressed: () {
                       authCubit.reset();
                       Navigator.pushNamed(context, Routes.createAccount);

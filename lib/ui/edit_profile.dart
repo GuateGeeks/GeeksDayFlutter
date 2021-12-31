@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class EditProfile extends StatelessWidget {
@@ -14,9 +15,9 @@ class EditProfile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Edit your profile"),
+        title: Text("Editar Perfil"),
         centerTitle: true,
-        leading: BackButton(),
+        leading: ReturnButton(),
       ),
       body: BodyEditUserProfile(),
     );

@@ -42,7 +42,7 @@ class BodyCard extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Image.network(
+                      child:  Image.network(
                         snapshot.data.toString(),
                         width: MediaQuery.of(context).size.width,
                         height: 400.0,

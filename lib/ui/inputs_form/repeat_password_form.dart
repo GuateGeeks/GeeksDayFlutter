@@ -21,7 +21,7 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Text(
-            "Repeat Password",
+            "Repetir contraseña",
             style: Theme.of(context).textTheme.headline1,
           ),
         ),
@@ -39,7 +39,7 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
                 showPassword ? Icons.visibility : Icons.visibility_off,
               ),
             ),
-            hintText: "Enter your Password",
+            hintText: "Ingresa tu contaseña",
             border: InputBorder.none,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,
