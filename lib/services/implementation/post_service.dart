@@ -22,11 +22,14 @@ class PostService extends PostServiceBase {
   @override
   Future<void> createPost(Post post, html.Blob file) async {
     String postPath = FirestorePath.post(post.id);
-    await _firestoreService.setData(
-      path: postPath,
-      data: post.toFirebaseMap(),
-    );
     await _firestoreService.storeBlob(path: postPath, blob: file);
+    _firestoreService.getDownloadURL(FirestorePath.post(post.id)).then((value){
+      post.imageRoute = value.toString();
+      _firestoreService.setData(
+        path: postPath,
+        data: post.toFirebaseMap(),
+      );
+    });
   }
 
   Future<void> createPostText(Post post) async{
@@ -75,6 +78,7 @@ class PostService extends PostServiceBase {
 
   @override
   Future<String> getImageURL(String uid) {
+
     return _firestoreService.getDownloadURL(FirestorePath.post(uid));
   }
 

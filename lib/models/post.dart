@@ -14,6 +14,7 @@ class Post extends Equatable {
   Quiz? quiz;
   final List<Comment> commentList;
   final String idEvent;
+  String? imageRoute;
 
   Post(
       {required this.id,
@@ -27,6 +28,7 @@ class Post extends Equatable {
       this.quiz,
       this.updatedAt,
       required this.idEvent,
+      this.imageRoute,
     }
   );
 
@@ -44,6 +46,7 @@ class Post extends Equatable {
       'commentList': commentList.map((comment) => comment.toFirebaseMap()),
       'quiz': this.quiz != null ? this.quiz!.toFirebaseMap() : null,
       'idEvent': this.idEvent,
+      'imageRoute': this.imageRoute,
     };
   }
 
@@ -59,6 +62,7 @@ class Post extends Equatable {
     List<Comment>? commentList,
     Quiz? quiz,
     String? idEvent,
+    String? imageRoute,
   }) {
     return Post(
       id: id ?? this.id,
@@ -72,6 +76,7 @@ class Post extends Equatable {
       idUser: idUser ?? this.idUser,
       quiz: quiz ?? this.quiz,
       idEvent: idEvent ?? this.idEvent,
+      imageRoute: imageRoute ?? this.imageRoute,
     );
   }
 
@@ -82,6 +87,7 @@ class Post extends Equatable {
     var likeCount = 0;
     var commentCount = 0;
     var commentList = <Comment>[];
+    var imageRoute = "";
     return Post(
         id: id,
         idUser: idUser,
@@ -92,6 +98,7 @@ class Post extends Equatable {
         commentCount: commentCount,
         commentList: commentList,
         idEvent: idEvent,
+        imageRoute: imageRoute,
     );
   }
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
@@ -104,6 +111,7 @@ class Post extends Equatable {
     var idUser = data["idUser"];
     var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
     var idEvent = data['idEvent'];
+    var imageRoute = data['imageRoute'];
     if (data["likeList"] != null) {
       final list = data['likeList'];
 
@@ -135,7 +143,8 @@ class Post extends Equatable {
         commentCount: commentCount,
         commentList: commentList,
         quiz: quiz,
-        idEvent: idEvent
+        idEvent: idEvent,
+        imageRoute: imageRoute,
     );
   }
 }

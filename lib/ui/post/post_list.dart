@@ -58,7 +58,7 @@ class _PostListState extends State<PostList> {
       final posts = state.post;
 
       return (posts.isEmpty)
-          ? postListEmpty()
+          ? postListEmpty(modalHeight)
           : showPostList(maxWidth, posts, modalHeight);
     });
   }
@@ -93,9 +93,14 @@ class _PostListState extends State<PostList> {
     );
   }
 
-  Widget postListEmpty() {
-    return Center(
-      child: Text("Aún no hay posts para este evento"),
+  Widget postListEmpty(modalHeight) {
+       return Stack(
+      children: [
+        Center(
+          child: Text("Aún no hay posts para este evento"),
+        ),
+        floatingActionButtons(modalHeight),
+      ],
     );
   }
 

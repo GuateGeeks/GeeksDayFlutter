@@ -74,8 +74,11 @@ class PostCubit extends Cubit<PostState> {
   }
 
   //we get the image of the publication from the database
-  Future<String> getImageURL(String uid) {
-    return _postService.getImageURL(uid);
+  // Future<String> getImageURL(String uid) {
+  //   return _postService.getImageURL(uid);
+  // }
+  String? getImageUrl(String uid){
+    return state.post.imageRoute;
   }
 
   //function to save the id of the user who likes a post
