@@ -264,4 +264,3 @@ class QuizPostState extends PostUpdatedState {
   QuizPostState(Post post) : super(post);
 }
 
-abstract class NewPostState extends Equatable {}

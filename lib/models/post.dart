@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geeksday/models/quiz.dart';
 import 'package:uuid/uuid.dart';
@@ -102,6 +103,52 @@ class Post extends Equatable {
     );
   }
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
+    var id = documentId;
+    var text = data['text'];
+    var createdAt = data['createdAt'];
+    var likeList = <String>[];
+    var likeCount = 0;
+    var commentCount = 0;
+    var idUser = data["idUser"];
+    var quiz = data['quiz'] != null ? Quiz.fromMap(data['quiz']) : null;
+    var idEvent = data['idEvent'];
+    var imageRoute = data['imageRoute'];
+    if (data["likeList"] != null) {
+      final list = data['likeList'];
+
+      if (list is List) {
+        data['likeList'].forEach((value) {
+          if (value is String) {
+            likeList.add(value);
+          }
+        });
+        likeCount = likeList.length;
+      }
+    }
+
+    var commentList = <Comment>[];
+    if (data["commentList"] != null) {
+      commentList = (data['commentList'] as List)
+          .map((comment) => Comment.fromMap(comment))
+          .toList();
+      commentCount = commentList.length;
+    }
+
+    return Post(
+        id: id,
+        idUser: idUser,
+        text: text,
+        createdAt: createdAt,
+        likeList: likeList,
+        likeCount: likeCount,
+        commentCount: commentCount,
+        commentList: commentList,
+        quiz: quiz,
+        idEvent: idEvent,
+        imageRoute: imageRoute,
+    );
+  }
+  factory Post.fromMap1(DocumentSnapshot data, String documentId) {
     var id = documentId;
     var text = data['text'];
     var createdAt = data['createdAt'];

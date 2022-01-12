@@ -12,4 +12,5 @@ abstract class PostServiceBase {
   Future<List<Post>> getPostList();
   Future<void> updateIsAnswered(Post post);
   Future<void> selectedCounter(Post post, int answer, int counter);
+  Stream<List<Post>> listadoPost();
 }

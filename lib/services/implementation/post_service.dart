@@ -92,4 +92,14 @@ class PostService extends PostServiceBase {
       return _feedlist;
     });
   }
+
+  Stream<List<Post>> listadoPost(){
+    final mensajes = FirebaseFirestore.instance.collection("posts");
+
+    return mensajes.snapshots().map(
+      (querySnap) => querySnap.docs
+        .map((doc) => Post.fromMap1(doc, doc.id))
+        .toList(),
+    );
+  }
 }

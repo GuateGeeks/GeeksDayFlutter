@@ -18,7 +18,7 @@ enum PostFilterOptions {
 
 class AdminCubit extends Cubit<AdminState> {
   final AdminServiceBase _adminService;
-
+  
   final PostServiceBase _postService;
   final QuizRecordsServiceBase _quizRecordsServiceBase;
   final AuthServiceBase _authServiceBase;
@@ -42,6 +42,7 @@ class AdminCubit extends Cubit<AdminState> {
   //function to show users with more posts
   Future sortByPostCount(String idEvent) async {
     _list = await _postService.getPostList();
+    
     Map<String, AuthUser> _usersMap = await _adminService.getUserMap();
 
     Map<dynamic, int> resultMap = {};
