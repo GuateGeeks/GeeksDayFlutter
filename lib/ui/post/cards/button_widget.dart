@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
 class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({Key? key}) : super(key: key);
+  final Post post;
+  ButtonWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class ButtonWidget extends StatelessWidget {
       },
     );
   }
-  //   //function to add a like to the post
+  //function to add a like to the post
   Widget likeButton(BuildContext context, width, cubit) {
-    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    String userId = post.idUser;
     bool isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
     return Row(
       children: [
@@ -92,7 +92,7 @@ class ButtonWidget extends StatelessWidget {
 
   //function to know which user has liked the post
   void likePost(BuildContext context) {
-    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    String userId = post.idUser;
     BlocProvider.of<PostCubit>(context).toggleLikeToPost(userId);
   }
 }

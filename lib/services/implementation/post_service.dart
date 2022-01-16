@@ -96,7 +96,7 @@ class PostService extends PostServiceBase {
   Stream<List<Post>> listadoPost(){
     final mensajes = FirebaseFirestore.instance.collection("posts");
 
-    return mensajes.snapshots().map(
+    return mensajes.orderBy('createdAt', descending: true).snapshots().map(
       (querySnap) => querySnap.docs
         .map((doc) => Post.fromMap1(doc, doc.id))
         .toList(),

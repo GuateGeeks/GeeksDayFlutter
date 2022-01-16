@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
+import 'package:geeksday/models/post.dart';
 
 class PostOptions extends StatefulWidget {
-  PostOptions({Key? key}) : super(key: key);
+  final Post post;
+  PostOptions({Key? key, required this.post}) : super(key: key);
 
   @override
   _PostOptionsState createState() => _PostOptionsState();
@@ -41,7 +43,7 @@ class _PostOptionsState extends State<PostOptions> {
   //function to carry out the selected action
   void choiceAction(String choice) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    String idPostDelete = state.idPost();
+    String idPostDelete = widget.post.id;
     BlocProvider.of<PostCubit>(context).postDeletion(idPostDelete);
   }
 }

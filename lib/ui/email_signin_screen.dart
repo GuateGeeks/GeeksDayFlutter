@@ -15,7 +15,7 @@ class EmailSignIn extends StatefulWidget {
 
 class _EmailSignInState extends State<EmailSignIn> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _emailController = TextEditingController();  
   final _passwordController = TextEditingController();
 
   String? emptyValidator(String? value) {

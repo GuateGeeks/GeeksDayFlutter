@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/post_service.dart';
@@ -10,7 +11,7 @@ class PostCubit extends Cubit<PostState> {
   final PostServiceBase _postService;
   File? _pickedImage;
 
-  PostCubit(this._postService, Post post) : super(PostInitialState(post));
+  PostCubit(this._postService, Post? post) : super(PostInitialState(post!));
 
   /*-----------------------------------------Post General-------------------------------------------*/
 
@@ -229,6 +230,20 @@ class PostCubit extends Cubit<PostState> {
     return total;
   }
 
+  Future<void> getPostList() async {
+    List<Post> _listPost = [];
+    final posts = _postService.listadoPost();
+    posts.listen((post) {
+      post.forEach((element) {
+        if(element.idEvent == idEvent()){
+          _listPost.add(element);
+        }
+      emit(PostLoaded(post: element, listPost: _listPost));
+      });
+    _listPost = [];
+    }, onDone: (){},
+    );
+  }
   
 
 
@@ -246,6 +261,11 @@ abstract class PostState extends Equatable {
 
 class PostInitialState extends PostState {
   PostInitialState(Post post) : super(post);
+}
+
+class PostLoaded extends PostState{
+  final List<Post> listPost;
+  PostLoaded({required Post post, required this.listPost}) : super(post);
 }
 
 class PostUpdatedState extends PostState {

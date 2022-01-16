@@ -10,19 +10,14 @@ class PostTestCubit extends Cubit<PostTestState>{
 
   PostTestCubit(this.postService, this.post) : super(PostTestInitialState());
 
-    //create post or quiz
-  Future<void> createPost(String text) async { 
-    Post newPost = post!;
-    newPost.text = text;
-
-    postService.createPostText(newPost);
-  }
-
   Future<void> getPost() async{
     final post = postService.listadoPost();
     post.listen((event) {
       emit(PostLoaded1(postList: event));
-    });
+      
+    },
+      onDone: (){},
+    );
   }
 
 

@@ -6,23 +6,21 @@ class FeedCubit extends Cubit<FeedState> {
   final PostServiceBase _postService;
   final String idEvent;
 
-  FeedCubit(this._postService, this.idEvent) : super(FeedInitialState()) {
-    getPostList();
-  }
-  List<Post> _list = [];
-
-  /// contain tweet list for home page
+  FeedCubit(this._postService, this.idEvent) : super(FeedInitialState());
+ 
   Future<void> getPostList() async {
     List<Post> _listPost = [];
-    _postService.getPostList().then((posts) {
-      posts.forEach((post) {
-        if(post.idEvent == idEvent){
-          _listPost.add(post);
-          _listPost.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final posts = _postService.listadoPost();
+    posts.listen((post) {
+      post.forEach((element) {
+        if(element.idEvent == idEvent){
+          _listPost.add(element);
         }
       });
       emit(PostLoaded(post: _listPost));
-    });
+    _listPost = [];
+    }, onDone: (){},
+    );
   }
  
 }

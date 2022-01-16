@@ -8,36 +8,61 @@ import 'package:geeksday/ui/post/cards/button_widget.dart';
 import 'package:geeksday/ui/post/cards/header_card.dart';
 
 class PostCard extends StatelessWidget {
-  //final PostModel postData;
   final Post post;
-
-  PostCard({
-    Key? key,
-    required this.post,
-  }) : super(key: key);
+  const PostCard({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PostCubit(PostService(), this.post),
-      child: builder(context),
+      child: card(),
     );
   }
-
-  Widget builder(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          child: Column(
-            children: [
-              HeaderCard(),
-              BodyCard(),
-              ButtonWidget(),
-            ],
-          ),
-        ),
+  Widget card(){
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      child: Column(
+        children: [
+          HeaderCard(post: post),
+          BodyCard(post: post),
+          ButtonWidget(post: post),
+        ],
       ),
     );
   }
 }
+
+// class PostCard extends StatelessWidget {
+//   //
+//   final Post post;
+
+//   PostCard({
+//     Key? key,
+//     required this.post,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (_) => PostCubit(PostService(), this.post),
+//       child: builder(context),
+//     );
+//   }
+
+//   Widget builder(BuildContext context) {
+//     return Center(
+//       child: Container(
+//         child: Card(
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+//           child: Column(
+//             children: [
+//               HeaderCard(post: post),
+//               BodyCard(post: post),
+//               ButtonWidget(post: post),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
