@@ -96,14 +96,14 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-        fontSize: 30.0,
-        color: Colors.white,
+        fontSize: 25.0,
+        color: Color(0xFF4A4A4A),
         fontWeight: FontWeight.w600
       ), 
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Colors.black,
+      fillColor: Color.fromRGBO(255, 255, 255, 1),
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),

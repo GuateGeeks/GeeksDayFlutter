@@ -50,38 +50,41 @@ class _PostListState extends State<PostList> {
     double modalHeight = width > 500 ? height / 2 : height / 1.3;
 
     return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
-      BlocProvider.of<FeedCubit>(context).getPostList();  
+      var getPostList = BlocProvider.of<FeedCubit>(context).getPostList();  
       if (!(state is PostLoaded)) {
         return Center(child: CircularProgressIndicator());
       }
       final posts = state.post;
       return (posts.isEmpty)
           ? postListEmpty(modalHeight)
-          : showPostList(maxWidth, posts, modalHeight);
+          : showPostList(maxWidth, posts, modalHeight, getPostList);
     });
   }
 
-  Widget showPostList(double maxWidth, List<Post> posts, double modalHeight) {
+  Widget showPostList(double maxWidth, List<Post> posts, double modalHeight, getPostList) {
     return Stack(
       children: [
-        postsCards(maxWidth, posts),
+        postsCards(maxWidth, posts, getPostList),
         floatingActionButtons(modalHeight),
       ],
     );
   }
 
-  Widget postsCards(double maxWidth, List<Post> posts) {
+  Widget postsCards(double maxWidth, List<Post> posts, getPostList) {
     return Center(
       child: Container(
         width: maxWidth,
         child: ScrollConfiguration(
             behavior:
                 ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: ListView(
-                controller: scrollController,
-                children: posts.map((post) {
-                  return PostCard(post: post);
-                }).toList(),
+              child: RefreshIndicator(
+                onRefresh: () => getPostList,
+                child: ListView(
+                  controller: scrollController,
+                  children: posts.map((post) {
+                    return PostCard(post: post);
+                  }).toList(),
+                ),
               ),
       ),
     ),

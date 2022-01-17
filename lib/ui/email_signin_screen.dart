@@ -15,11 +15,13 @@ class EmailSignIn extends StatefulWidget {
 
 class _EmailSignInState extends State<EmailSignIn> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();  
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   String? emptyValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'Este es un campo requerido' : null;
+    return (value == null || value.isEmpty)
+        ? 'Este es un campo requerido'
+        : null;
   }
 
   String? passwordValidator(String? value) {
@@ -30,130 +32,158 @@ class _EmailSignInState extends State<EmailSignIn> {
   @override
   Widget build(BuildContext context) {
     final authCubit = context.watch<AuthCubit>();
-    
-    double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 500 ? 500 : width;
 
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 400 ? 400 : width;
     return Scaffold(
       appBar: AppBar(
         title: Text('Iniciar sesión con Email'),
         leading: ReturnButton(),
       ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (_, state) {
-          return Center(
-            child: Container(
-              width: maxWidth,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      "Iniciar Sesión",
-                      style: Theme.of(context).textTheme.overline,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (state is AuthSigningIn)
-                              Center(child: CircularProgressIndicator()),
-                            if (state is AuthError)
-                              Text(
-                                state.message,
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 24),
-                              ),
-                            //Input email
-                            SizedBox(height: 8),
-                            EmailForm(emptyValidator, _emailController),
-
-                            //Input Password
-                            SizedBox(height: 8),
-                            PasswordForm(
-                                passwordValidator, _passwordController),
-                            SizedBox(height: 22),
-
-                            //Button Login
-                            Center(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(vertical: 18)),
-                                ),
-                                child: Center(
-                                    child: Text(
-                                  'Iniciar Sesión',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                  ),
-                                )),
-                                onPressed: () {
-                                  if (_formKey.currentState?.validate() ==
-                                      true) {
-                                    context
-                                        .read<AuthCubit>()
-                                        .signInWithEmailAndPassword(
-                                          _emailController.text,
-                                          _passwordController.text,
-                                        );
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    singInGoogle(context, authCubit),
-                    SizedBox(height: 20),
-                    singUp(context, authCubit),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF0E89AF),
+                Color(0xFF4B3BAB),
+              ]),
+        ),
+        child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (_, state) {
+            return cardLogin(maxWidth, state);
+          },
+        ),
       ),
     );
   }
 
-  //Button Sing In whith google
-  Widget singInGoogle(context, authCubit) {
-    return Column(
-      children: [
-        Text(
-          "Iniciar Sesión con",
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {},
-          child: GestureDetector(
-              onTap: () => authCubit.signInWithGoogle(),
-              child: Image(
-                image: AssetImage('assets/icon_google.png'),
-                fit: BoxFit.cover,
-                height: 20,
-              )),
-          style: ElevatedButton.styleFrom(
-            shape: CircleBorder(),
-            padding: EdgeInsets.all(20),
-            primary: Colors.white, // <-- Button color
-            onPrimary: Colors.red, // <-- Splash color
+  Widget cardLogin(double maxWidth, AuthState state) {
+    return Center(
+      child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+            width: maxWidth,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color.fromRGBO(255, 255, 255, 0.79)),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    "Iniciar Sesión",
+                    style: Theme.of(context).textTheme.overline,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  formLogin(state),
+                  SizedBox(
+                    height: 15
+                  ),
+                  forgotPassword(),
+                  SizedBox( 
+                    height: 20.0,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
+          
+          Positioned.fill(
+            
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+            onPressed: (){}, 
+            child: Text("Registrarse"),
+          ),
+            )
+          ),
+
+          
+
+
+
+        ],
+      ),
     );
   }
 
+  Widget formLogin(AuthState state) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (state is AuthSigningIn)
+            Center(child: CircularProgressIndicator()),
+          if (state is AuthError)
+            Text(
+              state.message,
+              style: TextStyle(color: Colors.red, fontSize: 24),
+            ),
+          //Input email
+          SizedBox(height: 8),
+          EmailForm(emptyValidator, _emailController),
+          //Input Password
+          SizedBox(height: 8),
+          PasswordForm(passwordValidator, _passwordController),
+          SizedBox(height: 22),
+          loginButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget loginButton() {
+    return Center(
+      child: Container(
+        width: 200,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color(0xFF0E89AF),
+            ),
+            padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 24)),
+          ),
+          child: Center(
+            child: Text(
+              "Ingresar",
+              style: TextStyle(
+                fontSize: 17,
+                color: Colors.white,
+              ),
+
+            ),
+          ),
+          onPressed: () {
+            if (_formKey.currentState?.validate() == true) {
+              context.read<AuthCubit>().signInWithEmailAndPassword(
+                    _emailController.text,
+                    _passwordController.text,
+                  );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget forgotPassword(){
+    return InkWell(
+      onTap: (){},
+      child: Text("Recuperar contraseña",
+        style: TextStyle(  
+          color: Color(0xFF4A4A4A),
+          fontSize: 14,
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    );
+  }
   //Button Sing Up
   Widget singUp(BuildContext context, authCubit) {
     return Row(
