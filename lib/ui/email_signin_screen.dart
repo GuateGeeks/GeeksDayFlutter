@@ -52,62 +52,78 @@ class _EmailSignInState extends State<EmailSignIn> {
         ),
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (_, state) {
-            return cardLogin(maxWidth, state);
+            return cardLogin(maxWidth, state, authCubit);
           },
         ),
       ),
     );
   }
 
-  Widget cardLogin(double maxWidth, AuthState state) {
-    return Center(
-      child: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-            width: maxWidth,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromRGBO(255, 255, 255, 0.79)),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    "Iniciar Sesión",
-                    style: Theme.of(context).textTheme.overline,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  formLogin(state),
-                  SizedBox(
-                    height: 15
-                  ),
-                  forgotPassword(),
-                  SizedBox( 
-                    height: 20.0,
-                  ),
-                ],
+  Widget cardLogin(double maxWidth, AuthState state, authCubit) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Center(      
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              width: maxWidth,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(255, 255, 255, 0.79)),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      "Iniciar Sesión",
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    formLogin(state),
+                    SizedBox(
+                      height: 15
+                    ),
+                    forgotPassword(),
+                    SizedBox( 
+                      height: 20.0,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          
-          Positioned.fill(
             
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-            onPressed: (){}, 
-            child: Text("Registrarse"),
-          ),
-            )
-          ),
-
-          
-
-
-
-        ],
+              Container(
+                margin: EdgeInsets.only(top: 340),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(const Size(120, 40)),
+                    side: MaterialStateProperty.all(
+                    const BorderSide(
+                      color: Color.fromRGBO(255, 255, 255, 0.79),
+                      width: 1,
+                    ),
+                  ),
+                    backgroundColor:  MaterialStateProperty.all<Color>(Color.fromRGBO(75, 59, 171, 1)),
+                  ),
+                  onPressed: () {
+                    authCubit.reset();
+                    Navigator.pushNamed(context, Routes.createAccount);
+                  },
+                  child: Text("Registrarse",
+                    style: TextStyle(  
+                      fontSize: 17.0,
+                      color: Colors.white,
+                      // fontFamily: 'Biryani',
+                    ),
+                  )
+                ),
+              ),
+            
+          ],
+        ),
       ),
     );
   }
@@ -185,6 +201,7 @@ class _EmailSignInState extends State<EmailSignIn> {
     );
   }
   //Button Sing Up
+
   Widget singUp(BuildContext context, authCubit) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

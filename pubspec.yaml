@@ -105,10 +105,25 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  #   - family: Biryani
+  #     fonts: 
+  #       - assets/fonts/Biryani-Black.ttf
+  #       - assets/fonts/Biryani-Bold.ttf
+  #       - assets/fonts/Biryani-ExtraBold.ttf
+  #       - assets/fonts/Biryani-ExtraLight.ttf
+  #       - assets/fonts/Biryani-Light.ttf
+  #       - assets/fonts/Biryani-Regular.ttf
+  #       - assets/fonts/Biryani-SemiBold.ttf
+  fonts:
+    - family: Biryani
+      fonts:
+        - asset: assets/fonts/Biryani-Regular.ttf
+        - asset: assets/fonts/Biryani-Black.ttf
+        - asset: assets/fonts/Biryani-Bold.ttf
+        - asset: assets/fonts/Biryani-ExtraBold.ttf
+        - asset: assets/fonts/Biryani-ExtraLight.ttf
+        - asset: assets/fonts/Biryani-Light.ttf
+        - asset: assets/fonts/Biryani-SemiBold.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

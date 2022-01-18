@@ -5,7 +5,7 @@ class RepeatPasswordForm extends StatefulWidget {
   TextEditingController repeatPasswordController;
   RepeatPasswordForm(this.passwordValidator, this.repeatPasswordController,
       {Key? key})
-      : super(key: key);
+      : super(key: key); 
 
   @override
   _RepeatPasswordFormState createState() => _RepeatPasswordFormState();
@@ -18,14 +18,8 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: Text(
-            "Repetir contraseña",
-            style: Theme.of(context).textTheme.headline1,
-          ),
-        ),
         TextFormField(
+          style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.visiblePassword,
           obscureText: showPassword,
           decoration: InputDecoration(
@@ -39,24 +33,11 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
                 showPassword ? Icons.visibility : Icons.visibility_off,
               ),
             ),
-            hintText: "Ingresa tu contaseña",
+            hintText: "Repetir contraseña",
+            hintStyle: TextStyle(color: Colors.black),
             border: InputBorder.none,
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-            contentPadding:
-                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderRadius: new BorderRadius.circular(8),
-              borderSide: new BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
           ),
           validator: widget.passwordValidator,
           controller: widget.repeatPasswordController,

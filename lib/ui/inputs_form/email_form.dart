@@ -11,6 +11,7 @@ class EmailForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.emailAddress,
           validator: emailAndUsernameValidator,
           controller: emailController,
@@ -18,9 +19,8 @@ class EmailForm extends StatelessWidget {
             hintText: "Email",
             hintStyle: TextStyle(color: Colors.black),
             filled: true,
-            fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-            contentPadding: EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-            border: OutlineInputBorder(),
+           prefixStyle: TextStyle(color: Colors.black)
+           
           ),
         ),
       ],
