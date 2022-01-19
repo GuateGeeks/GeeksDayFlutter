@@ -13,8 +13,7 @@ class RadiantGradientMask extends StatelessWidget {
         colors: [
           Color(0xFF4B3BAB),
           Color(0xFF0E89AF),
-        ]
-        
+        ],      
       ).createShader(bounds),
       child: child,
     );
