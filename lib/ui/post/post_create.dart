@@ -24,61 +24,79 @@ class _PostCreateState extends State<PostCreate> {
 
   Map<int, String> answersMap = {};
 
-
-  Widget _content(BuildContext context) {
-    //responsive modal
-    double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 700 ? 700 : width;
-    return BlocBuilder<PostCubit, PostState>(
-      builder: (context, state) {
-        //main container
-        return Center(
-          child: Container(
-            width: maxWidth,
-            height: 900,
-            constraints: BoxConstraints(
-              maxHeight: double.infinity,
+  Widget _content(BuildContext context){
+    return Container(
+      color: Theme.of(context).primaryColor,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              alignment: Alignment.topCenter,
+              width: 50,
+              height: 5,
+              color: Colors.white,
             ),
-            padding: EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              ),
-            ),
-            //ocultar la barra de scroll
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  //Header Nuevo Post
-                  title(context),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  //feature to preview images before posting
-                  previewImages(context),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  //Input description Nuevo Post
-                  description(context),
-                  //show answers
-                  ...inputAnswers(context),
-                  //function to add more answers
-                  addAnswer(context),
-                  //function to make the publication
-                  buttonSave(context),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+          )
+        ],
+      ),
     );
   }
+
+  // Widget _content(BuildContext context) {
+  //   //responsive modal
+  //   double width = MediaQuery.of(context).size.width;
+  //   double maxWidth = width > 700 ? 700 : width;
+  //   return BlocBuilder<PostCubit, PostState>(
+  //     builder: (context, state) {
+  //       //main container
+  //       return Center(
+  //         child: Container(
+  //           width: maxWidth,
+  //           height: 900,
+  //           constraints: BoxConstraints(
+  //             maxHeight: double.infinity,
+  //           ),
+  //           padding: EdgeInsets.all(20.0),
+  //           decoration: BoxDecoration(
+  //             color: Theme.of(context).primaryColor,
+  //             borderRadius: BorderRadius.only(
+  //               topLeft: Radius.circular(20.0),
+  //               topRight: Radius.circular(20.0),
+  //             ),
+  //           ),
+  //           //ocultar la barra de scroll
+  //           child: ScrollConfiguration(
+  //             behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+  //             child: ListView(
+  //               shrinkWrap: true,
+  //               children: [
+  //                 //Header Nuevo Post
+  //                 title(context),
+  //                 SizedBox(
+  //                   height: 10.0,
+  //                 ),
+  //                 //feature to preview images before posting
+  //                 previewImages(context),
+  //                 SizedBox(
+  //                   height: 10.0,
+  //                 ),
+  //                 //Input description Nuevo Post
+  //                 description(context),
+  //                 //show answers
+  //                 ...inputAnswers(context),
+  //                 //function to add more answers
+  //                 addAnswer(context),
+  //                 //function to make the publication
+  //                 buttonSave(context),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   uploadImage(BuildContext context) async {
     var uploadInput = FileUploadInputElement()..accept = 'image/*';

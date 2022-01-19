@@ -14,14 +14,13 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    double modalHeight = width > 500 ? height / 2 : height / 1.3;
+    double modalHeight =  height / 3;
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           title: Image.asset(
-            'guategeeks-logo-clear.png',
+            'assets/guategeeks-logo-clear.png',
             width: 150,
             fit: BoxFit.cover,
           )),
@@ -33,7 +32,7 @@ class Home extends StatelessWidget {
     );
   }
 
-    Widget createPostButton(context, modalHeight) {
+  Widget createPostButton(context, modalHeight) {
     return FloatingActionButton(
       onPressed: () {
         //Show modal new post
