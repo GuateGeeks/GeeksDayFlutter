@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
+import 'package:geeksday/provider/gradient_color.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -40,11 +41,19 @@ class ButtonWidget extends StatelessWidget {
             likePost(context);
             isLiked = !isLiked;
           },
-          child: Icon(
-            isLiked ? Icons.favorite : Icons.favorite_border,
-            color: isLiked ? Color.fromRGBO(229, 21, 21, 1) : Colors.grey,
-            
-          ),
+          child: isLiked ?
+            Icon(  
+              Icons.favorite,
+              size: 22,
+              color: Color.fromRGBO(229, 21, 21, 1)
+            ) :
+           RadiantGradientMask(
+              child: Icon(
+                Icons.favorite,
+                color: Colors.grey,
+                size: 22,
+              ),
+            ),
         ),
         
         Container(
@@ -72,9 +81,11 @@ class ButtonWidget extends StatelessWidget {
               ),
             );
           },
-          child: Icon(
-            Icons.comment_sharp, color: Colors.grey,
-            size: 20,
+          child: RadiantGradientMask(
+            child: Icon(
+              Icons.chat_bubble, color: Colors.grey,
+              size: 22,
+            ), 
           ),
         ),
         SizedBox(

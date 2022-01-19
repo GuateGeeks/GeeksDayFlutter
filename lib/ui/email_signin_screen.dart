@@ -41,7 +41,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: LinearGradient( 
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [

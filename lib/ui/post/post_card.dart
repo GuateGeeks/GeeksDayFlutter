@@ -15,20 +15,17 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PostCubit(PostService(), this.post),
-      child: card(),
+      child: posts(),
     );
   }
-  Widget card(){
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      child: Column(
+  Widget posts(){
+    return Column(
         children: [
           HeaderCard(post: post),
           BodyCard(post: post),
           ButtonWidget(post: post),
         ],
-      ),
-    );
+      );
   }
 }
 

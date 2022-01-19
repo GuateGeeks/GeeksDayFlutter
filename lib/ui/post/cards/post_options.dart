@@ -27,6 +27,11 @@ class _PostOptionsState extends State<PostOptions> {
     }
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
+      icon: Icon( 
+        Icons.more_vert_rounded,
+        color: Color(0xFF0E89AF),
+        size: 30, 
+      ),
       tooltip: "Ver Opciones",
       itemBuilder: (BuildContext context) {
         return choices.map((String choice) {

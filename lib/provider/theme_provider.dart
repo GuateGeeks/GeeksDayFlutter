@@ -127,6 +127,7 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    
     //Color del appbar
     appBarTheme: AppBarTheme(color: Colors.blue),
     //BackgroundColor
@@ -138,20 +139,20 @@ class MyThemes {
       //Nombre de usuarios
       headline1: TextStyle(
         fontSize: 15.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
+        fontWeight: FontWeight.w500,
+        color: Color(0xFF767676),
       ),
       //Fecha y likes
       subtitle2: TextStyle(
         fontSize: 13.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.grey,
+        fontWeight: FontWeight.w300,
+        color: Color(0xFF767676),
       ),
       //Post Description
       headline4: TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
-        color: Colors.grey,
+        color: Color(0xFF767676),
       ),
       //Texto del modal Crear Post/Quiz Seleccionado
       headline2: TextStyle(
@@ -189,6 +190,7 @@ class MyThemes {
         fontWeight: FontWeight.w600
       ),
     ),
+
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Color.fromRGBO(214, 214, 214, 1),

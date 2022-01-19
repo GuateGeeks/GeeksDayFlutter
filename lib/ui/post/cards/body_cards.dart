@@ -46,11 +46,17 @@ class BodyCard extends StatelessWidget {
             ),
           );
         },
-        child: Image.network(
-          post.imageRoute!,
-          height: 400,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 22),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              post.imageRoute!,
+              height: 400,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );

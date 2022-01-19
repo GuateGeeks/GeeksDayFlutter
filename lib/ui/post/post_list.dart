@@ -73,6 +73,7 @@ class _PostListState extends State<PostList> {
   Widget postsCards(double maxWidth, List<Post> posts, getPostList) {
     return Center(
       child: Container(
+        color: Colors.white60,
         width: maxWidth,
         child: ScrollConfiguration(
             behavior:
