@@ -1,23 +1,31 @@
 import 'dart:math';
 
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 import 'package:geeksday/ui/inputs_form/repeat_password_form.dart';
 import 'package:geeksday/ui/inputs_form/username_form.dart';
+import 'package:multiavatar/multiavatar.dart';
 
-class EmailCreate extends StatelessWidget {
-  static Widget create(BuildContext context) => EmailCreate();  
-  EmailCreate({Key? key}) : super(key: key);
+import 'helpers/return_button.dart';
+
+class EmailCreate extends StatefulWidget {
+  static Widget create(BuildContext context) => EmailCreate();
+
+  @override
+  _EmailCreateState createState() => _EmailCreateState();
+}
+
+class _EmailCreateState extends State<EmailCreate> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _repeatPasswordController = TextEditingController();
-  String randomAvatar = "";
 
   String? emailAndUsernameValidator(String? value) {
     return (value == null || value.isEmpty) ? 'Este es un campo requerido' : null;
@@ -30,23 +38,28 @@ class EmailCreate extends StatelessWidget {
       return 'Las contraseñas no coinciden';
     return null;
   }
+
+  String randomAvatar = "";
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crear una cuenta'),
+        title: Text('Registro'),
+        leading: ReturnButton(),
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF0E89AF),
-                Color(0xFF4B3BAB),
-              ],),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF0E89AF),
+              Color(0xFF4B3BAB),
+            ],
+          ),
         ),
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (_, state) {
@@ -57,11 +70,12 @@ class EmailCreate extends StatelessWidget {
     );
   }
 
-  Widget cardLogin(context, maxWidth, state){
+  Widget cardLogin(context, maxWidth, state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(  
-        child: Stack(  
+      child: Center(
+        child: Stack(
+          alignment: AlignmentDirectional.center,
           children: [
             Container(
               padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
@@ -73,34 +87,30 @@ class EmailCreate extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Crear Cuenta",
+                      "Iniciar Sesión",
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     formLogin(state),
-                    SizedBox(
-                      height: 15
-                    ),
-                    // forgotPassword(),
-                    SizedBox( 
-                      height: 20.0,
-                    ),
+                    SizedBox(height: 15),
                   ],
                 ),
               ),
             ),
+           
           ],
         ),
       ),
     );
   }
-    Widget formLogin(AuthState state) {
+
+  Widget formLogin(AuthState state) {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (state is AuthSigningIn)
             Center(child: CircularProgressIndicator()),
@@ -112,73 +122,62 @@ class EmailCreate extends StatelessWidget {
           //Input email
           SizedBox(height: 8),
           EmailForm(emailAndUsernameValidator, _emailController),
-                                      SizedBox(height: 8),
-                            //Show input Username
-                            UsernameForm(
-                                emailAndUsernameValidator, _usernameController),
-                            SizedBox(height: 8),
-                            //Show input Password
-                            PasswordForm(
-                                passwordValidator, _passwordController),
-                                                            SizedBox(height: 8),
-                            //Show input Repear Password
-                            RepeatPasswordForm(
-                                passwordValidator, _repeatPasswordController),
-                            SizedBox(height: 22),
+          SizedBox(height: 8),
+          //Show input Username
+          UsernameForm(emailAndUsernameValidator, _usernameController),
+          SizedBox(height: 8),
+          //Show input Password
+          PasswordForm(passwordValidator, _passwordController),
+          SizedBox(height: 8),
+          //Show input Repear Password
+          RepeatPasswordForm(passwordValidator, _repeatPasswordController),
+          SizedBox(height: 22),
+          saveUser(),
         ],
       ),
     );
   }
+
+  Widget saveUser(){
+    return Container(
+            
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(const Size(120, 40)),
+                    side: MaterialStateProperty.all(
+                      const BorderSide(
+                        color: Color.fromRGBO(255, 255, 255, 0.79),
+                        width: 1,
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromRGBO(75, 59, 171, 1)),
+                  ),
+                  onPressed: () {
+                                  var random = List.generate(
+                                      12, (_) => Random().nextInt(100));
+                                  randomAvatar = random.join();
+                                  if (_formKey.currentState?.validate() ==
+                                      true) {
+                                    context
+                                        .read<AuthCubit>()
+                                        .createUserWithEmailAndPassword(
+                                          _emailController.text,
+                                          _usernameController.text,
+                                          _passwordController.text,
+                                          randomAvatar,
+                                        );
+                                  }
+                                },
+                  child: Text(
+                    "Registrarse",
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      color: Colors.white,
+                      // fontFamily: 'Biryani',
+                    ),
+                  )),
+            );
+  }
 }
 
-
-//                             SizedBox(height: 8),
-//                             //Show input Repear Password
-//                             RepeatPasswordForm(
-//                                 passwordValidator, _repeatPasswordController),
-//                             SizedBox(height: 22),
-//                             Center(
-//                               child: ElevatedButton(
-//                                 style: ButtonStyle(
-//                                   padding: MaterialStateProperty.all(
-//                                       EdgeInsets.symmetric(vertical: 18)),
-//                                 ),
-//                                 child: Center(
-//                                     child: Text(
-//                                   'Registrarse',
-//                                   style: TextStyle(
-//                                     fontSize: 17,
-//                                   ),
-//                                 )),
-//                                 onPressed: () {
-//                                   var random = List.generate(
-//                                       12, (_) => Random().nextInt(100));
-//                                   randomAvatar = random.join();
-//                                   if (_formKey.currentState?.validate() ==
-//                                       true) {
-//                                     context
-//                                         .read<AuthCubit>()
-//                                         .createUserWithEmailAndPassword(
-//                                           _emailController.text,
-//                                           _usernameController.text,
-//                                           _passwordController.text,
-//                                           randomAvatar,
-//                                         );
-//                                   }
-//                                 },
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

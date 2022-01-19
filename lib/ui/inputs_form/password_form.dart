@@ -18,7 +18,7 @@ class _PasswordFormState extends State<PasswordForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black54),
           textInputAction: TextInputAction.go,
           keyboardType: TextInputType.visiblePassword,
           obscureText: showPassword,
@@ -35,7 +35,7 @@ class _PasswordFormState extends State<PasswordForm> {
             ),
             // hintText: "Enter your Password",
             hintText: "Ingresa tu contraseña",
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: Colors.black54),
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,
           ),

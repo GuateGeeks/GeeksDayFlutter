@@ -19,7 +19,7 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black54),
           keyboardType: TextInputType.visiblePassword,
           obscureText: showPassword,
           decoration: InputDecoration(
@@ -34,8 +34,7 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
               ),
             ),
             hintText: "Repetir contraseña",
-            hintStyle: TextStyle(color: Colors.black),
-            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.black54),
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,
           ),

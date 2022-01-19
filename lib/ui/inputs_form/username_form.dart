@@ -9,16 +9,14 @@ class UsernameForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      
         return TextFormField(
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black54),
           keyboardType: TextInputType.name,
           controller: usernameController,
           validator: emailAndUsernameValidator,          
           decoration: InputDecoration(
-            hintText: "Ingresa tu nombre de usuario",
-            hintStyle: TextStyle(color: Colors.black),
-            border: InputBorder.none,
+            hintText: "Nombre de usuario",
+            hintStyle: TextStyle(color: Colors.black54),
             filled: true,
             fillColor: Theme.of(context).inputDecorationTheme.fillColor,
           ),

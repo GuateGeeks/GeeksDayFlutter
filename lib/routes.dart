@@ -2,7 +2,6 @@ import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
 import 'package:geeksday/ui/events/main_events.dart';
 import 'package:geeksday/ui/home.dart';
-import 'package:geeksday/ui/intro_screen.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/ui/splash_screen.dart';
@@ -25,8 +24,6 @@ class Routes {
     switch (routeSettings.name) {
       case splash:
         return _buildRoute(SplashScreen.create);
-      case intro:
-        return _buildRoute(IntroScreen.create); 
       case createAccount:
         return _buildRoute(EmailCreate.create);
       case signInEmail:

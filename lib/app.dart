@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthSignedOut) {
           _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.intro, (r) => false);
+              ?.pushNamedAndRemoveUntil(Routes.signInEmail, (r) => false);
         } else if (state is AuthSignedIn) {
           _navigatorKey.currentState
               ?.pushNamedAndRemoveUntil(Routes.mainEvents, (r) => false);

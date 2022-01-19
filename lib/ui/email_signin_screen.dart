@@ -2,7 +2,6 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 
@@ -38,7 +37,7 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Iniciar sesión con Email'),
-        leading: ReturnButton(),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         decoration: BoxDecoration(

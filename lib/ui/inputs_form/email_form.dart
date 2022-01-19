@@ -11,16 +11,14 @@ class EmailForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black54),
           keyboardType: TextInputType.emailAddress,
           validator: emailAndUsernameValidator,
           controller: emailController,
           decoration: InputDecoration(
             hintText: "Email",
-            hintStyle: TextStyle(color: Colors.black),
-            filled: true,
-           prefixStyle: TextStyle(color: Colors.black)
-           
+            hintStyle: TextStyle(color: Colors.black54),
+            filled: true,           
           ),
         ),
       ],
