@@ -6,9 +6,10 @@ const RESOURCES = {
   "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "manifest.json": "cd30b6ab6774127656ea9c126369b699",
-"assets/AssetManifest.json": "636cdd87180a6216e7e7519e5c830d01",
+"assets/AssetManifest.json": "a5ae22a203d766f18d49a4b93e127bae",
 "assets/assets/icon_google.png": "28b51fa69f1f0cb8a8f7a4bdd8e173c9",
 "assets/assets/icon_facebook.png": "804cf2a905b2c7460adcaadb3dbfe9ae",
+"assets/assets/guategeeks-logo-clear.png": "d71461a34214ad6bc22fba074c63ec40",
 "assets/assets/icon.png": "8ac50d54716ef12d71db52324f32ba13",
 "assets/assets/logo.png": "7ae9268be56ac553cc479ece48e05991",
 "assets/assets/icon_email.png": "37f207403ee19ea3f7b9e72200462eac",
@@ -25,12 +26,12 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/FontManifest.json": "756290620cf7087d52363177ab3b66ac",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"index.html": "2b6275e6db43bbec34a4a4acc54626ed",
-"/": "2b6275e6db43bbec34a4a4acc54626ed",
+"index.html": "11225b7524b2fb52750eabfeae6302ca",
+"/": "11225b7524b2fb52750eabfeae6302ca",
 "version.json": "da2e0573834eb2187048bf7b88f15c46",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "firebase-config.js": "01ebaf1b69d2a21a35fc2537dfa5deaf",
-"main.dart.js": "1bc86a994e17dc9390d4962dec44045e"
+"main.dart.js": "29106b38a9ce348ddaac53742ee2e84b"
 };
 
 // The application shell files that are downloaded before a service worker can
