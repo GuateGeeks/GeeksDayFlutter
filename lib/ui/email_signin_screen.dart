@@ -41,7 +41,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient( 
+          gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
@@ -61,7 +61,7 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget cardLogin(double maxWidth, AuthState state, authCubit) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(      
+      child: Center(
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
@@ -82,45 +82,42 @@ class _EmailSignInState extends State<EmailSignIn> {
                       height: 10,
                     ),
                     formLogin(state),
-                    SizedBox(
-                      height: 15
-                    ),
+                    SizedBox(height: 15),
                     forgotPassword(),
-                    SizedBox( 
+                    SizedBox(
                       height: 20.0,
                     ),
                   ],
                 ),
               ),
             ),
-            
-              Container(
-                margin: EdgeInsets.only(top: 340),
-                child: ElevatedButton(
+            Container(
+              margin: EdgeInsets.only(top: 340),
+              child: ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(const Size(120, 40)),
                     side: MaterialStateProperty.all(
-                    const BorderSide(
-                      color: Color.fromRGBO(255, 255, 255, 0.79),
-                      width: 1,
+                      const BorderSide(
+                        color: Color.fromRGBO(255, 255, 255, 0.79),
+                        width: 1,
+                      ),
                     ),
-                  ),
-                    backgroundColor:  MaterialStateProperty.all<Color>(Color.fromRGBO(75, 59, 171, 1)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromRGBO(75, 59, 171, 1)),
                   ),
                   onPressed: () {
                     authCubit.reset();
                     Navigator.pushNamed(context, Routes.createAccount);
                   },
-                  child: Text("Registrarse",
-                    style: TextStyle(  
+                  child: Text(
+                    "Registrarse",
+                    style: TextStyle(
                       fontSize: 17.0,
                       color: Colors.white,
                       // fontFamily: 'Biryani',
                     ),
-                  )
-                ),
-              ),
-            
+                  )),
+            ),
           ],
         ),
       ),
@@ -162,7 +159,8 @@ class _EmailSignInState extends State<EmailSignIn> {
             backgroundColor: MaterialStateProperty.all<Color>(
               Color(0xFF0E89AF),
             ),
-            padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 24)),
+            padding:
+                MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 24)),
           ),
           child: Center(
             child: Text(
@@ -171,7 +169,6 @@ class _EmailSignInState extends State<EmailSignIn> {
                 fontSize: 17,
                 color: Colors.white,
               ),
-
             ),
           ),
           onPressed: () {
@@ -187,11 +184,12 @@ class _EmailSignInState extends State<EmailSignIn> {
     );
   }
 
-  Widget forgotPassword(){
+  Widget forgotPassword() {
     return InkWell(
-      onTap: (){},
-      child: Text("Recuperar contraseña",
-        style: TextStyle(  
+      onTap: () {},
+      child: Text(
+        "Recuperar contraseña",
+        style: TextStyle(
           color: Color(0xFF4A4A4A),
           fontSize: 14,
           decoration: TextDecoration.underline,

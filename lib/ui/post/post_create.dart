@@ -1,14 +1,110 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class PostCreate extends StatelessWidget {
+  static Widget create(BuildContext context) => PostCreate();
+
   const PostCreate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    File? uploadedImage;
     return Scaffold(
-      body: Text("")
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Image.asset(
+          'assets/guategeeks-logo-clear.png',
+          width: 150,
+          fit: BoxFit.cover,
+        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(15, 25, 15, 5),
+        alignment: Alignment.topCenter,
+        child: createPostBody(uploadedImage),
+      ),
     );
   }
+
+  Widget createPostBody(uploadedImage) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          image(uploadedImage),
+          SizedBox(
+            height: 40,
+          ),
+          description(),
+        ],
+      ),
+    );
+  }
+
+  Widget image(uploadedImage) {
+    return Container(
+      height: 280,
+      width: 260,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: uploadedImage == null
+                ? Container(
+                    width: 250,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(
+                        color: Color(0xFFD3D3D3),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.image,
+                      size: 80,
+                      color: Color(0xFFD3D3D3),
+                    ),
+                  )
+                : Container(),
+          ),
+          Container(
+            child: Positioned(
+                right: 5,
+                bottom: 20,
+              child: GestureDetector(
+                child: Container(
+                  width: 45,
+                  height: 45,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      border: Border.all(
+                        color: Color(0xFFD3D3D3),
+                      ),
+                    ),
+                  child: Icon(
+                    Icons.camera_alt,
+                    size: 30,
+                    color: Color(0xFF0E89AF),
+                   ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget description(){
+    return TextField(
+      decoration: InputDecoration(  
+        hintText: "Descripcion",
+        hintMaxLines: 6,
+        
+      ),
+    );
+  }
+
 }
 
 

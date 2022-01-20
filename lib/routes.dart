@@ -6,6 +6,7 @@ import 'package:geeksday/ui/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/ui/splash_screen.dart';
 import 'package:geeksday/ui/user_profile.dart';
+import 'package:geeksday/ui/post/post_create.dart';
 
 class Routes {
   static const splash = '/';
@@ -14,11 +15,12 @@ class Routes {
   static const mainEvents = '/mainEvents';
   static const userProfile = '/userProfile';
   static const settings = '/settings';
-  static const creatPost = '/createPost';
 
   static const postComment = '/postComment';
   static const createAccount = '/createAccount';
   static const signInEmail = '/signInEmail';
+
+  static const postCreate = '/postCreate';
 
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -36,6 +38,8 @@ class Routes {
         return _buildRoute(UserProfile.create);
       case settings:
         return _buildRoute(Settings.create);
+      case postCreate:
+        return _buildRoute(PostCreate.create);
       default:
         throw Exception('Route does not exists');
     }
