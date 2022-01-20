@@ -127,7 +127,6 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
-    
     //Color del appbar
     appBarTheme: AppBarTheme(color: Colors.blue),
     //BackgroundColor
@@ -156,9 +155,9 @@ class MyThemes {
       ),
       //Texto del modal Crear Post/Quiz Seleccionado
       headline2: TextStyle(
-        fontSize: 23,
+        fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: Colors.black,
+        color: Colors.white,
       ),
       //Texto del modal Crear Post/Quiz No Seleccionado
       headline5: TextStyle(
@@ -213,6 +212,6 @@ class MyThemes {
         ),
       )
     ),
-    primaryColor: Colors.black,
+    primaryColor: Color(0xFF4A4A4A)
   );
 }

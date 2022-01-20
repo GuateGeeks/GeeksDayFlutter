@@ -1,5 +1,6 @@
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/ui/main_drawer.dart';
+import 'package:geeksday/ui/post/modal_create_post.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double modalHeight =  height / 3;
+    double modalHeight =  height / 1.8;
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
@@ -43,7 +44,8 @@ class Home extends StatelessWidget {
           builder: (context) => Container(
             height: modalHeight,
             width: 800,
-            child: PostCreate(idEvent: event!.id),
+            child: ModalCreatePost(idEvent: event!.id),
+            // child: PostCreate(idEvent: event!.id),
           ),
         );
       },
