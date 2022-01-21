@@ -1,15 +1,26 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/posts/feed_cubit.dart';
+import 'package:geeksday/models/post.dart';
+import 'package:geeksday/services/implementation/post_service.dart';
+import 'package:geeksday/ui/helpers/preview_images.dart';
 
-class PostCreate extends StatelessWidget {
-  static Widget create(BuildContext context) => PostCreate();
+class PostCreate extends StatefulWidget {
+  final String idEvent;
 
-  const PostCreate({Key? key}) : super(key: key);
+  PostCreate({Key? key, required this.idEvent}) : super(key: key);
 
   @override
+  _PostCreateState createState() => _PostCreateState();
+}
+
+class _PostCreateState extends State<PostCreate> {
+  late Post post;
+  File? uploadedImage;
+  @override
   Widget build(BuildContext context) {
-    File? uploadedImage;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -19,10 +30,13 @@ class PostCreate extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.fromLTRB(15, 25, 15, 5),
-        alignment: Alignment.topCenter,
-        child: createPostBody(uploadedImage),
+      body: BlocProvider(
+        create: (_) => FeedCubit(PostService(), widget.idEvent),
+        child: Container(
+          padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
+          alignment: Alignment.topCenter,
+          child: createPostBody(uploadedImage),
+        ),
       ),
     );
   }
@@ -32,10 +46,11 @@ class PostCreate extends StatelessWidget {
       child: Column(
         children: [
           image(uploadedImage),
-          SizedBox(
-            height: 40,
-          ),
           description(),
+          SizedBox(
+            height: 30,
+          ),
+          savePost(),
         ],
       ),
     );
@@ -43,16 +58,16 @@ class PostCreate extends StatelessWidget {
 
   Widget image(uploadedImage) {
     return Container(
-      height: 280,
-      width: 260,
+      height: 260,
+      width: 240,
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: uploadedImage == null
                 ? Container(
-                    width: 250,
-                    height: 250,
+                    width: 230,
+                    height: 230,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       border: Border.all(
@@ -65,27 +80,33 @@ class PostCreate extends StatelessWidget {
                       color: Color(0xFFD3D3D3),
                     ),
                   )
-                : Container(),
+                : PreviewImage(uploadedImage: uploadedImage),
           ),
           Container(
             child: Positioned(
-                right: 5,
-                bottom: 20,
+              right: 5,
+              bottom: 20,
               child: GestureDetector(
                 child: Container(
-                  width: 45,
-                  height: 45,
+                  width: 55,
+                  height: 55,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      border: Border.all(
-                        color: Color(0xFFD3D3D3),
-                      ),
+                    color: Colors.white12,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    border: Border.all(
+                      color: Color(0xFFD3D3D3),
                     ),
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 30,
-                    color: Color(0xFF0E89AF),
-                   ),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      uploadImage(context);
+                    },
+                    child: Icon(
+                      Icons.camera_alt,
+                      size: 40,
+                      color: Color(0xFF0E89AF),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -95,17 +116,119 @@ class PostCreate extends StatelessWidget {
     );
   }
 
-  Widget description(){
-    return TextField(
-      decoration: InputDecoration(  
-        hintText: "Descripcion",
-        hintMaxLines: 6,
-        
+  Widget description() {
+    return PhysicalModel(
+      borderRadius: BorderRadius.circular(15),
+      color: Colors.white,
+      elevation: 5.0,
+      shadowColor: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          maxLines: 6,
+          minLines: 6,
+          keyboardType: TextInputType.multiline,
+          decoration: InputDecoration(
+            focusedBorder: null,
+            border: InputBorder.none,
+            hintText: "Descripción",
+          ),
+        ),
       ),
     );
   }
 
+  Widget savePost() {
+    return Center(
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            Color(0xFF0E89AF),
+          ),
+          padding: MaterialStateProperty.all(
+              EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
+        ),
+        onPressed: () {},
+        child: Text(
+          "Compartir",
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+    );
+  }
+
+  uploadImage(BuildContext context) async {
+    var uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
+    uploadInput.onChange.listen(
+      (event) {
+        final File file = uploadInput.files!.first;
+        final reader = FileReader();
+        reader.readAsDataUrl(file);
+        reader.onLoadEnd.listen(
+          (event) {
+            setState(() {
+              uploadedImage = file;
+            });
+            BlocProvider.of<FeedCubit>(context).setImage(file);
+          },
+        );
+      },
+    );
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

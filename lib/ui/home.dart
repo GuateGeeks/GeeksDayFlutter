@@ -1,7 +1,6 @@
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/ui/main_drawer.dart';
 import 'package:geeksday/ui/post/modal_create_post.dart';
-import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 

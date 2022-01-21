@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/routes.dart';
+import 'package:geeksday/ui/post/post_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
   String idEvent;
@@ -60,7 +60,13 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.postCreate);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return PostCreate(idEvent: idEvent);
+              },
+            ),
+          );
       },
       child: Row(
         children: [

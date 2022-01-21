@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/post_service.dart';
@@ -5,6 +7,7 @@ import 'package:geeksday/services/post_service.dart';
 class FeedCubit extends Cubit<FeedState> {
   final PostServiceBase _postService;
   final String idEvent;
+  File? _pickedImage;
 
   FeedCubit(this._postService, this.idEvent) : super(FeedInitialState());
  
@@ -22,6 +25,12 @@ class FeedCubit extends Cubit<FeedState> {
     }, onDone: (){},
     );
   }
+
+  //function to display image in preview
+  void setImage(File? image) {
+    _pickedImage = image;
+  }
+
  
 }
 

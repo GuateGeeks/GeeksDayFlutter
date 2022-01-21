@@ -197,27 +197,4 @@ class _EmailSignInState extends State<EmailSignIn> {
       ),
     );
   }
-  //Button Sing Up
-
-  Widget singUp(BuildContext context, authCubit) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "¿Aún no tienes una cuenta?",
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        SizedBox(width: 5.0),
-        TextButton(
-          child: Text('Registrate'),
-          style: Theme.of(context).textButtonTheme.style,
-          onPressed: () {
-            authCubit.reset();
-            Navigator.pushNamed(context, Routes.createAccount);
-          },
-        )
-      ],
-    );
-  }
 }
