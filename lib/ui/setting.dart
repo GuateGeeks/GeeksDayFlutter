@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/provider/theme_provider.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +15,14 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 500 ? 500 : width;
+    double maxWidth = width > 700 ? 700 : width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configuracion'),
+        elevation: 0,
+        title: Text(
+          'Configuracion',
+          style: Theme.of(context).appBarTheme.textTheme!.headline1,
+        ),
         leading: ReturnButton(),
       ),
       body: settings(maxWidth, context),
@@ -27,30 +33,85 @@ class Settings extends StatelessWidget {
     return Center(
       child: Container(
         width: maxWidth,
-        child: Card(
-          child: ListView(
-            children: [
-              ListTile(
-                title: Text('Modo Oscuro',
-                    style: Theme.of(context).textTheme.headline6),
-                trailing: changeTheme(context),
-              ),
-              Divider(
-                height: 25,
-                thickness: 1,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            account(context),
+            Divider(
+              height: 30,
+              thickness: 1,
+            ),
+            application(context),
+          ],
         ),
       ),
     );
   }
 
+  Widget account(context) {
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        ListTile(
+          title: Text(
+            "Cuenta",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text("Cuenta"),
+        ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text("Cuenta"),
+        ),
+        ListTile(
+          title: Text('Modo Oscuro'),
+          trailing: changeTheme(context),
+        ),
+      ],
+    );
+  }
+
+  Widget application(context) {
+    final authCubit = AuthCubit(AuthService());
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        ListTile(
+          title: Text(
+            "Aplicación",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text("Cuenta"),
+        ),
+        ListTile(
+          leading: Icon(Icons.home),
+          title: Text("Cuenta"),
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          onTap: () {
+            authCubit.signOut();
+          },
+          title: Text("Salir"),
+        ),
+      ],
+    );
+  }
+
   Widget changeTheme(context) {
     return Consumer<ThemeProvider>(
-      builder: (context, notifier, child){
+      builder: (context, notifier, child) {
         return Switch(
-          onChanged: (val){
+          onChanged: (val) {
             notifier.toogleTheme();
           },
           value: notifier.darkTheme,

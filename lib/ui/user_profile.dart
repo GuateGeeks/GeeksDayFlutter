@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/events.dart';
+import 'package:geeksday/ui/bottom_navigation.dart';
 import 'package:geeksday/ui/edit_profile.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatelessWidget {
+  final Events? event;
   static Widget create(BuildContext context) {
-    return const UserProfile();
+    return UserProfile();
   }
 
-  const UserProfile({Key? key}) : super(key: key);
+  UserProfile({Key? key, this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class UserProfile extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigation(event: event),
       body: BodyUserProfile(),
     );
   }

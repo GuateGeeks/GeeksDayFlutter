@@ -6,37 +6,49 @@ class ThemeProvider extends ChangeNotifier {
   //key to access the system preferences and know if the dark theme is active or not
   String keyPreferences = "darkmode";
 
-  ThemeProvider(){
-    _darkTheme = false;
+  ThemeProvider() {
+    _darkTheme = true;
     _loadFromPrefs();
   }
-  
+
   bool get darkTheme => _darkTheme;
 
   //function to change the theme of the application and save it in the preferences
-  toogleTheme(){
+  toogleTheme() {
     _darkTheme = !_darkTheme;
     _saveToPrefs();
     notifyListeners();
   }
 
   //bring the boolean value from the preferences, to know if the dark theme is active or not
- _loadFromPrefs() async {
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-   _darkTheme = prefs.getBool(keyPreferences) ?? true;
-   notifyListeners();
- }
+  _loadFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _darkTheme = prefs.getBool(keyPreferences) ?? true;
+    notifyListeners();
+  }
 
   //save in preferences if the dark theme is active or not
- _saveToPrefs() async {
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-   prefs.setBool(keyPreferences, _darkTheme);
- }
+  _saveToPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(keyPreferences, _darkTheme);
+  }
 }
+
 class MyThemes {
   static final darkTheme = ThemeData(
+    //Color del AppBar
+    appBarTheme: AppBarTheme(
+      color: Colors.black54,
+      textTheme: TextTheme(
+          headline1: TextStyle(
+        color: Colors.white,
+      )),
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+    ),
     //BackgroundColor
-    scaffoldBackgroundColor: Colors.grey.shade900,
+    scaffoldBackgroundColor: Color(0xFF2B2B2B),
     // Thema Principal
     colorScheme: ColorScheme.dark(),
     //Estilos de texto
@@ -44,32 +56,25 @@ class MyThemes {
       //Nombre de usuarios
       headline1: TextStyle(
         fontSize: 15.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        fontWeight: FontWeight.w500,
+        color: Color(0xFFD6D6D6),
       ),
-      //likes and comments
-      subtitle1: TextStyle(
-        fontSize: 16.5,
-        fontWeight: FontWeight.bold,
-        color: Colors.grey,
-      ),
-      //Fecha
-      subtitle2: TextStyle(
-        fontSize: 13.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.grey,
+      //Fecha y likes
+      headline2: TextStyle(
+        fontSize: 14.0,
+        fontWeight: FontWeight.w300,
+        color: Color(0xFF797979),
       ),
       //Post Description
-      headline4: TextStyle(
+      bodyText1: TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
-        color: Colors.white,
+        color: Color(0xFFD6D6D6),
       ),
-      //Texto del modal Crear Post/Quiz Seleccionado
-      headline2: TextStyle(
-        fontSize: 23,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+      //Texto pantalla configuracion
+      headline4: TextStyle(
+        fontSize: 22,
+        color: Color(0xFFD6D6D6),
       ),
       //Texto del modal Crear Post/Quiz No Seleccionado
       headline5: TextStyle(
@@ -96,10 +101,9 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-        fontSize: 25.0,
-        color: Color(0xFF4A4A4A),
-        fontWeight: FontWeight.w600
-      ), 
+          fontSize: 25.0,
+          color: Color(0xFF4A4A4A),
+          fontWeight: FontWeight.w600),
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
@@ -114,25 +118,35 @@ class MyThemes {
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
     //Style textbutton singup
-    textButtonTheme: TextButtonThemeData(  
-      style: TextButton.styleFrom(
-        primary: Colors.white,
-        textStyle: TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 17,
-        ),
-      )
-    ),
-    primaryColor: Colors.black, 
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+      primary: Colors.white,
+      textStyle: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 17,
+      ),
+    )),
+    primaryColor: Colors.black,
   );
 
   static final lightTheme = ThemeData(
     //Color del appbar
-    appBarTheme: AppBarTheme(color: Colors.blue),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      textTheme: TextTheme(
+          headline1: TextStyle(
+        color: Colors.black,
+      )),
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
+      elevation: 2,
+      actionsIconTheme: IconThemeData(
+        color: Color(0xFF0E89AF),
+      ),
+    ),
     //BackgroundColor
-    scaffoldBackgroundColor: Color.fromRGBO(240, 240, 240, 1),
-    // Thema Principal
-    colorScheme: ColorScheme.light(),
+    scaffoldBackgroundColor: Colors.white,
     //Estilos de texto
     textTheme: TextTheme(
       //Nombre de usuarios
@@ -142,26 +156,31 @@ class MyThemes {
         color: Color(0xFF767676),
       ),
       //Fecha y likes
-      subtitle2: TextStyle(
-        fontSize: 13.0,
+      headline2: TextStyle(
+        fontSize: 14.0,
         fontWeight: FontWeight.w300,
-        color: Color(0xFF767676),
+        color: Color(0xFF797979),
       ),
       //Post Description
-      headline4: TextStyle(
+      bodyText1: TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.w500,
         color: Color(0xFF767676),
       ),
-      //Texto del modal Crear Post/Quiz Seleccionado
-      headline2: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+      //Texto pantalla configuracion
+      headline4: TextStyle(
+        fontSize: 22,
+        color: Color(0xFF767676),
       ),
-      //Texto del modal Crear Post/Quiz No Seleccionado
+      // //Texto del modal Crear Post/Quiz Seleccionado
+      // headline3: TextStyle(
+      //   fontSize: 20,
+      //   fontWeight: FontWeight.bold,
+      //   color: Colors.white,
+      // ),
+      //BottomNavigation text
       headline5: TextStyle(
-        color: Colors.grey,
+        color: Colors.white,
         fontSize: 15.0,
       ),
       //Texto Menu y comentarios
@@ -184,10 +203,14 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-        fontSize: 30.0,
-        color: Colors.black,
-        fontWeight: FontWeight.w600
-      ),
+          fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.w600),
+    ),
+
+    //BottomNavbar Style
+    backgroundColor: Color(0xFF4A4A4A),
+    //Icons Color
+    iconTheme: IconThemeData(
+      color: Colors.white,
     ),
 
     //Estilos inputs Crear Post/Quiz
@@ -196,22 +219,18 @@ class MyThemes {
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(235, 235, 235, .6),
-    //Icons Color
-    iconTheme: IconThemeData(
-      color: Colors.black,
-    ),
+
     //DropdownButton color (admin)
     selectedRowColor: Colors.black12,
     //Style textbutton singup
-    textButtonTheme: TextButtonThemeData(  
-      style: TextButton.styleFrom(
-        primary: Colors.black,
-        textStyle: TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 17,
-        ),
-      )
-    ),
-    primaryColor: Color(0xFF4A4A4A)
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+      primary: Colors.black,
+      textStyle: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 17,
+      ),
+    )),
+    primaryColor: Color(0xFF4A4A4A),
   );
 }

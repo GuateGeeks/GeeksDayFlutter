@@ -4,6 +4,7 @@ import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/ui/post/post_card.dart';
+import 'package:geeksday/ui/setting.dart';
 
 class PostList extends StatelessWidget {
   final String idEvent;
@@ -11,11 +12,36 @@ class PostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => FeedCubit(PostService(), idEvent),
-      child: Builder(builder: (context) {
-        return postListBody(context);
-      }),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Image.asset(
+          'assets/guateGeeksLogo.png',
+          width: 150,
+          fit: BoxFit.cover,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Settings();
+                  },
+                ),
+              );
+            },
+            icon: Icon(Icons.menu),
+          ),
+        ],
+      ),
+      body: BlocProvider(
+        create: (_) => FeedCubit(PostService(), idEvent),
+        child: Builder(builder: (context) {
+          return postListBody(context);
+        }),
+      ),
     );
   }
 
@@ -42,7 +68,6 @@ class PostList extends StatelessWidget {
   Widget postsCards(context, double maxWidth, List<Post> posts, getPostList) {
     return Center(
       child: Container(
-        color: Colors.white60,
         width: maxWidth,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),

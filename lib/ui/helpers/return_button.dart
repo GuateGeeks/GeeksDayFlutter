@@ -5,16 +5,17 @@ class ReturnButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(  
-      builder: (context){
-        return IconButton(
-          icon: Icon(Icons.arrow_back_outlined),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          tooltip: 'Regresar',
-        );
-      }
-    );
+    return Builder(builder: (context) {
+      return IconButton(
+        icon: Icon(
+          Icons.arrow_back_outlined,
+          color: Theme.of(context).appBarTheme.iconTheme!.color,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        tooltip: 'Regresar',
+      );
+    });
   }
 }

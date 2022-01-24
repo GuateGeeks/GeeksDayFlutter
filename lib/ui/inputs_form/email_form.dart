@@ -18,7 +18,7 @@ class EmailForm extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Email",
             hintStyle: TextStyle(color: Colors.black54),
-            filled: true,           
+            filled: true,
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/routes.dart';
@@ -36,7 +37,13 @@ class _EmailSignInState extends State<EmailSignIn> {
     double maxWidth = width > 400 ? 400 : width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Iniciar sesión con Email'),
+        centerTitle: true,
+        title: Image.asset(
+          "assets/guateGeeksLogo.png",
+          width: 200,
+          height: 40,
+          fit: BoxFit.cover,
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Container(

@@ -26,10 +26,11 @@ class ButtonWidget extends StatelessWidget {
               commentButton(context, width, state.post, cubit),
             ],
           ),
-        );   
+        );
       },
     );
   }
+
   //function to add a like to the post
   Widget likeButton(BuildContext context, width, cubit) {
     String userId = post.idUser;
@@ -37,42 +38,40 @@ class ButtonWidget extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             likePost(context);
             isLiked = !isLiked;
           },
-          child: isLiked ?
-            Icon(  
-              Icons.favorite,
-              size: 22,
-              color: Color.fromRGBO(229, 21, 21, 1)
-            ) :
-           RadiantGradientMask(
-              child: Icon(
-                Icons.favorite,
-                color: Colors.grey,
-                size: 22,
-              ),
-            ),
+          child: isLiked
+              ? Icon(Icons.favorite,
+                  size: 22, color: Color.fromRGBO(229, 21, 21, 1))
+              : RadiantGradientMask(
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.grey,
+                    size: 22,
+                  ),
+                ),
         ),
-        
         Container(
           margin: EdgeInsets.symmetric(horizontal: 5.0),
           child: Text(
             //show the number of likes of the post
             cubit.getLikesCountText(),
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
       ],
     );
   }
+
   //   //function to add comments to the post
-  Widget commentButton(BuildContext context, width, Post post, PostCubit cubit) {
+  Widget commentButton(
+      BuildContext context, width, Post post, PostCubit cubit) {
     return Row(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -83,19 +82,17 @@ class ButtonWidget extends StatelessWidget {
           },
           child: RadiantGradientMask(
             child: Icon(
-              Icons.chat_bubble, color: Colors.grey,
+              Icons.chat_bubble,
+              color: Colors.grey,
               size: 22,
-            ), 
+            ),
           ),
         ),
-        SizedBox(
-          width: 10.0
-        ),
+        SizedBox(width: 10.0),
         Text(
           //show the number of comments of the post
           cubit.countComments(),
-          style: Theme.of(context).textTheme.subtitle1,
-          
+          style: Theme.of(context).textTheme.headline2,
         ),
       ],
     );

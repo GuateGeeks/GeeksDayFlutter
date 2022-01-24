@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +7,6 @@ import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 import 'package:geeksday/ui/inputs_form/repeat_password_form.dart';
 import 'package:geeksday/ui/inputs_form/username_form.dart';
-import 'package:multiavatar/multiavatar.dart';
 
 import 'helpers/return_button.dart';
 
@@ -28,7 +25,9 @@ class _EmailCreateState extends State<EmailCreate> {
   final _repeatPasswordController = TextEditingController();
 
   String? emailAndUsernameValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'Este es un campo requerido' : null;
+    return (value == null || value.isEmpty)
+        ? 'Este es un campo requerido'
+        : null;
   }
 
   String? passwordValidator(String? value) {
@@ -47,7 +46,13 @@ class _EmailCreateState extends State<EmailCreate> {
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro'),
+        centerTitle: true,
+        title: Image.asset(
+          "assets/guateGeeksLogo.png",
+          width: 200,
+          height: 40,
+          fit: BoxFit.cover,
+        ),
         leading: ReturnButton(),
       ),
       body: Container(
@@ -99,7 +104,6 @@ class _EmailCreateState extends State<EmailCreate> {
                 ),
               ),
             ),
-           
           ],
         ),
       ),
@@ -138,46 +142,40 @@ class _EmailCreateState extends State<EmailCreate> {
     );
   }
 
-  Widget saveUser(){
+  Widget saveUser() {
     return Container(
-            
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(const Size(120, 40)),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(
-                        color: Color.fromRGBO(255, 255, 255, 0.79),
-                        width: 1,
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(75, 59, 171, 1)),
-                  ),
-                  onPressed: () {
-                                  var random = List.generate(
-                                      12, (_) => Random().nextInt(100));
-                                  randomAvatar = random.join();
-                                  if (_formKey.currentState?.validate() ==
-                                      true) {
-                                    context
-                                        .read<AuthCubit>()
-                                        .createUserWithEmailAndPassword(
-                                          _emailController.text,
-                                          _usernameController.text,
-                                          _passwordController.text,
-                                          randomAvatar,
-                                        );
-                                  }
-                                },
-                  child: Text(
-                    "Registrarse",
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: Colors.white,
-                      // fontFamily: 'Biryani',
-                    ),
-                  )),
-            );
+      child: ElevatedButton(
+          style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all(const Size(120, 40)),
+            side: MaterialStateProperty.all(
+              const BorderSide(
+                color: Color.fromRGBO(255, 255, 255, 0.79),
+                width: 1,
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromRGBO(75, 59, 171, 1)),
+          ),
+          onPressed: () {
+            var random = List.generate(12, (_) => Random().nextInt(100));
+            randomAvatar = random.join();
+            if (_formKey.currentState?.validate() == true) {
+              context.read<AuthCubit>().createUserWithEmailAndPassword(
+                    _emailController.text,
+                    _usernameController.text,
+                    _passwordController.text,
+                    randomAvatar,
+                  );
+            }
+          },
+          child: Text(
+            "Registrarse",
+            style: TextStyle(
+              fontSize: 17.0,
+              color: Colors.white,
+              // fontFamily: 'Biryani',
+            ),
+          )),
+    );
   }
 }
-
