@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:geeksday/routes.dart';
@@ -14,17 +13,24 @@ class EmailSignIn extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignIn> {
+  double topBottom = 330.0;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   String? emptyValidator(String? value) {
+    setState(() {
+      topBottom = 385.0;
+    });
     return (value == null || value.isEmpty)
         ? 'Este es un campo requerido'
         : null;
   }
 
   String? passwordValidator(String? value) {
+    setState(() {
+      topBottom = 385.0;
+    });
     if (value == null || value.isEmpty) return 'Este es un campo requerido';
     return null;
   }
@@ -42,19 +48,18 @@ class _EmailSignInState extends State<EmailSignIn> {
           "assets/guateGeeksLogo.png",
           width: 200,
           height: 40,
-          fit: BoxFit.cover,
         ),
         automaticallyImplyLeading: false,
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF0E89AF),
-                Color(0xFF4B3BAB),
-              ]),
+          gradient: RadialGradient(
+            radius: 0.9,
+            colors: [
+              Color(0xFF0E89AF),
+              Color(0xFF4B3BAB),
+            ],
+          ),
         ),
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (_, state) {
@@ -99,31 +104,29 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 340),
+              width: 130,
+              margin: EdgeInsets.only(top: topBottom),
               child: ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(const Size(120, 40)),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(
-                        color: Color.fromRGBO(255, 255, 255, 0.79),
-                        width: 1,
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(75, 59, 171, 1)),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  primary: Color(0xFF4B3BAB),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  onPressed: () {
-                    authCubit.reset();
-                    Navigator.pushNamed(context, Routes.createAccount);
-                  },
-                  child: Text(
-                    "Registrarse",
-                    style: TextStyle(
-                      fontSize: 17.0,
-                      color: Colors.white,
-                      // fontFamily: 'Biryani',
-                    ),
-                  )),
+                ),
+                onPressed: () {
+                  authCubit.reset();
+                  Navigator.pushNamed(context, Routes.createAccount);
+                },
+                child: Text(
+                  "Registrarse",
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.white,
+                    // fontFamily: 'Biryani',
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -162,24 +165,27 @@ class _EmailSignInState extends State<EmailSignIn> {
       child: Container(
         width: 200,
         child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-              Color(0xFF0E89AF),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            primary: Color(0xFF0E89AF),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            padding:
-                MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 24)),
           ),
           child: Center(
             child: Text(
               "Ingresar",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 19,
                 color: Colors.white,
               ),
             ),
           ),
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
+              setState(() {
+                topBottom = 385.0;
+              });
               context.read<AuthCubit>().signInWithEmailAndPassword(
                     _emailController.text,
                     _passwordController.text,

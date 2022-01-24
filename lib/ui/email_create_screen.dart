@@ -51,7 +51,6 @@ class _EmailCreateState extends State<EmailCreate> {
           "assets/guateGeeksLogo.png",
           width: 200,
           height: 40,
-          fit: BoxFit.cover,
         ),
         leading: ReturnButton(),
       ),
@@ -144,38 +143,36 @@ class _EmailCreateState extends State<EmailCreate> {
 
   Widget saveUser() {
     return Container(
+      width: 150,
       child: ElevatedButton(
-          style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all(const Size(120, 40)),
-            side: MaterialStateProperty.all(
-              const BorderSide(
-                color: Color.fromRGBO(255, 255, 255, 0.79),
-                width: 1,
-              ),
-            ),
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromRGBO(75, 59, 171, 1)),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          primary: Color(0xFF4B3BAB),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: () {
-            var random = List.generate(12, (_) => Random().nextInt(100));
-            randomAvatar = random.join();
-            if (_formKey.currentState?.validate() == true) {
-              context.read<AuthCubit>().createUserWithEmailAndPassword(
-                    _emailController.text,
-                    _usernameController.text,
-                    _passwordController.text,
-                    randomAvatar,
-                  );
-            }
-          },
-          child: Text(
-            "Registrarse",
-            style: TextStyle(
-              fontSize: 17.0,
-              color: Colors.white,
-              // fontFamily: 'Biryani',
-            ),
-          )),
+        ),
+        onPressed: () {
+          var random = List.generate(12, (_) => Random().nextInt(100));
+          randomAvatar = random.join();
+          if (_formKey.currentState?.validate() == true) {
+            context.read<AuthCubit>().createUserWithEmailAndPassword(
+                  _emailController.text,
+                  _usernameController.text,
+                  _passwordController.text,
+                  randomAvatar,
+                );
+          }
+        },
+        child: Text(
+          "Registrarse",
+          style: TextStyle(
+            fontSize: 17.0,
+            color: Colors.white,
+            // fontFamily: 'Biryani',
+          ),
+        ),
+      ),
     );
   }
 }

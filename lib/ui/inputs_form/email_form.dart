@@ -7,21 +7,22 @@ class EmailForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          style: TextStyle(color: Colors.black54),
-          keyboardType: TextInputType.emailAddress,
-          validator: emailAndUsernameValidator,
-          controller: emailController,
-          decoration: InputDecoration(
-            hintText: "Email",
-            hintStyle: TextStyle(color: Colors.black54),
-            filled: true,
-          ),
+    return TextFormField(
+      style: TextStyle(color: Colors.black54),
+      keyboardType: TextInputType.emailAddress,
+      validator: emailAndUsernameValidator,
+      controller: emailController,
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFF0E89AF)),
         ),
-      ],
+        border: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(3),
+        ),
+        hintText: "Email",
+        hintStyle: TextStyle(color: Colors.black54),
+        filled: true,
+      ),
     );
   }
 }
