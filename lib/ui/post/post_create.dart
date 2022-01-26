@@ -17,7 +17,7 @@ class PostCreate extends StatefulWidget {
 }
 
 class _PostCreateState extends State<PostCreate> {
-  late Post post;
+  final commentController = TextEditingController();
   File? uploadedImage;
   @override
   Widget build(BuildContext context) {
@@ -25,38 +25,42 @@ class _PostCreateState extends State<PostCreate> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Image.asset(
-          'assets/guategeeks-logo-clear.png',
+          'assets/guateGeeksLogo.png',
           width: 150,
           fit: BoxFit.cover,
         ),
       ),
       body: BlocProvider(
         create: (_) => FeedCubit(PostService(), widget.idEvent),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
-          alignment: Alignment.topCenter,
-          child: createPostBody(uploadedImage),
+        child: Builder(
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
+              alignment: Alignment.topCenter,
+              child: createPostBody(context, uploadedImage),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget createPostBody(uploadedImage) {
+  Widget createPostBody(context, uploadedImage) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          image(uploadedImage),
-          description(),
+          image(context, uploadedImage),
+          description(context),
           SizedBox(
             height: 30,
           ),
-          savePost(),
+          savePost(context),
         ],
       ),
     );
   }
 
-  Widget image(uploadedImage) {
+  Widget image(context, uploadedImage) {
     return Container(
       height: 260,
       width: 240,
@@ -80,7 +84,11 @@ class _PostCreateState extends State<PostCreate> {
                       color: Color(0xFFD3D3D3),
                     ),
                   )
-                : PreviewImage(uploadedImage: uploadedImage),
+                : Container(
+                    width: 230,
+                    height: 230,
+                    child: PreviewImage(uploadedImage: uploadedImage),
+                  ),
           ),
           Container(
             child: Positioned(
@@ -116,7 +124,7 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  Widget description() {
+  Widget description(context) {
     return PhysicalModel(
       borderRadius: BorderRadius.circular(15),
       color: Colors.white,
@@ -125,6 +133,7 @@ class _PostCreateState extends State<PostCreate> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
+          controller: commentController,
           maxLines: 6,
           minLines: 6,
           keyboardType: TextInputType.multiline,
@@ -138,7 +147,7 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  Widget savePost() {
+  Widget savePost(context) {
     return Center(
       child: ElevatedButton(
         style: ButtonStyle(
@@ -148,7 +157,11 @@ class _PostCreateState extends State<PostCreate> {
           padding: MaterialStateProperty.all(
               EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
         ),
-        onPressed: () {},
+        onPressed: () {
+          print(commentController.text);
+          BlocProvider.of<FeedCubit>(context)
+              .createPost(commentController.text, uploadedImage);
+        },
         child: Text(
           "Compartir",
           style: TextStyle(fontSize: 20.0),
@@ -177,51 +190,6 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
