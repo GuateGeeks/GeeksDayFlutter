@@ -72044,7 +72044,7 @@ n=O.jc(new K.cp(m))
 s=new M.u0(new U.HI(o,O.lp(n,n.gdG().ef(0,"events"))),new M.LN())
 $.nA().toString
 n=U.Iu("assets/guateGeeksLogo.png",C.bC,r,150)
-n=M.iE(E.kh(H.a([B.ff(r,!0,L.cj(C.i4,r,r),24,new Z.a2S(b),C.ai,r)],t.p),!1,r,r,r,r,r,n),r,new T.fF(new Z.a2T(this,p),r),r,this.aau(b,s))
+n=M.iE(E.kh(H.a([B.ff(r,!0,L.cj(C.i4,new P.j(4279142831),30),24,new Z.a2S(b),C.ai,r)],t.p),!1,r,r,r,r,r,n),r,new T.fF(new Z.a2T(this,p),r),r,this.aau(b,s))
 return new R.nP(n,r,s,n,r,t.s6)},
 aau:function(a,b){return E.atW(L.cj(C.v7,null,null),!1,new Z.a2V(a,b),"Agregar Nuevo Evento")},
 acA:function(a){return O.nN(new Z.a3_(this),t.Q3,t.u_)},
