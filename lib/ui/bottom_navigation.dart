@@ -15,6 +15,7 @@ class BottomNavigation extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       elevation: 30,
       child: Container(
+        margin: EdgeInsets.only(bottom: 25),
         padding: EdgeInsets.symmetric(horizontal: 20),
         height: 60,
         child: Row(
