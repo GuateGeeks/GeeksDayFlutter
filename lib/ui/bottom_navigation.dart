@@ -15,7 +15,7 @@ class BottomNavigation extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       elevation: 30,
       child: Container(
-        margin: EdgeInsets.only(bottom: 8),
+        margin: EdgeInsets.only(bottom: 6),
         padding: EdgeInsets.symmetric(horizontal: 20),
         height: 60,
         child: Row(
@@ -34,8 +34,6 @@ class BottomNavigation extends StatelessWidget {
 
   Widget homePage(context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           onPressed: () {
@@ -155,6 +153,7 @@ class BottomNavigation extends StatelessWidget {
         Text(
           "Perfil",
           style: Theme.of(context).textTheme.headline5,
+          textAlign: TextAlign.center,
         ),
       ],
     );
