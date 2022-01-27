@@ -42,6 +42,8 @@ class MyThemes {
       textTheme: TextTheme(
           headline1: TextStyle(
         color: Colors.white,
+        fontWeight: FontWeight.w400, 
+        fontSize: 24,
       )),
       iconTheme: IconThemeData(
         color: Colors.white,
@@ -76,9 +78,9 @@ class MyThemes {
         fontSize: 22,
         color: Color(0xFFD6D6D6),
       ),
-      //Texto del modal Crear Post/Quiz No Seleccionado
+      //Texto opciones pantalla de configuracion
       headline5: TextStyle(
-        color: Colors.grey,
+        color: Color(0xFFD6D6D6),
         fontSize: 15.0,
       ),
       //Texto Menu y comentarios
@@ -113,7 +115,7 @@ class MyThemes {
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
     //Icons Color
     iconTheme: IconThemeData(
-      color: Colors.white,
+      color: Color(0xFFD6D6D6),
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
@@ -136,6 +138,8 @@ class MyThemes {
       textTheme: TextTheme(
           headline1: TextStyle(
         color: Colors.black,
+        fontWeight: FontWeight.w400, 
+        fontSize: 24,
       )),
       iconTheme: IconThemeData(
         color: Colors.black,
@@ -180,7 +184,7 @@ class MyThemes {
       // ),
       //BottomNavigation text
       headline5: TextStyle(
-        color: Colors.white,
+        color: Color(0xFF767676),
         fontSize: 15.0,
       ),
       //Texto Menu y comentarios
