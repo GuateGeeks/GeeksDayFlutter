@@ -72114,7 +72114,7 @@ L.a5I.prototype={}
 T.a6m.prototype={}
 B.wF.prototype={
 H:function(a,b){var s=this,r=null,q=K.a0(b).rx
-return new B.wD(M.aF(r,T.en(H.a([s.abF(b),s.Sf(b),s.aei(b),s.aaf(b),s.aeo(b)],t.p),C.B,C.dU,C.u),C.j,r,r,r,r,60,new V.an(0,0,0,25),new V.an(20,0,20,0),r,r,r),q,30,r)},
+return new B.wD(M.aF(r,T.en(H.a([s.abF(b),s.Sf(b),s.aei(b),s.aaf(b),s.aeo(b)],t.p),C.B,C.dU,C.u),C.j,r,r,r,r,60,new V.an(0,0,0,8),new V.an(20,0,20,0),r,r,r),q,30,r)},
 abF:function(a){var s=null
 return T.ch(H.a([B.fR(s,!0,L.cp(C.dL,s,30),24,new B.WW(this,a),C.al,s),L.aK("Inicio",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.B,C.dT,C.u)},
 Sf:function(a){var s=null
