@@ -42,7 +42,11 @@ class MainEvents extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              color: Color(0xFF0E89AF),
+              size: 30,
+            ),
           ),
         ],
         ),
