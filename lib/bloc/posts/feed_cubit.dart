@@ -29,7 +29,17 @@ class FeedCubit extends Cubit<FeedState> {
   }
 
   //create post or quiz
-  Future<void> createPost(String text, image) async {
+  Future<void> createPost(String text, image, idUser) async {
+    var createPost = Post.newPost(text, idUser, idEvent);
+    emit(AddingPost());
+    if (image == null) {
+      _postService.createPostText(createPost);
+      emit(PostAdded());
+    } else {
+      _postService.createPost(createPost, image);
+      emit(PostAdded());
+    }
+
     // newPost.text = text;
     // //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
     // if(_pickedImage == null){
@@ -59,3 +69,7 @@ class PostLoaded extends FeedState {
   final List<Post> post;
   PostLoaded({required this.post});
 }
+
+class AddingPost extends FeedState {}
+
+class PostAdded extends FeedState {}

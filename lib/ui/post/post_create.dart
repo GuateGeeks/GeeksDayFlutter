@@ -2,7 +2,9 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
+import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
@@ -46,16 +48,24 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   Widget createPostBody(context, uploadedImage) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          image(context, uploadedImage),
-          description(context),
-          SizedBox(
-            height: 30,
-          ),
-          savePost(context),
-        ],
+    return BlocListener<FeedCubit, FeedState>(
+      listener: (context, state) {
+        if (state is PostAdded) {
+          Navigator.pop(context);
+          return;
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            image(context, uploadedImage),
+            description(context),
+            SizedBox(
+              height: 30,
+            ),
+            savePost(context),
+          ],
+        ),
       ),
     );
   }
@@ -148,25 +158,32 @@ class _PostCreateState extends State<PostCreate> {
   }
 
   Widget savePost(context) {
-    return Center(
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-            Color(0xFF0E89AF),
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    return BlocBuilder<FeedCubit, FeedState>(
+      builder: (context, state) {
+        return Center(
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Color(0xFF0E89AF),
+              ),
+              padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
+            ),
+            onPressed: () {
+              print(commentController.text);
+              BlocProvider.of<FeedCubit>(context)
+                  .createPost(commentController.text, uploadedImage, userId);
+            },
+            child: state is PostLoading
+                ? CircularProgressIndicator()
+                : Text(
+                    "Compartir",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
           ),
-          padding: MaterialStateProperty.all(
-              EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
-        ),
-        onPressed: () {
-          print(commentController.text);
-          BlocProvider.of<FeedCubit>(context)
-              .createPost(commentController.text, uploadedImage);
-        },
-        child: Text(
-          "Compartir",
-          style: TextStyle(fontSize: 20.0),
-        ),
-      ),
+        );
+      },
     );
   }
 
