@@ -23,30 +23,32 @@ class HeaderCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [
-            Container(
-              width: 46,
-              height: 46,
-              child: SvgPicture.string(multiavatar(userData.image)),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //we show the user's name
-                Text(
-                  userData.name,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  getDatePost,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ],
-            ),
-          ]),
+          Row(
+            children: [
+              Container(
+                width: 46,
+                height: 46,
+                child: SvgPicture.string(multiavatar(userData.image)),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //we show the user's name
+                  Text(
+                    userData.name,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  Text(
+                    getDatePost,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                ],
+              ),
+            ],
+          ),
           PostOptions(post: post),
         ],
       ),

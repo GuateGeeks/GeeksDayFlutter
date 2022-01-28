@@ -69,8 +69,8 @@ class MyThemes {
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
+         fontSize: 16.0,
+        fontWeight: FontWeight.w400,
         color: Color(0xFFD6D6D6),
       ),
       //Texto pantalla configuracion
@@ -109,7 +109,7 @@ class MyThemes {
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color.fromRGBO(255, 255, 255, 1),
+      fillColor: Colors.black,
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
@@ -168,7 +168,7 @@ class MyThemes {
       //Post Description
       bodyText1: TextStyle(
         fontSize: 16.0,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: Color(0xFF767676),
       ),
       //Texto pantalla configuracion
@@ -176,12 +176,6 @@ class MyThemes {
         fontSize: 22,
         color: Color(0xFF767676),
       ),
-      // //Texto del modal Crear Post/Quiz Seleccionado
-      // headline3: TextStyle(
-      //   fontSize: 20,
-      //   fontWeight: FontWeight.bold,
-      //   color: Colors.white,
-      // ),
       //BottomNavigation text
       headline5: TextStyle(
         color: Color(0xFF767676),
