@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
-import 'package:geeksday/bloc/posts/post_cubit.dart';
-import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 
@@ -27,9 +25,8 @@ class _PostCreateState extends State<PostCreate> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Image.asset(
-          'assets/guateGeeksLogo.png',
+          "assets/guateGeeksLogo.png",
           width: 150,
-          fit: BoxFit.cover,
         ),
       ),
       body: BlocProvider(
@@ -140,21 +137,36 @@ class _PostCreateState extends State<PostCreate> {
       color: Colors.white,
       elevation: 5.0,
       shadowColor: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          controller: commentController,
-          maxLines: 6,
-          minLines: 6,
-          keyboardType: TextInputType.multiline,
-          decoration: InputDecoration(
-            focusedBorder: null,
-            border: InputBorder.none,
-            hintText: "Descripción",
+      child: TextFormField(
+        controller: commentController,
+        maxLines: 6,
+        minLines: 6,
+        decoration: InputDecoration(
+          hintText: "Descripcion",
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
           ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
+          fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+          filled: true,
         ),
       ),
     );
+
+    //       decoration: InputDecoration(
+    //         hintText: "Descripción",
+    //         hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
+    //         fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+    //         filled: true,
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget savePost(context) {
@@ -179,7 +191,10 @@ class _PostCreateState extends State<PostCreate> {
                 ? CircularProgressIndicator()
                 : Text(
                     "Compartir",
-                    style: TextStyle(fontSize: 20.0),
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
                   ),
           ),
         );

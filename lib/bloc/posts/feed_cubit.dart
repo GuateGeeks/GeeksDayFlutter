@@ -31,11 +31,13 @@ class FeedCubit extends Cubit<FeedState> {
   //create post or quiz
   Future<void> createPost(String text, image, idUser) async {
     var createPost = Post.newPost(text, idUser, idEvent);
-    emit(AddingPost());
+
     if (image == null) {
+      emit(AddingPost());
       _postService.createPostText(createPost);
       emit(PostAdded());
     } else {
+      emit(AddingPost());
       _postService.createPost(createPost, image);
       emit(PostAdded());
     }
@@ -65,11 +67,11 @@ class FeedInitialState extends FeedState {}
 
 class PostLoading extends FeedState {}
 
+class AddingPost extends FeedState {}
+
+class PostAdded extends FeedState {}
+
 class PostLoaded extends FeedState {
   final List<Post> post;
   PostLoaded({required this.post});
 }
-
-class AddingPost extends FeedState {}
-
-class PostAdded extends FeedState {}

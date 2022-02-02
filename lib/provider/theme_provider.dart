@@ -107,7 +107,8 @@ class MyThemes {
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color.fromRGBO(255, 255, 255, 1),
+      hintStyle: TextStyle(color: Colors.white),
+      fillColor: Colors.black54,
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
@@ -117,15 +118,7 @@ class MyThemes {
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
-    //Style textbutton singup
-    textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-      primary: Colors.white,
-      textStyle: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 17,
-      ),
-    )),
+
     primaryColor: Colors.black,
   );
 
