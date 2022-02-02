@@ -74,59 +74,68 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
+        child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: maxWidth,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 0.79)),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      "Iniciar Sesión",
-                      style: Theme.of(context).textTheme.overline,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    formLogin(state),
-                    SizedBox(height: 15),
-                    forgotPassword(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ),
+              padding: EdgeInsets.only(top: 10),
+              child: Image.asset("assets/ojos.png"),
             ),
-            Container(
-              width: 130,
-              margin: EdgeInsets.only(top: topBottom),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  primary: Color(0xFF4B3BAB),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                  width: maxWidth,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(255, 255, 255, 0.79)),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Iniciar Sesión",
+                          style: Theme.of(context).textTheme.overline,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        formLogin(state),
+                        SizedBox(height: 15),
+                        forgotPassword(),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                onPressed: () {
-                  authCubit.reset();
-                  Navigator.pushNamed(context, Routes.createAccount);
-                },
-                child: Text(
-                  "Registrarse",
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    // fontFamily: 'Biryani',
+                Container(
+                  width: 130,
+                  margin: EdgeInsets.only(top: topBottom),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      primary: Color(0xFF4B3BAB),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      authCubit.reset();
+                      Navigator.pushNamed(context, Routes.createAccount);
+                    },
+                    child: Text(
+                      "Registrarse",
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: Colors.white,
+                        // fontFamily: 'Biryani',
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

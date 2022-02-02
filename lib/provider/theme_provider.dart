@@ -203,7 +203,10 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-          fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontSize: 30.0,
+        color: Color(0xFF4A4A4A),
+        fontWeight: FontWeight.w600,
+      ),
     ),
 
     //BottomNavbar Style
