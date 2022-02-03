@@ -56,6 +56,7 @@ class _EmailCreateState extends State<EmailCreate> {
       ),
       body: Center(
         child: Container(
+          height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -77,20 +78,21 @@ class _EmailCreateState extends State<EmailCreate> {
   }
 
   Widget cardLogin(context, maxWidth, state) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: maxWidth,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 0.79)),
-              child: SingleChildScrollView(
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 90),
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                width: maxWidth,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.79)),
                 child: Column(
                   children: [
                     Text(
@@ -108,15 +110,21 @@ class _EmailCreateState extends State<EmailCreate> {
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              bottom: -20,
-              child: Container(
-                width: 150,
-                child: saveUser(),
+              Positioned(
+                bottom: -20,
+                child: Container(
+                  width: 150,
+                  child: saveUser(),
+                ),
               ),
-            ),
-          ],
+              Positioned(
+                top: -135,
+                child: Container(
+                  child: Image.asset('assets/ojos.png'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
