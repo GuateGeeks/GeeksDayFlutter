@@ -72272,7 +72272,7 @@ EG:function(a){if(a==null||a.length===0)return"Este es un campo requerido"
 if(a.length<6)return"La contrase\xf1a debe tener al menos 6 letras"
 if(this.r.a.a!=this.x.a.a)return"Las contrase\xf1as no coinciden"
 return null},
-H:function(a,b){var s=null,r=b.W(t.w).f.a.a,q=r>500?500:r,p=E.kn(s,!0,s,!0,s,s,new F.pz(s),U.IE("assets/guateGeeksLogo.png",s,40,200)),o=H.a([new P.i(4279142831),new P.i(4283120555)],t.t_)
+H:function(a,b){var s=null,r=b.W(t.w).f.a.a,q=r>500?500:r,p=E.kn(s,!0,s,!0,s,s,new F.pz(s),U.IE("assets/guateGeeksLogo.png",s,37,200)),o=H.a([new P.i(4279142831),new P.i(4283120555)],t.t_)
 return M.iG(p,s,T.cu(M.aB(s,O.nT(new X.agM(this,b,q),t.L,t.FB),C.j,s,s,new S.dc(s,s,s,s,s,new T.jp(C.bS,C.df,C.aJ,o,s,s),C.a_),s,s,s,s,s,s,s),s,s),s,s)},
 Sb:function(){var s=null,r=D.ZJ(s,s,s,s,s,s,s,s,s,new V.an(0,20,0,20),new P.i(4279142831),s,new X.dx(K.dT(10),C.u),s,s,s,s,s)
 return M.aB(s,D.xv(L.aK("Registrarme",s,s,s,A.ba(s,s,C.k,s,s,s,s,s,s,s,s,17,s,s,s,s,!0,s,s,s,s,s,s,s),s,s),new X.agN(this),r),C.j,s,s,s,s,60,s,s,s,s,230)}}
@@ -72316,7 +72316,7 @@ B.Cz.prototype={
 aa_:function(a){return a==null||a.length===0?"Este es un campo requerido":null},
 EG:function(a){if(a==null||a.length===0)return"Este es un campo requerido"
 return null},
-H:function(a,b){var s=null,r=t.L,q=Y.iC(b,!0,r),p=b.W(t.w).f.a.a,o=p>400?400:p,n=E.kn(s,!1,s,!0,s,s,s,U.IE("assets/guateGeeksLogo.png",s,40,200)),m=H.a([new P.i(4279142831),new P.i(4283120555)],t.t_)
+H:function(a,b){var s=null,r=t.L,q=Y.iC(b,!0,r),p=b.W(t.w).f.a.a,o=p>400?400:p,n=E.kn(s,!1,s,!0,s,s,s,U.IE("assets/guateGeeksLogo.png",s,37,200)),m=H.a([new P.i(4279142831),new P.i(4283120555)],t.t_)
 return M.iG(n,s,M.aB(s,O.nT(new B.agO(this,o,q),r,t.FB),C.j,s,s,new S.dc(s,s,s,s,s,new T.l6(C.aa,0.9,C.aJ,s,0,m,s,s),C.a_),s,s,s,s,s,s,s),s,s)},
 a8e:function(a,b,c){var s,r,q,p=this,o=null,n=K.dT(20),m=P.ku(255,255,255,0.79),l=p.c
 l.toString
