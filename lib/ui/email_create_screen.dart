@@ -50,7 +50,7 @@ class _EmailCreateState extends State<EmailCreate> {
         title: Image.asset(
           "assets/guateGeeksLogo.png",
           width: 200,
-          height: 40,
+          height: 37,
         ),
         leading: ReturnButton(),
       ),

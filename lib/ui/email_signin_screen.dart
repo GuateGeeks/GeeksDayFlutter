@@ -40,7 +40,7 @@ class _EmailSignInState extends State<EmailSignIn> {
         title: Image.asset(
           "assets/guateGeeksLogo.png",
           width: 200,
-          height: 40,
+          height: 37,
         ),
         automaticallyImplyLeading: false,
       ),
