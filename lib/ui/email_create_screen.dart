@@ -42,51 +42,6 @@ class _EmailCreateState extends State<EmailCreate> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Stack & Positioned Widget'),
-    //     centerTitle: true,
-    //   ),
-    //   body: Center(
-    //     child: Container(
-    //       padding: EdgeInsets.all(10),
-    //       child: Stack(
-    //         children: <Widget>[
-    //           Positioned(
-    //             top: 30,
-    //             left: 30,
-    //             height: 250,
-    //             width: 250,
-    //             child: Container(
-    //               width: 150,
-    //               height: 150,
-    //               color: Colors.green[300],
-    //               child: Text(
-    //                 'Green',
-    //                 style: TextStyle(color: Colors.white, fontSize: 20),
-    //               ),
-    //             ),
-    //           ),
-    //           Positioned(
-    //             top: 70,
-    //             left: 60,
-    //             width: 250,
-    //             height: 250,
-    //             child: Container(
-    //               width: 150,
-    //               height: 150,
-    //               color: Colors.red[400],
-    //               child: Text(
-    //                 'Red',
-    //                 style: TextStyle(color: Colors.white, fontSize: 20),
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 500 ? 500 : width;
     return Scaffold(
@@ -99,46 +54,47 @@ class _EmailCreateState extends State<EmailCreate> {
         ),
         leading: ReturnButton(),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0E89AF),
-              Color(0xFF4B3BAB),
-            ],
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF0E89AF),
+                Color(0xFF4B3BAB),
+              ],
+            ),
           ),
-        ),
-        child: BlocBuilder<AuthCubit, AuthState>(
-          builder: (_, state) {
-            return cardLogin(context, maxWidth, state);
-          },
+          child: BlocBuilder<AuthCubit, AuthState>(
+            builder: (_, state) {
+              return cardLogin(context, maxWidth, state);
+            },
+          ),
         ),
       ),
     );
   }
 
   Widget cardLogin(context, maxWidth, state) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-          width: maxWidth,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color.fromRGBO(255, 255, 255, 0.79),
-          ),
-          child: SingleChildScrollView(
-            child: Stack(
-              clipBehavior: Clip.none,
-              alignment: AlignmentDirectional.center,
-              children: [
-                Column(
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              width: maxWidth,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(255, 255, 255, 0.79)),
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
                     Text(
-                      "Iniciar Sesión",
+                      "Registrarse",
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
@@ -146,11 +102,21 @@ class _EmailCreateState extends State<EmailCreate> {
                     ),
                     formLogin(state),
                     SizedBox(height: 15),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            Positioned(
+              bottom: -20,
+              child: Container(
+                width: 150,
+                child: saveUser(),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -183,8 +149,6 @@ class _EmailCreateState extends State<EmailCreate> {
               SizedBox(height: 8),
               //Show input Repear Password
               RepeatPasswordForm(passwordValidator, _repeatPasswordController),
-              SizedBox(height: 40),
-              saveUser()
             ],
           ),
         ],
@@ -194,7 +158,8 @@ class _EmailCreateState extends State<EmailCreate> {
 
   Widget saveUser() {
     return Container(
-      width: 200,
+      width: 230,
+      height: 60,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 20),
@@ -216,7 +181,7 @@ class _EmailCreateState extends State<EmailCreate> {
           }
         },
         child: Text(
-          "Registrarse",
+          "Registrarme",
           style: TextStyle(
             fontSize: 17.0,
             color: Colors.white,
