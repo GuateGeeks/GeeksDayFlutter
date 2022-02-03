@@ -61,15 +61,15 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w300,
+        fontSize: 13.0,
+        fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
         fontSize: 16.0,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFFD6D6D6),
+        fontWeight: FontWeight.normal,
+        color: Color(0xFFFFFFFF),
       ),
       //Texto pantalla configuracion
       headline4: TextStyle(

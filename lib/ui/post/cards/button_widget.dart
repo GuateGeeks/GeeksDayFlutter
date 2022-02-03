@@ -43,8 +43,11 @@ class ButtonWidget extends StatelessWidget {
             isLiked = !isLiked;
           },
           child: isLiked
-              ? Icon(Icons.favorite,
-                  size: 22, color: Color.fromRGBO(229, 21, 21, 1))
+              ? Icon(
+                  Icons.favorite,
+                  size: 22,
+                  color: Color(0xFFC852FF),
+                )
               : RadiantGradientMask(
                   child: Icon(
                     Icons.favorite,

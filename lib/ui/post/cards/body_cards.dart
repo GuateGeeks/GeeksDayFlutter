@@ -47,9 +47,7 @@ class BodyCard extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 22),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
             child: Image.network(
               post.imageRoute!,
               height: 400,
@@ -63,10 +61,10 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 15, 5),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,
+        textAlign: TextAlign.left,
       ),
     );
   }
@@ -148,8 +146,8 @@ class _ProgressBarState extends State<ProgressBar> {
                       linearStrokeCap: LinearStrokeCap.roundAll,
                       progressColor: isAnswered
                           ? correctAnswer == answer.isCorrect
-                              ? Colors.green
-                              : Colors.red
+                              ? Color(0xFF0E89AF)
+                              : Color(0xFF4B3BAB)
                           : Colors.transparent,
                     ),
                   ],
