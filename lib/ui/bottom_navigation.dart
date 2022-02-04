@@ -47,7 +47,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'assets/icons/home.svg',
+            'icons/home.svg',
             color: Colors.black,
             width: 30,
             height: 30,
@@ -70,7 +70,7 @@ class BottomNavigation extends StatelessWidget {
           child: GestureDetector(
             onTap: () {},
             child: SvgPicture.asset(
-              'assets/icons/search.svg',
+              'icons/search.svg',
               color: Colors.black,
               width: 25,
               height: 25,
@@ -104,7 +104,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'assets/icons/plus.svg',
+            'icons/plus.svg',
             color: Colors.black,
             width: 36,
             height: 36,
@@ -133,7 +133,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'assets/icons/events.svg',
+            'icons/events.svg',
             color: Colors.black,
             width: 30,
             height: 30,
@@ -162,12 +162,13 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'assets/icons/user.svg',
+            'icons/user.svg',
             color: Colors.black,
             width: 30,
             height: 30,
           ),
         ),
+      
         Text(
           "user",
           style: Theme.of(context).textTheme.headline5,
