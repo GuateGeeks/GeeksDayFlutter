@@ -47,7 +47,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: Image.asset(
-            'icons/home.png'
+            'assets/icons/home.png'
           ),
         ),
         Text(
@@ -67,7 +67,7 @@ class BottomNavigation extends StatelessWidget {
           child: GestureDetector(
             onTap: () {},
              child: Image.asset(
-            'icons/search.png',
+            'assets/icons/search.png',
             height: 30,
           ),
           ),
@@ -99,7 +99,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
            child: Image.asset(
-            'icons/plus.png'
+            'assets/icons/plus.png'
           ),
         ),
         Text(
@@ -125,7 +125,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
            child: Image.asset(
-            'icons/events.png'
+            'assets/icons/events.png'
           ),
         ),
         Text(
@@ -151,7 +151,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
            child: Image.asset(
-            'icons/user.png',
+            'assets/icons/user.png',
             height: 30,
             fit: BoxFit.cover,
           ),
