@@ -117,13 +117,16 @@ flutter:
   fonts:
     - family: Biryani
       fonts:
-        - asset: assets/fonts/Biryani-Regular.ttf
-        - asset: assets/fonts/Biryani-Black.ttf
-        - asset: assets/fonts/Biryani-Bold.ttf
-        - asset: assets/fonts/Biryani-ExtraBold.ttf
-        - asset: assets/fonts/Biryani-ExtraLight.ttf
-        - asset: assets/fonts/Biryani-Light.ttf
-        - asset: assets/fonts/Biryani-SemiBold.ttf
+        - asset: assets/fonts/biryani/Biryani-Regular.ttf
+        - asset: assets/fonts/biryani/Biryani-Black.ttf
+        - asset: assets/fonts/biryani/Biryani-Bold.ttf
+        - asset: assets/fonts/biryani/Biryani-ExtraBold.ttf
+        - asset: assets/fonts/biryani/Biryani-ExtraLight.ttf
+        - asset: assets/fonts/biryani/Biryani-Light.ttf
+        - asset: assets/fonts/biryani/Biryani-SemiBold.ttf
+    - family: Abel
+      fonts:
+        - asset: assets/fonts/abel/Abel-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

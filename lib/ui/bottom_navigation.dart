@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/ui/events/main_events.dart';
 import 'package:geeksday/ui/home.dart';
@@ -33,11 +34,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget homePage(context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -46,9 +46,11 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.home,
-            size: 30,
+          child: SvgPicture.asset(
+            'icons/home.svg',
+            color: Colors.black,
+            width: 30,
+            height: 30,
           ),
         ),
         Text(
@@ -61,12 +63,18 @@ class BottomNavigation extends StatelessWidget {
 
   Widget searchModal(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.search,
-            size: 30,
+        Container(
+          margin: EdgeInsets.only(top: 5),
+          child: GestureDetector(
+            onTap: () {},
+            child: SvgPicture.asset(
+              'icons/search.svg',
+              color: Colors.black,
+              width: 25,
+              height: 25,
+            ),
           ),
         ),
         Text(
@@ -79,9 +87,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget postModal(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
@@ -94,9 +103,11 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.control_point,
-            size: 30,
+          child: SvgPicture.asset(
+            'icons/plus.svg',
+            color: Colors.black,
+            width: 36,
+            height: 36,
           ),
         ),
         Text(
@@ -109,9 +120,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget eventPage(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -120,9 +132,11 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.event_available_rounded,
-            size: 30,
+          child: SvgPicture.asset(
+            'icons/events.svg',
+            color: Colors.black,
+            width: 30,
+            height: 30,
           ),
         ),
         Text(
@@ -135,9 +149,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget profilePage(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -146,13 +161,15 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.person,
-            size: 30,
+          child: SvgPicture.asset(
+            'icons/user.svg',
+            color: Colors.black,
+            width: 30,
+            height: 30,
           ),
         ),
         Text(
-          "Perfil",
+          "user",
           style: Theme.of(context).textTheme.headline5,
         ),
       ],
