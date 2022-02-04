@@ -46,9 +46,14 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          child: Image.asset(
-            'assets/icons/home.png'
+          child: SvgPicture.asset(
+            "assets/icons/home.svg",
+            height: 30,
+            width: 30,
           ),
+          // child: Image.asset(
+          //   'assets/icons/home.png'
+          // ),
         ),
         Text(
           "Inicio",
@@ -66,10 +71,15 @@ class BottomNavigation extends StatelessWidget {
           margin: EdgeInsets.only(top: 2),
           child: GestureDetector(
             onTap: () {},
-             child: Image.asset(
-            'assets/icons/search.png',
-            height: 30,
+            child: SvgPicture.asset(
+            "assets/icons/search.svg",
+            height: 26,
+            width: 26,
           ),
+          //    child: Image.asset(
+          //   'assets/icons/search.png',
+          //   height: 30,
+          // ),
           ),
         ),
         Text(
@@ -98,9 +108,14 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-           child: Image.asset(
-            'assets/icons/plus.png'
+          child: SvgPicture.asset(
+            "assets/icons/plus.svg",
+            height: 34,
+            width: 34,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/plus.png'
+          // ),
         ),
         Text(
           "Post",
@@ -124,9 +139,14 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-           child: Image.asset(
-            'assets/icons/events.png'
+          child: SvgPicture.asset(
+            "assets/icons/events.svg",
+            height: 30,
+            width: 30,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/events.png'
+          // ),
         ),
         Text(
           "Eventos",
@@ -150,11 +170,16 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-           child: Image.asset(
-            'assets/icons/user.png',
-            height: 30,
-            fit: BoxFit.cover,
+          child: SvgPicture.asset(
+            "assets/icons/user.svg",
+            height: 28,
+            width: 28,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/user.png',
+          //   height: 30,
+          //   fit: BoxFit.cover,
+          // ),
         ),
       
         Text(
