@@ -72116,15 +72116,15 @@ B.wG.prototype={
 H:function(a,b){var s=this,r=null,q=K.a0(b).rx
 return new B.wE(M.aF(r,T.eo(H.a([s.abF(b),s.Sf(b),s.aei(b),s.aaf(b),s.aeo(b)],t.p),C.A,C.dT,C.u),C.j,r,r,r,r,60,r,new V.an(20,0,20,0),r,r,r),q,30,r)},
 abF:function(a){var s=null
-return T.ch(H.a([D.dH(s,U.mk("icons/home.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WX(this,a),s,s,s,s,s,s),L.aK("Inicio",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
+return T.ch(H.a([D.dH(s,U.mk("assets/icons/home.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WX(this,a),s,s,s,s,s,s),L.aK("Inicio",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
 Sf:function(a){var s=null
-return T.ch(H.a([M.aF(s,D.dH(s,U.mk("icons/search.png",s,30,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X1(),s,s,s,s,s,s),C.j,s,s,s,s,s,new V.an(0,2,0,0),s,s,s,s),L.aK("Buscar",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
+return T.ch(H.a([M.aF(s,D.dH(s,U.mk("assets/icons/search.png",s,30,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X1(),s,s,s,s,s,s),C.j,s,s,s,s,s,new V.an(0,2,0,0),s,s,s,s),L.aK("Buscar",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
 aei:function(a){var s=null
-return T.ch(H.a([D.dH(s,U.mk("icons/plus.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WZ(this,a),s,s,s,s,s,s),L.aK("Post",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
+return T.ch(H.a([D.dH(s,U.mk("assets/icons/plus.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WZ(this,a),s,s,s,s,s,s),L.aK("Post",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
 aaf:function(a){var s=null
-return T.ch(H.a([D.dH(s,U.mk("icons/events.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WV(a),s,s,s,s,s,s),L.aK("Eventos",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
+return T.ch(H.a([D.dH(s,U.mk("assets/icons/events.png",s,s,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.WV(a),s,s,s,s,s,s),L.aK("Eventos",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)},
 aeo:function(a){var s=null
-return T.ch(H.a([D.dH(s,U.mk("icons/user.png",C.bD,30,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X0(this,a),s,s,s,s,s,s),L.aK("user",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)}}
+return T.ch(H.a([D.dH(s,U.mk("assets/icons/user.png",C.bD,30,s),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X0(this,a),s,s,s,s,s,s),L.aK("user",s,s,s,K.a0(a).Z.e,s,s)],t.p),C.A,C.br,C.u)}}
 B.WX.prototype={
 $0:function(){K.dV(this.b,!1).fp(V.js(new B.WW(this.a),null,t.z))},
 $S:0}
