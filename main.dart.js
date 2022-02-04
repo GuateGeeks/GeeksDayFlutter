@@ -72200,15 +72200,15 @@ B.wI.prototype={
 H:function(a,b){var s=this,r=null,q=K.a1(b).rx
 return new B.wG(M.aF(r,T.ep(H.a([s.abG(b),s.Sh(b),s.aek(b),s.aag(b),s.aeq(b)],t.p),C.A,C.dT,C.u),C.j,r,r,r,r,60,r,new V.an(20,0,20,0),r,r,r),q,30,r)},
 abG:function(a){var s=null
-return T.ch(H.a([D.dH(s,G.MF("icons/home.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X3(this,a),s,s,s,s,s,s),L.aK("Inicio",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
+return T.ch(H.a([D.dH(s,G.MF("home.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X3(this,a),s,s,s,s,s,s),L.aK("Inicio",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
 Sh:function(a){var s=null
-return T.ch(H.a([M.aF(s,D.dH(s,G.MF("icons/search.svg",C.m,25,25),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X8(),s,s,s,s,s,s),C.j,s,s,s,s,s,new V.an(0,5,0,0),s,s,s,s),L.aK("Buscar",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
+return T.ch(H.a([M.aF(s,D.dH(s,G.MF("search.svg",C.m,25,25),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X8(),s,s,s,s,s,s),C.j,s,s,s,s,s,new V.an(0,5,0,0),s,s,s,s),L.aK("Buscar",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
 aek:function(a){var s=null
-return T.ch(H.a([D.dH(s,G.MF("icons/plus.svg",C.m,36,36),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X5(this,a),s,s,s,s,s,s),L.aK("Post",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
+return T.ch(H.a([D.dH(s,G.MF("plus.svg",C.m,36,36),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X5(this,a),s,s,s,s,s,s),L.aK("Post",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
 aag:function(a){var s=null
-return T.ch(H.a([D.dH(s,G.MF("icons/events.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X1(a),s,s,s,s,s,s),L.aK("Eventos",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
+return T.ch(H.a([D.dH(s,G.MF("events.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X1(a),s,s,s,s,s,s),L.aK("Eventos",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)},
 aeq:function(a){var s=null
-return T.ch(H.a([D.dH(s,G.MF("icons/user.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X7(this,a),s,s,s,s,s,s),L.aK("user",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)}}
+return T.ch(H.a([D.dH(s,G.MF("user.svg",C.m,30,30),C.U,!1,s,s,s,s,s,s,s,s,s,s,s,s,new B.X7(this,a),s,s,s,s,s,s),L.aK("user",s,s,s,K.a1(a).Z.e,s,s)],t.p),C.A,C.bs,C.u)}}
 B.X3.prototype={
 $0:function(){K.dV(this.b,!1).fo(V.jt(new B.X2(this.a),null,t.z))},
 $S:0}
