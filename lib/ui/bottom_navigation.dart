@@ -46,11 +46,8 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          child: SvgPicture.asset(
-            'home.svg',
-            color: Colors.black,
-            width: 30,
-            height: 30,
+          child: Image.asset(
+            'icons/home.png'
           ),
         ),
         Text(
@@ -66,15 +63,13 @@ class BottomNavigation extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 5),
+          margin: EdgeInsets.only(top: 2),
           child: GestureDetector(
             onTap: () {},
-            child: SvgPicture.asset(
-            'search.svg',
-              color: Colors.black,
-              width: 25,
-              height: 25,
-            ),
+             child: Image.asset(
+            'icons/search.png',
+            height: 30,
+          ),
           ),
         ),
         Text(
@@ -103,11 +98,8 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          child: SvgPicture.asset(
-            'plus.svg',
-            color: Colors.black,
-            width: 36,
-            height: 36,
+           child: Image.asset(
+            'icons/plus.png'
           ),
         ),
         Text(
@@ -132,11 +124,8 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          child: SvgPicture.asset(
-            'events.svg',
-            color: Colors.black,
-            width: 30,
-            height: 30,
+           child: Image.asset(
+            'icons/events.png'
           ),
         ),
         Text(
@@ -161,11 +150,10 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          child: SvgPicture.asset(
-            'user.svg',
-            color: Colors.black,
-            width: 30,
+           child: Image.asset(
+            'icons/user.png',
             height: 30,
+            fit: BoxFit.cover,
           ),
         ),
       
