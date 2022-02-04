@@ -47,7 +47,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'icons/home.svg',
+            'home.svg',
             color: Colors.black,
             width: 30,
             height: 30,
@@ -70,7 +70,7 @@ class BottomNavigation extends StatelessWidget {
           child: GestureDetector(
             onTap: () {},
             child: SvgPicture.asset(
-              'icons/search.svg',
+            'search.svg',
               color: Colors.black,
               width: 25,
               height: 25,
@@ -104,7 +104,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'icons/plus.svg',
+            'plus.svg',
             color: Colors.black,
             width: 36,
             height: 36,
@@ -133,7 +133,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'icons/events.svg',
+            'events.svg',
             color: Colors.black,
             width: 30,
             height: 30,
@@ -162,7 +162,7 @@ class BottomNavigation extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            'icons/user.svg',
+            'user.svg',
             color: Colors.black,
             width: 30,
             height: 30,
