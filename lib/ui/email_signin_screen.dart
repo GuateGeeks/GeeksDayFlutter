@@ -21,8 +21,8 @@ class _EmailSignInState extends State<EmailSignIn> {
   final _passwordController = TextEditingController();
 
   /// Controller for playback
-  late rive.RiveAnimationController blinkController;
-  late rive.RiveAnimationController noLookController;
+  late rive.RiveAnimationController _blinkController;
+  late rive.RiveAnimationController _noLookController;
 
   /// Is the animation currently playing?
   bool _isBlinkPlaying = false;
@@ -31,22 +31,25 @@ class _EmailSignInState extends State<EmailSignIn> {
   @override
   void initState() {
     super.initState();
-    blinkController = rive.OneShotAnimation(
+    _blinkController = rive.OneShotAnimation(
       '2_blink',
       autoplay: false,
       onStop: () => setState(() => _isBlinkPlaying = false),
       onStart: () => setState(() => _isBlinkPlaying = true),
     );
-    noLookController = rive.OneShotAnimation(
-      'no_look',
+    _noLookController = rive.OneShotAnimation(
+      'not_looking',
       autoplay: false,
       onStop: () => setState(() => _isNoLookPlaying = false),
       onStart: () => setState(() => _isNoLookPlaying = true),
     );
-    _emailController.addListener(
-        () => _isBlinkPlaying ? null : blinkController.isActive = true);
+    _emailController.addListener(() {
+      final int textLength = _emailController.text.length;
+      _inputLenght?.value = textLength as double;
+      print(_inputLenght?.value);
+    });
     _passwordController.addListener(
-        () => _isNoLookPlaying ? null : noLookController.isActive = true);
+        () => _isNoLookPlaying ? null : _noLookController.isActive = true);
   }
 
   String? emptyValidator(String? value) {
@@ -167,7 +170,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                     child: rive.RiveAnimation.asset(
                       'rive/guategeeks_logo.riv',
                       animations: const ['idle'],
-                      controllers: [blinkController, noLookController],
+                      onInit: _onRiveInit,
                     )),
               ),
             ],
@@ -175,6 +178,17 @@ class _EmailSignInState extends State<EmailSignIn> {
         ),
       ),
     );
+  }
+
+  rive.SMINumber? _inputLenght;
+  void _onRiveInit(rive.Artboard artboard) {
+    final controller =
+        rive.StateMachineController.fromArtboard(artboard, 'follow_input');
+    artboard.addController(controller!);
+    artboard.addController(_noLookController);
+    _inputLenght =
+        controller.findInput<double>('inputLenght') as rive.SMINumber;
+    _inputLenght?.value = 0;
   }
 
   Widget formLogin(AuthState state) {
