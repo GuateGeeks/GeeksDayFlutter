@@ -28,17 +28,21 @@ const RESOURCES = {
 "assets/FontManifest.json": "26be0fe0a0291aab5d0be165f0db29ad",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/AssetManifest.json": "42b37efa33069ed81e707d7f5693516b",
-"assets/NOTICES": "b80852edf30e021cec64cc3df1e65425",
+"assets/NOTICES": "5124bf12787c6c742f31ce67365e96b0",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "firebase-config.js": "01ebaf1b69d2a21a35fc2537dfa5deaf",
-"index.html": "4add89046290e21c1af24522d6423231",
-"/": "4add89046290e21c1af24522d6423231",
-"version.json": "da2e0573834eb2187048bf7b88f15c46",
+"index.html": "d772f1012994c34a94db0b4ed7fbbc08",
+"/": "d772f1012994c34a94db0b4ed7fbbc08",
+"version.json": "5fb9b9333e4f055a8847cb92bfb74be8",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
-"main.dart.js": "36edb753cd1715d04a19c47c8231ae19",
+"main.dart.js": "7293818f0b1a2710c3fb2930a7b99f1a",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"manifest.json": "cd30b6ab6774127656ea9c126369b699"
+"manifest.json": "cd30b6ab6774127656ea9c126369b699",
+"canvaskit/profiling/canvaskit.js": "3783918f48ef691e230156c251169480",
+"canvaskit/profiling/canvaskit.wasm": "6d1b0fc1ec88c3110db88caa3393c580",
+"canvaskit/canvaskit.js": "62b9906717d7215a6ff4cc24efbd1b5c",
+"canvaskit/canvaskit.wasm": "b179ba02b7a9f61ebc108f82c5a1ecdb"
 };
 
 // The application shell files that are downloaded before a service worker can
