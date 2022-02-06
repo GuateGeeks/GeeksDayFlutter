@@ -46,7 +46,6 @@ class _EmailSignInState extends State<EmailSignIn> {
     _emailController.addListener(() {
       final int textLength = _emailController.text.length;
       _inputLenght?.value = textLength as double;
-      print(_inputLenght?.value);
     });
     _passwordController.addListener(
         () => _isNoLookPlaying ? null : _noLookController.isActive = true);
@@ -167,8 +166,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                 child: SizedBox(
                     width: maxWidth,
                     height: 160,
-                    child: rive.RiveAnimation.asset(
-                      'rive/guategeeks_logo.riv',
+                    child: rive.RiveAnimation.network(
+                      'https://guategeeks.github.io/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
                       animations: const ['idle'],
                       onInit: _onRiveInit,
                     )),
