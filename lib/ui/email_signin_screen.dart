@@ -1,7 +1,10 @@
-import 'package:geeksday/bloc/auth_cubit.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:geeksday/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 
@@ -16,6 +19,35 @@ class _EmailSignInState extends State<EmailSignIn> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  /// Controller for playback
+  late rive.RiveAnimationController blinkController;
+  late rive.RiveAnimationController noLookController;
+
+  /// Is the animation currently playing?
+  bool _isBlinkPlaying = false;
+  bool _isNoLookPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    blinkController = rive.OneShotAnimation(
+      '2_blink',
+      autoplay: false,
+      onStop: () => setState(() => _isBlinkPlaying = false),
+      onStart: () => setState(() => _isBlinkPlaying = true),
+    );
+    noLookController = rive.OneShotAnimation(
+      'no_look',
+      autoplay: false,
+      onStop: () => setState(() => _isNoLookPlaying = false),
+      onStart: () => setState(() => _isNoLookPlaying = true),
+    );
+    _emailController.addListener(
+        () => _isBlinkPlaying ? null : blinkController.isActive = true);
+    _passwordController.addListener(
+        () => _isNoLookPlaying ? null : noLookController.isActive = true);
+  }
 
   String? emptyValidator(String? value) {
     return (value == null || value.isEmpty)
@@ -129,9 +161,14 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
               Positioned(
                 top: -135,
-                child: Container(
-                  child: Image.asset('assets/ojos.png'),
-                ),
+                child: SizedBox(
+                    width: maxWidth,
+                    height: 160,
+                    child: rive.RiveAnimation.asset(
+                      'rive/guategeeks_logo.riv',
+                      animations: const ['idle'],
+                      controllers: [blinkController, noLookController],
+                    )),
               ),
             ],
           ),
