@@ -28,15 +28,16 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
-        builder: (context, notifier, child){
+        builder: (context, notifier, child) {
           return MaterialApp(
-          title: 'GeeksDay', 
-          debugShowCheckedModeBanner: false, 
-          theme: notifier.darkTheme ? MyThemes.darkTheme : MyThemes.lightTheme,
-          navigatorKey: _navigatorKey,
-          onGenerateRoute: Routes.routes,
+            title: 'GeeksDay',
+            debugShowCheckedModeBanner: false,
+            theme:
+                notifier.darkTheme ? MyThemes.darkTheme : MyThemes.lightTheme,
+            navigatorKey: _navigatorKey,
+            onGenerateRoute: Routes.routes,
           );
-        }, 
+        },
       ),
     );
   }

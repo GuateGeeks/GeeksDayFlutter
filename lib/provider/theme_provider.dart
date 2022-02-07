@@ -36,6 +36,7 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del AppBar
     appBarTheme: AppBarTheme(
       color: Colors.black54,
@@ -130,6 +131,7 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,

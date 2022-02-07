@@ -87,6 +87,9 @@ flutter:
 
   assets:
     - assets/
+    - assets/icons/like.png
+    - assets/icons/isLiked.png
+    - assets/icons/comment.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

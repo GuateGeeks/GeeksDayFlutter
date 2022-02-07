@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/provider/gradient_color.dart';
@@ -43,18 +44,8 @@ class ButtonWidget extends StatelessWidget {
             isLiked = !isLiked;
           },
           child: isLiked
-              ? Icon(
-                  Icons.favorite,
-                  size: 22,
-                  color: Color(0xFFC852FF),
-                )
-              : RadiantGradientMask(
-                  child: Icon(
-                    Icons.favorite,
-                    color: Colors.grey,
-                    size: 22,
-                  ),
-                ),
+              ? Image.asset('assets/icons/isLiked.png')
+              : Image.asset('assets/icons/like.png'),
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -74,23 +65,16 @@ class ButtonWidget extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return PostComment(post);
-                },
-              ),
-            );
-          },
-          child: RadiantGradientMask(
-            child: Icon(
-              Icons.chat_bubble,
-              color: Colors.grey,
-              size: 22,
-            ),
-          ),
-        ),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PostComment(post);
+                  },
+                ),
+              );
+            },
+            child: Image.asset('assets/icons/comment.png')),
         SizedBox(width: 10.0),
         Text(
           //show the number of comments of the post

@@ -20,18 +20,16 @@ class PostCard extends StatelessWidget {
   }
 
   Widget posts() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: HeaderCard(post: post),
-        ),
-        BodyCard(post: post),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ButtonWidget(post: post),
-        ),
-      ],
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Column(
+        children: [
+          HeaderCard(post: post),
+          BodyCard(post: post),
+          ButtonWidget(post: post),
+        ],
+      ),
     );
   }
 }
