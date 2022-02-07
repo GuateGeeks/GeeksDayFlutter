@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
         width: maxWidth,
         child: PostList(idEvent: event!.id),
       ),
-      // bottomNavigationBar: BottomNavigation(event: event!),
+      bottomNavigationBar: BottomNavigation(event: event!),
     );
   }
 }
