@@ -1,7 +1,10 @@
-import 'package:geeksday/bloc/auth_cubit.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:geeksday/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 
@@ -16,6 +19,37 @@ class _EmailSignInState extends State<EmailSignIn> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  /// Controller for playback
+  late rive.RiveAnimationController _blinkController;
+  late rive.RiveAnimationController _noLookController;
+
+  /// Is the animation currently playing?
+  bool _isBlinkPlaying = false;
+  bool _isNoLookPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _blinkController = rive.OneShotAnimation(
+      '2_blink',
+      autoplay: false,
+      onStop: () => setState(() => _isBlinkPlaying = false),
+      onStart: () => setState(() => _isBlinkPlaying = true),
+    );
+    _noLookController = rive.OneShotAnimation(
+      'not_looking',
+      autoplay: false,
+      onStop: () => setState(() => _isNoLookPlaying = false),
+      onStart: () => setState(() => _isNoLookPlaying = true),
+    );
+    _emailController.addListener(() {
+      final int textLength = _emailController.text.length;
+      _inputLenght?.value = textLength as double;
+    });
+    _passwordController.addListener(
+        () => _isNoLookPlaying ? null : _noLookController.isActive = true);
+  }
 
   String? emptyValidator(String? value) {
     return (value == null || value.isEmpty)
@@ -129,15 +163,31 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
               Positioned(
                 top: -135,
-                child: Container(
-                  child: Image.asset('assets/ojos.png'),
-                ),
+                child: SizedBox(
+                    width: maxWidth,
+                    height: 160,
+                    child: rive.RiveAnimation.network(
+                      'https://guategeeks.github.io/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      animations: const ['idle'],
+                      onInit: _onRiveInit,
+                    )),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  rive.SMINumber? _inputLenght;
+  void _onRiveInit(rive.Artboard artboard) {
+    final controller =
+        rive.StateMachineController.fromArtboard(artboard, 'follow_input');
+    artboard.addController(controller!);
+    artboard.addController(_noLookController);
+    _inputLenght =
+        controller.findInput<double>('inputLenght') as rive.SMINumber;
+    _inputLenght?.value = 0;
   }
 
   Widget formLogin(AuthState state) {
