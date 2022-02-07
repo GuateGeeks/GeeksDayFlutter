@@ -88,6 +88,9 @@ flutter:
 
   assets:
     - assets/
+    - assets/icons/like.png
+    - assets/icons/isLiked.png
+    - assets/icons/comment.png
     - assets/icons/home.svg
     - assets/icons/search.svg
     - assets/icons/plus.svg
