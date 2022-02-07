@@ -13,24 +13,17 @@ class EmailSignIn extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignIn> {
-  double topBottom = 330.0;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   String? emptyValidator(String? value) {
-    setState(() {
-      topBottom = 385.0;
-    });
     return (value == null || value.isEmpty)
         ? 'Este es un campo requerido'
         : null;
   }
 
   String? passwordValidator(String? value) {
-    setState(() {
-      topBottom = 385.0;
-    });
     if (value == null || value.isEmpty) return 'Este es un campo requerido';
     return null;
   }
@@ -47,11 +40,12 @@ class _EmailSignInState extends State<EmailSignIn> {
         title: Image.asset(
           "assets/guateGeeksLogo.png",
           width: 200,
-          height: 40,
+          height: 37,
         ),
         automaticallyImplyLeading: false,
       ),
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: RadialGradient(
             radius: 0.9,
@@ -71,64 +65,76 @@ class _EmailSignInState extends State<EmailSignIn> {
   }
 
   Widget cardLogin(double maxWidth, AuthState state, authCubit) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: maxWidth,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 0.79)),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      "Iniciar Sesión",
-                      style: Theme.of(context).textTheme.overline,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    formLogin(state),
-                    SizedBox(height: 15),
-                    forgotPassword(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: 130,
-              margin: EdgeInsets.only(top: topBottom),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  primary: Color(0xFF4B3BAB),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  authCubit.reset();
-                  Navigator.pushNamed(context, Routes.createAccount);
-                },
-                child: Text(
-                  "Registrarse",
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    // fontFamily: 'Biryani',
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 90),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                width: maxWidth,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.79)),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Iniciar Sesión",
+                        style: Theme.of(context).textTheme.overline,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      formLogin(state),
+                      SizedBox(height: 15),
+                      forgotPassword(),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: -20,
+                child: Container(
+                  width: 150,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      primary: Color(0xFF4B3BAB),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      authCubit.reset();
+                      Navigator.pushNamed(context, Routes.createAccount);
+                    },
+                    child: Text(
+                      "Registrarse",
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        color: Colors.white,
+                        // fontFamily: 'Biryani',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -135,
+                child: Container(
+                  child: Image.asset('assets/ojos.png'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -183,9 +189,6 @@ class _EmailSignInState extends State<EmailSignIn> {
           ),
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
-              setState(() {
-                topBottom = 385.0;
-              });
               context.read<AuthCubit>().signInWithEmailAndPassword(
                     _emailController.text,
                     _passwordController.text,

@@ -77,10 +77,12 @@ class MyThemes {
         fontSize: 22,
         color: Color(0xFFD6D6D6),
       ),
-      //Texto del modal Crear Post/Quiz No Seleccionado
+      //Texto bottomapp
       headline5: TextStyle(
-        color: Colors.grey,
-        fontSize: 15.0,
+        color: Colors.white,
+        fontFamily: "Abel",
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -183,7 +185,9 @@ class MyThemes {
       //BottomNavigation text
       headline5: TextStyle(
         color: Colors.white,
-        fontSize: 15.0,
+        fontFamily: "Abel",
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -205,7 +209,10 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-          fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontSize: 30.0,
+        color: Color(0xFF4A4A4A),
+        fontWeight: FontWeight.w600,
+      ),
     ),
 
     //BottomNavbar Style
