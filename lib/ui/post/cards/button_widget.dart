@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
-import 'package:geeksday/provider/gradient_color.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -17,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
           child: Row(
             children: [
               //Like button
@@ -45,14 +44,9 @@ class ButtonWidget extends StatelessWidget {
             },
             child: isLiked
                 ? SvgPicture.asset('assets/icons/is_liked.svg')
-                : SvgPicture.asset('assets/icons/like.svg')
-
-            // child: isLiked
-            //     ? Image.asset('assets/icons/isLiked.png')
-            //     : Image.asset('assets/icons/like.png'),
-            ),
+                : SvgPicture.asset('assets/icons/like.svg')),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
           child: Text(
             //show the number of likes of the post
             cubit.getLikesCountText(),
@@ -80,11 +74,14 @@ class ButtonWidget extends StatelessWidget {
           },
           child: SvgPicture.asset('assets/icons/comment.svg'),
         ),
-        SizedBox(width: 10.0),
-        Text(
-          //show the number of comments of the post
-          cubit.countComments(),
-          style: Theme.of(context).textTheme.headline2,
+        // SizedBox(width: 10.0),
+        Container(
+          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+          child: Text(
+            //show the number of comments of the post
+            cubit.countComments(),
+            style: Theme.of(context).textTheme.headline2,
+          ),
         ),
       ],
     );

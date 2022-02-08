@@ -47,13 +47,27 @@ class BodyCard extends StatelessWidget {
           );
         },
         child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), //color of shadow
+                spreadRadius: 10, //spread radius
+                blurRadius: 4, // blur radius
+                offset: Offset(0, 0), // changes position of shadow
+                //first paramerter of offset is left-right
+                //second parameter is top to down
+              ),
+            ],
+          ),
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(22.0),
-            child: Image.network(
-              post.imageRoute!,
-              height: 400,
-              fit: BoxFit.cover,
+            child: Container(
+              child: Image.network(
+                post.imageRoute!,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -64,7 +78,7 @@ class BodyCard extends StatelessWidget {
   Widget postDescription(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.only(top: 10),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,
