@@ -39,14 +39,18 @@ class ButtonWidget extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            likePost(context);
-            isLiked = !isLiked;
-          },
-          child: isLiked
-              ? Image.asset('assets/icons/isLiked.png')
-              : Image.asset('assets/icons/like.png'),
-        ),
+            onTap: () {
+              likePost(context);
+              isLiked = !isLiked;
+            },
+            child: isLiked
+                ? SvgPicture.asset('assets/icons/is_liked.svg')
+                : SvgPicture.asset('assets/icons/like.svg')
+
+            // child: isLiked
+            //     ? Image.asset('assets/icons/isLiked.png')
+            //     : Image.asset('assets/icons/like.png'),
+            ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 5.0),
           child: Text(
@@ -65,16 +69,17 @@ class ButtonWidget extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return PostComment(post);
-                  },
-                ),
-              );
-            },
-            child: Image.asset('assets/icons/comment.png')),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return PostComment(post);
+                },
+              ),
+            );
+          },
+          child: SvgPicture.asset('assets/icons/comment.svg'),
+        ),
         SizedBox(width: 10.0),
         Text(
           //show the number of comments of the post

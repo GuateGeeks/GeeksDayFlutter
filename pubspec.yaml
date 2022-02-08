@@ -87,9 +87,9 @@ flutter:
 
   assets:
     - assets/
-    - assets/icons/like.png
-    - assets/icons/isLiked.png
-    - assets/icons/comment.png
+    - assets/icons/like.svg
+    - assets/icons/is_liked.svg
+    - assets/icons/comment.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -126,6 +126,7 @@ flutter:
         - asset: assets/fonts/Biryani-ExtraBold.ttf
         - asset: assets/fonts/Biryani-ExtraLight.ttf
         - asset: assets/fonts/Biryani-Light.ttf
+          weight: 100
         - asset: assets/fonts/Biryani-SemiBold.ttf
   #         style: italic
   #   - family: Trajan Pro

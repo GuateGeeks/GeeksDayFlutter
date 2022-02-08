@@ -23,6 +23,7 @@ class BodyCard extends StatelessWidget {
   Widget bodyBodyCard(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           post.imageRoute == "" ? Container() : showImage(context),
           postDescription(context),
@@ -62,7 +63,8 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 15),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,

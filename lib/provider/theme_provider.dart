@@ -56,20 +56,23 @@ class MyThemes {
     textTheme: TextTheme(
       //Nombre de usuarios
       headline1: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w500,
+        height: 1,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: Color(0xFFD6D6D6),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 13.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.normal,
+        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontSize: 12.0,
+        // fontWeight: FontWeight.w100,
+        letterSpacing: 1,
         color: Color(0xFFFFFFFF),
       ),
       //Texto pantalla configuracion
