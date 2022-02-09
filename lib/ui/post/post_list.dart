@@ -12,39 +12,39 @@ class PostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("stateless");
-    return BlocProvider(
-      create: (_) => FeedCubit(PostService(), idEvent),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          iconTheme: IconThemeData(color: Colors.white),
-          title: Image.asset(
-            'assets/guateGeeksLogo.png',
-            width: 150,
-            fit: BoxFit.cover,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Settings();
-                    },
-                  ),
-                );
-              },
-              icon: Icon(Icons.menu),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Image.asset(
+          'assets/guateGeeksLogo.png',
+          width: 150,
+          fit: BoxFit.cover,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Settings();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.menu,
+              size: 30,
+              color: Theme.of(context).appBarTheme.iconTheme!.color,
             ),
-          ],
-        ),
-        body: Builder(
-          builder: (context) {
-            BlocProvider.of<FeedCubit>(context).getPostList();
-            return postListBody(context);
-          },
-        ),
+          ),
+        ],
+      ),
+      body: Builder(
+        builder: (context) {
+          BlocProvider.of<FeedCubit>(context).getPostList();
+          return postListBody(context);
+        },
       ),
     );
   }

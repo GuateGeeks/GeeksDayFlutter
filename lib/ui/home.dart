@@ -15,10 +15,7 @@ class Home extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return Scaffold(
-      body: Container(
-        width: maxWidth,
-        child: PostList(idEvent: event!.id),
-      ),
+      body: PostList(idEvent: event!.id),
       bottomNavigationBar: BottomNavigation(event: event!),
     );
   }

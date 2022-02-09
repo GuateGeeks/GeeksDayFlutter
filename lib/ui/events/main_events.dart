@@ -7,6 +7,7 @@ import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:geeksday/ui/events/form_create_event.dart';
 import 'package:geeksday/ui/home.dart';
+import 'package:geeksday/ui/setting.dart';
 
 class MainEvents extends StatelessWidget {
   static Widget create(BuildContext context) {
@@ -25,13 +26,36 @@ class MainEvents extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Eventos"),
+          title: Image.asset(
+            'assets/guateGeeksLogo.png',
+            width: 150,
+            fit: BoxFit.cover,
+          ),
+          actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Settings();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.menu,
+              color: Theme.of(context).appBarTheme.iconTheme!.color,
+              size: 30,
+            ),
+          ),
+        ],
         ),
         floatingActionButton: floatingButton(context, showEvents),
         body: Builder(builder: (context) {
           BlocProvider.of<ShowEventsCubit>(context).getEventsList();
           return Center(
             child: Container(
+              margin: EdgeInsets.only(top: 5),
               width: maxWidth,
               child: mainEventsBody(context),
             ),
@@ -41,7 +65,7 @@ class MainEvents extends StatelessWidget {
     );
   }
 
-  Widget floatingButton(BuildContext context, ShowEventsCubit showEvents){
+  Widget floatingButton(BuildContext context, ShowEventsCubit showEvents) {
     return FloatingActionButton(
       onPressed: () {
         showModalBottomSheet(
@@ -64,10 +88,12 @@ class MainEvents extends StatelessWidget {
         final events = state.event;
 
         return RefreshIndicator(
-          onRefresh: (){
-            return   BlocProvider.of<ShowEventsCubit>(context).getEventsList();
+          onRefresh: () {
+            return BlocProvider.of<ShowEventsCubit>(context).getEventsList();
           },
-          child: (events.isEmpty) ? listEventsEmpty(context) : gridViewImage(events, context),
+          child: (events.isEmpty)
+              ? listEventsEmpty(context)
+              : listEvents(events, context),
         );
       },
     );
@@ -80,63 +106,35 @@ class MainEvents extends StatelessWidget {
     );
   }
 
-  Widget gridViewImage(List<Events> events, BuildContext context) {
-    return GridView.count(
-        crossAxisCount: 3,
-        childAspectRatio: 0.9,
-        children: events.map((event) {
-          var getImage =
-              BlocProvider.of<ShowEventsCubit>(context).getImageURL(event.id);
-          return StreamBuilder(
-            stream: getImage.asStream(),
-            builder: (context, snapshot) {
-              //if the image is loading we show a circularProgressIndicator
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Home(event: event);
-                      },
-                    ),
-                  );
-                },
-                child: Card(child: backgroundImage(snapshot, event)),
-              );
-            },
-          );
-        }).toList());
-  }
-
-  //widget to display the event image
-  Widget backgroundImage(snapshot, event) {
-    return Stack(
-      children: [
-        Image(
-          height: double.infinity,
-          image: NetworkImage(snapshot.data.toString()),
-          fit: BoxFit.cover,
-        ),
-        nameEvent(event)
-      ],
-    );
-  }
-
-  //widget to show the name of the event, and put a transparent color to the image, so that it does not hide the name of the event
-  Widget nameEvent(event) {
+  Widget listEvents(List<Events> events, BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 10, left: 5.0, right: 5.0),
-      width: double.infinity,
-      height: double.infinity,
-      alignment: Alignment.bottomCenter,
-      color: Colors.black45,
-      child: Text(
-        event.name,
-        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400),
-        overflow: TextOverflow.ellipsis,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: ListView(
+          children: events.map((event) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Home(event: event);
+                    },
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Image.network(
+                  event.image,
+                  width: double.infinity,
+                  height: 350,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

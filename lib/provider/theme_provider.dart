@@ -40,12 +40,14 @@ class MyThemes {
     //Color del AppBar
     appBarTheme: AppBarTheme(
       color: Colors.black54,
-      textTheme: TextTheme(
-          headline1: TextStyle(
+      toolbarTextStyle: TextStyle(  
+        fontFamily: 'Abel',
         color: Colors.white,
-      )),
-      iconTheme: IconThemeData(
-        color: Colors.white,
+        fontWeight: FontWeight.w100, 
+        fontSize: 24,
+      ),
+      iconTheme: IconThemeData( 
+        color: Color(0xFF0E89AF),
       ),
     ),
     //BackgroundColor
@@ -54,35 +56,36 @@ class MyThemes {
     colorScheme: ColorScheme.dark(),
     //Estilos de texto
     textTheme: TextTheme(
-      //Nombre de usuarios
+       //Nombre de usuarios
       headline1: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w500,
+        height: 1,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: Color(0xFFD6D6D6),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 13.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.normal,
-        color: Color(0xFFFFFFFF),
+        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontSize: 13.0,
+        fontWeight: FontWeight.w100,
+        letterSpacing: 0.7,
+        color: Color(0xFFD6D6D6),
       ),
       //Texto pantalla configuracion
       headline4: TextStyle(
         fontSize: 22,
         color: Color(0xFFD6D6D6),
       ),
-      //Texto bottomapp
+      //Texto opciones pantalla de configuracion
       headline5: TextStyle(
-        color: Colors.white,
-        fontFamily: "Abel",
-        fontWeight: FontWeight.normal,
-        fontSize: 12.0,
+        color: Color(0xFFD6D6D6),
+        fontSize: 15.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -110,13 +113,13 @@ class MyThemes {
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color.fromRGBO(255, 255, 255, 1),
+      fillColor: Colors.black,
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
     //Icons Color
     iconTheme: IconThemeData(
-      color: Colors.white,
+      color: Color(0xFFD6D6D6),
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
@@ -137,12 +140,14 @@ class MyThemes {
     //Color del appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      textTheme: TextTheme(
-          headline1: TextStyle(
+      toolbarTextStyle: TextStyle(  
+        fontFamily: 'Abel',
         color: Colors.black,
-      )),
-      iconTheme: IconThemeData(
-        color: Colors.black,
+        fontWeight: FontWeight.w100, 
+        fontSize: 24,
+      ),
+      iconTheme: IconThemeData( 
+        color: Color(0xFF0E89AF),
       ),
       elevation: 2,
       actionsIconTheme: IconThemeData(
@@ -153,22 +158,24 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.white,
     //Estilos de texto
     textTheme: TextTheme(
-      //Nombre de usuarios
+       //Nombre de usuarios
       headline1: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w500,
+        height: 1,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: Color(0xFF767676),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w300,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w500,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w100,
+        letterSpacing: 0.7,
         color: Color(0xFF767676),
       ),
       //Texto pantalla configuracion
@@ -176,18 +183,10 @@ class MyThemes {
         fontSize: 22,
         color: Color(0xFF767676),
       ),
-      // //Texto del modal Crear Post/Quiz Seleccionado
-      // headline3: TextStyle(
-      //   fontSize: 20,
-      //   fontWeight: FontWeight.bold,
-      //   color: Colors.white,
-      // ),
       //BottomNavigation text
       headline5: TextStyle(
-        color: Colors.white,
-        fontFamily: "Abel",
-        fontWeight: FontWeight.normal,
-        fontSize: 12.0,
+        color: Color(0xFF767676),
+        fontSize: 15.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(

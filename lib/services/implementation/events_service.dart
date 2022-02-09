@@ -18,22 +18,16 @@ class EventsService extends EventsServiceBase{
   final _firestoreService = FirestoreService.instance;
   final _eventsCollection = FirebaseFirestore.instance.collection('events');
 
-
-  Future<void> createEvent(Events createEvent) async {
-    String createEventPath = FirestorePath.events(createEvent.id);
-    await _firestoreService.setData(
-      path: createEventPath,
-      data: createEvent.toFirebaseMap()
-    );
-  } 
-
   Future<Events> createEventImage(Events createEvent, html.Blob file) async {
     String createEventPath = FirestorePath.events(createEvent.id);
     await _firestoreService.storeBlob(path: createEventPath, blob: file);
-    await _firestoreService.setData(
-      path: createEventPath, 
-      data: createEvent.toFirebaseMap(), 
-    );
+    _firestoreService.getDownloadURL(FirestorePath.events(createEvent.id)).then((image){
+      createEvent.image = image.toString();
+      _firestoreService.setData(
+        path: createEventPath, 
+        data: createEvent.toFirebaseMap(), 
+      );
+    });
 
     return Events.fromMap(createEvent.toFirebaseMap(), createEvent.id);
   }

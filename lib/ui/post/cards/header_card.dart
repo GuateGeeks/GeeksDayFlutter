@@ -18,35 +18,40 @@ class HeaderCard extends StatelessWidget {
         BlocProvider.of<AuthCubit>(context).getUserByPost(post.idUser);
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(children: [
-          Container(
-            width: 46,
-            height: 46,
-            child: SvgPicture.string(multiavatar(userData.image)),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10, 15, 15, 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
             children: [
-              //we show the user's name
-              Text(
-                userData.name,
-                style: Theme.of(context).textTheme.headline1,
+              Container(
+                width: 46,
+                height: 46,
+                child: SvgPicture.string(multiavatar(userData.image)),
               ),
-              Text(
-                getDatePost,
-                style: Theme.of(context).textTheme.headline2,
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //we show the user's name
+                  Text(
+                    userData.name,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  Text(
+                    getDatePost,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                ],
               ),
             ],
           ),
-        ]),
-        PostOptions(post: post),
-      ],
+          PostOptions(post: post),
+        ],
+      ),
     );
   }
 }
