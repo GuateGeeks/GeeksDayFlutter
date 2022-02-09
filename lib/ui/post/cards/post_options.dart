@@ -22,15 +22,15 @@ class _PostOptionsState extends State<PostOptions> {
     if (state.isOwnedBy(userData.uid) || userData.isadmin == true) {
       choices.add(Constants.Delete);
     }
-    if(userData.isadmin == true){
+    if (userData.isadmin == true) {
       choices.add(Constants.DeleteUser);
     }
     //show list of actions that can be performed on the post
     return PopupMenuButton<String>(
-      icon: Icon( 
+      icon: Icon(
         Icons.more_vert_rounded,
         color: Color(0xFF0E89AF),
-        size: 30, 
+        size: 30,
       ),
       tooltip: "Ver Opciones",
       itemBuilder: (BuildContext context) {

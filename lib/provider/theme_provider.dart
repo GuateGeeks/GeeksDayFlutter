@@ -36,6 +36,7 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del AppBar
     appBarTheme: AppBarTheme(
       color: Colors.black54,
@@ -61,25 +62,27 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w300,
+        fontSize: 13.0,
+        fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
         fontSize: 16.0,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFFD6D6D6),
+        fontWeight: FontWeight.normal,
+        color: Color(0xFFFFFFFF),
       ),
       //Texto pantalla configuracion
       headline4: TextStyle(
         fontSize: 22,
         color: Color(0xFFD6D6D6),
       ),
-      //Texto del modal Crear Post/Quiz No Seleccionado
+      //Texto bottomapp
       headline5: TextStyle(
-        color: Colors.grey,
-        fontSize: 15.0,
+        color: Colors.white,
+        fontFamily: "Abel",
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -123,6 +126,7 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
@@ -174,7 +178,9 @@ class MyThemes {
       //BottomNavigation text
       headline5: TextStyle(
         color: Colors.white,
-        fontSize: 15.0,
+        fontFamily: "Abel",
+        fontWeight: FontWeight.normal,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -196,7 +202,10 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-          fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontSize: 30.0,
+        color: Color(0xFF4A4A4A),
+        fontWeight: FontWeight.w600,
+      ),
     ),
 
     //BottomNavbar Style

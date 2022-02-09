@@ -68,6 +68,7 @@ dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_svg: ^0.22.0
+  rive: ^0.8.1
 
 
 dev_dependencies:
@@ -87,6 +88,15 @@ flutter:
 
   assets:
     - assets/
+    - assets/icons/like.png
+    - assets/icons/isLiked.png
+    - assets/icons/comment.png
+    - assets/icons/home.svg
+    - assets/icons/search.svg
+    - assets/icons/plus.svg
+    - assets/icons/events.svg
+    - assets/icons/user.svg
+    - assets/rive/guategeeks_logo.riv
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -117,13 +127,16 @@ flutter:
   fonts:
     - family: Biryani
       fonts:
-        - asset: assets/fonts/Biryani-Regular.ttf
-        - asset: assets/fonts/Biryani-Black.ttf
-        - asset: assets/fonts/Biryani-Bold.ttf
-        - asset: assets/fonts/Biryani-ExtraBold.ttf
-        - asset: assets/fonts/Biryani-ExtraLight.ttf
-        - asset: assets/fonts/Biryani-Light.ttf
-        - asset: assets/fonts/Biryani-SemiBold.ttf
+        - asset: assets/fonts/biryani/Biryani-Regular.ttf
+        - asset: assets/fonts/biryani/Biryani-Black.ttf
+        - asset: assets/fonts/biryani/Biryani-Bold.ttf
+        - asset: assets/fonts/biryani/Biryani-ExtraBold.ttf
+        - asset: assets/fonts/biryani/Biryani-ExtraLight.ttf
+        - asset: assets/fonts/biryani/Biryani-Light.ttf
+        - asset: assets/fonts/biryani/Biryani-SemiBold.ttf
+    - family: Abel
+      fonts:
+        - asset: assets/fonts/abel/Abel-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

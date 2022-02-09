@@ -34,7 +34,7 @@ class BodyCard extends StatelessWidget {
 
   Widget showImage(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15.0),
+      padding: EdgeInsets.only(top: 15),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
@@ -47,9 +47,8 @@ class BodyCard extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 22),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(22.0),
             child: Image.network(
               post.imageRoute!,
               height: 400,
@@ -63,10 +62,11 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 15, 5),
+      padding: EdgeInsets.only(top: 10),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,
+        textAlign: TextAlign.left,
       ),
     );
   }
@@ -87,8 +87,11 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    return Column(
-      children: [...AnswersList(state)],
+    return Container(
+      padding: EdgeInsets.only(top: 10),
+      child: Column(
+        children: [...AnswersList(state)],
+      ),
     );
   }
 
@@ -102,58 +105,51 @@ class _ProgressBarState extends State<ProgressBar> {
       return state.getAnswers().map(
         (answer) {
           int porcentage = state.porcentage(total, answer.selectedCounter);
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35.0),
-            child: Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: GestureDetector(
-                onTap: isAnswered
-                    ? null
-                    : () {
-                        setState(() {
-                          var quizRecords =
-                              BlocProvider.of<QuizRecordsCubit>(context);
-                          quizRecords.answeredQuiz(
-                              answer.text,
-                              answer.isCorrect,
-                              state.idPost(),
-                              userId,
-                              state.idEvent());
-                          //get the click a button of the answers
-                          state.usersResponded(userId);
-                          state.selectCounter(answer);
-                        });
-                      },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    new LinearPercentIndicator(
-                      backgroundColor: Colors.black12,
-                      width: width < 650
-                          ? MediaQuery.of(context).size.width - 100
-                          : 450,
-                      animation: true,
-                      lineHeight: 40.0,
-                      animationDuration: 1000,
-                      percent: isAnswered
-                          ? answer.selectedCounter.toDouble() / total
-                          : 0,
-                      center: Text(
-                        isAnswered ? "$porcentage%" : answer.text,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+          return Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(bottom: 10.0),
+            child: GestureDetector(
+              onTap: isAnswered
+                  ? null
+                  : () {
+                      setState(() {
+                        var quizRecords =
+                            BlocProvider.of<QuizRecordsCubit>(context);
+                        quizRecords.answeredQuiz(answer.text, answer.isCorrect,
+                            state.idPost(), userId, state.idEvent());
+                        //get the click a button of the answers
+                        state.usersResponded(userId);
+                        state.selectCounter(answer);
+                      });
+                    },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  new LinearPercentIndicator(
+                    backgroundColor: Colors.black12,
+                    width: width < 650
+                        ? MediaQuery.of(context).size.width - 100
+                        : 450,
+                    animation: true,
+                    lineHeight: 40.0,
+                    animationDuration: 1000,
+                    percent: isAnswered
+                        ? answer.selectedCounter.toDouble() / total
+                        : 0,
+                    center: Text(
+                      isAnswered ? "$porcentage%" : answer.text,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      progressColor: isAnswered
-                          ? correctAnswer == answer.isCorrect
-                              ? Colors.green
-                              : Colors.red
-                          : Colors.transparent,
                     ),
-                  ],
-                ),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    progressColor: isAnswered
+                        ? correctAnswer == answer.isCorrect
+                            ? Color(0xFF0E89AF)
+                            : Color(0xFF4B3BAB)
+                        : Colors.transparent,
+                  ),
+                ],
               ),
             ),
           );
