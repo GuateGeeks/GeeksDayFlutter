@@ -68,6 +68,7 @@ dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_svg: ^0.22.0
+  rive: ^0.8.1
 
 
 dev_dependencies:
@@ -89,6 +90,13 @@ flutter:
     - assets/
     - assets/icons/like.svg
     - assets/icons/is_liked.svg
+    - assets/icons/comment.png
+    - assets/icons/home.svg
+    - assets/icons/search.svg
+    - assets/icons/plus.svg
+    - assets/icons/events.svg
+    - assets/icons/user.svg
+    - assets/rive/guategeeks_logo.riv
 
   # To add assets to your application, add an assets section, like this:
   # assets:

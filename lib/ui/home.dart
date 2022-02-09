@@ -12,9 +12,11 @@ class Home extends StatelessWidget {
   const Home({Key? key, this.event}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 700 ? 700 : width;
     return Scaffold(
       body: PostList(idEvent: event!.id),
-      // bottomNavigationBar: BottomNavigation(event: event!),
+      bottomNavigationBar: BottomNavigation(event: event!),
     );
   }
 }

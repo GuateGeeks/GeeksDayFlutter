@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class PasswordForm extends StatefulWidget {
   String? Function(String? value) passwordValidator;
   TextEditingController passwordController;
@@ -10,39 +11,45 @@ class PasswordForm extends StatefulWidget {
   @override
   _PasswordFormState createState() => _PasswordFormState();
 }
+
 class _PasswordFormState extends State<PasswordForm> {
   bool showPassword = true;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          style: TextStyle(color: Colors.black54),
-          textInputAction: TextInputAction.go,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: showPassword,
-          decoration: InputDecoration(
-            suffixIcon: InkWell(
-              onTap: () {
-                setState(() {
-                  showPassword = !showPassword;
-                });
-              },
-              child: Icon(
-                showPassword ? Icons.visibility : Icons.visibility_off,
-              ),
-            ),
-            // hintText: "Enter your Password",
-            hintText: "Ingresa tu contraseña",
-            hintStyle: TextStyle(color: Colors.black54),
-            filled: true,
-            fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-          ),
-          validator: widget.passwordValidator,
-          controller: widget.passwordController,
+    return TextFormField(
+      style: TextStyle(color: Colors.black54),
+      textInputAction: TextInputAction.go,
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: showPassword,
+      decoration: InputDecoration(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFF0E89AF)),
         ),
-      ],
+        enabledBorder: InputBorder.none,
+        border: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(3),
+        ),
+        suffixIcon: InkWell(
+          onTap: () {
+            setState(() {
+              showPassword = !showPassword;
+            });
+          },
+          child: Icon(
+            showPassword ? Icons.visibility : Icons.visibility_off,
+          ),
+        ),
+        // hintText: "Enter your Password",
+        hintText: "Ingresa tu contraseña",
+        hintStyle: TextStyle(
+          color: Colors.black54,
+          fontWeight: FontWeight.w600,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      validator: widget.passwordValidator,
+      controller: widget.passwordController,
     );
   }
 }

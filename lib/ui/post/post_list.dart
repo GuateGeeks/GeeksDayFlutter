@@ -40,11 +40,11 @@ class PostList extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocProvider(
-        create: (_) => FeedCubit(PostService(), idEvent),
-        child: Builder(builder: (context) {
+      body: Builder(
+        builder: (context) {
+          BlocProvider.of<FeedCubit>(context).getPostList();
           return postListBody(context);
-        }),
+        },
       ),
     );
   }
@@ -52,31 +52,27 @@ class PostList extends StatelessWidget {
   Widget postListBody(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-
     return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
-      var getPostList = BlocProvider.of<FeedCubit>(context).getPostList();
+      print("block builder");
+
       if (!(state is PostLoaded)) {
         return Center(child: CircularProgressIndicator());
       }
       final posts = state.post;
       return (posts.isEmpty)
           ? postListEmpty()
-          : showPostList(context, maxWidth, posts, getPostList);
+          : postsCards(context, maxWidth, posts);
     });
   }
 
-  Widget showPostList(context, double maxWidth, List<Post> posts, getPostList) {
-    return postsCards(context, maxWidth, posts, getPostList);
-  }
-
-  Widget postsCards(context, double maxWidth, List<Post> posts, getPostList) {
+  Widget postsCards(context, double maxWidth, List<Post> posts) {
     return Center(
       child: Container(
         width: maxWidth,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: RefreshIndicator(
-            onRefresh: () => getPostList,
+            onRefresh: () => BlocProvider.of<FeedCubit>(context).getPostList(),
             child: ListView(
               children: posts.map((post) {
                 return PostCard(post: post);
