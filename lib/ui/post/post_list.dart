@@ -32,7 +32,11 @@ class PostList extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              size: 30,
+              color: Theme.of(context).appBarTheme.iconTheme!.color,
+            ),
           ),
         ],
       ),

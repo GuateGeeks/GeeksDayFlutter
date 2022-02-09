@@ -44,7 +44,7 @@ class MainEvents extends StatelessWidget {
             },
             icon: Icon(
               Icons.menu,
-              color: Color(0xFF0E89AF),
+              color: Theme.of(context).appBarTheme.iconTheme!.color,
               size: 30,
             ),
           ),

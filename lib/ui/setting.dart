@@ -21,7 +21,7 @@ class Settings extends StatelessWidget {
         elevation: 0,
         title: Text(
           'Configuracion',
-          style: Theme.of(context).appBarTheme.textTheme!.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
         leading: ReturnButton(),
       ),

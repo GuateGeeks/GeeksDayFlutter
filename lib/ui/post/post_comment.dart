@@ -3,7 +3,6 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
-import 'package:geeksday/provider/gradient_color.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +37,7 @@ class PostComment extends StatelessWidget {
             elevation: 0.5,
             title: Text(
               'Comentarios',
-              style: Theme.of(context).appBarTheme.textTheme!.headline1,
+              style: Theme.of(context).appBarTheme.toolbarTextStyle,
             ),
             leading: ReturnButton(),
           ),
@@ -94,8 +93,8 @@ class PostComment extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 50,
-                    height: 50,
+                    width: 45,
+                    height: 45,
                     //verify that the user has an avatar as a profile picture and display it
                     child: SvgPicture.string(multiavatar(userData.image)),
                   ),
@@ -118,30 +117,26 @@ class PostComment extends StatelessWidget {
                   ),
                 ],
               ),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   likePost(context);
                   isLiked = !isLiked;
                 },
                 child: isLiked
-                    ? Icon(Icons.favorite,
-                        size: 30, color: Color.fromRGBO(229, 21, 21, 1))
-                    : RadiantGradientMask(
-                        child: Icon(
-                          Icons.favorite,
-                          color: Colors.grey,
-                          size: 30,
-                        ),
-                      ),
+                    ? SvgPicture.asset('assets/icons/is_liked.svg')
+                    : SvgPicture.asset('assets/icons/like.svg')
               ),
             ],
           ),
           SizedBox(
             height: 7.0,
           ),
-          Text(
-            post.text,
-            style: Theme.of(context).textTheme.bodyText1,
+          Container(
+            padding: EdgeInsets.only(left: 60),
+            child: Text(
+              post.text,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
         ],
       ),
@@ -199,11 +194,14 @@ class PostComment extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 7.0,
+              height: 6.0,
             ),
-            Text(
-              comment.text,
-              style: Theme.of(context).textTheme.bodyText1,
+            Container(
+              padding: EdgeInsets.only(left: 62),
+              child: Text(
+                comment.text,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           ],
         ),
@@ -244,19 +242,26 @@ class PostComment extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: Container(
-        // color: Colors.white,
+        height: 70,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           children: [
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: TextStyle(  
+                    fontSize: 13,
+                  ),
                   textInputAction: TextInputAction.send,
                   minLines: 1,
                   maxLines: 2,
                   controller: _controller,
                   decoration: InputDecoration(
                     hintText: "Agregar un comentario",
+                    hintStyle: TextStyle(  
+                      fontSize: 13,
+                    ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10)

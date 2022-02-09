@@ -36,17 +36,18 @@ class ThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final darkTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del AppBar
     appBarTheme: AppBarTheme(
       color: Colors.black54,
-      textTheme: TextTheme(
-          headline1: TextStyle(
+      toolbarTextStyle: TextStyle(  
+        fontFamily: 'Abel',
         color: Colors.white,
-        fontWeight: FontWeight.w400, 
+        fontWeight: FontWeight.w100, 
         fontSize: 24,
-      )),
-      iconTheme: IconThemeData(
-        color: Colors.white,
+      ),
+      iconTheme: IconThemeData( 
+        color: Color(0xFF0E89AF),
       ),
     ),
     //BackgroundColor
@@ -55,22 +56,25 @@ class MyThemes {
     colorScheme: ColorScheme.dark(),
     //Estilos de texto
     textTheme: TextTheme(
-      //Nombre de usuarios
+       //Nombre de usuarios
       headline1: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w500,
+        height: 1,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: Color(0xFFD6D6D6),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w300,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
-         fontSize: 16.0,
-        fontWeight: FontWeight.w400,
+        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontSize: 13.0,
+        fontWeight: FontWeight.w100,
+        letterSpacing: 0.7,
         color: Color(0xFFD6D6D6),
       ),
       //Texto pantalla configuracion
@@ -132,17 +136,18 @@ class MyThemes {
   );
 
   static final lightTheme = ThemeData(
+    fontFamily: 'Biryani',
     //Color del appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      textTheme: TextTheme(
-          headline1: TextStyle(
+      toolbarTextStyle: TextStyle(  
+        fontFamily: 'Abel',
         color: Colors.black,
-        fontWeight: FontWeight.w400, 
+        fontWeight: FontWeight.w100, 
         fontSize: 24,
-      )),
-      iconTheme: IconThemeData(
-        color: Colors.black,
+      ),
+      iconTheme: IconThemeData( 
+        color: Color(0xFF0E89AF),
       ),
       elevation: 2,
       actionsIconTheme: IconThemeData(
@@ -153,22 +158,24 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.white,
     //Estilos de texto
     textTheme: TextTheme(
-      //Nombre de usuarios
+       //Nombre de usuarios
       headline1: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w500,
+        height: 1,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: Color(0xFF767676),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.w300,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w200,
         color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.w400,
+        fontSize: 12.0,
+        fontWeight: FontWeight.w100,
+        letterSpacing: 0.7,
         color: Color(0xFF767676),
       ),
       //Texto pantalla configuracion
