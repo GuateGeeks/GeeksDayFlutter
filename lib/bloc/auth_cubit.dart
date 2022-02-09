@@ -53,7 +53,24 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSignedIn(user));
       }
     } catch (e) {
-      emit(AuthError("Error ${e.toString()}"));
+      print(e);
+      switch (e.toString()) {
+        case "[firebase_auth/invalid-email] The email address is badly formatted.":
+          emit(AuthError("*El correo ingresado no es válido"));
+          break;
+        case "[firebase_auth/wrong-password] The password is invalid or the user does not have a password.":
+          emit(AuthError("*El correo o contraseña es incorrecta"));
+          break;
+        case "[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.":
+          emit(AuthError("*El correo o contraseña es incorrecta"));
+          break;
+        case "[firebase_auth/email-already-in-use] The email address is already in use by another account.":
+          emit(AuthError("*El correo ya está en uso"));
+          break;
+        default:
+          emit(AuthError("*Ocurrió un probleme, por favor inténtelo más tarde"));
+          break;
+      }
     }
   }
 

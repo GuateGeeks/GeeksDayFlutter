@@ -117,11 +117,6 @@ class _EmailCreateState extends State<EmailCreate> {
         children: [
           if (state is AuthSigningIn)
             Center(child: CircularProgressIndicator()),
-          if (state is AuthError)
-            Text(
-              state.message,
-              style: TextStyle(color: Colors.red, fontSize: 24),
-            ),
           //Input email
           SizedBox(height: 8),
           EmailForm(emailAndUsernameValidator, _emailController),
@@ -135,6 +130,16 @@ class _EmailCreateState extends State<EmailCreate> {
           //Show input Repear Password
           RepeatPasswordForm(passwordValidator, _repeatPasswordController),
           SizedBox(height: 22),
+          SizedBox(height: 10),
+          if (state is AuthError)
+            Text(
+              state.message,
+              style: TextStyle(
+                color: Colors.red, 
+                fontSize: 16,
+              ),
+            ),
+          SizedBox(height: 10),
           saveUser(),
         ],
       ),
