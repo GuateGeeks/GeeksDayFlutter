@@ -6,11 +6,13 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
+import 'package:geeksday/models/events.dart';
+
+import '../home.dart';
 
 class PostCreate extends StatefulWidget {
-  final String idEvent;
-
-  PostCreate({Key? key, required this.idEvent}) : super(key: key);
+  Events event;
+  PostCreate({Key? key, required this.event}) : super(key: key);
 
   @override
   _PostCreateState createState() => _PostCreateState();
@@ -30,7 +32,7 @@ class _PostCreateState extends State<PostCreate> {
         ),
       ),
       body: BlocProvider(
-        create: (_) => FeedCubit(PostService(), widget.idEvent),
+        create: (_) => FeedCubit(PostService(), widget.event.id),
         child: Builder(
           builder: (context) {
             return Container(
@@ -48,7 +50,13 @@ class _PostCreateState extends State<PostCreate> {
     return BlocListener<FeedCubit, FeedState>(
       listener: (context, state) {
         if (state is PostAdded) {
-          Navigator.pop(context);
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Home(event: widget.event);
+                },
+              ),
+            );
           return;
         }
       },
@@ -97,31 +105,25 @@ class _PostCreateState extends State<PostCreate> {
                     child: PreviewImage(uploadedImage: uploadedImage),
                   ),
           ),
-          Container(
-            child: Positioned(
-              right: 5,
-              bottom: 20,
-              child: GestureDetector(
-                child: Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: Colors.white12,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    border: Border.all(
-                      color: Color(0xFFD3D3D3),
-                    ),
+          Positioned(
+            right: 5,
+            bottom: 10,
+            child: GestureDetector(
+              onTap: () => uploadImage(context),
+              child: Container(
+                width: 55,
+                height: 55,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  border: Border.all(
+                    color: Color(0xFFD3D3D3)
                   ),
-                  child: InkWell(
-                    onTap: () {
-                      uploadImage(context);
-                    },
-                    child: Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                      color: Color(0xFF0E89AF),
-                    ),
-                  ),
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  size: 40,
+                  color: Color(0xFF0E89AF),
                 ),
               ),
             ),
@@ -157,16 +159,6 @@ class _PostCreateState extends State<PostCreate> {
         ),
       ),
     );
-
-    //       decoration: InputDecoration(
-    //         hintText: "Descripción",
-    //         hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
-    //         fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-    //         filled: true,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 
   Widget savePost(context) {
@@ -175,12 +167,12 @@ class _PostCreateState extends State<PostCreate> {
       builder: (context, state) {
         return Center(
           child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                Color(0xFF0E89AF),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 50),
+              primary: Color(0xFF0E89AF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              padding: MaterialStateProperty.all(
-                  EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
             ),
             onPressed: () {
               print(commentController.text);

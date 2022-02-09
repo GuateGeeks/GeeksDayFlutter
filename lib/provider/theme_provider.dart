@@ -108,7 +108,7 @@ class MyThemes {
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
       hintStyle: TextStyle(color: Colors.white),
-      fillColor: Colors.black54,
+      fillColor: Color.fromRGBO(27, 27, 27, 1)
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
