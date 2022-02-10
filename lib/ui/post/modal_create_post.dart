@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/models/events.dart';
 import 'package:geeksday/ui/post/post_create.dart';
+import 'package:geeksday/ui/post/quiz_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
-  String idEvent;
-  ModalCreatePost({Key? key, required this.idEvent}) : super(key: key);
+  Events event;
+  ModalCreatePost({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class ModalCreatePost extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return PostCreate(idEvent: idEvent);
+                return PostCreate(idEvent: event.id);
               },
             ),
           );
@@ -83,7 +85,15 @@ class ModalCreatePost extends StatelessWidget {
 
   Widget createQuiz(context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return QuizCreate(event: event);
+              },
+            ),
+          );
+      },
       child: Row(
         children: [
           Icon(
