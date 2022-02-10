@@ -1,4 +1,5 @@
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
+import 'package:geeksday/models/events.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,13 @@ import 'package:geeksday/ui/post/post_card.dart';
 import 'package:geeksday/ui/setting.dart';
 
 class PostList extends StatelessWidget {
-  final String idEvent;
-  PostList({Key? key, required this.idEvent}) : super(key: key);
+  Events event;
+  PostList({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FeedCubit(PostService(), idEvent),
+      create: (_) => FeedCubit(PostService(), event.id),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

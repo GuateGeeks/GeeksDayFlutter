@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:html';
 
@@ -9,13 +8,13 @@ import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
-
-class EventsCubit extends Cubit<EventsState>{
+class EventsCubit extends Cubit<EventsState> {
   final EventsService _eventsService;
   File? _pickedImage;
   AuthUser user;
   ShowEventsCubit _showEventsCubit;
-  EventsCubit(this._eventsService, this.user, this._showEventsCubit) : super(EventsInitialState()){
+  EventsCubit(this._eventsService, this.user, this._showEventsCubit)
+      : super(EventsInitialState()) {
     // getEventsList();
   }
 
@@ -25,33 +24,30 @@ class EventsCubit extends Cubit<EventsState>{
     var createEvent = Events.newEvents(eventName, eventCodigo);
     emit(AddingEvent());
 
-    
-    _eventsService.createEventImage(createEvent, _pickedImage!).then((event){
+    _eventsService.createEventImage(createEvent, _pickedImage!).then((event) {
       _showEventsCubit.addEvents(event);
       emit(EventAdded());
     });
-
   }
- 
 
-  void addUserToEvent(String eventCode, String userId){
-    _list.forEach((event) { 
-      if(event.code == eventCode){
-        if(!event.usersList.contains(userId)){
+  void addUserToEvent(String eventCode, String userId) {
+    _list.forEach((event) {
+      if (event.code == eventCode) {
+        if (!event.usersList.contains(userId)) {
           event.usersList.add(userId);
-         _eventsService.updateEvent(event).then((value) {
-          emit(EventUpdate(event));
-         }); 
+          _eventsService.updateEvent(event).then((value) {
+            emit(EventUpdate(event));
+          });
         }
       }
     });
   }
 
-  void setImage(File? image) { 
+  void setImage(File? image) {
     _pickedImage = image;
   }
-  
-  String codigoRandom(){
+
+  String codigoRandom() {
     final codigo = RandomPasswordGenerator();
     return codigo.randomPassword(
       letters: true,
@@ -61,26 +57,25 @@ class EventsCubit extends Cubit<EventsState>{
       specialChar: false,
     );
   }
-
 }
 
-abstract class EventsState{
+abstract class EventsState {
   bool isBusy = false;
   List<Events> listEvents = [];
   List<Events> listEventsUser = [];
-
 }
-class EventsInitialState extends EventsState{
+
+class EventsInitialState extends EventsState {
   @override
   bool isBusy = false;
-  @override  
-  List<Events> listEvents = []; 
+  @override
+  List<Events> listEvents = [];
   List<Events> listEventsUser = [];
 }
 
-class AddingEvent extends EventsState{}
+class AddingEvent extends EventsState {}
 
-class EventAdded extends EventsState{}
+class EventAdded extends EventsState {}
 
 class EventUpdate extends EventsState {
   final Events event;
