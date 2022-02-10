@@ -23,6 +23,7 @@ class BodyCard extends StatelessWidget {
   Widget bodyBodyCard(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           post.imageRoute == "" ? Container() : showImage(context),
           postDescription(context),
@@ -46,13 +47,26 @@ class BodyCard extends StatelessWidget {
           );
         },
         child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black38,
+                spreadRadius: 0,
+                blurRadius: 7,
+                offset: Offset(0, 7), // changes position of shadow
+              ),
+            ],
+          ),
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(22.0),
-            child: Image.network(
-              post.imageRoute!,
-              height: 400,
-              fit: BoxFit.cover,
+            child: Container(
+              child: Image.network(
+                post.imageRoute!,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -62,7 +76,8 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
+      width: double.infinity,
+      padding: EdgeInsets.only(top: 15),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,
@@ -87,76 +102,69 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    return Container(
-      padding: EdgeInsets.only(top: 10),
-      child: Column(
-        children: [...AnswersList(state)],
-      ),
-    );
+    return answersList(state);
   }
 
-  List<Widget> AnswersList(PostCubit state) {
+  Widget answersList(PostCubit state) {
     String userId = BlocProvider.of<AuthCubit>(context).getUserId();
-    double width = MediaQuery.of(context).size.width;
-
     if (state.isQuiz()) {
       bool isAnswered = state.isAnswered(userId);
       int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
-      return state.getAnswers().map(
-        (answer) {
-          int porcentage = state.porcentage(total, answer.selectedCounter);
-          return Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(bottom: 10.0),
-            child: GestureDetector(
-              onTap: isAnswered
-                  ? null
-                  : () {
-                      setState(() {
-                        var quizRecords =
-                            BlocProvider.of<QuizRecordsCubit>(context);
-                        quizRecords.answeredQuiz(answer.text, answer.isCorrect,
-                            state.idPost(), userId, state.idEvent());
-                        //get the click a button of the answers
-                        state.usersResponded(userId);
-                        state.selectCounter(answer);
-                      });
-                    },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  new LinearPercentIndicator(
-                    backgroundColor: Colors.black12,
-                    width: width < 650
-                        ? MediaQuery.of(context).size.width - 100
-                        : 450,
-                    animation: true,
-                    lineHeight: 40.0,
-                    animationDuration: 1000,
-                    percent: isAnswered
-                        ? answer.selectedCounter.toDouble() / total
-                        : 0,
-                    center: Text(
-                      isAnswered ? "$porcentage%" : answer.text,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        width: double.infinity,
+        child: Column(
+          children: state.getAnswers().map((answer) {
+            int porcentage = state.porcentage(total, answer.selectedCounter);
+            return Container(
+              margin: EdgeInsets.only(bottom: 10.0),
+              child: GestureDetector(
+                onTap: isAnswered
+                    ? null
+                    : () {
+                        setState(() {
+                          var quizRecords =
+                              BlocProvider.of<QuizRecordsCubit>(context);
+                          quizRecords.answeredQuiz(
+                              answer.text,
+                              answer.isCorrect,
+                              state.idPost(),
+                              userId,
+                              state.idEvent());
+                          //get the click a button of the answers
+                          state.usersResponded(userId);
+                          state.selectCounter(answer);
+                        });
+                      },
+                child: LinearPercentIndicator(
+                  backgroundColor: Colors.black12,
+                  // width: 600,
+                  animation: true,
+                  lineHeight: 40.0,
+                  animationDuration: 1000,
+                  percent: isAnswered
+                      ? answer.selectedCounter.toDouble() / total
+                      : 0,
+                      center: Text(
+                        isAnswered ? "$porcentage%" : answer.text,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      progressColor: isAnswered
+                          ? correctAnswer == answer.isCorrect
+                              ? Color(0xFF0E89AF)
+                              : Color(0xFF4B3BAB)
+                          : Colors.transparent,
                     ),
-                    linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: isAnswered
-                        ? correctAnswer == answer.isCorrect
-                            ? Color(0xFF0E89AF)
-                            : Color(0xFF4B3BAB)
-                        : Colors.transparent,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ).toList();
-    } else {
-      return [];
+                ),
+              
+            );
+          }).toList(),
+        ),
+      );
     }
+    return Container();
   }
 }

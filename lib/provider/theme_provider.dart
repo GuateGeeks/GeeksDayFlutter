@@ -72,7 +72,7 @@ class MyThemes {
       //Post Description
       bodyText1: TextStyle(
         fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
-        fontSize: 13.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w100,
         letterSpacing: 0.7,
         color: Color(0xFFD6D6D6),
