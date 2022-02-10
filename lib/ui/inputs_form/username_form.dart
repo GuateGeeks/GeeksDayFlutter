@@ -18,13 +18,17 @@ class UsernameForm extends StatelessWidget {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFF0E89AF)),
         ),
+        enabledBorder: InputBorder.none,
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(3),
         ),
         hintText: "Nombre de usuario",
-        hintStyle: TextStyle(color: Colors.black54),
+        hintStyle: TextStyle(
+          color: Colors.black54,
+          fontWeight: FontWeight.w600,
+        ),
         filled: true,
-        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+        fillColor: Colors.white,
       ),
       // validator: emailValidator,
     );
