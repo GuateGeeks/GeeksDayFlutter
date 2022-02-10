@@ -6,27 +6,30 @@ class Events extends Equatable{
   final String id;
   final String name;
   final String code;
-  final int createAt;
+  final int createdAt;
   final List<String> usersList;
+  String image;
 
   Events({
     required this.id,
     required this.name, 
     required this.code,
-    required this.createAt,
+    required this.createdAt,
     required this.usersList,
+    required this.image,
   });
 
   @override
-  List<Object> get props => [id, name, code, createAt, usersList];
+  List<Object> get props => [id, name, code, createdAt, usersList, image];
 
 
   Map<String, Object> toFirebaseMap(){
     return<String, Object>{
       'name': name,
       'code': code,
-      'createAt': createAt,
+      'createdAt': createdAt,
       'usersList': usersList,
+      'image': image,
     };
   }
 
@@ -34,28 +37,32 @@ class Events extends Equatable{
     String? id,
     String? name,
     String? code,
-    int? createAt,
+    int? createdAt,
     List<String>? usersList,
+    String? image,
   }){
     return Events(  
       id: id ?? this.id,
       name: name ?? this.name,
       code: code ?? this.code,
-      createAt:  DateTime.now().millisecondsSinceEpoch,
+      createdAt:  DateTime.now().millisecondsSinceEpoch,
       usersList: usersList ?? this.usersList,
+      image: image ?? this.image,
     );
   }
 
   factory Events.newEvents(String name, String code){
     var id = Uuid().v1();
-    var createAt = DateTime.now().microsecondsSinceEpoch;
+    var createdAt = DateTime.now().microsecondsSinceEpoch;
     var usersList = <String>[];
+    var image = "";
     return Events(
       id: id,
       name: name,
       code: code,
-      createAt: createAt,
+      createdAt: createdAt,
       usersList: usersList,
+      image: image,
     );
   }
 
@@ -63,8 +70,9 @@ class Events extends Equatable{
     var id = documentId;
     var name = data['name'];
     var code = data['code']; 
-    var createAt = data['createAt'];
+    var createdAt = data['createdAt'];
     var usersList = <String>[];
+    var image = data['image'];
 
     if(data["usersList"] != null){
       final list = data["usersList"];
@@ -81,8 +89,9 @@ class Events extends Equatable{
       id: id,
       name: name,
       code: code,
-      createAt: createAt,
+      createdAt: createdAt,
       usersList: usersList,
+      image: image,
     );
   }
 }

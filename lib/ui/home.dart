@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
   }
 
   const Home({Key? key, this.event}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
