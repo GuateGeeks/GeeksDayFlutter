@@ -39,7 +39,9 @@ class PostList extends StatelessWidget {
       body: BlocProvider(
         create: (_) => FeedCubit(PostService(), idEvent),
         child: Builder(builder: (context) {
-          return postListBody(context);
+          return Center(
+            child: postListBody(context),
+          );
         }),
       ),
     );
@@ -61,11 +63,8 @@ class PostList extends StatelessWidget {
     });
   }
 
-  Widget showPostList(context, double maxWidth, List<Post> posts, getPostList) {
-    return postsCards(context, maxWidth, posts, getPostList);
-  }
 
-  Widget postsCards(context, double maxWidth, List<Post> posts, getPostList) {
+  Widget showPostList(context, double maxWidth, List<Post> posts, getPostList) {
     return Center(
       child: Container(
         width: maxWidth,

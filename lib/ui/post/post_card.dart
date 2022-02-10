@@ -21,7 +21,6 @@ class PostCard extends StatelessWidget {
 
   Widget posts() {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Column(
         children: [
