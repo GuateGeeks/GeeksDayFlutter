@@ -60,6 +60,8 @@ dependencies:
   image_whisperer: ^0.11.1
   #provider pack for light and dark theme
   provider: ^6.0.0
+  fluro: ^2.0.3
+  get_it: ^7.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
