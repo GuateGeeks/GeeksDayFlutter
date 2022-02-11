@@ -76488,7 +76488,7 @@ ae5(a,b,c,d){var s=null
 return A.eO(A.a([A.dX(s,A.n2("assets/icons/comment.svg",s,s),B.S,!1,s,s,s,s,s,s,s,s,s,s,s,s,new A.a2t(a,c),s,s,s,s,s,s),A.aC(s,A.b0(""+d.b.a.e,s,s,s,A.a6(a).H.b,s,s),B.j,s,s,s,s,s,s,new A.ar(5,5,5,0),s,s,s)],t.p),B.x,B.G,B.r)}}
 A.a2r.prototype={
 $2(a,b){var s=null,r=this.a,q=this.b,p=this.c
-return A.aC(s,A.eO(A.a([r.aiu(a,q,p),A.bM(s,s,5),r.ae5(a,q,b.a,p)],t.p),B.x,B.G,B.r),B.j,s,s,s,s,s,s,new A.ar(10,0,0,5),s,s,s)},
+return A.aC(s,A.eO(A.a([r.aiu(a,q,p),A.bM(s,s,5),r.ae5(a,q,b.a,p)],t.p),B.x,B.G,B.r),B.j,s,s,s,s,s,s,new A.ar(0,0,0,5),s,s,s)},
 $S:494}
 A.a2u.prototype={
 $0(){var s,r=this.b.c.x
