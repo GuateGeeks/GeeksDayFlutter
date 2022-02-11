@@ -242,7 +242,7 @@ class PostComment extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: Container(
-        height: 70,
+     
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           children: [
