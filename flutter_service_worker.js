@@ -27,12 +27,12 @@ const RESOURCES = {
 "assets/NOTICES": "05cf836107a57285fa567fefa592a47a",
 "assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "firebase-config.js": "01ebaf1b69d2a21a35fc2537dfa5deaf",
-"index.html": "e42fa31501811b1f4b808157063545ca",
-"/": "e42fa31501811b1f4b808157063545ca",
+"index.html": "dda91572ca764420f0debd1024bbae1f",
+"/": "dda91572ca764420f0debd1024bbae1f",
 "version.json": "da2e0573834eb2187048bf7b88f15c46",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
-"main.dart.js": "bfa5530ed3b408f37d18e2a0ec2eb060",
+"main.dart.js": "a499adb2f89c3a5833f6c1eedb45eaf4",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "manifest.json": "cd30b6ab6774127656ea9c126369b699"
 };
