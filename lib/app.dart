@@ -15,11 +15,9 @@ class MyApp extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSignedOut) {
-          _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.signInEmail, (r) => false);
+          locator<NavigationService>().navigateTo('/login');
         } else if (state is AuthSignedIn) {
-          _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.mainEvents, (r) => false);
+          locator<NavigationService>().navigateTo('/eventos');
         }
       },
       child: MyApp(),

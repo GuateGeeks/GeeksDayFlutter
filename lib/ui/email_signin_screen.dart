@@ -117,7 +117,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                   ),
                 ),
                 onPressed: () {
-                   locator<NavigationService>().navigateTo('/registration');
+                   locator<NavigationService>().navigateTo('/registrarse');
                 },
                 child: Text(
                   "Registrarse",
