@@ -57,8 +57,6 @@ class PostList extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
-      print("block builder");
-
       if (!(state is PostLoaded)) {
         return Center(child: CircularProgressIndicator());
       }

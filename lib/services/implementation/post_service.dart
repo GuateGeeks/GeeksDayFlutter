@@ -34,7 +34,6 @@ class PostService extends PostServiceBase {
 
   Future<void> createPostText(Post post) async {
     String postPath = FirestorePath.post(post.id);
-    print(postPath);
     await _firestoreService.setData(
       path: postPath,
       data: post.toFirebaseMap(),

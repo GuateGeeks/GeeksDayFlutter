@@ -48,8 +48,7 @@ class _PostOptionsState extends State<PostOptions> {
   //function to carry out the selected action
   void choiceAction(String choice) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    String idPostDelete = widget.post.id;
-    BlocProvider.of<PostCubit>(context).postDeletion(idPostDelete);
+    BlocProvider.of<PostCubit>(context).deletePost();
   }
 }
 

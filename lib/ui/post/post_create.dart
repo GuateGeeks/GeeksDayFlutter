@@ -51,12 +51,12 @@ class _PostCreateState extends State<PostCreate> {
       listener: (context, state) {
         if (state is PostAdded) {
           Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return Home(event: widget.event);
-                },
-              ),
-            );
+            MaterialPageRoute(
+              builder: (context) {
+                return Home(event: widget.event);
+              },
+            ),
+          );
           return;
         }
       },
@@ -116,9 +116,7 @@ class _PostCreateState extends State<PostCreate> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  border: Border.all(
-                    color: Color(0xFFD3D3D3)
-                  ),
+                  border: Border.all(color: Color(0xFFD3D3D3)),
                 ),
                 child: Icon(
                   Icons.camera_alt,
@@ -175,7 +173,6 @@ class _PostCreateState extends State<PostCreate> {
               ),
             ),
             onPressed: () {
-              print(commentController.text);
               BlocProvider.of<FeedCubit>(context)
                   .createPost(commentController.text, uploadedImage, userId);
             },
