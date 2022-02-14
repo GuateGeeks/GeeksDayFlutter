@@ -3,8 +3,11 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/bottom_navigation.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/post/post_card.dart';
-import 'package:geeksday/ui/setting.dart';
+import 'package:geeksday/ui/configuration.dart';
 
 class PostList extends StatelessWidget {
   final String idEvent;
@@ -24,18 +27,13 @@ class PostList extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Settings();
-                  },
-                ),
-              );
+             locator<NavigationService>().navigateTo('/configuracion');
             },
             icon: Icon(Icons.menu),
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigation(idEvent: idEvent),
       body: BlocProvider(
         create: (_) => FeedCubit(PostService(), idEvent),
         child: Builder(builder: (context) {

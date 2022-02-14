@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 
 class SingleImageView extends StatelessWidget {
   String image;
@@ -9,7 +10,7 @@ class SingleImageView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: BackButton(),
+        leading: ReturnButton(), 
       ),
       backgroundColor: Colors.black,
       body: Center(

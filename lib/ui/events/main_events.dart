@@ -5,8 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/events/show_events_cubit.dart';
 import 'package:geeksday/models/events.dart';
 import 'package:geeksday/services/implementation/events_service.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/events/form_create_event.dart';
-import 'package:geeksday/ui/home.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class MainEvents extends StatelessWidget {
   static Widget create(BuildContext context) {
@@ -96,13 +97,7 @@ class MainEvents extends StatelessWidget {
               }
               return GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Home(event: event);
-                      },
-                    ),
-                  );
+                  locator<NavigationService>().navigateTo('/evento/'+'${event.id}');
                 },
                 child: Card(child: backgroundImage(snapshot, event)),
               );

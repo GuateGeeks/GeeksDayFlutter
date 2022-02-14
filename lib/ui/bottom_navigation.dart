@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/models/events.dart';
-import 'package:geeksday/ui/events/main_events.dart';
-import 'package:geeksday/ui/home.dart';
-import 'package:geeksday/ui/post/modal_create_post.dart';
-import 'package:geeksday/ui/user_profile.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Events? event;
-  BottomNavigation({this.event});
+  final String idEvent;
+  BottomNavigation({required this.idEvent});
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +35,7 @@ class BottomNavigation extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return Home(event: event);
-                },
-              ),
-            );
+            locator<NavigationService>().navigateTo('/evento/'+idEvent);
           },
           icon: Icon(
             Icons.home,
@@ -89,7 +80,7 @@ class BottomNavigation extends StatelessWidget {
               builder: (context) => Container(
                 height: MediaQuery.of(context).size.height / 2,
                 // width: 800,
-                child: ModalCreatePost(idEvent: event!.id),
+                // child: ModalCreatePost(idEvent: event!.id),
                 // child: PostCreate(idEvent: event!.id),
               ),
             );
@@ -112,13 +103,7 @@ class BottomNavigation extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return MainEvents();
-                },
-              ),
-            );
+            locator<NavigationService>().navigateTo('/eventos');
           },
           icon: Icon(
             Icons.event_available_rounded,
@@ -138,13 +123,7 @@ class BottomNavigation extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return UserProfile(event: event);
-                },
-              ),
-            );
+            locator<NavigationService>().navigateTo('/evento/'+idEvent+'/perfil');
           },
           icon: Icon(
             Icons.person,

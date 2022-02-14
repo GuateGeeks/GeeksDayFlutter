@@ -82,7 +82,7 @@ class MyThemes {
       //Texto del modal Crear Post/Quiz No Seleccionado
       headline5: TextStyle(
         color: Colors.grey,
-        fontSize: 15.0,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(

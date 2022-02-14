@@ -5,12 +5,8 @@ import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatelessWidget {
-  static Widget create(BuildContext context) {
-    return Settings();
-  }
-
-  const Settings({Key? key}) : super(key: key);
+class Configuration extends StatelessWidget {
+  const Configuration({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class Settings extends StatelessWidget {
           'Configuracion',
           style: Theme.of(context).appBarTheme.textTheme!.headline1,
         ),
-        leading: ReturnButton(),
+        automaticallyImplyLeading: false,
       ),
       body: settings(maxWidth, context),
     );
