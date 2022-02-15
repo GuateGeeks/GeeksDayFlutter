@@ -19,7 +19,7 @@ class HeaderCard extends StatelessWidget {
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 15, 15, 5),
+      padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

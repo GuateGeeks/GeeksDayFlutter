@@ -85,7 +85,7 @@ class MyThemes {
       //Texto opciones pantalla de configuracion
       headline5: TextStyle(
         color: Color(0xFFD6D6D6),
-        fontSize: 15.0,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
