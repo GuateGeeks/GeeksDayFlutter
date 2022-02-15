@@ -65,9 +65,10 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 12.0,
-        fontWeight: FontWeight.w200,
-        color: Color(0xFF797979),
+        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontSize: 15.0,
+        fontWeight: FontWeight.w100,
+        color: Colors.white,
       ),
       //Post Description
       bodyText1: TextStyle(
