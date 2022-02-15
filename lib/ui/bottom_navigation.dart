@@ -101,7 +101,7 @@ class BottomNavigation extends StatelessWidget {
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) => Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.5,
                 // width: 800,
                 child: ModalCreatePost(event: event!),
                 // child: PostCreate(idEvent: event!.id),
