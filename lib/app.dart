@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
               ?.pushNamedAndRemoveUntil(Routes.signInEmail, (r) => false);
         } else if (state is AuthSignedIn) {
           _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.mainEvents, (r) => false);
+              ?.pushNamedAndRemoveUntil(Routes.mainEvent, (r) => false);
         }
       },
       child: MyApp(),

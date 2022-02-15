@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/models/events.dart';
-import 'package:geeksday/ui/events/main_events.dart';
+import 'package:geeksday/models/event.dart';
+import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/post/modal_create_post.dart';
 import 'package:geeksday/ui/user_profile.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   BottomNavigation({this.event});
 
   @override
@@ -115,7 +115,7 @@ class BottomNavigation extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return MainEvents();
+                  return MainEvent();
                 },
               ),
             );

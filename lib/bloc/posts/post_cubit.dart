@@ -21,18 +21,18 @@ class PostCubit extends Cubit<PostState> {
     emit(state);
   }
 
-  //create post or quiz
-  Future<void> createPost(String text) async { 
-    Post newPost = state.post;
-    newPost.text = text;
-    //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
-    if(_pickedImage == null){
-      _postService.createPostText(newPost);
-      emit(CreatePost(newPost));
-    }else{
-      _postService.createPost(newPost, _pickedImage!);
-    }
-  }
+  // //create post or quiz
+  // Future<void> createPost(String text) async { 
+  //   Post newPost = state.post;
+  //   newPost.text = text;
+  //   //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
+  //   if(_pickedImage == null){
+  //     _postService.createPostText(newPost);
+  //     emit(CreatePost(newPost));
+  //   }else{
+  //     _postService.createPost(newPost, _pickedImage!);
+  //   }
+  // }
 
   //get the post
   Post? getPost() {
