@@ -8,7 +8,7 @@ class Event extends Equatable{
   final String name;
   final String code;
   final int createdAt;
-  final List<String> usersList;
+  final List usersList;
   String image;
 
   Event({
@@ -72,7 +72,7 @@ class Event extends Equatable{
     var name = data['name'];
     var code = data['code'];
     var createdAt = data['createdAt'];
-    var usersList = <String>[];
+    var usersList = data['usersList'];
     var image = data['image'];
 
     return Event(

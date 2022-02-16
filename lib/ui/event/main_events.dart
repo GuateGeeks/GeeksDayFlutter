@@ -107,13 +107,13 @@ class MainEvent extends StatelessWidget {
     );
   }
 
-    Widget listEvent(List<Event> Event, BuildContext context) {
+    Widget listEvent(List<Event> event, BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
         child: ListView(
-          children: Event.map((event) {
+          children: event.map((event) {
             return GestureDetector(
               onTap: () {
                 Navigator.of(context).push(

@@ -15,7 +15,7 @@ class FeedCubit extends Cubit<FeedState> {
     List<Post> _listPost = [];
     final posts = _postService.listadoPost();
     posts.listen((post) {
-      post.forEach((element) {
+      post.forEach((element) { 
         if(element.idEvent == idEvent){
           _listPost.add(element);
         }

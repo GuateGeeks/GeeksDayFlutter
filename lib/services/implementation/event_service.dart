@@ -43,9 +43,20 @@ class EventService extends EventServiceBase{
     final events = FirebaseFirestore.instance.collection('events');
 
     return events.orderBy('createdAt', descending: true).snapshots().map((event) =>
-      event.docs.map((doc) => Event.fromMap(doc, doc.id)).toList()
+      event.docs.map(
+        (doc) {
+          return Event.fromMap(doc, doc.id);
+        }
+      ).toList()
     );
   } 
+
+  Future<void> eventUpdate(Event eventUpdate) async{
+    final event = FirebaseFirestore.instance.collection('events').doc(eventUpdate.id);
+    await event.set(eventUpdate.toFirebaseMap(), SetOptions(merge: true));
+    getEventList();
+  }
+
 
   // @override 
   // Future<void> updateEvent(Event event) async {
@@ -67,11 +78,5 @@ class EventService extends EventServiceBase{
   @override
   Future<String> getImageURL(String uid) {
     return _firestoreService.getDownloadURL(FirestorePath.event(uid));
-  }
-
-  @override
-  Future<void> updateEvent(Event event) {
-    throw UnimplementedError();
-  }
-  
+  }  
 }

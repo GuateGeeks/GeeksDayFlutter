@@ -19,10 +19,21 @@ class EventCubit extends Cubit<EventState>{
     final events = this._eventServiceBase.getEventList();
     events.listen((event) {
       event.forEach((element) {
-        _listEvent.add(element);
+        //if the user is an administrator we show all the events
+        if(user.isadmin){
+          _listEvent.add(element);
+        //if the user is not an administrator, we verify that he is registered in the event
+        }else{
+          element.usersList.forEach((idUsers) { 
+            if(idUsers == user.uid){
+              _listEvent.add(element);
+            }
+          });
+        }
       });
-      emit(EventLoaded(events: _listEvent));
+        emit(EventLoaded(events: _listEvent));
       _listEvent = [];
+      
     },
       onDone: (){},
     );
@@ -36,6 +47,28 @@ class EventCubit extends Cubit<EventState>{
     emit(EventAdded());
 
   }
+
+  Future<void> registerInEvent() async{
+    final events = this._eventServiceBase.getEventList();
+    events.listen((event) {
+      event.forEach((element) {
+        if(element.code == "dgaFkV"){
+          element.usersList.add("Este es el agregado");
+          updateEvent(element);
+        }
+      },);
+    }, onDone: (){
+      print("Se detuvo");
+    });
+          emit(EventAdded());
+  }
+
+  Future<void> updateEvent(Event event) async{
+    emit(AddingEvent());
+    _eventServiceBase.eventUpdate(event);
+  }
+
+
 
   void setImage(File? image) { 
     uploadImage = image;

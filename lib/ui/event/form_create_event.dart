@@ -178,8 +178,8 @@ class _FormCreateEventState extends State<FormCreateEvent> {
         BlocProvider.of<EventCubit>(context)
             .createEvent(nameEvent.text, codigoEvent.text);
       } else {
-        // BlocProvider.of<EventCubit>(context)
-        //     .addUserToEvent(codigoEvent.text, userId);
+        BlocProvider.of<EventCubit>(context)
+            .registerInEvent();
       }
     }
   }
@@ -201,50 +201,3 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     });
   }
 }
-
-
-// class _FormCreateEventtate extends State<FormCreateEvent> {
-//   File? uploadedImage;
-//   TextEditingController nameEvent = TextEditingController();
-//   TextEditingController codigoEvent = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
-//     return  principal();
-//   }
-
-//   Widget principal(){
-//     return BlocListener<EventCubit, EventState>(
-//       listener: (context, state){
-//         if(state is EventAdded){
-//           Navigator.pop(context);
-//           return;
-//         }
-//       },
-//       child: modalForm(),
-//     );
-//   }
-
-
-
-
-
-//   //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
-//   uploadImage(BuildContext context) {
-//     var uploadInput = FileUploadInputElement()..accept = 'image/*';
-//     uploadInput.click();
-//     uploadInput.onChange.listen((event) {
-//       final File file = uploadInput.files!.first;
-//       final reader = FileReader();
-//       reader.readAsDataUrl(file);
-//       reader.onLoadEnd.listen((event) {
-//         setState(() {
-//           uploadedImage = file;
-//         });
-//         BlocProvider.of<EventCubit>(context).setImage(file);
-//       });
-//     });
-//   }
-
-
-// }
