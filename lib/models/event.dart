@@ -1,16 +1,17 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
-class Events extends Equatable{
+class Event extends Equatable{
   final String id;
   final String name;
   final String code;
   final int createdAt;
-  final List<String> usersList;
+  final List usersList;
   String image;
 
-  Events({
+  Event({
     required this.id,
     required this.name, 
     required this.code,
@@ -33,7 +34,7 @@ class Events extends Equatable{
     };
   }
 
-  Events copyWith({
+  Event copyWith({
     String? id,
     String? name,
     String? code,
@@ -41,7 +42,7 @@ class Events extends Equatable{
     List<String>? usersList,
     String? image,
   }){
-    return Events(  
+    return Event(  
       id: id ?? this.id,
       name: name ?? this.name,
       code: code ?? this.code,
@@ -51,12 +52,12 @@ class Events extends Equatable{
     );
   }
 
-  factory Events.newEvents(String name, String code){
+  factory Event.newEvent(String name, String code){
     var id = Uuid().v1();
     var createdAt = DateTime.now().microsecondsSinceEpoch;
     var usersList = <String>[];
     var image = "";
-    return Events(
+    return Event(
       id: id,
       name: name,
       code: code,
@@ -66,32 +67,50 @@ class Events extends Equatable{
     );
   }
 
-  factory Events.fromMap(Map<String, dynamic> data, String documentId){
+  factory Event.fromMap(DocumentSnapshot data, String documentId){
     var id = documentId;
     var name = data['name'];
-    var code = data['code']; 
+    var code = data['code'];
     var createdAt = data['createdAt'];
-    var usersList = <String>[];
+    var usersList = data['usersList'];
     var image = data['image'];
 
-    if(data["usersList"] != null){
-      final list = data["usersList"];
-      if(list is List){
-        data["usersList"].forEach((user){
-          if(user is String){
-            usersList.add(user);
-          }
-        }); 
-      } 
-    }
-
-    return Events(
+    return Event(
       id: id,
       name: name,
       code: code,
       createdAt: createdAt,
       usersList: usersList,
-      image: image,
+      image: image
     );
   }
+
+  // factory Event.fromMap(Map<String, dynamic> data, String documentId){
+  //   var id = documentId;
+  //   var name = data['name'];
+  //   var code = data['code']; 
+  //   var createdAt = data['createdAt'];
+  //   var usersList = <String>[];
+  //   var image = data['image'];
+
+  //   if(data["usersList"] != null){
+  //     final list = data["usersList"];
+  //     if(list is List){
+  //       data["usersList"].forEach((user){
+  //         if(user is String){
+  //           usersList.add(user);
+  //         }
+  //       }); 
+  //     } 
+  //   }
+
+  //   return Event(
+  //     id: id,
+  //     name: name,
+  //     code: code,
+  //     createdAt: createdAt,
+  //     usersList: usersList,
+  //     image: image,
+  //   );
+  // }
 }
