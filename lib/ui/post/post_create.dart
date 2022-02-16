@@ -6,12 +6,12 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
-import 'package:geeksday/models/events.dart';
+import 'package:geeksday/models/event.dart';
 
 import '../home.dart';
 
 class PostCreate extends StatefulWidget {
-  Events event;
+  Event event;
   PostCreate({Key? key, required this.event}) : super(key: key);
 
   @override
@@ -51,12 +51,12 @@ class _PostCreateState extends State<PostCreate> {
       listener: (context, state) {
         if (state is PostAdded) {
           Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return Home(event: widget.event);
-                },
-              ),
-            );
+            MaterialPageRoute(
+              builder: (context) {
+                return Home(event: widget.event);
+              },
+            ),
+          );
           return;
         }
       },
@@ -116,9 +116,7 @@ class _PostCreateState extends State<PostCreate> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  border: Border.all(
-                    color: Color(0xFFD3D3D3)
-                  ),
+                  border: Border.all(color: Color(0xFFD3D3D3)),
                 ),
                 child: Icon(
                   Icons.camera_alt,
