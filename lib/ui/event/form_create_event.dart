@@ -3,35 +3,34 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/bloc/events/events_cubit.dart';
-import 'package:geeksday/bloc/events/show_events_cubit.dart';
+import 'package:geeksday/bloc/event/event_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
-import 'package:geeksday/services/implementation/events_service.dart';
+import 'package:geeksday/services/implementation/event_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 import 'package:provider/provider.dart';
 
 class FormCreateEvent extends StatefulWidget {
-  FormCreateEvent({Key? key, required this.showEvents}) : super(key: key);
-  final ShowEventsCubit showEvents;
+  FormCreateEvent({Key? key}) : super(key: key);
+
   @override
-  _FormCreateEventState createState() => _FormCreateEventState();
+  State<FormCreateEvent> createState() => _FormCreateEventState();
 }
 
 class _FormCreateEventState extends State<FormCreateEvent> {
-  File? uploadedImage;
   TextEditingController nameEvent = TextEditingController();
   TextEditingController codigoEvent = TextEditingController();
+  File? uploadedImage;
   @override
   Widget build(BuildContext context) {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return BlocProvider(
-      create: (_) => EventsCubit(EventsService(), user, widget.showEvents),
-      child: principal(),
+      create: (_) => EventCubit(EventService(), user),
+      child: bodyFormCreateEvent(),
     );
   }
 
-  Widget principal(){
-    return BlocListener<EventsCubit, EventsState>(
+  Widget bodyFormCreateEvent(){
+    return BlocListener<EventCubit, EventState>(
       listener: (context, state){
         if(state is EventAdded){
           Navigator.pop(context);
@@ -41,17 +40,16 @@ class _FormCreateEventState extends State<FormCreateEvent> {
       child: modalForm(),
     );
   }
-
-  //Function that shows the modal when clicking on the floatingActionButton
+    //Function that shows the modal when clicking on the floatingActionButton
   Widget modalForm() {
     bool isAdmin = Provider.of<AuthCubit>(context).getUser().isadmin;
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return BlocBuilder<EventsCubit, EventsState>(builder: (context, state) {
+    return BlocBuilder<EventCubit, EventState>(builder: (context, state) {
       return Center(
         child: Container(
           width: maxWidth,
-          height: 900,
+          height: 500,
           constraints: BoxConstraints(
             maxHeight: double.infinity,
           ),
@@ -89,7 +87,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     });
   }
 
-  //form to create a new event
+    //form to create a new event
   Widget formCreateEvent(BuildContext context, maxWidth) {
     return Container(
       width: maxWidth,
@@ -119,7 +117,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
                   onTap: () {
                     //the ramdon code of is generating from the cubit
                     codigoEvent.text =
-                        BlocProvider.of<EventsCubit>(context).codigoRandom();
+                        BlocProvider.of<EventCubit>(context).codigoRandom();
                   },
                 ),
                 hintText: "Generar Código",
@@ -131,7 +129,8 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     );
   }
 
-  Widget formRegistrationEvent() {
+
+    Widget formRegistrationEvent() {
     return Form(
       child: TextFormField(
         autofocus: true,
@@ -144,25 +143,9 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     );
   }
 
-  //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
-  uploadImage(BuildContext context) {
-    var uploadInput = FileUploadInputElement()..accept = 'image/*';
-    uploadInput.click();
-    uploadInput.onChange.listen((event) {
-      final File file = uploadInput.files!.first;
-      final reader = FileReader();
-      reader.readAsDataUrl(file);
-      reader.onLoadEnd.listen((event) {
-        setState(() {
-          uploadedImage = file;
-        });
-        BlocProvider.of<EventsCubit>(context).setImage(file);
-      });
-    });
-  }
-
+  
   //button to save in new event
-  Widget buttonSave(BuildContext context, EventsState state) {
+  Widget buttonSave(BuildContext context, EventState state) {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
@@ -187,17 +170,34 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     );
   }
 
-  //Function to save an event
+    //Function to save an event
   void saveEvent(BuildContext context, TextEditingValue value, String userId) {
     //If the event name is empty, we validate that the user joins an event. If the event name  is not empty, we create an event
     if (value.text.isNotEmpty) {
       if (nameEvent.text.isNotEmpty) {
-        BlocProvider.of<EventsCubit>(context)
+        BlocProvider.of<EventCubit>(context)
             .createEvent(nameEvent.text, codigoEvent.text);
       } else {
-        BlocProvider.of<EventsCubit>(context)
-            .addUserToEvent(codigoEvent.text, userId);
+        BlocProvider.of<EventCubit>(context)
+            .registerInEvent();
       }
     }
+  }
+  
+    //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
+  uploadImage(BuildContext context) {
+    var uploadInput = FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
+    uploadInput.onChange.listen((event) {
+      final File file = uploadInput.files!.first;
+      final reader = FileReader();
+      reader.readAsDataUrl(file);
+      reader.onLoadEnd.listen((event) {
+        setState(() {
+          uploadedImage = file;
+        });
+        BlocProvider.of<EventCubit>(context).setImage(file);
+      });
+    });
   }
 }

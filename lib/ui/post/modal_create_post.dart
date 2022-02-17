@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geeksday/models/events.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
-  Events event;
+  Event event;
   ModalCreatePost({Key? key, required this.event}) : super(key: key);
 
   @override
@@ -62,13 +62,13 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return PostCreate(event: event);
-              },
-            ),
-          );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return PostCreate(event: event);
+            },
+          ),
+        );
       },
       child: Row(
         children: [

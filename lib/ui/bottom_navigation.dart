@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geeksday/models/events.dart';
-import 'package:geeksday/ui/events/main_events.dart';
+import 'package:geeksday/models/event.dart';
+import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/post/modal_create_post.dart';
 import 'package:geeksday/ui/user_profile.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   BottomNavigation({this.event});
 
   @override
@@ -72,14 +72,14 @@ class BottomNavigation extends StatelessWidget {
           child: GestureDetector(
             onTap: () {},
             child: SvgPicture.asset(
-            "assets/icons/search.svg",
-            height: 26,
-            width: 26,
-          ),
-          //    child: Image.asset(
-          //   'assets/icons/search.png',
-          //   height: 30,
-          // ),
+              "assets/icons/search.svg",
+              height: 26,
+              width: 26,
+            ),
+            //    child: Image.asset(
+            //   'assets/icons/search.png',
+            //   height: 30,
+            // ),
           ),
         ),
         Text(
@@ -134,7 +134,7 @@ class BottomNavigation extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return MainEvents();
+                  return MainEvent();
                 },
               ),
             );
@@ -181,7 +181,6 @@ class BottomNavigation extends StatelessWidget {
           //   fit: BoxFit.cover,
           // ),
         ),
-      
         Text(
           "user",
           style: Theme.of(context).textTheme.headline5,

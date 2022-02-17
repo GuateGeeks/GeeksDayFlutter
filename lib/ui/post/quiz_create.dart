@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
-import 'package:geeksday/models/events.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 
 class QuizCreate extends StatefulWidget {
-  Events event;
+  Event event;
 
   QuizCreate({Key? key, required this.event}) : super(key: key);
 
@@ -151,21 +151,19 @@ class _QuizCreateState extends State<QuizCreate> {
 
   Widget inputAnswers(BuildContext context) {
     bool isSwitchOn = true;
-    
+
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: TextFormField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           suffixIcon: Switch(
-
             value: isSwitchOn,
             onChanged: (value) {
               setState(() {
                 isSwitchOn = !isSwitchOn;
               });
             },
-          
           ),
           hintText: "Respuesta",
           border: InputBorder.none,
