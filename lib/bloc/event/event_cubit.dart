@@ -31,9 +31,8 @@ class EventCubit extends Cubit<EventState>{
           });
         }
       });
-        emit(EventLoaded(events: _listEvent));
+      emit(EventLoaded(events: _listEvent));
       _listEvent = [];
-      
     },
       onDone: (){},
     );
@@ -52,15 +51,16 @@ class EventCubit extends Cubit<EventState>{
     final events = this._eventServiceBase.getEventList();
     events.listen((event) {
       event.forEach((element) {
-        if(element.code == "dgaFkV"){
+        if(element.code == "uUaPfN"){
           element.usersList.add("Este es el agregado");
           updateEvent(element);
-        }
-      },);
-    }, onDone: (){
-      print("Se detuvo");
-    });
           emit(EventAdded());
+          
+        }
+      },
+      
+      );
+    });
   }
 
   Future<void> updateEvent(Event event) async{

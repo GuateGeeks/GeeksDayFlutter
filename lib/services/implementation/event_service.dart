@@ -50,11 +50,19 @@ class EventService extends EventServiceBase{
       ).toList()
     );
   } 
+  
 
   Future<void> eventUpdate(Event eventUpdate) async{
-    final event = FirebaseFirestore.instance.collection('events').doc(eventUpdate.id);
-    await event.set(eventUpdate.toFirebaseMap(), SetOptions(merge: true));
-    getEventList();
+    var a = FirebaseFirestore.instance.collection('events');
+    a.get().then((value) {
+      
+    });
+    // Map<String, dynamic> listadoUsuarios = Map();
+
+    // final events = FirebaseFirestore.instance.collection('events');
+    // listadoUsuarios['usersList'] = eventUpdate.usersList;
+    
+    // events.doc(eventUpdate.id).set(listadoUsuarios, SetOptions(merge: true));
   }
 
 
