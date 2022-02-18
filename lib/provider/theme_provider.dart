@@ -57,14 +57,14 @@ class MyThemes {
       //Nombre de usuarios
       headline1: TextStyle(
         height: 1,
-        fontSize: 16.0,
+        fontSize: 18.0,
         fontWeight: FontWeight.normal,
         color: Color(0xFFD6D6D6),
       ),
       //Fecha y likes
       headline2: TextStyle(
         fontSize: 12.0,
-        fontWeight: FontWeight.w200,
+        fontFamily: 'assets/fonts/Biryani-Regular.ttf',
         color: Color(0xFF797979),
       ),
       //Post Description

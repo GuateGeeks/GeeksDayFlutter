@@ -26,7 +26,6 @@ class PostCard extends StatelessWidget {
         children: [
           HeaderCard(post: post),
           BodyCard(post: post),
-          ButtonWidget(post: post),
         ],
       ),
     );

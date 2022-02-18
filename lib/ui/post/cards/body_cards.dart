@@ -5,6 +5,7 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
+import 'package:geeksday/ui/post/cards/button_widget.dart';
 import 'package:geeksday/ui/post/single_image_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -26,6 +27,7 @@ class BodyCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           post.imageRoute == "" ? Container() : showImage(context),
+          ButtonWidget(post: post),
           postDescription(context),
           ProgressBar(post: post),
         ],

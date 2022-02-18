@@ -16,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.fromLTRB(0, 19, 0, 0),
           child: Row(
             children: [
               //Like button

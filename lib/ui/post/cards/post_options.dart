@@ -26,22 +26,34 @@ class _PostOptionsState extends State<PostOptions> {
       choices.add(Constants.DeleteUser);
     }
     //show list of actions that can be performed on the post
-    return PopupMenuButton<String>(
-      icon: Icon(
-        Icons.more_vert_rounded,
-        color: Color(0xFF0E89AF),
-        size: 30,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        hoverColor: Colors.transparent,
       ),
-      tooltip: "Ver Opciones",
-      itemBuilder: (BuildContext context) {
-        return choices.map((String choice) {
-          return PopupMenuItem<String>(
-            value: choice,
-            child: Text(choice),
-          );
-        }).toList();
-      },
-      onSelected: choiceAction,
+      child: PopupMenuButton<String>(
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2.5),
+        icon: Align(
+          alignment: Alignment(6, -20),
+          child: Icon(
+            Icons.more_vert_rounded,
+            color: Color(0xFF0E89AF),
+            size: 35,
+            textDirection: TextDirection.ltr,
+          ),
+        ),
+        tooltip: "Ver Opciones",
+        itemBuilder: (BuildContext context) {
+          return choices.map((String choice) {
+            return PopupMenuItem<String>(
+              value: choice,
+              child: Text(choice),
+            );
+          }).toList();
+        },
+        onSelected: choiceAction,
+      ),
     );
   }
 
