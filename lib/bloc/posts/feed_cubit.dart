@@ -41,16 +41,45 @@ class FeedCubit extends Cubit<FeedState> {
       _postService.createPost(createPost, image);
       emit(PostAdded());
     }
-
-    // newPost.text = text;
-    // //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
-    // if(_pickedImage == null){
-    //   _postService.createPostText(newPost);
-    //   emit(CreatePost(newPost));
-    // }else{
-    //   _postService.createPost(newPost, _pickedImage!);
-    // }
   }
+
+  void toggleLikeToPost(Post post, String uid) {
+    if(post.likeList.contains(uid)){
+      post.likeList.remove(uid);
+    }else{
+      post.likeList.add(uid);
+    }
+    post.likeCount = post.likeList.length;
+    updatePost(post);
+  }
+
+  String getLikesCountText(Post post) {
+    return post.likeCount.toString();
+  }
+
+  bool likedByMe(Post post, String uid) {
+    return post.likeList.contains(uid);
+  }
+
+  void makeComment(Post post,String idUser, String text) {
+    var comment = Comment.newComment(text, idUser);
+    post.commentList.add(comment);
+    post.commentCount = post.commentList.length;
+    _postService.updatePost(post);
+  }
+
+  String countComments(Post post) {
+    return post.commentCount.toString();
+  }
+
+
+
+
+  updatePost(Post post){
+    _postService.updatePost(post);
+  }
+
+
 
   //function to display image in preview
   void setImage(File? image) {
@@ -75,3 +104,4 @@ class PostLoaded extends FeedState {
   final List<Post> post;
   PostLoaded({required this.post});
 }
+
