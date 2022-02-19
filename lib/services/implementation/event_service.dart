@@ -11,7 +11,7 @@ final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
 class EventService extends EventServiceBase{
   final _firestoreService = FirestoreService.instance;
-  final _EventCollection = FirebaseFirestore.instance.collection('events');
+  final _eventCollection = FirebaseFirestore.instance.collection('events');
 
   Future<void> createEvent(Event eventData, html.Blob file) async {
     String eventPath = FirestorePath.event(eventData.id);
@@ -24,64 +24,35 @@ class EventService extends EventServiceBase{
       );
     });
   }
-  // Future<Event> createEventImage(Event createEvent, html.Blob file) async {
-  //   String createEventPath = FirestorePath.Event(createEvent.id);
-  //   await _firestoreService.storeBlob(path: createEventPath, blob: file);
-  //   _firestoreService.getDownloadURL(FirestorePath.Event(createEvent.id)).then((image){
-  //     createEvent.image = image.toString();
-  //     _firestoreService.setData(
-  //       path: createEventPath, 
-  //       data: createEvent.toFirebaseMap(), 
-  //     );
-  //   });
-
-  //   // return Event.fromMap(createEvent.toFirebaseMap(), createEvent.id);
-  // }
 
   @override
   Stream<List<Event>> getEventList(){
-    final events = FirebaseFirestore.instance.collection('events');
-
-    return events.orderBy('createdAt', descending: true).snapshots().map((event) =>
+    return _eventCollection.orderBy('createdAt', descending: true).snapshots().map((event) =>
       event.docs.map(
         (doc) {
           return Event.fromMap(doc, doc.id);
         }
-      ).toList()
+      ).toList() 
     );
   } 
   
 
-  Future<void> eventUpdate(Event eventUpdate) async{
-    var a = FirebaseFirestore.instance.collection('events');
-    a.get().then((value) {
-      
-    });
-    // Map<String, dynamic> listadoUsuarios = Map();
-
-    // final events = FirebaseFirestore.instance.collection('events');
-    // listadoUsuarios['usersList'] = eventUpdate.usersList;
-    
-    // events.doc(eventUpdate.id).set(listadoUsuarios, SetOptions(merge: true));
+  Future<void> registerInEvent(String code, String userId) async{
+    Map<String, dynamic> usersListMap = Map();
+    List listUsers = [];
+      _eventCollection.get().then((QuerySnapshot a) {
+        a.docs.forEach((element) {
+          if(element['code'] == code){
+            listUsers = element['usersList'];
+            if(!listUsers.contains(userId)){
+              listUsers.add(userId);
+              usersListMap['usersList'] = listUsers;
+              _eventCollection.doc(element.id).set(usersListMap, SetOptions(merge: true));
+            }
+          }
+        });
+      });
   }
-
-
-  // @override 
-  // Future<void> updateEvent(Event event) async {
-  //   final ref = EventRef.doc(event.id);
-  //   await ref.set(event, SetOptions(merge: true));
-  // }
-
-  // @override
-  // Future<List<Event>> getEventList() async {
-  //   var _feedlist = <Event>[];
-  //   return EventRef.get().then((value) {
-  //     value.docs.forEach((element) {
-  //       _feedlist.add(element.data());
-  //     });
-  //     return _feedlist;
-  //   });
-  // }
 
   @override
   Future<String> getImageURL(String uid) {
