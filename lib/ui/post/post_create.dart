@@ -23,6 +23,8 @@ class _PostCreateState extends State<PostCreate> {
   File? uploadedImage;
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double maxWidth = width > 700 ? 700 : width;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -35,10 +37,13 @@ class _PostCreateState extends State<PostCreate> {
         create: (_) => FeedCubit(PostService(), widget.event.id),
         child: Builder(
           builder: (context) {
-            return Container(
-              padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
-              alignment: Alignment.topCenter,
-              child: createPostBody(context, uploadedImage),
+            return Center(
+              child: Container(
+                width: maxWidth,
+                padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
+                alignment: Alignment.topCenter,
+                child: createPostBody(context, uploadedImage),
+              ),
             );
           },
         ),
