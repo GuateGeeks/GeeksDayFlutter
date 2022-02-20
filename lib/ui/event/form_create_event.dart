@@ -179,7 +179,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
             .createEvent(nameEvent.text, codigoEvent.text);
       } else {
         BlocProvider.of<EventCubit>(context)
-            .registerInEvent();
+            .registerInEvent(codigoEvent.text);
       }
     }
   }

@@ -9,7 +9,7 @@ final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
 
 class EventService extends EventServiceBase {
   final _firestoreService = FirestoreService.instance;
-  final _EventCollection = FirebaseFirestore.instance.collection('events');
+  final _eventCollection = FirebaseFirestore.instance.collection('events');
 
   Future<void> createEvent(Event eventData, html.Blob file) async {
     String eventPath = FirestorePath.event(eventData.id);
@@ -26,22 +26,32 @@ class EventService extends EventServiceBase {
   }
 
   @override
-  Stream<List<Event>> getEventList() {
-    final events = FirebaseFirestore.instance.collection('events');
+  Stream<List<Event>> getEventList(){
+    return _eventCollection.orderBy('createdAt', descending: true).snapshots().map((event) =>
+      event.docs.map(
+        (doc) {
+          return Event.fromMap(doc, doc.id);
+        }
+      ).toList() 
+    );
+  } 
+  
 
-    return events
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map((event) => event.docs.map((doc) {
-              return Event.fromMap(doc, doc.id);
-            }).toList());
-  }
-
-  Future<void> eventUpdate(Event eventUpdate) async {
-    final event =
-        FirebaseFirestore.instance.collection('events').doc(eventUpdate.id);
-    await event.set(eventUpdate.toFirebaseMap(), SetOptions(merge: true));
-    getEventList();
+  Future<void> registerInEvent(String code, String userId) async{
+    Map<String, dynamic> usersListMap = Map();
+    List listUsers = [];
+      _eventCollection.get().then((QuerySnapshot a) {
+        a.docs.forEach((element) {
+          if(element['code'] == code){
+            listUsers = element['usersList'];
+            if(!listUsers.contains(userId)){
+              listUsers.add(userId);
+              usersListMap['usersList'] = listUsers;
+              _eventCollection.doc(element.id).set(usersListMap, SetOptions(merge: true));
+            }
+          }
+        });
+      });
   }
 
   @override

@@ -46,26 +46,14 @@ class EventCubit extends Cubit<EventState> {
     emit(EventAdded());
   }
 
-  Future<void> registerInEvent() async {
-    final events = this._eventServiceBase.getEventList();
-    events.listen((event) {
-      event.forEach(
-        (element) {
-          if (element.code == "dgaFkV") {
-            element.usersList.add("Este es el agregado");
-            updateEvent(element);
-          }
-        },
-      );
-    }, onDone: () {
-      print("Se detuvo");
-    });
+  Future<void> registerInEvent(String code) async{
+    _eventServiceBase.registerInEvent(code, user.uid);
     emit(EventAdded());
   }
 
   Future<void> updateEvent(Event event) async {
     emit(AddingEvent());
-    _eventServiceBase.eventUpdate(event);
+    // _eventServiceBase.eventUpdate(event);
   }
 
   void setImage(File? image) {
