@@ -43,7 +43,7 @@ class _EmailCreateState extends State<EmailCreate> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 500 ? 500 : width;
+    double maxWidth = width > 400 ? 400 : width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -58,9 +58,9 @@ class _EmailCreateState extends State<EmailCreate> {
         child: Container(
           height: double.infinity,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+            gradient: RadialGradient(
+              center: Alignment.topCenter,
+              radius: 0.9,
               colors: [
                 Color(0xFF0E89AF),
                 Color(0xFF4B3BAB),
@@ -166,11 +166,11 @@ class _EmailCreateState extends State<EmailCreate> {
 
   Widget saveUser() {
     return Container(
-      width: 230,
-      height: 60,
+      width: 180,
+      height: 57,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          // padding: EdgeInsets.symmetric(vertical: 20),
           primary: Color(0xFF0E89AF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

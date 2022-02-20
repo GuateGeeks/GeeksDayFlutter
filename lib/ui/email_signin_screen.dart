@@ -82,6 +82,7 @@ class _EmailSignInState extends State<EmailSignIn> {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: RadialGradient(
+            center: Alignment.topCenter,
             radius: 0.9,
             colors: [
               Color(0xFF0E89AF),
@@ -103,7 +104,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(top: 90),
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
@@ -137,7 +138,7 @@ class _EmailSignInState extends State<EmailSignIn> {
               Positioned(
                 bottom: -20,
                 child: Container(
-                  width: 150,
+                  width: 130,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 20),
@@ -153,7 +154,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                     child: Text(
                       "Registrarse",
                       style: TextStyle(
-                        fontSize: 17.0,
+                        fontSize: 15.0,
                         color: Colors.white,
                         // fontFamily: 'Biryani',
                       ),
@@ -219,7 +220,8 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget loginButton() {
     return Center(
       child: Container(
-        width: 200,
+        width: 180,
+        height: 57,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 20),
