@@ -151,21 +151,19 @@ class _QuizCreateState extends State<QuizCreate> {
 
   Widget inputAnswers(BuildContext context) {
     bool isSwitchOn = true;
-    
+
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: TextFormField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           suffixIcon: Switch(
-
             value: isSwitchOn,
             onChanged: (value) {
               setState(() {
                 isSwitchOn = !isSwitchOn;
               });
             },
-          
           ),
           hintText: "Respuesta",
           border: InputBorder.none,

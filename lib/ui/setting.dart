@@ -21,7 +21,7 @@ class Settings extends StatelessWidget {
         elevation: 0,
         title: Text(
           'Configuracion',
-          style: Theme.of(context).appBarTheme.textTheme!.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
         leading: ReturnButton(),
       ),
@@ -63,14 +63,18 @@ class Settings extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text("Cuenta"),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,
+          ),
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text("Cuenta"),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
-          title: Text('Modo Oscuro'),
+          title: Text('Modo Oscuro',
+            style: Theme.of(context).textTheme.headline5,),
           trailing: changeTheme(context),
         ),
       ],
@@ -90,18 +94,21 @@ class Settings extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text("Cuenta"),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text("Cuenta"),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
           leading: Icon(Icons.logout),
           onTap: () {
             authCubit.signOut();
           },
-          title: Text("Salir"),
+          title: Text("Salir",
+            style: Theme.of(context).textTheme.headline5,),
         ),
       ],
     );

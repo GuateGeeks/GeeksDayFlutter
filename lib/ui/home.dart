@@ -10,10 +10,11 @@ class Home extends StatelessWidget {
   }
 
   const Home({Key? key, this.event}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PostList(idEvent: event!.id),
+      body: PostList(event: event!),
       bottomNavigationBar: BottomNavigation(event: event!),
     );
   }

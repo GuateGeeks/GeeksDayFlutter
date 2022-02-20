@@ -23,7 +23,7 @@ class PostService extends PostServiceBase {
   Future<void> createPost(Post post, html.Blob file) async {
     String postPath = FirestorePath.post(post.id);
     await _firestoreService.storeBlob(path: postPath, blob: file);
-    _firestoreService.getDownloadURL(FirestorePath.post(post.id)).then((value){
+    _firestoreService.getDownloadURL(FirestorePath.post(post.id)).then((value) {
       post.imageRoute = value.toString();
       _firestoreService.setData(
         path: postPath,
@@ -32,22 +32,25 @@ class PostService extends PostServiceBase {
     });
   }
 
-  Future<void> createPostText(Post post) async{
+  Future<void> createPostText(Post post) async {
     String postPath = FirestorePath.post(post.id);
+    print(postPath);
     await _firestoreService.setData(
       path: postPath,
       data: post.toFirebaseMap(),
     );
   }
-  //Delete post 
+
+  //Delete post
   @override
   Future<void> deletePost(String uid) async {
     await postRef.doc(uid).delete();
     getPostList();
   }
+
   //Delete post comments
   @override
-  Future<void> deleteComment(Post post, String commentid) async{  
+  Future<void> deleteComment(Post post, String commentid) async {
     post.commentList.removeWhere((element) => element.id == commentid);
     updatePost(post);
   }
@@ -57,11 +60,10 @@ class PostService extends PostServiceBase {
     ref.update({
       'quiz.isanswered': true,
     });
-
   }
 
   @override
-  Future<void> selectedCounter(Post post, int index, int counter) async{
+  Future<void> selectedCounter(Post post, int index, int counter) async {
     int countertoFirebase = counter + 1;
     var editar = post.quiz!.questions[0].answers;
     final ref = postRef.doc(post.id);
@@ -78,7 +80,6 @@ class PostService extends PostServiceBase {
 
   @override
   Future<String> getImageURL(String uid) {
-
     return _firestoreService.getDownloadURL(FirestorePath.post(uid));
   }
 
@@ -93,13 +94,12 @@ class PostService extends PostServiceBase {
     });
   }
 
-  Stream<List<Post>> listadoPost(){
+  Stream<List<Post>> listadoPost() {
     final mensajes = FirebaseFirestore.instance.collection("posts");
 
     return mensajes.orderBy('createdAt', descending: true).snapshots().map(
-      (querySnap) => querySnap.docs
-        .map((doc) => Post.fromMap1(doc, doc.id))
-        .toList(),
-    );
+          (querySnap) =>
+              querySnap.docs.map((doc) => Post.fromMap1(doc, doc.id)).toList(),
+        );
   }
 }

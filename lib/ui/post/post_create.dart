@@ -2,22 +2,24 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
-import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
+import 'package:geeksday/models/event.dart';
+
+import '../home.dart';
 
 class PostCreate extends StatefulWidget {
-  final String idEvent;
-
-  PostCreate({Key? key, required this.idEvent}) : super(key: key);
+  Event event;
+  PostCreate({Key? key, required this.event}) : super(key: key);
 
   @override
   _PostCreateState createState() => _PostCreateState();
 }
 
 class _PostCreateState extends State<PostCreate> {
-  late Post post;
+  final commentController = TextEditingController();
   File? uploadedImage;
   @override
   Widget build(BuildContext context) {
@@ -25,38 +27,55 @@ class _PostCreateState extends State<PostCreate> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Image.asset(
-          'assets/guategeeks-logo-clear.png',
+          "assets/guateGeeksLogo.png",
           width: 150,
-          fit: BoxFit.cover,
         ),
       ),
       body: BlocProvider(
-        create: (_) => FeedCubit(PostService(), widget.idEvent),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
-          alignment: Alignment.topCenter,
-          child: createPostBody(uploadedImage),
+        create: (_) => FeedCubit(PostService(), widget.event.id),
+        child: Builder(
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
+              alignment: Alignment.topCenter,
+              child: createPostBody(context, uploadedImage),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget createPostBody(uploadedImage) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          image(uploadedImage),
-          description(),
-          SizedBox(
-            height: 30,
-          ),
-          savePost(),
-        ],
+  Widget createPostBody(context, uploadedImage) {
+    return BlocListener<FeedCubit, FeedState>(
+      listener: (context, state) {
+        if (state is PostAdded) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return Home(event: widget.event);
+              },
+            ),
+          );
+          return;
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            image(context, uploadedImage),
+            description(context),
+            SizedBox(
+              height: 30,
+            ),
+            savePost(context),
+          ],
+        ),
       ),
     );
   }
 
-  Widget image(uploadedImage) {
+  Widget image(context, uploadedImage) {
     return Container(
       height: 260,
       width: 240,
@@ -80,33 +99,29 @@ class _PostCreateState extends State<PostCreate> {
                       color: Color(0xFFD3D3D3),
                     ),
                   )
-                : PreviewImage(uploadedImage: uploadedImage),
+                : Container(
+                    width: 230,
+                    height: 230,
+                    child: PreviewImage(uploadedImage: uploadedImage),
+                  ),
           ),
-          Container(
-            child: Positioned(
-              right: 5,
-              bottom: 20,
-              child: GestureDetector(
-                child: Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: Colors.white12,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    border: Border.all(
-                      color: Color(0xFFD3D3D3),
-                    ),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      uploadImage(context);
-                    },
-                    child: Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                      color: Color(0xFF0E89AF),
-                    ),
-                  ),
+          Positioned(
+            right: 5,
+            bottom: 10,
+            child: GestureDetector(
+              onTap: () => uploadImage(context),
+              child: Container(
+                width: 55,
+                height: 55,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  border: Border.all(color: Color(0xFFD3D3D3)),
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  size: 40,
+                  color: Color(0xFF0E89AF),
                 ),
               ),
             ),
@@ -116,44 +131,64 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 
-  Widget description() {
+  Widget description(context) {
     return PhysicalModel(
       borderRadius: BorderRadius.circular(15),
       color: Colors.white,
       elevation: 5.0,
       shadowColor: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          maxLines: 6,
-          minLines: 6,
-          keyboardType: TextInputType.multiline,
-          decoration: InputDecoration(
-            focusedBorder: null,
-            border: InputBorder.none,
-            hintText: "Descripción",
+      child: TextFormField(
+        controller: commentController,
+        maxLines: 6,
+        minLines: 6,
+        decoration: InputDecoration(
+          hintText: "Descripcion",
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
           ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
+          fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+          filled: true,
         ),
       ),
     );
   }
 
-  Widget savePost() {
-    return Center(
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-            Color(0xFF0E89AF),
+  Widget savePost(context) {
+    String userId = BlocProvider.of<AuthCubit>(context).getUserId();
+    return BlocBuilder<FeedCubit, FeedState>(
+      builder: (context, state) {
+        return Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 50),
+              primary: Color(0xFF0E89AF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              print(commentController.text);
+              BlocProvider.of<FeedCubit>(context)
+                  .createPost(commentController.text, uploadedImage, userId);
+            },
+            child: state is PostLoading
+                ? CircularProgressIndicator()
+                : Text(
+                    "Compartir",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
           ),
-          padding: MaterialStateProperty.all(
-              EdgeInsets.symmetric(vertical: 24, horizontal: 50)),
-        ),
-        onPressed: () {},
-        child: Text(
-          "Compartir",
-          style: TextStyle(fontSize: 20.0),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -177,51 +212,6 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

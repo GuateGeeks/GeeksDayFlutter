@@ -43,56 +43,60 @@ class _EmailCreateState extends State<EmailCreate> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 500 ? 500 : width;
+    double maxWidth = width > 400 ? 400 : width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
           "assets/guateGeeksLogo.png",
           width: 200,
-          height: 40,
-          fit: BoxFit.cover,
+          height: 37,
         ),
         leading: ReturnButton(),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0E89AF),
-              Color(0xFF4B3BAB),
-            ],
+      body: Center(
+        child: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment.topCenter,
+              radius: 0.9,
+              colors: [
+                Color(0xFF0E89AF),
+                Color(0xFF4B3BAB),
+              ],
+            ),
           ),
-        ),
-        child: BlocBuilder<AuthCubit, AuthState>(
-          builder: (_, state) {
-            return cardLogin(context, maxWidth, state);
-          },
+          child: BlocBuilder<AuthCubit, AuthState>(
+            builder: (_, state) {
+              return cardLogin(context, maxWidth, state);
+            },
+          ),
         ),
       ),
     );
   }
 
   Widget cardLogin(context, maxWidth, state) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: maxWidth,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 0.79)),
-              child: SingleChildScrollView(
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 90),
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                width: maxWidth,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.79)),
                 child: Column(
                   children: [
                     Text(
-                      "Iniciar Sesión",
+                      "Registrarse",
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
@@ -100,11 +104,27 @@ class _EmailCreateState extends State<EmailCreate> {
                     ),
                     formLogin(state),
                     SizedBox(height: 15),
+                    SizedBox(
+                      height: 20.0,
+                    ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: -20,
+                child: Container(
+                  width: 150,
+                  child: saveUser(),
+                ),
+              ),
+              Positioned(
+                top: -135,
+                child: Container(
+                  child: Image.asset('assets/ojos.png'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -113,30 +133,32 @@ class _EmailCreateState extends State<EmailCreate> {
   Widget formLogin(AuthState state) {
     return Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
         children: [
-          if (state is AuthSigningIn)
-            Center(child: CircularProgressIndicator()),
-          if (state is AuthError)
-            Text(
-              state.message,
-              style: TextStyle(color: Colors.red, fontSize: 24),
-            ),
-          //Input email
-          SizedBox(height: 8),
-          EmailForm(emailAndUsernameValidator, _emailController),
-          SizedBox(height: 8),
-          //Show input Username
-          UsernameForm(emailAndUsernameValidator, _usernameController),
-          SizedBox(height: 8),
-          //Show input Password
-          PasswordForm(passwordValidator, _passwordController),
-          SizedBox(height: 8),
-          //Show input Repear Password
-          RepeatPasswordForm(passwordValidator, _repeatPasswordController),
-          SizedBox(height: 22),
-          saveUser(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (state is AuthSigningIn)
+                Center(child: CircularProgressIndicator()),
+              if (state is AuthError)
+                Text(
+                  state.message,
+                  style: TextStyle(color: Colors.red, fontSize: 24),
+                ),
+              //Input email
+              SizedBox(height: 8),
+              EmailForm(emailAndUsernameValidator, _emailController),
+              SizedBox(height: 8),
+              //Show input Username
+              UsernameForm(emailAndUsernameValidator, _usernameController),
+              SizedBox(height: 8),
+              //Show input Password
+              PasswordForm(passwordValidator, _passwordController),
+              SizedBox(height: 8),
+              //Show input Repear Password
+              RepeatPasswordForm(passwordValidator, _repeatPasswordController),
+            ],
+          ),
         ],
       ),
     );
@@ -144,38 +166,37 @@ class _EmailCreateState extends State<EmailCreate> {
 
   Widget saveUser() {
     return Container(
+      width: 180,
+      height: 57,
       child: ElevatedButton(
-          style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all(const Size(120, 40)),
-            side: MaterialStateProperty.all(
-              const BorderSide(
-                color: Color.fromRGBO(255, 255, 255, 0.79),
-                width: 1,
-              ),
-            ),
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromRGBO(75, 59, 171, 1)),
+        style: ElevatedButton.styleFrom(
+          // padding: EdgeInsets.symmetric(vertical: 20),
+          primary: Color(0xFF0E89AF),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: () {
-            var random = List.generate(12, (_) => Random().nextInt(100));
-            randomAvatar = random.join();
-            if (_formKey.currentState?.validate() == true) {
-              context.read<AuthCubit>().createUserWithEmailAndPassword(
-                    _emailController.text,
-                    _usernameController.text,
-                    _passwordController.text,
-                    randomAvatar,
-                  );
-            }
-          },
-          child: Text(
-            "Registrarse",
-            style: TextStyle(
-              fontSize: 17.0,
-              color: Colors.white,
-              // fontFamily: 'Biryani',
-            ),
-          )),
+        ),
+        onPressed: () {
+          var random = List.generate(12, (_) => Random().nextInt(100));
+          randomAvatar = random.join();
+          if (_formKey.currentState?.validate() == true) {
+            context.read<AuthCubit>().createUserWithEmailAndPassword(
+                  _emailController.text,
+                  _usernameController.text,
+                  _passwordController.text,
+                  randomAvatar,
+                );
+          }
+        },
+        child: Text(
+          "Registrarme",
+          style: TextStyle(
+            fontSize: 17.0,
+            color: Colors.white,
+            // fontFamily: 'Biryani',
+          ),
+        ),
+      ),
     );
   }
 }
