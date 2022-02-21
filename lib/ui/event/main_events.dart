@@ -56,7 +56,7 @@ class MainEvent extends StatelessWidget {
             BlocProvider.of<EventCubit>(context).getEventList();
             return Center(
               child: Container(
-                margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: 6),
                 width: maxWidth,
                 child: eventListBody(context),
               ),
@@ -116,7 +116,7 @@ class MainEvent extends StatelessWidget {
             return Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                Container(
+                Container(  
                   margin:
                       EdgeInsets.only(top: 10, bottom: 37, left: 13, right: 13),
                   child: GestureDetector(
