@@ -69,6 +69,8 @@ class MainEvent extends StatelessWidget {
 
   Widget floatingButton(BuildContext context) {
     return FloatingActionButton(
+      
+      backgroundColor: Color(0xFF0E89AF),
       onPressed: () {
         showModalBottomSheet(
           backgroundColor: Colors.transparent,
@@ -79,7 +81,10 @@ class MainEvent extends StatelessWidget {
         );
       },
       tooltip: "Agregar Nuevo Evento",
-      child: Icon(Icons.add),
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
     );
   }
 
