@@ -140,10 +140,10 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
            Container(
-             margin: EdgeInsets.only(top: 4.5),
+             margin: EdgeInsets.only(top: 2.5),
              child: SvgPicture.asset(
                 "assets/icons/events.svg",
-                height: 28.5,
+                height: 30,
                 width: 30,
               ),
            ),    

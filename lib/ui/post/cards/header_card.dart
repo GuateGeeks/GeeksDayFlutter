@@ -18,12 +18,13 @@ class HeaderCard extends StatelessWidget {
         BlocProvider.of<AuthCubit>(context).getUserByPost(post.idUser);
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
-    return SizedBox(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListTile(
+      contentPadding: EdgeInsets.all(0),
+      title: Row(  
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 46,
@@ -34,7 +35,7 @@ class HeaderCard extends StatelessWidget {
                 width: 10,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 2.5),
+                padding: EdgeInsets.only(top: 3),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -54,9 +55,49 @@ class HeaderCard extends StatelessWidget {
               ),
             ],
           ),
-          PostOptions(post: post),
         ],
       ),
+      trailing: PostOptions(post: post),
     );
+    // return SizedBox(
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     children: [
+    //       Row(
+    //         children: [
+    //           Container(
+    //             width: 46,
+    //             height: 46,
+    //             child: SvgPicture.string(multiavatar(userData.image)),
+    //           ),
+    //           SizedBox(
+    //             width: 10,
+    //           ),
+    //           Padding(
+    //             padding: EdgeInsets.only(top: 2.5),
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: [
+    //                 //we show the user's name
+    //                 Text(
+    //                   userData.name,
+    //                   style: Theme.of(context).textTheme.headline1,
+    //                   textAlign: TextAlign.right,
+    //                 ),
+    //                 Text(
+    //                   getDatePost,
+    //                   style: Theme.of(context).textTheme.headline2,
+    //                   textAlign: TextAlign.right,
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       PostOptions(post: post),
+    //     ],
+    //   ),
+    // );
   }
 }
