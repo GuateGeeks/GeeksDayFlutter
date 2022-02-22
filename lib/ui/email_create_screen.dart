@@ -96,7 +96,7 @@ class _EmailCreateState extends State<EmailCreate> {
                       style: Theme.of(context).textTheme.overline,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 11,
                     ),
                     formLogin(state),
                     SizedBox(height: 15),
