@@ -51,14 +51,14 @@ class MainEvent extends StatelessWidget {
           ],
         ),
         floatingActionButton: floatingButton(context),
-        body: Builder(  
-          builder: (context){
+        body: Builder(
+          builder: (context) {
             BlocProvider.of<EventCubit>(context).getEventList();
             return Center(
               child: Container(
-                 margin: EdgeInsets.only(top: 5),
-                 width: maxWidth,
-                 child: eventListBody(context),
+                margin: EdgeInsets.only(top: 6),
+                width: maxWidth,
+                child: eventListBody(context),
               ),
             );
           },
@@ -69,21 +69,28 @@ class MainEvent extends StatelessWidget {
 
   Widget floatingButton(BuildContext context) {
     return FloatingActionButton(
+      
+      backgroundColor: Color(0xFF0E89AF),
       onPressed: () {
         showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
-          builder: (_) {return FormCreateEvent();},
+          builder: (_) {
+            return FormCreateEvent();
+          },
         );
       },
       tooltip: "Agregar Nuevo Evento",
-      child: Icon(Icons.add),
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
     );
   }
 
-  Widget eventListBody(BuildContext context){
-    return BlocBuilder<EventCubit, EventState>(builder: (context, state){
-      if(!(state is EventLoaded)){
+  Widget eventListBody(BuildContext context) {
+    return BlocBuilder<EventCubit, EventState>(builder: (context, state) {
+      if (!(state is EventLoaded)) {
         return Center(
           child: CircularProgressIndicator(),
         );
@@ -92,55 +99,102 @@ class MainEvent extends StatelessWidget {
       return RefreshIndicator(
         onRefresh: () => BlocProvider.of<EventCubit>(context).getEventList(),
         child: events.isEmpty
-              ? listEventEmpty(context)
-              : listEvent(events, context),
+            ? listEventEmpty(context)
+            : listEvent(events, context),
       );
-
-
-
     });
   }
-    Widget listEventEmpty(BuildContext context) {
+
+  Widget listEventEmpty(BuildContext context) {
     return Center(
       child: Text("Aún no hay eventos",
           style: Theme.of(context).textTheme.headline4),
     );
   }
 
-    Widget listEvent(List<Event> event, BuildContext context) {
+  Widget listEvent(List<Event> event, BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
         child: ListView(
           children: event.map((event) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Home(event: event);
+            return Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Container(  
+                  margin:
+                      EdgeInsets.only(top: 10, bottom: 37, left: 13, right: 13),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Home(event: event);
+                          },
+                        ),
+                      );
                     },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(22),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black38,
+                            spreadRadius: 0,
+                            blurRadius: 7,
+                            offset: Offset(0, 7), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Container(
+                          child: Image.network(
+                            event.image,
+                            height: 262,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              child: Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Image.network(
-                  event.image,
-                  width: double.infinity,
-                  height: 350,
-                  fit: BoxFit.cover,
                 ),
-              ),
+                textImage(context, event),
+              ],
             );
           }).toList(),
         ),
       ),
     );
   }
+
+  Widget textImage(BuildContext context, event) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return Home(event: event);
+            },
+          ),
+        );
+      },
+      child: Container(
+        color: Color.fromRGBO(255, 255, 255, 0.5),
+        height: 43,
+        width: 133,
+        child: Center(
+          child: Text(
+            'Click Aquí',
+            style: TextStyle(
+                color: Color(0xFF4A4A4A),
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Biryani'),
+          ),
+        ),
+      ),
+    );
+  }
 }
-
-
-
-
