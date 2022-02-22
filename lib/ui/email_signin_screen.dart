@@ -71,10 +71,15 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          "assets/guateGeeksLogo.png",
+        title: SizedBox(
           width: 200,
           height: 37,
+          child: rive.RiveAnimation.network(
+            '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+            artboard: 'full_logo',
+            animations: const ['single_blink_loop'],
+            onInit: _onRiveInit,
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -168,7 +173,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                     width: maxWidth,
                     height: 160,
                     child: rive.RiveAnimation.network(
-                      'https://guategeeks.github.io/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      artboard: 'eye_lid_v2',
                       animations: const ['idle'],
                       onInit: _onRiveInit,
                     )),
