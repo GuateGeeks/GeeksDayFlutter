@@ -81,12 +81,13 @@ class MyThemes {
       ),
       //Texto del modal Crear Post/Quiz No Seleccionado
       headline5: TextStyle(
-        color: Colors.grey,
-        fontSize: 15.0,
+        color: Color(0xFFD6D6D6),
+        fontSize: 12.0,
+        fontFamily: 'Abel'
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
-        fontSize: 15.0,
+        fontSize: 16.0,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
