@@ -82,63 +82,57 @@ class PostComment extends StatelessWidget {
     AuthUser userData =
         BlocProvider.of<AuthCubit>(context).getUserByPost(userId);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      margin: EdgeInsets.only(top: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 45,
-                    height: 45,
-                    //verify that the user has an avatar as a profile picture and display it
-                    child: SvgPicture.string(multiavatar(userData.image)),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: ListTile(
+        contentPadding: EdgeInsets.all(0),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 46,
+                  height: 46,
+                  child: SvgPicture.string(multiavatar(userData.image)),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 3),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //we show the user's name
+                      Text(
+                        userData.name,
+                        style: Theme.of(context).textTheme.headline1,
+                        textAlign: TextAlign.right,
+                      ),
+                      Text(
+                        state.getDatePost(post.createdAt),
+                        style: Theme.of(context).textTheme.headline2,
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          userData.name,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          //get the date the post was made
-                          state.getDatePost(post.createdAt),
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  likePost(context);
-                  isLiked = !isLiked;
-                },
-                child: isLiked
-                    ? SvgPicture.asset('assets/icons/is_liked.svg')
-                    : SvgPicture.asset('assets/icons/like.svg')
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 7.0,
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 60),
-            child: Text(
-              post.text,
-              style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
+        trailing: Container(
+          margin: EdgeInsets.only(right: 5),
+          child: GestureDetector(
+              onTap: () {
+                likePost(context);
+                isLiked = !isLiked;
+              },
+              child: isLiked
+                  ? SvgPicture.asset('assets/icons/is_liked.svg')
+                  : SvgPicture.asset('assets/icons/like.svg')),
+        ),
       ),
     );
   }
@@ -149,55 +143,61 @@ class PostComment extends StatelessWidget {
     return post.commentList.map((comment) {
       AuthUser userData =
           BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      child: SvgPicture.string(
-                        multiavatar(userData.image),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 46,
+                        child: SvgPicture.string(multiavatar(userData.image)),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            userData.name,
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                          Text(
-                            //function to show the date the comment was made
-                            state.getDatePost(comment.createdAt),
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                ),
-                //button to delete comment
-                deleteCommentButton(
-                  comment.id,
-                  comment.idUser,
-                  context,
-                ),
-              ],
+                      Padding(
+                        padding: EdgeInsets.only(top: 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //we show the user's name
+                            Text(
+                              userData.name,
+                              style: Theme.of(context).textTheme.headline1,
+                              textAlign: TextAlign.right,
+                            ),
+                            Text(
+                              state.getDatePost(post.createdAt),
+                              style: Theme.of(context).textTheme.headline2,
+                              textAlign: TextAlign.right,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: deleteCommentButton(
+                comment.id,
+                comment.idUser,
+                context,
+              ),
             ),
             SizedBox(
               height: 6.0,
             ),
             Container(
-              padding: EdgeInsets.only(left: 62),
+              margin: EdgeInsets.only(left: 58),
               child: Text(
                 comment.text,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -214,21 +214,28 @@ class PostComment extends StatelessWidget {
     //validate if the user is an administrator or the user has made a comment to show the delete comment button
     var user = BlocProvider.of<AuthCubit>(context).getUser();
     if (user.uid == commentUserId || user.isadmin == true) {
-      return PopupMenuButton(
-        icon: Icon(
-          Icons.more_vert_rounded,
-          color: Color(0xFF0E89AF),
-          size: 30,
+      return Theme(
+        data: Theme.of(context).copyWith(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
         ),
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: "Eliminar",
-            child: Text("Eliminar"),
+        child: PopupMenuButton(
+          icon: Icon(
+            Icons.more_vert_rounded,
+            color: Color(0xFF0E89AF),
+            size: 30,
           ),
-        ],
-        onSelected: (_) {
-          BlocProvider.of<PostCubit>(context).commentDeletion(commentId);
-        },
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: "Eliminar",
+              child: Text("Eliminar"),
+            ),
+          ],
+          onSelected: (_) {
+            BlocProvider.of<PostCubit>(context).commentDeletion(commentId);
+          },
+        ),
       );
     }
     return Container();
@@ -242,15 +249,14 @@ class PostComment extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: Container(
-     
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: TextStyle(  
+                  style: TextStyle(
                     fontSize: 13,
                   ),
                   textInputAction: TextInputAction.send,
@@ -259,30 +265,36 @@ class PostComment extends StatelessWidget {
                   controller: _controller,
                   decoration: InputDecoration(
                     hintText: "Agregar un comentario",
-                    hintStyle: TextStyle(  
+                    hintStyle: TextStyle(
                       fontSize: 13,
                     ),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
                     filled: true,
                     fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                   
                   ),
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                //get the information of who is making the comment
-                String idUser = BlocProvider.of<AuthCubit>(context).getUserId();
-                BlocProvider.of<PostCubit>(context)
-                    .makeComment(idUser, _controller.text);
-              },
-              icon: Icon(
-                Icons.send,
-                color: Color(0xFF0E89AF),  
+            Theme(
+              data: Theme.of(context).copyWith(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  //get the information of who is making the comment
+                  String idUser =
+                      BlocProvider.of<AuthCubit>(context).getUserId();
+                  BlocProvider.of<PostCubit>(context)
+                      .makeComment(idUser, _controller.text);
+                },
+                icon: Icon(
+                  Icons.send,
+                  color: Color(0xFF0E89AF),
+                ),
               ),
             ),
           ],
