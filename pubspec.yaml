@@ -90,7 +90,11 @@ flutter:
     - assets/icons/like.svg
     - assets/icons/is_liked.svg
     - assets/icons/comment.svg
-
+    - assets/icons/home.svg
+    - assets/icons/search.svg
+    - assets/icons/plus.svg
+    - assets/icons/events.svg
+    - assets/icons/user.svg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
