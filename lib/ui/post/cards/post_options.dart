@@ -33,7 +33,7 @@ class _PostOptionsState extends State<PostOptions> {
         hoverColor: Colors.transparent,
       ),
       child: PopupMenuButton<String>(
-    
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         icon:  Icon(
             Icons.more_vert_rounded,
             color: Color(0xFF0E89AF),

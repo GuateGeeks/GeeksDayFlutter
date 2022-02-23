@@ -4,7 +4,6 @@ import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/ui/post/cards/body_cards.dart';
-import 'package:geeksday/ui/post/cards/button_widget.dart';
 import 'package:geeksday/ui/post/cards/header_card.dart';
 
 class PostCard extends StatelessWidget {
@@ -21,7 +20,7 @@ class PostCard extends StatelessWidget {
 
   Widget posts() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
       child: Column(
         children: [
           HeaderCard(post: post),

@@ -22,7 +22,8 @@ class BodyCard extends StatelessWidget {
   }
 
   Widget bodyBodyCard(BuildContext context) {
-    return  Column(
+    return Container(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           post.imageRoute == "" ? Container() : showImage(context),
@@ -30,7 +31,7 @@ class BodyCard extends StatelessWidget {
           postDescription(context),
           ProgressBar(post: post),
         ],
-      
+      ),
     );
   }
 
@@ -46,6 +47,7 @@ class BodyCard extends StatelessWidget {
         );
       },
       child: Container(
+        margin: EdgeInsets.only(bottom: 10, top: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           boxShadow: [
@@ -74,6 +76,7 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
       child: Text(
         post.text,
@@ -108,7 +111,7 @@ class _ProgressBarState extends State<ProgressBar> {
       bool isAnswered = state.isAnswered(userId);
       int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
       return Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         width: double.infinity,
         child: Column(
           children: state.getAnswers().map((answer) {

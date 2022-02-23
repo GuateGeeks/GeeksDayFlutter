@@ -19,13 +19,12 @@ class HeaderCard extends StatelessWidget {
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-      title: Row(  
+      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        
         children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 46,
@@ -59,51 +58,10 @@ class HeaderCard extends StatelessWidget {
         ],
       ),
       trailing: SizedBox(
-        height: 90,
-        width: 30,
-        
+        height: 80,
+        width: 20,
         child: PostOptions(post: post),
       ),
     );
-    // return SizedBox(
-    //   child: Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: [
-    //       Row(
-    //         children: [
-    //           Container(
-    //             width: 46,
-    //             height: 46,
-    //             child: SvgPicture.string(multiavatar(userData.image)),
-    //           ),
-    //           SizedBox(
-    //             width: 10,
-    //           ),
-    //           Padding(
-    //             padding: EdgeInsets.only(top: 2.5),
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 //we show the user's name
-    //                 Text(
-    //                   userData.name,
-    //                   style: Theme.of(context).textTheme.headline1,
-    //                   textAlign: TextAlign.right,
-    //                 ),
-    //                 Text(
-    //                   getDatePost,
-    //                   style: Theme.of(context).textTheme.headline2,
-    //                   textAlign: TextAlign.right,
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //       PostOptions(post: post),
-    //     ],
-    //   ),
-    // );
   }
 }

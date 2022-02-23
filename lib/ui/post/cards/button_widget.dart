@@ -15,15 +15,18 @@ class ButtonWidget extends StatelessWidget {
     PostCubit cubit = BlocProvider.of<PostCubit>(context);
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
-        return  Row(
-            children: [
-              //Like button
-              likeButton(context,  cubit),
-              SizedBox(width: 5.0),
-              //Comment button
-              commentButton(context, state.post, cubit),
-            ],
-          
+        return  Container(
+          margin: EdgeInsets.only(top: 5),
+          child: Row(
+              children: [
+                //Like button
+                likeButton(context,  cubit),
+                SizedBox(width: 5.0),
+                //Comment button
+                commentButton(context, state.post, cubit),
+              ],
+            
+          ),
         );
       },
     );
