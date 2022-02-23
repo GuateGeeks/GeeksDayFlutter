@@ -187,9 +187,10 @@ class PostComment extends StatelessWidget {
                               textAlign: TextAlign.right,
                             ),
                             Text(
-                              state.getDatePost(post.createdAt),
-                              style: Theme.of(context).textTheme.headline2,
+                              //function to show the date the comment was made
+                              state.getDatePost(comment.createdAt),
                               textAlign: TextAlign.right,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ],
                         ),
@@ -208,56 +209,11 @@ class PostComment extends StatelessWidget {
                 ),
               ),
             ),
-            // ListTile(
-            //   contentPadding: EdgeInsets.all(0),
-            //   title: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Row(
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Container(
-            //             width: 46,
-            //             height: 46,
-            //             child: SvgPicture.string(multiavatar(userData.image)),
-            //           ),
-            //           SizedBox(
-            //             width: 10,
-            //           ),
-            //           Padding(
-            //             padding: EdgeInsets.only(top: 3),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 //we show the user's name
-            //                 Text(
-            //                   userData.name,
-            //                   style: Theme.of(context).textTheme.headline1,
-            //                   textAlign: TextAlign.right,
-            //                 ),
-            //                 Text(
-            //                   state.getDatePost(post.createdAt),
-            //                   style: Theme.of(context).textTheme.headline2,
-            //                   textAlign: TextAlign.right,
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            //   trailing: deleteCommentButton(
-            //     comment.id,
-            //     comment.idUser,
-            //     context,
-            //   ),
-            // ),
             SizedBox(
               height: 6.0,
             ),
             Container(
-              margin: EdgeInsets.only(left: 58),
+              margin: EdgeInsets.fromLTRB(58, 0, 3, 0),
               child: Text(
                 comment.text,
                 style: Theme.of(context).textTheme.bodyText1,

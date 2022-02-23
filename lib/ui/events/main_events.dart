@@ -32,23 +32,31 @@ class MainEvents extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Settings();
-                  },
+            Theme(
+              data: Theme.of(context).copyWith(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.only(right: 15),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Settings();
+                      },
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                  size: 30,
                 ),
-              );
-            },
-            icon: Icon(
-              Icons.menu,
-              color: Theme.of(context).appBarTheme.iconTheme!.color,
-              size: 30,
+              ),
             ),
-          ),
-        ],
+          ],
         ),
         floatingActionButton: floatingButton(context, showEvents),
         body: Builder(builder: (context) {
