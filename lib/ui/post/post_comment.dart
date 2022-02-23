@@ -84,7 +84,7 @@ class PostComment extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: ListTile(
-        contentPadding: EdgeInsets.all(0),
+        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -100,7 +100,7 @@ class PostComment extends StatelessWidget {
                   width: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 3),
+                  padding: EdgeInsets.only(top: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -122,16 +122,27 @@ class PostComment extends StatelessWidget {
             ),
           ],
         ),
-        trailing: Container(
-          margin: EdgeInsets.only(right: 5),
-          child: GestureDetector(
-              onTap: () {
-                likePost(context);
-                isLiked = !isLiked;
-              },
+        trailing: GestureDetector(
+          onTap: () {
+            likePost(context);
+            isLiked = !isLiked;
+          },
+          child: SizedBox(
+            height: 80,
+            width: 28,
+            child: Container(
+              margin: EdgeInsets.only(right: 6),
               child: isLiked
-                  ? SvgPicture.asset('assets/icons/is_liked.svg')
-                  : SvgPicture.asset('assets/icons/like.svg')),
+                  ? SvgPicture.asset(
+                      'assets/icons/is_liked.svg',
+                      alignment: Alignment.centerLeft,
+                    )
+                  : SvgPicture.asset(
+                      'assets/icons/like.svg',
+                      width: 25,
+                    ),
+            ),
+          ),
         ),
       ),
     );
@@ -144,12 +155,12 @@ class PostComment extends StatelessWidget {
       AuthUser userData =
           BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              contentPadding: EdgeInsets.all(0),
+              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               title: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -165,7 +176,7 @@ class PostComment extends StatelessWidget {
                         width: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 3),
+                        padding: EdgeInsets.only(top: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -187,12 +198,61 @@ class PostComment extends StatelessWidget {
                   ),
                 ],
               ),
-              trailing: deleteCommentButton(
-                comment.id,
-                comment.idUser,
-                context,
+              trailing: SizedBox(
+                height: 80,
+                width: 29,
+                child: deleteCommentButton(
+                  comment.id,
+                  comment.idUser,
+                  context,
+                ),
               ),
             ),
+            // ListTile(
+            //   contentPadding: EdgeInsets.all(0),
+            //   title: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Row(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: [
+            //           Container(
+            //             width: 46,
+            //             height: 46,
+            //             child: SvgPicture.string(multiavatar(userData.image)),
+            //           ),
+            //           SizedBox(
+            //             width: 10,
+            //           ),
+            //           Padding(
+            //             padding: EdgeInsets.only(top: 3),
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 //we show the user's name
+            //                 Text(
+            //                   userData.name,
+            //                   style: Theme.of(context).textTheme.headline1,
+            //                   textAlign: TextAlign.right,
+            //                 ),
+            //                 Text(
+            //                   state.getDatePost(post.createdAt),
+            //                   style: Theme.of(context).textTheme.headline2,
+            //                   textAlign: TextAlign.right,
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            //   trailing: deleteCommentButton(
+            //     comment.id,
+            //     comment.idUser,
+            //     context,
+            //   ),
+            // ),
             SizedBox(
               height: 6.0,
             ),
@@ -221,6 +281,7 @@ class PostComment extends StatelessWidget {
           hoverColor: Colors.transparent,
         ),
         child: PopupMenuButton(
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           icon: Icon(
             Icons.more_vert_rounded,
             color: Color(0xFF0E89AF),
