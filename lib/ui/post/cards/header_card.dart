@@ -59,7 +59,7 @@ class HeaderCard extends StatelessWidget {
       ),
       trailing: SizedBox(
         height: 80,
-        width: 20,
+        width: 21,
         child: PostOptions(post: post),
       ),
     );

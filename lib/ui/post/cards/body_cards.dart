@@ -36,6 +36,8 @@ class BodyCard extends StatelessWidget {
   }
 
   Widget showImage(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = width > 500 ? 350 : 265;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -65,7 +67,7 @@ class BodyCard extends StatelessWidget {
           child: Container(
             child: Image.network(
               post.imageRoute!,
-              height: 265,
+              height: height,
               fit: BoxFit.cover,
             ),
           ),
