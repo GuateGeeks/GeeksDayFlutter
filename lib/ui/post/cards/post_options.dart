@@ -33,15 +33,13 @@ class _PostOptionsState extends State<PostOptions> {
         hoverColor: Colors.transparent,
       ),
       child: PopupMenuButton<String>(
-        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2.5),
-        icon: Align(
-          alignment: Alignment(6, -20),
-          child: Icon(
+    
+        icon:  Icon(
             Icons.more_vert_rounded,
             color: Color(0xFF0E89AF),
             size: 35,
             textDirection: TextDirection.ltr,
-          ),
+          
         ),
         tooltip: "Ver Opciones",
         itemBuilder: (BuildContext context) {

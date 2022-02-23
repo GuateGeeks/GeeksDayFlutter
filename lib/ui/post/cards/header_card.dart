@@ -19,7 +19,7 @@ class HeaderCard extends StatelessWidget {
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 1),
+      contentPadding: EdgeInsets.symmetric(horizontal: 0),
       title: Row(  
         crossAxisAlignment: CrossAxisAlignment.center,
         
@@ -58,7 +58,12 @@ class HeaderCard extends StatelessWidget {
           ),
         ],
       ),
-      trailing: PostOptions(post: post),
+      trailing: SizedBox(
+        height: 90,
+        width: 30,
+        
+        child: PostOptions(post: post),
+      ),
     );
     // return SizedBox(
     //   child: Row(
