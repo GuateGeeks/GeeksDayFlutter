@@ -131,6 +131,7 @@ class MyThemes {
       ),
     )),
     primaryColor: Colors.black,
+    
   );
 
   static final lightTheme = ThemeData(

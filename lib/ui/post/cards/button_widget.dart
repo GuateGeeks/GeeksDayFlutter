@@ -11,28 +11,26 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+
     PostCubit cubit = BlocProvider.of<PostCubit>(context);
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, 19, 0, 0),
-          child: Row(
+        return  Row(
             children: [
               //Like button
-              likeButton(context, width, cubit),
+              likeButton(context,  cubit),
               SizedBox(width: 5.0),
               //Comment button
-              commentButton(context, width, state.post, cubit),
+              commentButton(context, state.post, cubit),
             ],
-          ),
+          
         );
       },
     );
   }
 
   //function to add a like to the post
-  Widget likeButton(BuildContext context, width, cubit) {
+  Widget likeButton(BuildContext context, cubit) {
     String userId = post.idUser;
     bool isLiked = BlocProvider.of<PostCubit>(context).likedByMe(userId);
     return Row(
@@ -59,7 +57,7 @@ class ButtonWidget extends StatelessWidget {
 
   //   //function to add comments to the post
   Widget commentButton(
-      BuildContext context, width, Post post, PostCubit cubit) {
+      BuildContext context, Post post, PostCubit cubit) {
     return Row(
       children: [
         GestureDetector(

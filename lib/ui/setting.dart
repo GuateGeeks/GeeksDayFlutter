@@ -111,6 +111,7 @@ class Settings extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, notifier, child) {
         return Switch(
+          activeColor: Color(0xFF0E89AF),
           onChanged: (val) {
             notifier.toogleTheme();
           },
