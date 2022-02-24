@@ -5,6 +5,8 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/post/single_image_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -38,13 +40,7 @@ class BodyCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 15),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return SingleImageView(image: post.imageRoute!);
-              },
-            ),
-          );
+          locator<NavigationService>().navigateTo('/evento/'+post.idEvent+'/publicacion/'+post.id+'/imagen');
         },
         child: Container(
           decoration: BoxDecoration(

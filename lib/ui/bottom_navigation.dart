@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/locator.dart';
 
@@ -119,11 +122,12 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Widget profilePage(BuildContext context) {
+    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser();
     return Column(
       children: [
         IconButton(
           onPressed: () {
-            locator<NavigationService>().navigateTo('/evento/'+idEvent+'/perfil');
+            locator<NavigationService>().navigateTo('/perfil/'+userData.uid);
           },
           icon: Icon(
             Icons.person,

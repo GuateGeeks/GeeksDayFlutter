@@ -1,5 +1,6 @@
 
 import 'package:fluro/fluro.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/ui/router/router_handlers.dart';
 
 class Flurorouter{
@@ -17,11 +18,11 @@ class Flurorouter{
     //Posts page route
     router.define('/evento/:id', handler: postsHandler, transitionType: TransitionType.none); 
     //Single image page route
-    router.define('/foto/:id', handler: singleImage, transitionType: TransitionType.none);
+    router.define('/evento/:id/publicacion/:idPost/imagen', handler: singleImage, transitionType: TransitionType.none);
     //User profile page route
-    router.define('/evento/:id/perfil', handler: userProfileHandler, transitionType: TransitionType.none);
+    router.define('perfil/:idUser', handler: userProfileHandler, transitionType: TransitionType.none);
     //Comments page route
-    router.define('/evento/:id/comentarios', handler: commentsHandler, transitionType: TransitionType.none);
+    router.define('/evento/:id/publicacion/:idPost/comentarios', handler: commentsHandler, transitionType: TransitionType.none);
   }
 
 

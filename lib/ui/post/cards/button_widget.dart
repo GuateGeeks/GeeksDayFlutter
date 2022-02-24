@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -64,13 +66,7 @@ class ButtonWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return PostComment(post);
-                },
-              ),
-            );
+            locator<NavigationService>().navigateTo('/evento/'+post.idEvent+'/publicacion/'+post.id+'/comentarios');
           },
           child: SvgPicture.asset('assets/icons/comment.svg'),
         ),
