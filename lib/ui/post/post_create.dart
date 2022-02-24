@@ -19,7 +19,7 @@ class PostCreate extends StatefulWidget {
 }
 
 class _PostCreateState extends State<PostCreate> {
-  final commentController = TextEditingController();
+  final descriptionController = TextEditingController();
   File? uploadedImage;
   @override
   Widget build(BuildContext context) {
@@ -143,7 +143,7 @@ class _PostCreateState extends State<PostCreate> {
       elevation: 5.0,
       shadowColor: Colors.black,
       child: TextFormField(
-        controller: commentController,
+        controller: descriptionController,
         maxLines: 6,
         minLines: 6,
         decoration: InputDecoration(
@@ -178,9 +178,9 @@ class _PostCreateState extends State<PostCreate> {
               ),
             ),
             onPressed: () {
-              print(commentController.text);
-              BlocProvider.of<FeedCubit>(context)
-                  .createPost(commentController.text, uploadedImage, userId);
+              print(descriptionController.text);
+              BlocProvider.of<FeedCubit>(context).createPost(
+                  descriptionController.text, uploadedImage, userId);
             },
             child: state is PostLoading
                 ? CircularProgressIndicator()
@@ -217,164 +217,6 @@ class _PostCreateState extends State<PostCreate> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-// import 'dart:html';
-// import 'package:geeksday/bloc/auth_cubit.dart';
-// import 'package:geeksday/bloc/posts/post_cubit.dart';
-// import 'package:geeksday/models/auth_user.dart';
-// import 'package:geeksday/models/post.dart';
-// import 'package:geeksday/models/quiz.dart';
-// import 'package:geeksday/services/implementation/post_service.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:image_whisperer/image_whisperer.dart';
-// import 'package:flutter/foundation.dart';
-
-// class PostCreate extends StatefulWidget {
-//   final String idEvent;
-//   PostCreate({Key? key, required this.idEvent}) : super(key: key);
-
-//   @override
-//   _PostCreateState createState() => _PostCreateState();
-// }
-
-// class _PostCreateState extends State<PostCreate> {
-//   final commentController = TextEditingController();
-//   File? uploadedImage;
-
-//   Map<int, String> answersMap = {};
-
-//   Widget _content(BuildContext context){
-//     //responsive modal
-//     double width = MediaQuery.of(context).size.width;
-//     double maxWidth = width > 700 ? 700 : width;
-//     return Center(
-//       child: Container(  
-//         width: maxWidth,
-//         height: 900,
-//         padding: EdgeInsets.fromLTRB(35, 20, 35, 5),
-//         decoration: BoxDecoration(
-//           color: Theme.of(context).primaryColor,
-//           borderRadius: BorderRadius.only(
-//             topLeft: Radius.circular(20.0),
-//             topRight: Radius.circular(20.0),
-//           ),
-//         ),
-//         child: Column(  
-//           children: [
-//             ClipRRect(
-//               borderRadius: BorderRadius.circular(20),
-//               child: Container(
-//                 alignment: Alignment.topCenter,
-//                 width: 50,
-//                 height: 5,
-//                 color: Colors.white,
-//               ),
-//             ),
-//             SizedBox(
-//               height: 20,
-//             ),
-//             Text("Crear", 
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontSize: 26
-//               ),
-//             ),
-//             SizedBox(
-//               height: 45,
-//             ),
-//             createPost(),
-//             Container(
-//               margin: EdgeInsets.symmetric(vertical: 20),
-//               child: Divider(
-//                 height: 2,
-//                 color: Colors.white,      
-//               ),
-//             ),
-//             createQuiz(),
-//           ],
-//         )
-//       ),
-//     );
-//   }
-
-//   Widget createPost(){
-//     return GestureDetector(
-//       onTap: (){},
-//       child: Row(  
-//         children: [
-//           Icon(
-//             Icons.post_add_outlined,
-//             color: Colors.white,
-//           ),
-//           SizedBox(width: 5),
-//           Text(  
-//             'Post',
-//             style: Theme.of(context).textTheme.headline2
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget createQuiz(){
-//     return GestureDetector(
-//       onTap: (){},
-//       child: Row(  
-//         children: [
-//           Icon(
-//             Icons.post_add_outlined,
-//             color: Colors.white,
-//           ),
-//           Text(  
-//             'Quiz',
-//             style: Theme.of(context).textTheme.headline2
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   uploadImage(BuildContext context) async {
-//     var uploadInput = FileUploadInputElement()..accept = 'image/*';
-//     uploadInput.click();
-//     uploadInput.onChange.listen(
-//       (event) {
-//         final File file = uploadInput.files!.first;
-//         final reader = FileReader();
-//         reader.readAsDataUrl(file);
-//         reader.onLoadEnd.listen(
-//           (event) {
-//             setState(() {
-//               uploadedImage = file;
-//             });
-//             BlocProvider.of<PostCubit>(context).setImage(file);
-//           },
-//         );
-//       },
-//     );
-//   }
-
-//   Widget previewImages(context) {
-//     if (uploadedImage != null) {
-//       BlobImage blobImage =
-//           new BlobImage(uploadedImage, name: uploadedImage!.name);
-//       return Container(
-//         child: Image.network(blobImage.url, width: 50, height: 250),
-//       );
-//     }
-//     return Container();
-//   }
 
 //   List<Widget> inputAnswers(BuildContext context) {
     

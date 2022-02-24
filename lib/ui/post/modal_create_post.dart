@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/post/post_create.dart';
+import 'package:geeksday/ui/post/quiz_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
   Event event;
@@ -82,7 +83,15 @@ class ModalCreatePost extends StatelessWidget {
 
   Widget createQuiz(context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return QuizCreate(event: event);
+            },
+          ),
+        );
+      },
       child: Row(
         children: [
           SvgPicture.asset('assets/icons/post.svg'),

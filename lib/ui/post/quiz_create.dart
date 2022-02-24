@@ -3,14 +3,13 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
-import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/event.dart';
+import 'package:geeksday/models/quiz.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 
 class QuizCreate extends StatefulWidget {
   Event event;
-
   QuizCreate({Key? key, required this.event}) : super(key: key);
 
   @override
@@ -18,37 +17,43 @@ class QuizCreate extends StatefulWidget {
 }
 
 class _QuizCreateState extends State<QuizCreate> {
+  List<Answer> answers = [
+    Answer("Respuesta", false, 0),
+    Answer("Respuesta", false, 0),
+  ];
+  final descriptionController = TextEditingController();
   File? uploadedImage;
-  Map<int, String> answersMap = {};
-  bool status = false;
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 800 ? 800 : width;
+    double maxWidth = width > 700 ? 700 : width;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         title: Image.asset(
-          'assets/guateGeeksLogo.png',
+          "assets/guateGeeksLogo.png",
           width: 150,
-          fit: BoxFit.cover,
         ),
       ),
       body: BlocProvider(
         create: (_) => FeedCubit(PostService(), widget.event.id),
-        child: Center(
-          child: Container(
-            width: maxWidth,
-            padding: EdgeInsets.fromLTRB(20, 25, 20, 5),
-            child: createQuizBody(uploadedImage),
-          ),
+        child: Builder(
+          builder: (context) {
+            return Center(
+              child: Container(
+                width: maxWidth,
+                padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
+                alignment: Alignment.topCenter,
+                child: createQuizBody(context, uploadedImage),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget createQuizBody(uploadedImage) {
+  Widget createQuizBody(context, uploadedImage) {
     return Column(
       children: [
         descriptionAndImage(uploadedImage),
@@ -63,9 +68,9 @@ class _QuizCreateState extends State<QuizCreate> {
         SizedBox(
           height: 80,
         ),
-        inputAnswers(context),
-        inputAnswers(context),
-        inputAnswers(context),
+        // inputAnswers(context),
+        ...listAnswers(),
+        addAnswer(context),
       ],
     );
   }
@@ -149,39 +154,9 @@ class _QuizCreateState extends State<QuizCreate> {
     );
   }
 
-  Widget inputAnswers(BuildContext context) {
-    bool isSwitchOn = true;
+ 
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          suffixIcon: Switch(
-            value: isSwitchOn,
-            onChanged: (value) {
-              setState(() {
-                isSwitchOn = !isSwitchOn;
-              });
-            },
-          ),
-          hintText: "Respuesta",
-          border: InputBorder.none,
-          filled: false,
-        ),
-      ),
-    );
-  }
 
-  void saveAnswers(BuildContext context, int index, String value) {
-    var postCubit = BlocProvider.of<PostCubit>(context);
-    answersMap[index] = value;
-    answersMap.forEach((key, value) {
-      setState(() {
-        postCubit.updateQuizAnswer(key, value);
-      });
-    });
-  }
 
   uploadImage(BuildContext context) async {
     var uploadInput = FileUploadInputElement()..accept = 'image/*';
@@ -196,10 +171,62 @@ class _QuizCreateState extends State<QuizCreate> {
             setState(() {
               uploadedImage = file;
             });
-            BlocProvider.of<FeedCubit>(context).setImage(file);
           },
         );
       },
     );
+  }
+
+  List<Widget> listAnswers(){
+    bool isSwitchOn =true;
+    return answers.map((e) {
+      
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          suffixIcon: Switch(
+            value: isSwitchOn,
+            onChanged: (value) {
+              setState(() {
+                isSwitchOn = !isSwitchOn;
+              });
+            },
+          ),
+          hintText: e.text,
+          border: InputBorder.none,
+          filled: false,
+        ),
+      ),
+    );
+    }).toList();
+  }
+
+
+
+  //Add TextFromField dynamically
+  Widget addAnswer(BuildContext context) {
+    return TextButton(
+      onPressed: () => {
+        saveAnswers(),
+        setState(() {
+          answers.add(Answer("Respuesta", false, 0));
+        })
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(Icons.add),
+          Text("Agregar Respuesta"),
+        ],
+      ),
+    );
+  }
+
+    void saveAnswers() {
+      listAnswers().forEach((element) {
+          print(element);
+      });
   }
 }

@@ -6,6 +6,7 @@ import 'package:geeksday/services/post_service.dart';
 
 class FeedCubit extends Cubit<FeedState> {
   final PostServiceBase _postService;
+  
   final String idEvent;
   File? _pickedImage;
 
@@ -71,6 +72,24 @@ class FeedCubit extends Cubit<FeedState> {
   String countComments(Post post) {
     return post.commentCount.toString();
   }
+
+
+  /*----------------------------------Quiz---------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
