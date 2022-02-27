@@ -16,7 +16,7 @@ jobs:
       shell: bash
       env:
         FIREBASE_CONFIG : ${{secrets.FIREBASE_CONFIG}}
-    - run: flutter build web --web-renderer=html --no-sound-null-safety
+    - run: flutter build web --web-renderer=canvaskit --no-sound-null-safety --base-href "/GeeksDayFlutter/"
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
