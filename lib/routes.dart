@@ -2,7 +2,7 @@ import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
 import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
-import 'package:geeksday/ui/setting.dart';
+
 import 'package:flutter/material.dart';
 import 'package:geeksday/ui/splash_screen.dart';
 import 'package:geeksday/ui/user_profile.dart';
@@ -19,7 +19,6 @@ class Routes {
   static const createAccount = '/createAccount';
   static const signInEmail = '/signInEmail';
 
-
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case splash:
@@ -28,14 +27,8 @@ class Routes {
         return _buildRoute(EmailCreate.create);
       case signInEmail:
         return _buildRoute(EmailSignIn.create);
-      case home:
-        return _buildRoute(Home.create);
-      case mainEvent: 
+      case mainEvent:
         return _buildRoute(MainEvent.create);
-      case userProfile:
-        return _buildRoute(UserProfile.create);
-      case settings:
-        return _buildRoute(Settings.create);
       default:
         throw Exception('Route does not exists');
     }

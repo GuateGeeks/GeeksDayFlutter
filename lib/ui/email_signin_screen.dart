@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class EmailSignIn extends StatefulWidget {
   static Widget create(BuildContext context) => EmailSignIn();
@@ -153,8 +155,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                       ),
                     ),
                     onPressed: () {
-                      authCubit.reset();
-                      Navigator.pushNamed(context, Routes.createAccount);
+                      locator<NavigationService>().navigateTo('/registrarse');
                     },
                     child: Text(
                       "Registrarse",

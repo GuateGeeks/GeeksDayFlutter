@@ -8,13 +8,13 @@ import 'package:geeksday/ui/post/post_card.dart';
 import 'package:geeksday/ui/setting.dart';
 
 class PostList extends StatelessWidget {
-  Event event;
-  PostList({Key? key, required this.event}) : super(key: key);
+  final String idEvent;
+  PostList({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FeedCubit(PostService(), event.id),
+      create: (_) => FeedCubit(PostService(), this.idEvent),
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -57,7 +57,6 @@ class PostList extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
-
       if (!(state is PostLoaded)) {
         return Center(child: CircularProgressIndicator());
       }

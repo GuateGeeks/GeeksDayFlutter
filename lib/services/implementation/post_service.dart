@@ -102,4 +102,19 @@ class PostService extends PostServiceBase {
               querySnap.docs.map((doc) => Post.fromMap1(doc, doc.id)).toList(),
         );
   }
+
+  Future<Post> getPostById(String idPost) async{
+    var postCollection = _postCollection.doc(idPost);
+    return await postCollection.get().then((value) {
+        return Post.fromMap1(value, idPost);
+    });
+
+  }
+
+
+
+
+
+
+
 }

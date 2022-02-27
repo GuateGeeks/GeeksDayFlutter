@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PostList(event: event!),
+      body: PostList(idEvent: event!.id),
       bottomNavigationBar: BottomNavigation(event: event!),
     );
   }

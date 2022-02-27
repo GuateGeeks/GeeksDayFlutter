@@ -1,22 +1,20 @@
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/provider/theme_provider.dart';
-import 'package:geeksday/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
+import 'package:geeksday/ui/router/router.dart';
 import 'package:provider/provider.dart';
-
-final _navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   static Widget create() {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSignedOut) {
-          _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.signInEmail, (r) => false);
+          locator<NavigationService>().navigateTo('/login');
         } else if (state is AuthSignedIn) {
-          _navigatorKey.currentState
-              ?.pushNamedAndRemoveUntil(Routes.mainEvent, (r) => false);
+          locator<NavigationService>().navigateTo('/eventos');
         }
       },
       child: MyApp(),
@@ -34,8 +32,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme:
                 notifier.darkTheme ? MyThemes.darkTheme : MyThemes.lightTheme,
-            navigatorKey: _navigatorKey,
-            onGenerateRoute: Routes.routes,
+            initialRoute: '/login',
+            onGenerateRoute: Flurorouter.router.generator,
+            navigatorKey: locator<NavigationService>().navigatorKey,
           );
         },
       ),

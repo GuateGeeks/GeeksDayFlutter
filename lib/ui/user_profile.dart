@@ -9,12 +9,9 @@ import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatelessWidget {
-  final Event? event;
-  static Widget create(BuildContext context) {
-    return UserProfile();
-  }
+  final String idUser;
 
-  UserProfile({Key? key, this.event}) : super(key: key);
+  UserProfile({Key? key, required this.idUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,6 @@ class UserProfile extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigation(event: event),
       body: BodyUserProfile(),
     );
   }

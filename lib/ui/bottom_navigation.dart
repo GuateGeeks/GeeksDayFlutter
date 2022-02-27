@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/event.dart';
-import 'package:geeksday/ui/event/main_events.dart';
-import 'package:geeksday/ui/home.dart';
-import 'package:geeksday/ui/post/modal_create_post.dart';
-import 'package:geeksday/ui/user_profile.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class BottomNavigation extends StatelessWidget {
   final Event? event;
@@ -35,13 +36,7 @@ class BottomNavigation extends StatelessWidget {
   Widget homePage(context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return Home(event: event);
-            },
-          ),
-        );
+        locator<NavigationService>().navigateTo('/evento/' + event!.id);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -99,9 +94,9 @@ class BottomNavigation extends StatelessWidget {
           backgroundColor: Colors.transparent,
           context: context,
           builder: (context) => Container(
-            height: MediaQuery.of(context).size.height / 2.5,
-            child: ModalCreatePost(event: event!),
-          ),
+              //height: MediaQuery.of(context).size.height / 2.5,
+              //child: ModalCreatePost(event: event!),
+              ),
         );
       },
       child: Column(
@@ -130,13 +125,7 @@ class BottomNavigation extends StatelessWidget {
   Widget eventPage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return MainEvent();
-            },
-          ),
-        );
+        locator<NavigationService>().navigateTo('/eventos');
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -164,13 +153,8 @@ class BottomNavigation extends StatelessWidget {
   Widget profilePage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return UserProfile(event: event);
-            },
-          ),
-        );
+        AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser();
+        locator<NavigationService>().navigateTo('/perfil/' + userData.uid);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

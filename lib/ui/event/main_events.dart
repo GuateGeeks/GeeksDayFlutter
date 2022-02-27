@@ -5,8 +5,10 @@ import 'package:geeksday/bloc/event/event_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/implementation/event_service.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/event/form_create_event.dart';
 import 'package:geeksday/ui/home.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/setting.dart';
 
 class MainEvent extends StatelessWidget {
@@ -133,6 +135,8 @@ class MainEvent extends StatelessWidget {
                       EdgeInsets.only(top: 10, bottom: 37, left: 13, right: 13),
                   child: GestureDetector(
                     onTap: () {
+                      locator<NavigationService>()
+                          .navigateTo('/evento/' + event.id);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
