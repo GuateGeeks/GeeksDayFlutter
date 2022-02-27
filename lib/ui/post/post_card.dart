@@ -18,48 +18,17 @@ class PostCard extends StatelessWidget {
       child: posts(),
     );
   }
-  Widget posts(){
-    return Column(
+
+  Widget posts() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Column(
         children: [
           HeaderCard(post: post),
           BodyCard(post: post),
           ButtonWidget(post: post),
         ],
-      );
+      ),
+    );
   }
 }
-
-// class PostCard extends StatelessWidget {
-//   //
-//   final Post post;
-
-//   PostCard({
-//     Key? key,
-//     required this.post,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (_) => PostCubit(PostService(), this.post),
-//       child: builder(context),
-//     );
-//   }
-
-//   Widget builder(BuildContext context) {
-//     return Center(
-//       child: Container(
-//         child: Card(
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-//           child: Column(
-//             children: [
-//               HeaderCard(post: post),
-//               BodyCard(post: post),
-//               ButtonWidget(post: post),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

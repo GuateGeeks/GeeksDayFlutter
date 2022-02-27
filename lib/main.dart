@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  final authCubit = AuthCubit(AuthService()); 
+  final authCubit = AuthCubit(AuthService());
 
   runApp(
     BlocProvider(
@@ -18,3 +18,7 @@ void main() async {
     ),
   );
 }
+
+
+
+

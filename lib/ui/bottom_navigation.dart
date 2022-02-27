@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/models/events.dart';
-import 'package:geeksday/ui/events/main_events.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geeksday/models/event.dart';
+import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/post/modal_create_post.dart';
 import 'package:geeksday/ui/user_profile.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   BottomNavigation({this.event});
 
   @override
@@ -33,11 +34,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget homePage(context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -46,10 +46,14 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.home,
-            size: 30,
+          child: SvgPicture.asset(
+            "assets/icons/home.svg",
+            height: 30,
+            width: 30,
           ),
+          // child: Image.asset(
+          //   'assets/icons/home.png'
+          // ),
         ),
         Text(
           "Inicio",
@@ -61,12 +65,21 @@ class BottomNavigation extends StatelessWidget {
 
   Widget searchModal(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.search,
-            size: 30,
+        Container(
+          margin: EdgeInsets.only(top: 2),
+          child: GestureDetector(
+            onTap: () {},
+            child: SvgPicture.asset(
+              "assets/icons/search.svg",
+              height: 26,
+              width: 26,
+            ),
+            //    child: Image.asset(
+            //   'assets/icons/search.png',
+            //   height: 30,
+            // ),
           ),
         ),
         Text(
@@ -79,25 +92,30 @@ class BottomNavigation extends StatelessWidget {
 
   Widget postModal(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) => Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.5,
                 // width: 800,
-                child: ModalCreatePost(idEvent: event!.id),
+                child: ModalCreatePost(event: event!),
                 // child: PostCreate(idEvent: event!.id),
               ),
             );
           },
-          icon: Icon(
-            Icons.control_point,
-            size: 30,
+          child: SvgPicture.asset(
+            "assets/icons/plus.svg",
+            height: 34,
+            width: 34,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/plus.png'
+          // ),
         ),
         Text(
           "Post",
@@ -109,21 +127,26 @@ class BottomNavigation extends StatelessWidget {
 
   Widget eventPage(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return MainEvents();
+                  return MainEvent();
                 },
               ),
             );
           },
-          icon: Icon(
-            Icons.event_available_rounded,
-            size: 30,
+          child: SvgPicture.asset(
+            "assets/icons/events.svg",
+            height: 30,
+            width: 30,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/events.png'
+          // ),
         ),
         Text(
           "Eventos",
@@ -135,9 +158,10 @@ class BottomNavigation extends StatelessWidget {
 
   Widget profilePage(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
@@ -146,13 +170,19 @@ class BottomNavigation extends StatelessWidget {
               ),
             );
           },
-          icon: Icon(
-            Icons.person,
-            size: 30,
+          child: SvgPicture.asset(
+            "assets/icons/user.svg",
+            height: 28,
+            width: 28,
           ),
+          //  child: Image.asset(
+          //   'assets/icons/user.png',
+          //   height: 30,
+          //   fit: BoxFit.cover,
+          // ),
         ),
         Text(
-          "Perfil",
+          "user",
           style: Theme.of(context).textTheme.headline5,
         ),
       ],

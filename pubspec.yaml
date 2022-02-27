@@ -1,7 +1,7 @@
 name: geeksday
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
+# The following line prEvent the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -68,6 +68,7 @@ dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_svg: ^0.22.0
+  rive: ^0.8.1
 
 
 dev_dependencies:
@@ -89,6 +90,14 @@ flutter:
     - assets/
     - assets/icons/like.svg
     - assets/icons/is_liked.svg
+    - assets/icons/comment.svg
+    - assets/icons/home.svg
+    - assets/icons/search.svg
+    - assets/icons/plus.svg
+    - assets/icons/events.svg
+    - assets/icons/user.svg
+    - assets/icons/post.svg
+    - assets/rive/guategeeks_logo.riv
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -106,16 +115,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Biryani
-  #     fonts: 
-  #       - assets/fonts/Biryani-Black.ttf
-  #       - assets/fonts/Biryani-Bold.ttf
-  #       - assets/fonts/Biryani-ExtraBold.ttf
-  #       - assets/fonts/Biryani-ExtraLight.ttf
-  #       - assets/fonts/Biryani-Light.ttf
-  #       - assets/fonts/Biryani-Regular.ttf
-  #       - assets/fonts/Biryani-SemiBold.ttf
+
   fonts:
     - family: Biryani
       fonts:
@@ -129,12 +129,3 @@ flutter:
     - family: Abel
       fonts:
         - asset: assets/fonts/abel/Abel-Regular.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

@@ -65,14 +65,15 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 12.0,
-        fontWeight: FontWeight.w200,
-        color: Color(0xFF797979),
+        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontSize: 15.0,
+        fontWeight: FontWeight.w100,
+        color: Colors.white,
       ),
       //Post Description
       bodyText1: TextStyle(
         fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
-        fontSize: 13.0,
+        fontSize: 12.0,
         fontWeight: FontWeight.w100,
         letterSpacing: 0.7,
         color: Color(0xFFD6D6D6),
@@ -85,7 +86,7 @@ class MyThemes {
       //Texto opciones pantalla de configuracion
       headline5: TextStyle(
         color: Color(0xFFD6D6D6),
-        fontSize: 15.0,
+        fontSize: 12.0,
       ),
       //Texto Menu y comentarios
       headline6: TextStyle(
@@ -113,7 +114,8 @@ class MyThemes {
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Colors.black,
+      hintStyle: TextStyle(color: Colors.white),
+      fillColor: Color.fromRGBO(74, 74, 74, 0.25)
     ),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
@@ -123,15 +125,7 @@ class MyThemes {
     ),
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
-    //Style textbutton singup
-    textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-      primary: Colors.white,
-      textStyle: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 17,
-      ),
-    )),
+
     primaryColor: Colors.black,
   );
 
@@ -208,7 +202,10 @@ class MyThemes {
       ),
       //text style Sing up and login
       overline: TextStyle(
-          fontSize: 30.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontSize: 30.0,
+        color: Color(0xFF4A4A4A),
+        fontWeight: FontWeight.w600,
+      ),
     ),
 
     //BottomNavbar Style

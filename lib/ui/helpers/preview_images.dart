@@ -1,4 +1,3 @@
-
 //file to show a preview of the images before uploading them to the database
 import 'dart:html';
 
@@ -15,7 +14,12 @@ class PreviewImage extends StatelessWidget {
       BlobImage blobImage =
           new BlobImage(uploadedImage, name: uploadedImage!.name);
       return Container(
-        child: Image.network(blobImage.url, width: 50, height: 250),
+        child: Image.network(
+          blobImage.url,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        ),
       );
     }
     return Container();

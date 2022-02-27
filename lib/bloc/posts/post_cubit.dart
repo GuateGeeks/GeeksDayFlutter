@@ -21,19 +21,6 @@ class PostCubit extends Cubit<PostState> {
     emit(state);
   }
 
-  //create post or quiz
-  Future<void> createPost(String text) async { 
-    Post newPost = state.post;
-    newPost.text = text;
-    //We check if the publication contains an image and we save it in the database, otherwise only the description of the publication is saved
-    if(_pickedImage == null){
-      _postService.createPostText(newPost);
-      emit(CreatePost(newPost));
-    }else{
-      _postService.createPost(newPost, _pickedImage!);
-    }
-  }
-
   //get the post
   Post? getPost() {
     return state.post;
@@ -78,7 +65,7 @@ class PostCubit extends Cubit<PostState> {
   // Future<String> getImageURL(String uid) {
   //   return _postService.getImageURL(uid);
   // }
-  String? getImageUrl(String uid){
+  String? getImageUrl(String uid) {
     return state.post.imageRoute;
   }
 
@@ -103,16 +90,18 @@ class PostCubit extends Cubit<PostState> {
   bool likedByMe(String uid) {
     return state.post.likeList.contains(uid);
   }
+
   //function to show the options button in posts, this button only appears in posts made by the user
   bool isOwnedBy(String uid) {
     return state.post.idUser == uid;
   }
+
   //get the id of the post or quiz
   String idPost() {
     return state.post.id;
   }
 
-  String idEvent(){
+  String idEvent() {
     return state.post.idEvent;
   }
 
@@ -121,6 +110,7 @@ class PostCubit extends Cubit<PostState> {
     _postService.deletePost(uid);
     emit(PostUpdatedState(state.post));
   }
+
   //this function shows in the modal the option to create the post
   void unsetQuiz() {
     var post = state.post.copyWith(text: "Create a Post");
@@ -136,6 +126,7 @@ class PostCubit extends Cubit<PostState> {
     post.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
     emit(PostUpdatedState(post));
   }
+
   //this function shows in the modal the option to  create a quiz
   void setQuiz(Quiz? quiz) {
     var post = state.post.copyWith(text: "Create a Quiz", quiz: quiz);
@@ -154,15 +145,14 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
-  String countComments(){
+  String countComments() {
     return "${state.post.commentCount}";
   }
 
-  void commentDeletion(String commentid){
+  void commentDeletion(String commentid) {
     _postService.deleteComment(state.post, commentid);
     emit(PostUpdatedState(state.post));
   }
-
 
   bool isQuiz() {
     return state.post.quiz != null && state.post.quiz!.questions.isNotEmpty;
@@ -171,37 +161,36 @@ class PostCubit extends Cubit<PostState> {
   int indexOfAnswer(Answer answer) {
     return state.post.quiz!.questions[0].answers.indexOf(answer);
   }
- 
+
   void updateQuizAnswer(int index, String text) {
     state.post.quiz!.questions[0].answers[index].text = text;
   }
 
   //function to check if the quiz was answered, if so we return true otherwise false
-  bool isAnswered(String userId){
+  bool isAnswered(String userId) {
     bool userResponded = false;
     var usersResponded = state.post.quiz!.usersresponded;
-    usersResponded.forEach((user) { 
-      if(user == userId){
+    usersResponded.forEach((user) {
+      if (user == userId) {
         userResponded = true;
       }
     });
     return userResponded;
   }
 
-  void usersResponded(String userId){
+  void usersResponded(String userId) {
     state.post.quiz!.usersresponded.add(userId);
     _postService.updatePost(state.post);
     emit(PostUpdatedState(state.post));
   }
 
-  int porcentage(int total, selectedCounter){
-    if(total > 0){
+  int porcentage(int total, selectedCounter) {
+    if (total > 0) {
       return ((selectedCounter.toDouble() / total) * 100).round();
-    }else{
+    } else {
       return 0;
     }
   }
-
 
   void toggleAnswerIsCorrect(Answer answer) {
     int index = indexOfAnswer(answer);
@@ -211,20 +200,18 @@ class PostCubit extends Cubit<PostState> {
     emit(PostUpdatedState(state.post));
   }
 
-  void selectCounter(Answer answer){
+  void selectCounter(Answer answer) {
     int index = indexOfAnswer(answer);
-    state.post.quiz!.questions[0].answers[index].selectedCounter = 
-      state.post.quiz!.questions[0].answers[index].selectedCounter + 1;
+    state.post.quiz!.questions[0].answers[index].selectedCounter =
+        state.post.quiz!.questions[0].answers[index].selectedCounter + 1;
     _postService.updatePost(state.post);
     emit(PostUpdatedState(state.post));
   }
 
-
-
-  int totalresponses(PostCubit state){
+  int totalresponses(PostCubit state) {
     var answers = state.getAnswers();
     int total = 0;
-    answers.forEach((element) { 
+    answers.forEach((element) {
       total += element.selectedCounter;
     });
     return total;
@@ -233,24 +220,20 @@ class PostCubit extends Cubit<PostState> {
   Future<void> getPostList() async {
     List<Post> _listPost = [];
     final posts = _postService.listadoPost();
-    posts.listen((post) {
-      post.forEach((element) {
-        if(element.idEvent == idEvent()){
-          _listPost.add(element);
-        }
-      emit(PostLoaded(post: element, listPost: _listPost));
-      });
-    _listPost = [];
-    }, onDone: (){},
+    posts.listen(
+      (post) {
+        post.forEach((element) {
+          if (element.idEvent == idEvent()) {
+            _listPost.add(element);
+          }
+          emit(PostLoaded(post: element, listPost: _listPost));
+        });
+        _listPost = [];
+      },
+      onDone: () {},
     );
   }
-  
-
-
 }
-
-
-
 
 abstract class PostState extends Equatable {
   final Post post;
@@ -263,7 +246,7 @@ class PostInitialState extends PostState {
   PostInitialState(Post post) : super(post);
 }
 
-class PostLoaded extends PostState{
+class PostLoaded extends PostState {
   final List<Post> listPost;
   PostLoaded({required Post post, required this.listPost}) : super(post);
 }
@@ -275,7 +258,7 @@ class PostUpdatedState extends PostState {
   List<Object?> get props => [updatedAt];
 }
 
-class CreatePost extends PostState{
+class CreatePost extends PostState {
   CreatePost(Post post) : super(post);
 }
 
@@ -283,4 +266,3 @@ class QuizPostState extends PostUpdatedState {
   Quiz? quiz;
   QuizPostState(Post post) : super(post);
 }
-
