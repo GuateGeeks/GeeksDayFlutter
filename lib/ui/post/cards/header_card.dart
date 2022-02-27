@@ -18,12 +18,13 @@ class HeaderCard extends StatelessWidget {
         BlocProvider.of<AuthCubit>(context).getUserByPost(post.idUser);
     String getDatePost =
         BlocProvider.of<PostCubit>(context).getDatePost(post.createdAt);
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 15, 15, 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 46,
@@ -33,24 +34,33 @@ class HeaderCard extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //we show the user's name
-                  Text(
-                    userData.name,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    getDatePost,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.only(top: 3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //we show the user's name
+                    Text(
+                      userData.name,
+                      style: Theme.of(context).textTheme.headline1,
+                      textAlign: TextAlign.right,
+                    ),
+                    Text(
+                      getDatePost,
+                      style: Theme.of(context).textTheme.headline2,
+                      textAlign: TextAlign.right,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          PostOptions(post: post),
         ],
+      ),
+      trailing: SizedBox(
+        height: 80,
+        width: 21,
+        child: PostOptions(post: post),
       ),
     );
   }

@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class EmailSignIn extends StatefulWidget {
   static Widget create(BuildContext context) => EmailSignIn();
@@ -71,10 +73,15 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          "assets/guateGeeksLogo.png",
+        title: SizedBox(
           width: 200,
           height: 37,
+          child: rive.RiveAnimation.network(
+            '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+            artboard: 'full_logo',
+            animations: const ['single_blink_loop'],
+            onInit: _onRiveInit,
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -82,6 +89,7 @@ class _EmailSignInState extends State<EmailSignIn> {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: RadialGradient(
+            center: Alignment.topCenter,
             radius: 0.9,
             colors: [
               Color(0xFF0E89AF),
@@ -103,7 +111,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(top: 90),
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
@@ -137,7 +145,7 @@ class _EmailSignInState extends State<EmailSignIn> {
               Positioned(
                 bottom: -20,
                 child: Container(
-                  width: 150,
+                  width: 130,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 20),
@@ -147,13 +155,12 @@ class _EmailSignInState extends State<EmailSignIn> {
                       ),
                     ),
                     onPressed: () {
-                      authCubit.reset();
-                      Navigator.pushNamed(context, Routes.createAccount);
+                      locator<NavigationService>().navigateTo('/registrarse');
                     },
                     child: Text(
                       "Registrarse",
                       style: TextStyle(
-                        fontSize: 17.0,
+                        fontSize: 15.0,
                         color: Colors.white,
                         // fontFamily: 'Biryani',
                       ),
@@ -167,7 +174,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                     width: maxWidth,
                     height: 160,
                     child: rive.RiveAnimation.network(
-                      'https://guategeeks.github.io/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      artboard: 'eye_lid_v2',
                       animations: const ['idle'],
                       onInit: _onRiveInit,
                     )),
@@ -219,7 +227,8 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget loginButton() {
     return Center(
       child: Container(
-        width: 200,
+        width: 180,
+        height: 57,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 20),

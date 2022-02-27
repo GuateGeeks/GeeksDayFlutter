@@ -5,6 +5,9 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/implementation/quiz_records_service.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
+import 'package:geeksday/ui/post/cards/button_widget.dart';
 import 'package:geeksday/ui/post/single_image_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -26,6 +29,7 @@ class BodyCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           post.imageRoute == "" ? Container() : showImage(context),
+          ButtonWidget(post: post),
           postDescription(context),
           ProgressBar(post: post),
         ],
@@ -34,39 +38,34 @@ class BodyCard extends StatelessWidget {
   }
 
   Widget showImage(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 15),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return SingleImageView(image: post.imageRoute!);
-              },
+    double width = MediaQuery.of(context).size.width;
+    double height = width > 500 ? 350 : 265;
+    return GestureDetector(
+      onTap: () {
+        locator<NavigationService>().navigateTo(
+            '/evento/' + post.idEvent + '/publicacion/' + post.id + '/imagen');
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10, top: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(22),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black38,
+              spreadRadius: 0,
+              blurRadius: 7,
+              offset: Offset(0, 7), // changes position of shadow
             ),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black38,
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 7), // changes position of shadow
-              ),
-            ],
-          ),
-          width: double.infinity,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(22.0),
-            child: Container(
-              child: Image.network(
-                post.imageRoute!,
-                height: 400,
-                fit: BoxFit.cover,
-              ),
+          ],
+        ),
+        width: double.infinity,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(22.0),
+          child: Container(
+            child: Image.network(
+              post.imageRoute!,
+              height: height,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -76,8 +75,8 @@ class BodyCard extends StatelessWidget {
 
   Widget postDescription(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
-      padding: EdgeInsets.only(top: 15),
       child: Text(
         post.text,
         style: Theme.of(context).textTheme.bodyText1,
@@ -111,7 +110,7 @@ class _ProgressBarState extends State<ProgressBar> {
       bool isAnswered = state.isAnswered(userId);
       int total = BlocProvider.of<PostCubit>(context).totalresponses(state);
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         width: double.infinity,
         child: Column(
           children: state.getAnswers().map((answer) {
@@ -145,21 +144,20 @@ class _ProgressBarState extends State<ProgressBar> {
                   percent: isAnswered
                       ? answer.selectedCounter.toDouble() / total
                       : 0,
-                      center: Text(
-                        isAnswered ? "$porcentage%" : answer.text,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      progressColor: isAnswered
-                          ? correctAnswer == answer.isCorrect
-                              ? Color(0xFF0E89AF)
-                              : Color(0xFF4B3BAB)
-                          : Colors.transparent,
+                  center: Text(
+                    isAnswered ? "$porcentage%" : answer.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: isAnswered
+                      ? correctAnswer == answer.isCorrect
+                          ? Color(0xFF0E89AF)
+                          : Color(0xFF4B3BAB)
+                      : Colors.transparent,
                 ),
-              
+              ),
             );
           }).toList(),
         ),

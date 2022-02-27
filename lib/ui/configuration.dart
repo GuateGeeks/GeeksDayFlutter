@@ -5,12 +5,8 @@ import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatelessWidget {
-  static Widget create(BuildContext context) {
-    return Settings();
-  }
-
-  const Settings({Key? key}) : super(key: key);
+class Configuration extends StatelessWidget {
+  const Configuration({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class Settings extends StatelessWidget {
           'Configuracion',
           style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
-        leading: ReturnButton(),
+        automaticallyImplyLeading: false,
       ),
       body: settings(maxWidth, context),
     );
@@ -63,23 +59,18 @@ class Settings extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
+          title: Text("Cuenta",
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
-          title: Text(
-            'Modo Oscuro',
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          title: Text('Modo Oscuro',
+            style: Theme.of(context).textTheme.headline5,),
           trailing: changeTheme(context),
         ),
       ],
@@ -99,27 +90,21 @@ class Settings extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
           leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          title: Text("Cuenta",
+            style: Theme.of(context).textTheme.headline5,),
         ),
         ListTile(
           leading: Icon(Icons.logout),
           onTap: () {
             authCubit.signOut();
           },
-          title: Text(
-            "Salir",
-            style: Theme.of(context).textTheme.headline5,
-          ),
+          title: Text("Salir",
+            style: Theme.of(context).textTheme.headline5,),
         ),
       ],
     );

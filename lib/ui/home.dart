@@ -1,10 +1,10 @@
-import 'package:geeksday/models/events.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/bottom_navigation.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   static Widget create(BuildContext context) {
     return Home();
   }
@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PostList(event: event!),
+      body: PostList(idEvent: event!.id),
       bottomNavigationBar: BottomNavigation(event: event!),
     );
   }

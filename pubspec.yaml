@@ -1,7 +1,7 @@
 name: geeksday
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
+# The following line prEvent the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -60,6 +60,8 @@ dependencies:
   image_whisperer: ^0.11.1
   #provider pack for light and dark theme
   provider: ^6.0.0
+  fluro: ^2.0.3
+  get_it: ^7.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -96,6 +98,7 @@ flutter:
     - assets/icons/plus.svg
     - assets/icons/events.svg
     - assets/icons/user.svg
+    - assets/icons/post.svg
     - assets/rive/guategeeks_logo.riv
 
   # To add assets to your application, add an assets section, like this:

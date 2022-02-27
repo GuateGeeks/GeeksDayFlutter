@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:geeksday/models/events.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
-  Events event;
+  Event event;
   ModalCreatePost({Key? key, required this.event}) : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class ModalCreatePost extends StatelessWidget {
     return Center(
       child: Container(
           width: maxWidth,
-          height: 900,
+          height: 400,
           padding: EdgeInsets.fromLTRB(35, 20, 35, 5),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -35,14 +36,14 @@ class ModalCreatePost extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Text(
                 "Crear",
                 style: TextStyle(color: Colors.white, fontSize: 26),
               ),
               SizedBox(
-                height: 45,
+                height: 15,
               ),
               createPost(context),
               Container(
@@ -61,21 +62,18 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return PostCreate(event: event);
-              },
-            ),
-          );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return PostCreate(event: event);
+            },
+          ),
+        );
       },
       child: Row(
         children: [
-          Icon(
-            Icons.post_add_outlined,
-            color: Colors.white,
-          ),
-          SizedBox(width: 5),
+          SvgPicture.asset('assets/icons/post.svg'),
+          SizedBox(width: 15),
           Text('Post', style: Theme.of(context).textTheme.headline2),
         ],
       ),
@@ -87,10 +85,8 @@ class ModalCreatePost extends StatelessWidget {
       onTap: () {},
       child: Row(
         children: [
-          Icon(
-            Icons.post_add_outlined,
-            color: Colors.white,
-          ),
+          SvgPicture.asset('assets/icons/post.svg'),
+          SizedBox(width: 15),
           Text('Quiz', style: Theme.of(context).textTheme.headline2),
         ],
       ),
