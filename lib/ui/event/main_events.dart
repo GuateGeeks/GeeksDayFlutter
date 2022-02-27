@@ -32,20 +32,28 @@ class MainEvent extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Settings();
-                    },
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.menu,
-                color: Color(0xFF0E89AF),
-                size: 30,
+            Theme(
+              data: Theme.of(context).copyWith(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.only(right: 15),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Settings();
+                      },
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                  size: 30,
+                ),
               ),
             ),
           ],
@@ -69,7 +77,6 @@ class MainEvent extends StatelessWidget {
 
   Widget floatingButton(BuildContext context) {
     return FloatingActionButton(
-      
       backgroundColor: Color(0xFF0E89AF),
       onPressed: () {
         showModalBottomSheet(
@@ -121,7 +128,7 @@ class MainEvent extends StatelessWidget {
             return Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                Container(  
+                Container(
                   margin:
                       EdgeInsets.only(top: 10, bottom: 37, left: 13, right: 13),
                   child: GestureDetector(
