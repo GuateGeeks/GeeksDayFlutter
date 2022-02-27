@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/post/post_create.dart';
 
 class ModalCreatePost extends StatelessWidget {
-  String idEvent;
-  ModalCreatePost({Key? key, required this.idEvent}) : super(key: key);
+  Event event;
+  ModalCreatePost({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class ModalCreatePost extends StatelessWidget {
     return Center(
       child: Container(
           width: maxWidth,
-          height: 900,
+          height: 400,
           padding: EdgeInsets.fromLTRB(35, 20, 35, 5),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -34,7 +36,7 @@ class ModalCreatePost extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Text(
                 "Crear",
@@ -60,21 +62,18 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return PostCreate(idEvent: idEvent);
-              },
-            ),
-          );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return PostCreate(event: event);
+            },
+          ),
+        );
       },
       child: Row(
         children: [
-          Icon(
-            Icons.post_add_outlined,
-            color: Colors.white,
-          ),
-          SizedBox(width: 5),
+          SvgPicture.asset('assets/icons/post.svg'),
+          SizedBox(width: 15),
           Text('Post', style: Theme.of(context).textTheme.headline2),
         ],
       ),
@@ -86,10 +85,8 @@ class ModalCreatePost extends StatelessWidget {
       onTap: () {},
       child: Row(
         children: [
-          Icon(
-            Icons.post_add_outlined,
-            color: Colors.white,
-          ),
+          SvgPicture.asset('assets/icons/post.svg'),
+          SizedBox(width: 15),
           Text('Quiz', style: Theme.of(context).textTheme.headline2),
         ],
       ),

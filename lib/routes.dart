@@ -1,6 +1,6 @@
 import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
-import 'package:geeksday/ui/events/main_events.dart';
+import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/setting.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class Routes {
   static const splash = '/';
   static const intro = '/intro';
   static const home = '/home';
-  static const mainEvents = '/mainEvents';
+  static const mainEvent = '/mainEvent';
   static const userProfile = '/userProfile';
   static const settings = '/settings';
 
@@ -30,8 +30,8 @@ class Routes {
         return _buildRoute(EmailSignIn.create);
       case home:
         return _buildRoute(Home.create);
-      case mainEvents: 
-        return _buildRoute(MainEvents.create);
+      case mainEvent: 
+        return _buildRoute(MainEvent.create);
       case userProfile:
         return _buildRoute(UserProfile.create);
       case settings:

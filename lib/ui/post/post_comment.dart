@@ -6,6 +6,7 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
@@ -27,177 +28,231 @@ class PostComment extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
 
-    return BlocBuilder<PostCubit, PostState>(builder: (context, state) {
-      //get user id
-      String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
-      return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          //Main Container
-          child: Container(
-            width: maxWidth,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+    return BlocBuilder<PostCubit, PostState>(
+      builder: (context, state) {
+        //get user id
+        String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0.5,
+            title: Text(
+              'Comentarios',
+              style: Theme.of(context).appBarTheme.toolbarTextStyle,
+            ),
+            leading: ReturnButton(),
+          ),
+          body: Center(
+            //Main Container
+            child: Container(
+              width: maxWidth,
               child: Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: ListView(
-                      children: [
-                        //function to show the image, the date and the description of the post
-                        postDescription(context),
-                        const Divider(
-                          height: 25,
-                          thickness: 1,
-                        ),
-                        //function to display the image, name, date and comment
-                        ...comments(context, user),
-                        SizedBox(
-                          height: 70,
-                        )
-                      ],
-                    ),
+                  ListView(
+                    children: [
+                      //function to show the image, the date and the description of the post
+                      postDescription(context),
+                      const Divider(
+                        height: 25,
+                        thickness: 1,
+                      ),
+                      //function to display the image, name, date and comment
+                      ...comments(context, user),
+                      SizedBox(
+                        height: 70,
+                      )
+                    ],
                   ),
+
                   //Function to create a new comment
                   textFormFielComment(context)
                 ],
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
+
   //post description
   Widget postDescription(context) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
     String userId = state.getPost()!.idUser;
-    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUserByPost(userId);
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                //verify that the user has an avatar as a profile picture and display it
-                child: SvgPicture.string(multiavatar(userData.image)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      userData.name,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      //get the date the post was made
-                      state.getDatePost(post.createdAt),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ],
+    bool isLiked = state.likedByMe(userId);
+    AuthUser userData =
+        BlocProvider.of<AuthCubit>(context).getUserByPost(userId);
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 46,
+                  height: 46,
+                  child: SvgPicture.string(multiavatar(userData.image)),
                 ),
-              ),
-            ],
+                SizedBox(
+                  width: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //we show the user's name
+                      Text(
+                        userData.name,
+                        style: Theme.of(context).textTheme.headline1,
+                        textAlign: TextAlign.right,
+                      ),
+                      Text(
+                        state.getDatePost(post.createdAt),
+                        style: Theme.of(context).textTheme.headline2,
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        trailing: GestureDetector(
+          onTap: () {
+            likePost(context);
+            isLiked = !isLiked;
+          },
+          child: SizedBox(
+            height: 80,
+            width: 28,
+            child: Container(
+              margin: EdgeInsets.only(right: 6),
+              child: isLiked
+                  ? SvgPicture.asset(
+                      'assets/icons/is_liked.svg',
+                      alignment: Alignment.centerLeft,
+                    )
+                  : SvgPicture.asset(
+                      'assets/icons/like.svg',
+                      width: 25,
+                    ),
+            ),
           ),
-          SizedBox(
-            height: 7.0,
-          ),
-          Text(
-            post.text,
-            style: Theme.of(context).textTheme.headline4,
-          ),
-        ],
+        ),
       ),
     );
   }
-  
+
   //Comments
   List<Widget> comments(context, userId) {
     PostCubit state = BlocProvider.of<PostCubit>(context);
-    return post.commentList
-      .map((comment){
-        AuthUser userData = BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
-        return Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: 50,
-                            height: 50,
-                            child: SvgPicture.string(
-                                multiavatar(userData.image),
+    return post.commentList.map((comment) {
+      AuthUser userData =
+          BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 46,
+                        child: SvgPicture.string(multiavatar(userData.image)),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //we show the user's name
+                            Text(
+                              userData.name,
+                              style: Theme.of(context).textTheme.headline1,
+                              textAlign: TextAlign.right,
                             ),
+                            Text(
+                              //function to show the date the comment was made
+                              state.getDatePost(comment.createdAt),
+                              textAlign: TextAlign.right,
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                userData.name,
-                                style: Theme.of(context).textTheme.headline1,
-                              ),
-                              Text(
-                                //function to show the date the comment was made
-                                state.getDatePost(comment.createdAt),
-                                style: Theme.of(context).textTheme.subtitle2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  //button to delete comment
-                  deleteCommentButton(
-                    comment.id, 
-                    comment.idUser,
-                    context,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            SizedBox(
-              height: 7.0,
+              trailing: SizedBox(
+                height: 80,
+                width: 29,
+                child: deleteCommentButton(
+                  comment.id,
+                  comment.idUser,
+                  context,
+                ),
+              ),
             ),
-            Text(
-              comment.text,
-              style: Theme.of(context).textTheme.headline6,
+            SizedBox(
+              height: 6.0,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(58, 0, 3, 0),
+              child: Text(
+                comment.text,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           ],
         ),
       );
-      }
-    ).toList();
+    }).toList();
   }
 
   //function to delete comment
-  Widget deleteCommentButton(commentId, commentUserId, context){
+  Widget deleteCommentButton(commentId, commentUserId, context) {
     //validate if the user is an administrator or the user has made a comment to show the delete comment button
     var user = BlocProvider.of<AuthCubit>(context).getUser();
-    if(user.uid == commentUserId || user.isadmin == true){
-      return PopupMenuButton(
-        itemBuilder: (context) => [
-          PopupMenuItem(
-            value: "Eliminar",
-            child: Text("Eliminar"), 
+    if (user.uid == commentUserId || user.isadmin == true) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+        ),
+        child: PopupMenuButton(
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          icon: Icon(
+            Icons.more_vert_rounded,
+            color: Color(0xFF0E89AF),
+            size: 30,
           ),
-        ],
-        onSelected: (_){
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: "Eliminar",
+              child: Text("Eliminar"),
+            ),
+          ],
+          onSelected: (_) {
             BlocProvider.of<PostCubit>(context).commentDeletion(commentId);
-        },
+          },
+        ),
       );
     }
     return Container();
@@ -211,45 +266,63 @@ class PostComment extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: Container(
-        //color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  style: TextStyle(
+                    fontSize: 13,
+                  ),
+                  textInputAction: TextInputAction.send,
                   minLines: 1,
                   maxLines: 2,
                   controller: _controller,
                   decoration: InputDecoration(
                     hintText: "Agregar un comentario",
-                    border: InputBorder.none,
+                    hintStyle: TextStyle(
+                      fontSize: 13,
+                    ),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
                     filled: true,
                     fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                    contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 8.0, top: 8.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(8),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: new BorderRadius.circular(8),
-                    ),
                   ),
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                //get the information of who is making the comment
-                String idUser = BlocProvider.of<AuthCubit>(context).getUserId();
-                BlocProvider.of<PostCubit>(context)
-                    .makeComment(idUser, _controller.text);
-              },
-              icon: Icon(Icons.send),
+            Theme(
+              data: Theme.of(context).copyWith(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  //get the information of who is making the comment
+                  String idUser =
+                      BlocProvider.of<AuthCubit>(context).getUserId();
+                  BlocProvider.of<PostCubit>(context)
+                      .makeComment(idUser, _controller.text);
+                },
+                icon: Icon(
+                  Icons.send,
+                  color: Color(0xFF0E89AF),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  //function to know which user has liked the post
+  void likePost(BuildContext context) {
+    String userId = post.idUser;
+    BlocProvider.of<PostCubit>(context).toggleLikeToPost(userId);
   }
 }

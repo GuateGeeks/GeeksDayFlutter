@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/models/events.dart';
+import 'package:geeksday/models/event.dart';
 import 'package:geeksday/ui/bottom_navigation.dart';
 import 'package:geeksday/ui/edit_profile.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   static Widget create(BuildContext context) {
     return UserProfile();
   }

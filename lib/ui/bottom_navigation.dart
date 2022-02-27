@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geeksday/models/events.dart';
-import 'package:geeksday/ui/events/main_events.dart';
+import 'package:geeksday/models/event.dart';
+import 'package:geeksday/ui/event/main_events.dart';
 import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/post/modal_create_post.dart';
 import 'package:geeksday/ui/user_profile.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Events? event;
+  final Event? event;
   BottomNavigation({this.event});
 
   @override
@@ -73,13 +73,15 @@ class BottomNavigation extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(top: 5),
-              child: SvgPicture.asset(
-                "assets/icons/search.svg",
-                height: 24,
-                width: 28,
-              ),
+            child: SvgPicture.asset(
+              "assets/icons/search.svg",
+              height: 24,
+              width: 28,
+            ),
           ),
-          SizedBox(height: 6.0,),
+          SizedBox(
+            height: 6.0,
+          ),
           Text(
             "Buscar",
             style: Theme.of(context).textTheme.headline5,
@@ -98,7 +100,7 @@ class BottomNavigation extends StatelessWidget {
           context: context,
           builder: (context) => Container(
             height: MediaQuery.of(context).size.height / 2.5,
-            child: ModalCreatePost(idEvent: event!.id),
+            child: ModalCreatePost(event: event!),
           ),
         );
       },
@@ -128,28 +130,28 @@ class BottomNavigation extends StatelessWidget {
   Widget eventPage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return MainEvents();
-                  },
-                ),
-              );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return MainEvent();
             },
+          ),
+        );
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Container(
-             margin: EdgeInsets.only(top: 2.5),
-             child: SvgPicture.asset(
-                "assets/icons/events.svg",
-                height: 30,
-                width: 30,
-              ),
-           ),    
-           SizedBox(
-             height: 3,
-           ),      
+          Container(
+            margin: EdgeInsets.only(top: 2.5),
+            child: SvgPicture.asset(
+              "assets/icons/events.svg",
+              height: 30,
+              width: 30,
+            ),
+          ),
+          SizedBox(
+            height: 3,
+          ),
           Text(
             "Eventos",
             style: Theme.of(context).textTheme.headline5,
@@ -162,28 +164,28 @@ class BottomNavigation extends StatelessWidget {
   Widget profilePage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return UserProfile(event: event);
-                  },
-                ),
-              );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return UserProfile(event: event);
             },
+          ),
+        );
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Container(
-             margin: EdgeInsets.only(top: 5.5),
-             child: SvgPicture.asset(
-                "assets/icons/user.svg",
-                height: 26,
-                width: 29,
+          Container(
+            margin: EdgeInsets.only(top: 5.5),
+            child: SvgPicture.asset(
+              "assets/icons/user.svg",
+              height: 26,
+              width: 29,
+            ),
           ),
-           ),
-           SizedBox(
-             height: 4,
-           ),
+          SizedBox(
+            height: 4,
+          ),
           Text(
             "Perfil",
             style: Theme.of(context).textTheme.headline5,

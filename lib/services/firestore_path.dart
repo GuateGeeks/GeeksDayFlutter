@@ -8,5 +8,5 @@ class FirestorePath {
   static String post(String postId) => 'posts/$postId';
   static String user(String userId) => 'users/$userId';
   static String quizRecords(String quizRecordsId) => 'quiz_records/$quizRecordsId';
-  static String events(String eventsId) => 'events/$eventsId';
+  static String event(String eventId) => 'events/$eventId';
 }

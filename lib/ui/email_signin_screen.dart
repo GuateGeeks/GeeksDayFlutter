@@ -1,7 +1,10 @@
-import 'package:geeksday/bloc/auth_cubit.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:geeksday/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 
@@ -13,24 +16,48 @@ class EmailSignIn extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignIn> {
-  double topBottom = 330.0;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  String? emptyValidator(String? value) {
-    setState(() {
-      topBottom = 385.0;
+  /// Controller for playback
+  late rive.RiveAnimationController _blinkController;
+  late rive.RiveAnimationController _noLookController;
+
+  /// Is the animation currently playing?
+  bool _isBlinkPlaying = false;
+  bool _isNoLookPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _blinkController = rive.OneShotAnimation(
+      '2_blink',
+      autoplay: false,
+      onStop: () => setState(() => _isBlinkPlaying = false),
+      onStart: () => setState(() => _isBlinkPlaying = true),
+    );
+    _noLookController = rive.OneShotAnimation(
+      'not_looking',
+      autoplay: false,
+      onStop: () => setState(() => _isNoLookPlaying = false),
+      onStart: () => setState(() => _isNoLookPlaying = true),
+    );
+    _emailController.addListener(() {
+      final int textLength = _emailController.text.length;
+      _inputLenght?.value = textLength as double;
     });
+    _passwordController.addListener(
+        () => _isNoLookPlaying ? null : _noLookController.isActive = true);
+  }
+
+  String? emptyValidator(String? value) {
     return (value == null || value.isEmpty)
         ? 'Este es un campo requerido'
         : null;
   }
 
   String? passwordValidator(String? value) {
-    setState(() {
-      topBottom = 385.0;
-    });
     if (value == null || value.isEmpty) return 'Este es un campo requerido';
     return null;
   }
@@ -44,16 +71,23 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Image.asset(
-          "assets/guateGeeksLogo.png",
+        title: SizedBox(
           width: 200,
-          height: 40,
+          height: 37,
+          child: rive.RiveAnimation.network(
+            '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+            artboard: 'full_logo',
+            animations: const ['single_blink_loop'],
+            onInit: _onRiveInit,
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
       body: Container(
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: RadialGradient(
+            center: Alignment.topCenter,
             radius: 0.9,
             colors: [
               Color(0xFF0E89AF),
@@ -71,67 +105,96 @@ class _EmailSignInState extends State<EmailSignIn> {
   }
 
   Widget cardLogin(double maxWidth, AuthState state, authCubit) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-              width: maxWidth,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color.fromRGBO(255, 255, 255, 0.79)),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      "Iniciar Sesión",
-                      style: Theme.of(context).textTheme.overline,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    formLogin(state),
-                    SizedBox(height: 15),
-                    forgotPassword(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: 130,
-              margin: EdgeInsets.only(top: topBottom),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  primary: Color(0xFF4B3BAB),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  authCubit.reset();
-                  Navigator.pushNamed(context, Routes.createAccount);
-                },
-                child: Text(
-                  "Registrarse",
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    color: Colors.white,
-                    // fontFamily: 'Biryani',
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 90),
+          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                width: maxWidth,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.79)),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Iniciar Sesión",
+                        style: Theme.of(context).textTheme.overline,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      formLogin(state),
+                      SizedBox(height: 15),
+                      forgotPassword(),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: -20,
+                child: Container(
+                  width: 130,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      primary: Color(0xFF4B3BAB),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      authCubit.reset();
+                      Navigator.pushNamed(context, Routes.createAccount);
+                    },
+                    child: Text(
+                      "Registrarse",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.white,
+                        // fontFamily: 'Biryani',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -135,
+                child: SizedBox(
+                    width: maxWidth,
+                    height: 160,
+                    child: rive.RiveAnimation.network(
+                      '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+                      artboard: 'eye_lid_v2',
+                      animations: const ['idle'],
+                      onInit: _onRiveInit,
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  rive.SMINumber? _inputLenght;
+  void _onRiveInit(rive.Artboard artboard) {
+    final controller =
+        rive.StateMachineController.fromArtboard(artboard, 'follow_input');
+    artboard.addController(controller!);
+    artboard.addController(_noLookController);
+    _inputLenght =
+        controller.findInput<double>('inputLenght') as rive.SMINumber;
+    _inputLenght?.value = 0;
   }
 
   Widget formLogin(AuthState state) {
@@ -163,7 +226,8 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget loginButton() {
     return Center(
       child: Container(
-        width: 200,
+        width: 180,
+        height: 57,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 20),
@@ -183,9 +247,6 @@ class _EmailSignInState extends State<EmailSignIn> {
           ),
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
-              setState(() {
-                topBottom = 385.0;
-              });
               context.read<AuthCubit>().signInWithEmailAndPassword(
                     _emailController.text,
                     _passwordController.text,

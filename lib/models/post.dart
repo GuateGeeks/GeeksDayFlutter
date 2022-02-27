@@ -34,7 +34,7 @@ class Post extends Equatable {
   );
 
   @override
-  List<Object> get props => [id, text, createdAt];
+  List<Object> get props => [id, text, createdAt, likeList, likeCount];
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
