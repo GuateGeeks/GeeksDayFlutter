@@ -43,7 +43,7 @@ class ModalCreatePost extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 26),
               ),
               SizedBox(
-                height: 30,
+                height: 15,
               ),
               createPost(context),
               Container(

@@ -17,11 +17,11 @@ class ButtonWidget extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.only(bottom: 5),
+          margin: EdgeInsets.only(top: 5),
           child: Row(
             children: [
               //Like button
-              likeButton(context, width, cubit),
+              likeButton(context, cubit),
               SizedBox(width: 5.0),
               //Comment button
               commentButton(context, width, state.post, cubit),
@@ -33,7 +33,7 @@ class ButtonWidget extends StatelessWidget {
   }
 
   //function to add a like to the post
-  Widget likeButton(BuildContext context, width, cubit) {
+  Widget likeButton(BuildContext context, cubit) {
     String userId = post.idUser;
     bool isLiked = cubit.likedByMe(post, userId);
     return Row(

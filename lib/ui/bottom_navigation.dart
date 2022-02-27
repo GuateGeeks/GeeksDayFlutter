@@ -33,159 +33,165 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Widget homePage(context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return Home(event: event);
-                },
-              ),
-            );
-          },
-          child: SvgPicture.asset(
-            "assets/icons/home.svg",
-            height: 30,
-            width: 30,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return Home(event: event);
+            },
           ),
-          // child: Image.asset(
-          //   'assets/icons/home.png'
-          // ),
-        ),
-        Text(
-          "Inicio",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ],
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 1),
+            child: SvgPicture.asset(
+              "assets/icons/home.svg",
+              height: 33,
+              width: 32,
+            ),
+          ),
+          SizedBox(
+            height: 1,
+          ),
+          Text(
+            "Inicio",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 
   Widget searchModal(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 2),
-          child: GestureDetector(
-            onTap: () {},
+    return GestureDetector(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 5),
             child: SvgPicture.asset(
               "assets/icons/search.svg",
-              height: 26,
-              width: 26,
+              height: 24,
+              width: 28,
             ),
-            //    child: Image.asset(
-            //   'assets/icons/search.png',
-            //   height: 30,
-            // ),
           ),
-        ),
-        Text(
-          "Buscar",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ],
+          SizedBox(
+            height: 6.0,
+          ),
+          Text(
+            "Buscar",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 
   Widget postModal(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) => Container(
-                height: MediaQuery.of(context).size.height / 2.5,
-                // width: 800,
-                child: ModalCreatePost(event: event!),
-                // child: PostCreate(idEvent: event!.id),
-              ),
-            );
-          },
-          child: SvgPicture.asset(
-            "assets/icons/plus.svg",
-            height: 34,
-            width: 34,
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) => Container(
+            height: MediaQuery.of(context).size.height / 2.5,
+            child: ModalCreatePost(event: event!),
           ),
-          //  child: Image.asset(
-          //   'assets/icons/plus.png'
-          // ),
-        ),
-        Text(
-          "Post",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ],
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 2),
+            child: SvgPicture.asset(
+              "assets/icons/plus.svg",
+              height: 32,
+              width: 32,
+            ),
+          ),
+          SizedBox(
+            height: 1,
+          ),
+          Text(
+            "Post",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 
   Widget eventPage(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return MainEvent();
-                },
-              ),
-            );
-          },
-          child: SvgPicture.asset(
-            "assets/icons/events.svg",
-            height: 30,
-            width: 30,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return MainEvent();
+            },
           ),
-          //  child: Image.asset(
-          //   'assets/icons/events.png'
-          // ),
-        ),
-        Text(
-          "Eventos",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ],
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 2.5),
+            child: SvgPicture.asset(
+              "assets/icons/events.svg",
+              height: 30,
+              width: 30,
+            ),
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Text(
+            "Eventos",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 
   Widget profilePage(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return UserProfile(event: event);
-                },
-              ),
-            );
-          },
-          child: SvgPicture.asset(
-            "assets/icons/user.svg",
-            height: 28,
-            width: 28,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return UserProfile(event: event);
+            },
           ),
-          //  child: Image.asset(
-          //   'assets/icons/user.png',
-          //   height: 30,
-          //   fit: BoxFit.cover,
-          // ),
-        ),
-        Text(
-          "user",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      ],
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 5.5),
+            child: SvgPicture.asset(
+              "assets/icons/user.svg",
+              height: 26,
+              width: 29,
+            ),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            "Perfil",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -40,13 +40,13 @@ class MyThemes {
     //Color del AppBar
     appBarTheme: AppBarTheme(
       color: Colors.black54,
-      toolbarTextStyle: TextStyle(  
+      toolbarTextStyle: TextStyle(
         fontFamily: 'Abel',
         color: Colors.white,
-        fontWeight: FontWeight.w100, 
+        fontWeight: FontWeight.w100,
         fontSize: 24,
       ),
-      iconTheme: IconThemeData( 
+      iconTheme: IconThemeData(
         color: Color(0xFF0E89AF),
       ),
     ),
@@ -56,19 +56,18 @@ class MyThemes {
     colorScheme: ColorScheme.dark(),
     //Estilos de texto
     textTheme: TextTheme(
-       //Nombre de usuarios
+      //Nombre de usuarios
       headline1: TextStyle(
         height: 1,
-        fontSize: 16.0,
+        fontSize: 18.0,
         fontWeight: FontWeight.normal,
         color: Color(0xFFD6D6D6),
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
-        fontSize: 15.0,
-        fontWeight: FontWeight.w100,
-        color: Colors.white,
+        fontSize: 12.0,
+        fontFamily: 'assets/fonts/Biryani-Regular.ttf',
+        color: Color(0xFF797979),
       ),
       //Post Description
       bodyText1: TextStyle(
@@ -85,12 +84,10 @@ class MyThemes {
       ),
       //Texto opciones pantalla de configuracion
       headline5: TextStyle(
-        color: Color(0xFFD6D6D6),
-        fontSize: 12.0,
-      ),
+          color: Color(0xFFD6D6D6), fontSize: 12.0, fontFamily: 'Abel'),
       //Texto Menu y comentarios
       headline6: TextStyle(
-        fontSize: 15.0,
+        fontSize: 16.0,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
@@ -114,9 +111,8 @@ class MyThemes {
     ),
     //Estilos inputs Crear Post/Quiz
     inputDecorationTheme: InputDecorationTheme(
-      hintStyle: TextStyle(color: Colors.white),
-      fillColor: Color.fromRGBO(74, 74, 74, 0.25)
-    ),
+        hintStyle: TextStyle(color: Colors.white),
+        fillColor: Color.fromRGBO(74, 74, 74, 0.25)),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
     //Icons Color
@@ -134,13 +130,13 @@ class MyThemes {
     //Color del appbar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      toolbarTextStyle: TextStyle(  
+      toolbarTextStyle: TextStyle(
         fontFamily: 'Abel',
         color: Colors.black,
-        fontWeight: FontWeight.w100, 
+        fontWeight: FontWeight.w100,
         fontSize: 24,
       ),
-      iconTheme: IconThemeData( 
+      iconTheme: IconThemeData(
         color: Color(0xFF0E89AF),
       ),
       elevation: 2,
@@ -152,7 +148,7 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.white,
     //Estilos de texto
     textTheme: TextTheme(
-       //Nombre de usuarios
+      //Nombre de usuarios
       headline1: TextStyle(
         height: 1,
         fontSize: 16.0,

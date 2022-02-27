@@ -166,11 +166,10 @@ class _EmailCreateState extends State<EmailCreate> {
 
   Widget saveUser() {
     return Container(
-      width: 180,
-      height: 57,
+      width: 230,
+      height: 60,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          // padding: EdgeInsets.symmetric(vertical: 20),
           primary: Color(0xFF0E89AF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
