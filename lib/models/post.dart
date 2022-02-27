@@ -10,31 +10,39 @@ class Post extends Equatable {
   int likeCount;
   int commentCount;
   final int createdAt;
-  int? updatedAt;
+  int updatedAt;
   final String idUser;
   Quiz? quiz;
   final List<Comment> commentList;
   final String idEvent;
   String? imageRoute;
 
-  Post(
-      {required this.id,
-      required this.text,
-      required this.likeList,
-      required this.likeCount,
-      required this.commentCount,
-      required this.createdAt,
-      required this.idUser,
-      required this.commentList,
-      this.quiz,
-      this.updatedAt,
-      required this.idEvent,
-      this.imageRoute,
-    }
-  );
+  Post({
+    required this.id,
+    required this.text,
+    required this.likeList,
+    required this.likeCount,
+    required this.commentCount,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.idUser,
+    required this.commentList,
+    this.quiz,
+    required this.idEvent,
+    this.imageRoute,
+  });
 
   @override
-  List<Object> get props => [id, text, createdAt, likeList, likeCount];
+  List<Object> get props => [
+        id,
+        text,
+        createdAt,
+        likeList,
+        likeCount,
+        commentList,
+        commentCount,
+        updatedAt
+      ];
 
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
@@ -84,28 +92,33 @@ class Post extends Equatable {
   factory Post.newPost(String text, String idUser, String idEvent) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
+    var updatedAt = DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
     var likeCount = 0;
     var commentCount = 0;
     var commentList = <Comment>[];
     var imageRoute = "";
     return Post(
-        id: id,
-        idUser: idUser,
-        text: text,
-        createdAt: createdAt,
-        likeList: likeList,
-        likeCount: likeCount,
-        commentCount: commentCount,
-        commentList: commentList,
-        idEvent: idEvent,
-        imageRoute: imageRoute,
+      id: id,
+      idUser: idUser,
+      text: text,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      likeList: likeList,
+      likeCount: likeCount,
+      commentCount: commentCount,
+      commentList: commentList,
+      idEvent: idEvent,
+      imageRoute: imageRoute,
     );
   }
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
     var id = documentId;
     var text = data['text'];
     var createdAt = data['createdAt'];
+    var updatedAt = data.containsKey('updatedAt')
+        ? data['updatedAt']
+        : DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
     var likeCount = 0;
     var commentCount = 0;
@@ -135,23 +148,25 @@ class Post extends Equatable {
     }
 
     return Post(
-        id: id,
-        idUser: idUser,
-        text: text,
-        createdAt: createdAt,
-        likeList: likeList,
-        likeCount: likeCount,
-        commentCount: commentCount,
-        commentList: commentList,
-        quiz: quiz,
-        idEvent: idEvent,
-        imageRoute: imageRoute,
+      id: id,
+      idUser: idUser,
+      text: text,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      likeList: likeList,
+      likeCount: likeCount,
+      commentCount: commentCount,
+      commentList: commentList,
+      quiz: quiz,
+      idEvent: idEvent,
+      imageRoute: imageRoute,
     );
   }
   factory Post.fromMap1(DocumentSnapshot data, String documentId) {
     var id = documentId;
     var text = data['text'];
     var createdAt = data['createdAt'];
+    var updatedAt = DateTime.now().millisecondsSinceEpoch;
     var likeList = <String>[];
     var likeCount = 0;
     var commentCount = 0;
@@ -181,17 +196,18 @@ class Post extends Equatable {
     }
 
     return Post(
-        id: id,
-        idUser: idUser,
-        text: text,
-        createdAt: createdAt,
-        likeList: likeList,
-        likeCount: likeCount,
-        commentCount: commentCount,
-        commentList: commentList,
-        quiz: quiz,
-        idEvent: idEvent,
-        imageRoute: imageRoute,
+      id: id,
+      idUser: idUser,
+      text: text,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      likeList: likeList,
+      likeCount: likeCount,
+      commentCount: commentCount,
+      commentList: commentList,
+      quiz: quiz,
+      idEvent: idEvent,
+      imageRoute: imageRoute,
     );
   }
 }
@@ -212,8 +228,7 @@ class Comment extends Equatable {
   factory Comment.newComment(String text, String idUser) {
     var id = Uuid().v1();
     var createdAt = DateTime.now().millisecondsSinceEpoch;
-    return Comment(
-        id: id, text: text, createdAt: createdAt, idUser: idUser);
+    return Comment(id: id, text: text, createdAt: createdAt, idUser: idUser);
   }
 
   @override
@@ -233,7 +248,6 @@ class Comment extends Equatable {
     var text = data['text'];
     var createdAt = data['createdAt'];
     var idUser = data['idUser'];
-    return Comment(
-        id: id, text: text, createdAt: createdAt, idUser: idUser);
+    return Comment(id: id, text: text, createdAt: createdAt, idUser: idUser);
   }
 }

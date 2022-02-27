@@ -26,7 +26,7 @@ class ButtonWidget extends StatelessWidget {
               likeButton(context, cubit),
               SizedBox(width: 5.0),
               //Comment button
-              commentButton(context, width, state.post, cubit),
+              commentButton(context, width, state.post!, cubit),
             ],
           ),
         );

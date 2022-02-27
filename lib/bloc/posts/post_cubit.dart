@@ -16,14 +16,21 @@ class PostCubit extends Cubit<PostState> {
   /*-----------------------------------------Post General-------------------------------------------*/
 
   //edit post or quiz
-  void updatePost(String text) {
-    state.post.text = text;
-    emit(state);
+  void _updatePost() {
+    state.post!.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    _postService.updatePost(state.post!);
   }
 
   //get the post
   Post? getPost() {
     return state.post;
+  }
+
+  //delete post or quiz
+  void deletePost() {
+    state.post!.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    _postService.deletePost(state.post!.id);
+    emit(PostDeleted(state.post!));
   }
 
   //function to show when a post, quiz or comment was made
@@ -66,110 +73,105 @@ class PostCubit extends Cubit<PostState> {
   //   return _postService.getImageURL(uid);
   // }
   String? getImageUrl(String uid) {
-    return state.post.imageRoute;
+    return state.post!.imageRoute;
   }
 
   //function to save the id of the user who likes a post
   void toggleLikeToPost(String uid) {
     //We verify if the user had already liked it, if so, the id of the database is eliminated, otherwise it is added
-    if (state.post.likeList.contains(uid)) {
-      state.post.likeList.remove(uid);
+    if (state.post!.likeList.contains(uid)) {
+      state.post!.likeList.remove(uid);
+      state.post!.likeCount = state.post!.likeList.length;
+      _updatePost();
+      emit(PostLiked(state.post));
     } else {
-      state.post.likeList.add(uid);
+      state.post!.likeList.add(uid);
+      state.post!.likeCount = state.post!.likeList.length;
+      _updatePost();
+      emit(PostUnliked(state.post));
     }
-    state.post.likeCount = state.post.likeList.length;
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
   }
 
   //show the number of likes of the post
   String getLikesCountText() {
-    return "${state.post.likeCount}";
+    return "${state.post!.likeCount}";
   }
 
   bool likedByMe(String uid) {
-    return state.post.likeList.contains(uid);
+    return state.post!.likeList.contains(uid);
   }
 
   //function to show the options button in posts, this button only appears in posts made by the user
   bool isOwnedBy(String uid) {
-    return state.post.idUser == uid;
+    return state.post!.idUser == uid;
   }
 
   //get the id of the post or quiz
   String idPost() {
-    return state.post.id;
+    return state.post!.id;
   }
 
   String idEvent() {
-    return state.post.idEvent;
-  }
-
-  //delete post or quiz
-  void postDeletion(String uid) {
-    _postService.deletePost(uid);
-    emit(PostUpdatedState(state.post));
+    return state.post!.idEvent;
   }
 
   //this function shows in the modal the option to create the post
   void unsetQuiz() {
-    var post = state.post.copyWith(text: "Create a Post");
-    post.quiz = null;
-    emit(PostUpdatedState(post));
+    state.post!.quiz = null;
+    emit(PostUnsetQuiz(state.post));
   }
 
   /*---------------------------------------Quiz----------------------------------------*/
 
   //add quiz answers
   void addAnswer() {
-    var post = state.post.copyWith(text: "Create a Post");
-    post.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
-    emit(PostUpdatedState(post));
+    state.post!.quiz!.questions[0].answers.add(Answer("Respuesta", false, 0));
+    emit(PostQuizAddedAnswer(state.post));
   }
 
   //this function shows in the modal the option to  create a quiz
   void setQuiz(Quiz? quiz) {
-    var post = state.post.copyWith(text: "Create a Quiz", quiz: quiz);
-    emit(PostUpdatedState(post));
+    state.post!.quiz = quiz;
+    emit(PostSetQuiz(state.post));
   }
 
   List<Answer> getAnswers() {
-    return state.post.quiz!.questions[0].answers;
+    return state.post!.quiz!.questions[0].answers;
   }
 
   void makeComment(String idUser, String text) {
     var comment = Comment.newComment(text, idUser);
-    state.post.commentList.add(comment);
-    state.post.commentCount = state.post.commentList.length;
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
+    state.post!.commentList.add(comment);
+    state.post!.commentCount = state.post!.commentList.length;
+    _updatePost();
+    emit(PostCommentAdded(state.post));
   }
 
   String countComments() {
-    return "${state.post.commentCount}";
+    return "${state.post!.commentCount}";
   }
 
   void commentDeletion(String commentid) {
-    _postService.deleteComment(state.post, commentid);
-    emit(PostUpdatedState(state.post));
+    _postService.deleteComment(state.post!, commentid);
+    emit(PostCommentDeleted(state.post));
   }
 
   bool isQuiz() {
-    return state.post.quiz != null && state.post.quiz!.questions.isNotEmpty;
+    return state.post!.quiz != null && state.post!.quiz!.questions.isNotEmpty;
   }
 
   int indexOfAnswer(Answer answer) {
-    return state.post.quiz!.questions[0].answers.indexOf(answer);
+    return state.post!.quiz!.questions[0].answers.indexOf(answer);
   }
 
   void updateQuizAnswer(int index, String text) {
-    state.post.quiz!.questions[0].answers[index].text = text;
+    state.post!.quiz!.questions[0].answers[index].text = text;
   }
 
   //function to check if the quiz was answered, if so we return true otherwise false
   bool isAnswered(String userId) {
     bool userResponded = false;
-    var usersResponded = state.post.quiz!.usersresponded;
+    var usersResponded = state.post!.quiz!.usersresponded;
     usersResponded.forEach((user) {
       if (user == userId) {
         userResponded = true;
@@ -179,9 +181,9 @@ class PostCubit extends Cubit<PostState> {
   }
 
   void usersResponded(String userId) {
-    state.post.quiz!.usersresponded.add(userId);
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
+    state.post!.quiz!.usersresponded.add(userId);
+    _updatePost();
+    emit(PostQuizUserAnswered(state.post));
   }
 
   int porcentage(int total, selectedCounter) {
@@ -194,18 +196,18 @@ class PostCubit extends Cubit<PostState> {
 
   void toggleAnswerIsCorrect(Answer answer) {
     int index = indexOfAnswer(answer);
-    state.post.quiz!.questions[0].answers[index].isCorrect =
-        !state.post.quiz!.questions[0].answers[index].isCorrect;
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
+    state.post!.quiz!.questions[0].answers[index].isCorrect =
+        !state.post!.quiz!.questions[0].answers[index].isCorrect;
+    _updatePost();
+    emit(PostQuizAnswerIsCorrect(state.post));
   }
 
   void selectCounter(Answer answer) {
     int index = indexOfAnswer(answer);
-    state.post.quiz!.questions[0].answers[index].selectedCounter =
-        state.post.quiz!.questions[0].answers[index].selectedCounter + 1;
-    _postService.updatePost(state.post);
-    emit(PostUpdatedState(state.post));
+    state.post!.quiz!.questions[0].answers[index].selectedCounter =
+        state.post!.quiz!.questions[0].answers[index].selectedCounter + 1;
+    _updatePost();
+    emit(PostQuizSelectCounter(state.post));
   }
 
   int totalresponses(PostCubit state) {
@@ -235,11 +237,10 @@ class PostCubit extends Cubit<PostState> {
   }
 }
 
-abstract class PostState extends Equatable {
-  final Post post;
+abstract class PostState {
+  Post? post;
   PostState(this.post);
-  @override
-  List<Object?> get props => [];
+  PostState.empty();
 }
 
 class PostInitialState extends PostState {
@@ -251,18 +252,50 @@ class PostLoaded extends PostState {
   PostLoaded({required Post post, required this.listPost}) : super(post);
 }
 
-class PostUpdatedState extends PostState {
-  int updatedAt = DateTime.now().millisecondsSinceEpoch;
-  PostUpdatedState(Post post) : super(post);
-  @override
-  List<Object?> get props => [updatedAt];
+class PostCreated extends PostState {
+  PostCreated(Post post) : super(post);
 }
 
-class CreatePost extends PostState {
-  CreatePost(Post post) : super(post);
+class PostDeleted extends PostState {
+  PostDeleted(Post? post) : super(post);
 }
 
-class QuizPostState extends PostUpdatedState {
-  Quiz? quiz;
-  QuizPostState(Post post) : super(post);
+class PostLiked extends PostState {
+  PostLiked(Post? post) : super(post);
+}
+
+class PostUnliked extends PostState {
+  PostUnliked(Post? post) : super(post);
+}
+
+class PostSetQuiz extends PostState {
+  PostSetQuiz(Post? post) : super(post);
+}
+
+class PostUnsetQuiz extends PostState {
+  PostUnsetQuiz(Post? post) : super(post);
+}
+
+class PostQuizAddedAnswer extends PostState {
+  PostQuizAddedAnswer(Post? post) : super(post);
+}
+
+class PostQuizUserAnswered extends PostState {
+  PostQuizUserAnswered(Post? post) : super(post);
+}
+
+class PostCommentAdded extends PostState {
+  PostCommentAdded(Post? post) : super(post);
+}
+
+class PostCommentDeleted extends PostState {
+  PostCommentDeleted(Post? post) : super(post);
+}
+
+class PostQuizAnswerIsCorrect extends PostState {
+  PostQuizAnswerIsCorrect(Post? post) : super(post);
+}
+
+class PostQuizSelectCounter extends PostState {
+  PostQuizSelectCounter(Post? post) : super(post);
 }

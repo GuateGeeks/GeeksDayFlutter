@@ -178,7 +178,6 @@ class _PostCreateState extends State<PostCreate> {
               ),
             ),
             onPressed: () {
-              print(commentController.text);
               BlocProvider.of<FeedCubit>(context)
                   .createPost(commentController.text, uploadedImage, userId);
             },
