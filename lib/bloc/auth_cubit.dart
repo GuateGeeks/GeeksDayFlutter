@@ -107,7 +107,7 @@ class AuthCubit extends Cubit<AuthState> {
     AuthUser user =
         (state as AuthSignedIn).user.copyWith(name: userName, image: avatar);
     _authService.updateUser(user).then((value) {
-      emit(AuthSignedIn(user));
+      emit(UpdateUser());
 
     });
   }
@@ -141,3 +141,5 @@ class AuthSignedIn extends AuthState {
   @override
   List<Object?> get props => [user];
 }
+
+class UpdateUser extends AuthState{}

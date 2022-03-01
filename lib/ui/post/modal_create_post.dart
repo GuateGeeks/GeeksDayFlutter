@@ -62,13 +62,7 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return PostCreate(event: event);
-            },
-          ),
-        );
+        
       },
       child: Row(
         children: [

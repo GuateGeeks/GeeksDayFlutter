@@ -1,7 +1,6 @@
 import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
-import 'package:geeksday/ui/event/main_events.dart';
-import 'package:geeksday/ui/home.dart';
+import 'package:geeksday/ui/event/main_event.dart';
 
 import 'package:flutter/material.dart';
 import 'package:geeksday/ui/splash_screen.dart';
@@ -27,8 +26,6 @@ class Routes {
         return _buildRoute(EmailCreate.create);
       case signInEmail:
         return _buildRoute(EmailSignIn.create);
-      case mainEvent:
-        return _buildRoute(MainEvent.create);
       default:
         throw Exception('Route does not exists');
     }

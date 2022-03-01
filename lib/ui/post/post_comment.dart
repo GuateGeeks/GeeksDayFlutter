@@ -7,7 +7,6 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
@@ -119,25 +118,6 @@ class PostComment extends StatelessWidget {
           ),
           SizedBox(
             width: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //we show the user's name
-                Text(
-                  userData.name,
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  state.getDatePost(post.createdAt),
-                  style: Theme.of(context).textTheme.headline2,
-                  textAlign: TextAlign.right,
-                ),
-              ],
-            ),
           ),
         ],
       ),

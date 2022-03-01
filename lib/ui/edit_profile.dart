@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class EditProfile extends StatelessWidget {
@@ -18,7 +21,7 @@ class EditProfile extends StatelessWidget {
         title: Text("Editar Perfil"),
         centerTitle: true,
         leading: ReturnButton(),
-      ),
+      ), 
       body: BodyEditUserProfile(),
     );
   }
@@ -43,42 +46,49 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 400 ? 400 : width;
 
-    return Container(
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              CustomPaint(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state){
+        if(state is UpdateUser){
+          locator<NavigationService>().navigateTo('/perfil/' + userData.uid);
+        }
+      },
+      child: Container(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                CustomPaint(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 300,
+                  ),
+                  painter: HeaderCurvedContainer(),
                 ),
-                painter: HeaderCurvedContainer(),
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 120.0),
-                    CircleAvatar(
-                      radius: 60.0,
-                      child: randomAvatar == ""
-                          ? avatarWidget(userData.image)
-                          : avatarWidget(randomAvatar),
-                    ),
-                    SizedBox(height: 10.0),
-                    randomButton(context),
-                    userDataProfile(context, userData, maxWidth),
-                    SizedBox(height: 15.0),
-                    buttonSave(userData, maxWidth),
-                  ],
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 120.0),
+                      CircleAvatar(
+                        radius: 60.0,
+                        child: randomAvatar == ""
+                            ? avatarWidget(userData.image)
+                            : avatarWidget(randomAvatar),
+                      ),
+                      SizedBox(height: 10.0),
+                      randomButton(context),
+                      userDataProfile(context, userData, maxWidth),
+                      SizedBox(height: 15.0),
+                      buttonSave(userData, maxWidth),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
