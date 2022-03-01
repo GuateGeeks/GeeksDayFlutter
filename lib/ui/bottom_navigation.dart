@@ -5,6 +5,7 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/locator.dart';
+import 'package:geeksday/ui/post/modal_create_post.dart';
 
 class BottomNavigation extends StatelessWidget {
   final String idEvent;
@@ -95,7 +96,7 @@ class BottomNavigation extends StatelessWidget {
           builder: (context) => Container(
             height: MediaQuery.of(context).size.height / 2,
             // width: 800,
-            // child: ModalCreatePost(idEvent: event!.id),
+            child: ModalCreatePost(idEvent: idEvent),
             // child: PostCreate(idEvent: event!.id),
           ),
         );

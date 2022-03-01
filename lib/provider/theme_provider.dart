@@ -157,8 +157,8 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 12.0,
-        fontWeight: FontWeight.w200,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w300,
         color: Color(0xFF797979),
       ),
       //Post Description

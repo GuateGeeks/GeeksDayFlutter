@@ -4,6 +4,7 @@ import 'package:geeksday/ui/email_create_screen.dart';
 import 'package:geeksday/ui/email_signin_screen.dart';
 import 'package:geeksday/ui/event/main_event.dart';
 import 'package:geeksday/ui/post/post_comment.dart';
+import 'package:geeksday/ui/post/post_create.dart';
 import 'package:geeksday/ui/post/post_list.dart';
 import 'package:geeksday/ui/post/single_image_view.dart';
 import 'package:geeksday/ui/user_profile.dart';
@@ -31,6 +32,11 @@ final configurationHandler = Handler(
 final eventsHandler = Handler(
   handlerFunc: (context, _){
     return MainEvent();
+  }
+);
+final createPostHandler = Handler(
+  handlerFunc: (context, params){
+    return PostCreate(idEvent: params['id']!.first);
   }
 );
 //Post page handler
