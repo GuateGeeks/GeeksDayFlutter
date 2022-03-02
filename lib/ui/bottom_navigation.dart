@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
-import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/locator.dart';
+import 'package:geeksday/ui/post/modal_create_post.dart';
 
 class BottomNavigation extends StatelessWidget {
-  final Event? event;
-  BottomNavigation({this.event});
+  final String idEvent;
+  BottomNavigation({required this.idEvent});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class BottomNavigation extends StatelessWidget {
   Widget homePage(context) {
     return GestureDetector(
       onTap: () {
-        locator<NavigationService>().navigateTo('/evento/' + event!.id);
+        locator<NavigationService>().navigateTo('/evento/' + idEvent);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,9 +94,11 @@ class BottomNavigation extends StatelessWidget {
           backgroundColor: Colors.transparent,
           context: context,
           builder: (context) => Container(
-              //height: MediaQuery.of(context).size.height / 2.5,
-              //child: ModalCreatePost(event: event!),
-              ),
+            height: MediaQuery.of(context).size.height / 2,
+            // width: 800,
+            child: ModalCreatePost(idEvent: idEvent),
+            // child: PostCreate(idEvent: event!.id),
+          ),
         );
       },
       child: Column(

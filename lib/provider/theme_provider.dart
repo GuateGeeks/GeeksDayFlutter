@@ -157,8 +157,8 @@ class MyThemes {
       ),
       //Fecha y likes
       headline2: TextStyle(
-        fontSize: 12.0,
-        fontWeight: FontWeight.w200,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w300,
         color: Color(0xFF797979),
       ),
       //Post Description
@@ -173,11 +173,9 @@ class MyThemes {
         fontSize: 22,
         color: Color(0xFF767676),
       ),
-      //BottomNavigation text
+      //Texto opciones pantalla de configuracion
       headline5: TextStyle(
-        color: Color(0xFF767676),
-        fontSize: 15.0,
-      ),
+          color: Color(0xFFD6D6D6), fontSize: 12.0, fontFamily: 'Abel'),
       //Texto Menu y comentarios
       headline6: TextStyle(
         fontSize: 15.0,

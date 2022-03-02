@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
-import 'package:geeksday/models/event.dart';
-
-import '../home.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class PostCreate extends StatefulWidget {
-  Event event;
-  PostCreate({Key? key, required this.event}) : super(key: key);
+  final String idEvent;
+
+  PostCreate({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   _PostCreateState createState() => _PostCreateState();
@@ -34,7 +34,7 @@ class _PostCreateState extends State<PostCreate> {
         ),
       ),
       body: BlocProvider(
-        create: (_) => FeedCubit(PostService(), widget.event.id),
+        create: (_) => FeedCubit(PostService(), widget.idEvent),
         child: Builder(
           builder: (context) {
             return Center(
@@ -55,13 +55,7 @@ class _PostCreateState extends State<PostCreate> {
     return BlocListener<FeedCubit, FeedState>(
       listener: (context, state) {
         if (state is PostAdded) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return Home(event: widget.event);
-              },
-            ),
-          );
+           locator<NavigationService>().navigateTo('/evento/' + widget.idEvent);
           return;
         }
       },

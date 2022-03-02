@@ -15,6 +15,8 @@ class Flurorouter{
     router.define('/configuracion', handler: configurationHandler, transitionType: TransitionType.none);
     //Events route
     router.define('/eventos', handler: eventsHandler, transitionType: TransitionType.none); 
+    //Create a new post route
+    router.define('/evento/:id/publicacion', handler: createPostHandler, transitionType: TransitionType.none);
     //Posts page route
     router.define('/evento/:id', handler: postsHandler, transitionType: TransitionType.none); 
     //Single image page route

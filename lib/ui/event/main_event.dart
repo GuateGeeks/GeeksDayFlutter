@@ -7,15 +7,10 @@ import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/implementation/event_service.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/event/form_create_event.dart';
-import 'package:geeksday/ui/home.dart';
 import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/setting.dart';
 
 class MainEvent extends StatelessWidget {
-  static Widget create(BuildContext context) {
-    return MainEvent();
-  }
-
   const MainEvent({Key? key}) : super(key: key);
 
   @override
@@ -43,13 +38,7 @@ class MainEvent extends StatelessWidget {
               child: IconButton(
                 padding: EdgeInsets.only(right: 15),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Settings();
-                      },
-                    ),
-                  );
+                  locator<NavigationService>().navigateTo('/configuracion');
                 },
                 icon: Icon(
                   Icons.menu,
@@ -137,13 +126,6 @@ class MainEvent extends StatelessWidget {
                     onTap: () {
                       locator<NavigationService>()
                           .navigateTo('/evento/' + event.id);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return Home(event: event);
-                          },
-                        ),
-                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -183,13 +165,7 @@ class MainEvent extends StatelessWidget {
   Widget textImage(BuildContext context, event) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return Home(event: event);
-            },
-          ),
-        );
+        locator<NavigationService>().navigateTo('/evento/' + event.id);
       },
       child: Container(
         color: Color.fromRGBO(255, 255, 255, 0.5),

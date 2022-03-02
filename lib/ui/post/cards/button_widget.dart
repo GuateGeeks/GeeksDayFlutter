@@ -6,7 +6,6 @@ import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/locator.dart';
-import 'package:geeksday/ui/post/post_comment.dart';
 
 class ButtonWidget extends StatelessWidget {
   final Post post;
@@ -26,7 +25,7 @@ class ButtonWidget extends StatelessWidget {
               likeButton(context, cubit),
               SizedBox(width: 5.0),
               //Comment button
-              commentButton(context, width, state.post!, cubit),
+              commentButton(context, width, cubit),
             ],
           ),
         );
@@ -64,7 +63,7 @@ class ButtonWidget extends StatelessWidget {
 
   //   //function to add comments to the post
   Widget commentButton(
-      BuildContext context, width, Post post, FeedCubit cubit) {
+      BuildContext context, width, FeedCubit cubit) {
     return Row(
       children: [
         GestureDetector(

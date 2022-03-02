@@ -115,8 +115,14 @@ class FeedCubit extends Cubit<FeedState> {
     post.commentList.add(comment);
     post.commentCount = post.commentList.length;
     _postService.updatePost(post);
-    GetPostById(post: post);
   }
+
+  void commentDeletion(String commentid, Post post) {
+    _postService.deleteComment(post, commentid);
+  }
+
+
+
 }
 
 abstract class FeedState {}

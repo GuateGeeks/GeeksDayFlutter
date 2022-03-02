@@ -7,10 +7,10 @@ import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
+    TextEditingController _controller = TextEditingController();
   //get the data from the posts
   String idPost;
   String idEvent;
@@ -120,25 +120,6 @@ class PostComment extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //we show the user's name
-                Text(
-                  userData.name,
-                  style: Theme.of(context).textTheme.headline1,
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  state.getDatePost(post.createdAt),
-                  style: Theme.of(context).textTheme.headline2,
-                  textAlign: TextAlign.right,
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -191,6 +172,7 @@ class PostComment extends StatelessWidget {
                   comment.id,
                   comment.idUser,
                   context,
+                  post,
                 ),
               ],
             ),
@@ -211,7 +193,7 @@ class PostComment extends StatelessWidget {
   }
 
   //function to delete comment
-  Widget deleteCommentButton(commentId, commentUserId, context) {
+  Widget deleteCommentButton(commentId, commentUserId, context, post) {
     //validate if the user is an administrator or the user has made a comment to show the delete comment button
     var user = BlocProvider.of<AuthCubit>(context).getUser();
     if (user.uid == commentUserId || user.isadmin == true) {
@@ -235,7 +217,7 @@ class PostComment extends StatelessWidget {
             ),
           ],
           onSelected: (_) {
-            BlocProvider.of<PostCubit>(context).commentDeletion(commentId);
+            BlocProvider.of<FeedCubit>(context).commentDeletion(commentId, post);
           },
         ),
       );
@@ -245,7 +227,6 @@ class PostComment extends StatelessWidget {
 
   //make a comment
   Widget textFormFielComment(BuildContext context, Post post) {
-    TextEditingController _controller = TextEditingController();
     return Positioned(
       bottom: 0.0,
       left: 0.0,
@@ -290,8 +271,8 @@ class PostComment extends StatelessWidget {
                   //get the information of who is making the comment
                   String idUser =
                       BlocProvider.of<AuthCubit>(context).getUserId();
-                  BlocProvider.of<PostCubit>(context)
-                      .makeComment(idUser, _controller.text);
+                  BlocProvider.of<FeedCubit>(context)
+                      .makeComment(post, idUser, _controller.text);
                 },
                 icon: Icon(
                   Icons.send,
