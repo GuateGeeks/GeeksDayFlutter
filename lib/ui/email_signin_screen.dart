@@ -213,10 +213,10 @@ class _EmailSignInState extends State<EmailSignIn> {
             ),
           //Input email
           SizedBox(height: 8),
-          EmailForm(emptyValidator, _emailController),
+          EmailForm(emptyValidator, _emailController, submitForm),
           //Input Password
           SizedBox(height: 8),
-          PasswordForm(passwordValidator, _passwordController),
+          PasswordForm(passwordValidator, _passwordController, submitForm),
           SizedBox(height: 22),
           loginButton(),
         ],
@@ -246,14 +246,7 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
             ),
           ),
-          onPressed: () {
-            if (_formKey.currentState?.validate() == true) {
-              context.read<AuthCubit>().signInWithEmailAndPassword(
-                    _emailController.text,
-                    _passwordController.text,
-                  );
-            }
-          },
+          onPressed: () => submitForm(),
         ),
       ),
     );
@@ -271,5 +264,14 @@ class _EmailSignInState extends State<EmailSignIn> {
         ),
       ),
     );
+  }
+
+  void submitForm() {
+    if (_formKey.currentState?.validate() == true) {
+      context.read<AuthCubit>().signInWithEmailAndPassword(
+            _emailController.text,
+            _passwordController.text,
+          );
+    }
   }
 }

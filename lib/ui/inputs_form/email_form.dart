@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class EmailForm extends StatelessWidget {
   String? Function(String? value) emailAndUsernameValidator;
   TextEditingController emailController;
-  EmailForm(this.emailAndUsernameValidator, this.emailController);
+  Function submitForm;
+  EmailForm(this.emailAndUsernameValidator, this.emailController, this.submitForm);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: (vallue) => submitForm(),
       style: TextStyle(color: Colors.black54),
       keyboardType: TextInputType.emailAddress,
       validator: emailAndUsernameValidator,
