@@ -144,3 +144,5 @@ class GetPostById extends FeedState {
   final Post post;
   GetPostById({required this.post});
 }
+
+class UpdateComment extends FeedState{}

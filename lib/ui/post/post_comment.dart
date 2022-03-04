@@ -38,37 +38,29 @@ class PostComment extends StatelessWidget {
           //get user id
           String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
           return Center(
-            //Main Container
-            child: Container(
+            child: Container(  
               width: maxWidth,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: ListView(
-                        children: [
-                          //function to show the image, the date and the description of the post
-                          postDescription(context, post),
-                          const Divider(
-                            height: 25,
-                            thickness: 1,
-                          ),
-                          //function to display the image, name, date and comment
-                          ...comments(context, user, post),
-                          SizedBox(
-                            height: 70,
-                          )
-                        ],
+              child: Stack(  
+                children: [
+                  ListView(
+                    children: [
+                      //function to show the image, the date and the description of the post
+                      postDescription(context, post),
+                      const Divider(
+                        height: 25,
+                        thickness: 1,
                       ),
-                    ),
-                    //Function to create a new comment
-                    textFormFielComment(context, post)
-                  ],
-                ),
+                      //function to display the image, name, date and comment
+                      ...comments(context, user, post),
+                      SizedBox(
+                        height: 70,
+                      )
+                    ],
+                  ),
+
+                  //Function to create a new comment
+                  textFormFielComment(context, post)
+                ],
               ),
             ),
           );
@@ -83,44 +75,61 @@ class PostComment extends StatelessWidget {
   Widget postDescription(context, Post post) {
     FeedCubit state = BlocProvider.of<FeedCubit>(context);
     String userId = post.idUser;
+    bool isLiked = state.likedByMe(post, userId);
     AuthUser userData =
         BlocProvider.of<AuthCubit>(context).getUserByPost(userId);
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                //verify that the user has an avatar as a profile picture and display it
-                child: SvgPicture.string(multiavatar(userData.image)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      userData.name,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      //get the date the post was made
-                      state.getDatePost(post.createdAt),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: ListTile(
+        contentPadding: EdgeInsets.all(0),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 46,
+                  height: 46,
+                  child: SvgPicture.string(multiavatar(userData.image)),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
+                SizedBox(
+                  width: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 3),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //we show the user's name
+                      Text(
+                        userData.name,
+                        style: Theme.of(context).textTheme.headline1,
+                        textAlign: TextAlign.right,
+                      ),
+                      Text(
+                        state.getDatePost(post.createdAt),
+                        style: Theme.of(context).textTheme.headline2,
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        trailing: Container(
+          margin: EdgeInsets.only(right: 5),
+          child: GestureDetector(
+              onTap: () {
+                likePost(context, post);
+                isLiked = !isLiked;
+              },
+              child: isLiked
+                  ? SvgPicture.asset('assets/icons/is_liked.svg')
+                  : SvgPicture.asset('assets/icons/like.svg')),
+        ),
       ),
     );
   }
@@ -131,50 +140,61 @@ class PostComment extends StatelessWidget {
     return post.commentList.map((comment) {
       AuthUser userData =
           BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
-      return Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+              return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      child: SvgPicture.string(
-                        multiavatar(userData.image),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 46,
+                        child: SvgPicture.string(multiavatar(userData.image)),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            userData.name,
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                          Text(
-                            //function to show the date the comment was made
-                            state.getDatePost(comment.createdAt),
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                ),
-                //button to delete comment
-                deleteCommentButton(
+                      Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //we show the user's name
+                            Text(
+                              userData.name,
+                              style: Theme.of(context).textTheme.headline1,
+                              textAlign: TextAlign.right,
+                            ),
+                            Text(
+                              //function to show the date the comment was made
+                              state.getDatePost(comment.createdAt),
+                              textAlign: TextAlign.right,
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: SizedBox(
+                height: 80,
+                width: 29,
+                child: deleteCommentButton(
                   comment.id,
                   comment.idUser,
                   context,
                   post,
                 ),
-              ],
+              ),
             ),
             SizedBox(
               height: 6.0,
@@ -284,5 +304,11 @@ class PostComment extends StatelessWidget {
         ),
       ),
     );
+  }
+
+    //function to know which user has liked the post
+  void likePost(BuildContext context, post) {
+    String userId = post.idUser;
+    BlocProvider.of<FeedCubit>(context).toggleLikeToPost(post, userId);
   }
 }
