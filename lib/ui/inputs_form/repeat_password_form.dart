@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class RepeatPasswordForm extends StatefulWidget {
   String? Function(String? value) passwordValidator;
   TextEditingController repeatPasswordController;
-  RepeatPasswordForm(this.passwordValidator, this.repeatPasswordController,
+  Function submitForm;
+  RepeatPasswordForm(this.passwordValidator, this.repeatPasswordController, this.submitForm,
       {Key? key})
       : super(key: key);
 
@@ -16,6 +17,7 @@ class _RepeatPasswordFormState extends State<RepeatPasswordForm> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: (value) => widget.submitForm(),
       style: TextStyle(color: Colors.black54),
       keyboardType: TextInputType.visiblePassword,
       obscureText: showPassword,

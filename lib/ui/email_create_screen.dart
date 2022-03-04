@@ -147,16 +147,16 @@ class _EmailCreateState extends State<EmailCreate> {
                 ),
               //Input email
               SizedBox(height: 8),
-              EmailForm(emailAndUsernameValidator, _emailController),
+              EmailForm(emailAndUsernameValidator, _emailController, submitForm),
               SizedBox(height: 8),
               //Show input Username
-              UsernameForm(emailAndUsernameValidator, _usernameController),
+              UsernameForm(emailAndUsernameValidator, _usernameController, submitForm),
               SizedBox(height: 8),
               //Show input Password
-              PasswordForm(passwordValidator, _passwordController),
+              PasswordForm(passwordValidator, _passwordController, submitForm),
               SizedBox(height: 8),
               //Show input Repear Password
-              RepeatPasswordForm(passwordValidator, _repeatPasswordController),
+              RepeatPasswordForm(passwordValidator, _repeatPasswordController, submitForm),
             ],
           ),
         ],
@@ -178,14 +178,7 @@ class _EmailCreateState extends State<EmailCreate> {
         onPressed: () {
           var random = List.generate(12, (_) => Random().nextInt(100));
           randomAvatar = random.join();
-          if (_formKey.currentState?.validate() == true) {
-            context.read<AuthCubit>().createUserWithEmailAndPassword(
-                  _emailController.text,
-                  _usernameController.text,
-                  _passwordController.text,
-                  randomAvatar,
-                );
-          }
+          submitForm();
         },
         child: Text(
           "Registrarme",
@@ -197,5 +190,16 @@ class _EmailCreateState extends State<EmailCreate> {
         ),
       ),
     );
+  }
+
+  void submitForm() {
+    if (_formKey.currentState?.validate() == true) {
+      context.read<AuthCubit>().createUserWithEmailAndPassword(
+            _emailController.text,
+            _usernameController.text,
+            _passwordController.text,
+            randomAvatar,
+          );
+    }
   }
 }

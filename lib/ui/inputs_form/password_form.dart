@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 class PasswordForm extends StatefulWidget {
   String? Function(String? value) passwordValidator;
   TextEditingController passwordController;
-  PasswordForm(
-    this.passwordValidator,
-    this.passwordController, {
-    Key? key,
-  }) : super(key: key);
+  Function submitForm;
+  PasswordForm(this.passwordValidator, this.passwordController, this.submitForm);
   @override
   _PasswordFormState createState() => _PasswordFormState();
 }
@@ -17,6 +14,7 @@ class _PasswordFormState extends State<PasswordForm> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: (value) => widget.submitForm(),
       style: TextStyle(color: Colors.black54),
       textInputAction: TextInputAction.go,
       keyboardType: TextInputType.visiblePassword,
