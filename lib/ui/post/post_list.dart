@@ -25,15 +25,24 @@ class PostList extends StatelessWidget {
             width: 150,
             fit: BoxFit.cover,
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                locator<NavigationService>().navigateTo('/configuracion');
-              },
-              icon: Icon(
-                Icons.menu,
-                size: 30,
-                color: Theme.of(context).appBarTheme.iconTheme!.color,
+          actions: [ 
+
+            Theme(
+              data: Theme.of(context).copyWith(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.only(right: 15),
+                onPressed: () {
+                  locator<NavigationService>().navigateTo('/configuracion');
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                  size: 30,
+                ),
               ),
             ),
           ],
