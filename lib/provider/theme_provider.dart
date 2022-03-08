@@ -53,7 +53,9 @@ class MyThemes {
     //BackgroundColor
     scaffoldBackgroundColor: Color(0xFF2B2B2B),
     // Thema Principal
-    colorScheme: ColorScheme.dark(),
+    colorScheme: ColorScheme.dark(
+      primary: Colors.black45,
+    ),
     //Estilos de texto
     textTheme: TextTheme(
       //Nombre de usuarios
@@ -228,5 +230,8 @@ class MyThemes {
       ),
     )),
     primaryColor: Color(0xFF4A4A4A),
+    colorScheme: ColorScheme.dark(
+      primary: Colors.grey.shade300
+    )
   );
 }

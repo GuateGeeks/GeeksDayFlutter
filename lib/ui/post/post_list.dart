@@ -26,7 +26,6 @@ class PostList extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           actions: [ 
-
             Theme(
               data: Theme.of(context).copyWith(
                 highlightColor: Colors.transparent,
@@ -61,15 +60,18 @@ class PostList extends StatelessWidget {
   Widget postListBody(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    return BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
-      if (!(state is PostLoaded)) {
-        return Center(child: CircularProgressIndicator());
-      }
-      final posts = state.post;
-      return (posts.isEmpty)
-          ? postListEmpty()
-          : postsCards(context, maxWidth, posts);
-    });
+    return Container(
+      color: Theme.of(context).colorScheme.primary,
+      child: BlocBuilder<FeedCubit, FeedState>(builder: (context, state) {
+        if (!(state is PostLoaded)) {
+          return Center(child: CircularProgressIndicator());
+        }
+        final posts = state.post;
+        return (posts.isEmpty)
+            ? postListEmpty()
+            : postsCards(context, maxWidth, posts);
+      }),
+    );
   }
 
   Widget postsCards(context, double maxWidth, List<Post> posts) {

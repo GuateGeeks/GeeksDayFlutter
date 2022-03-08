@@ -14,17 +14,29 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PostCubit(PostService(), this.post),
-      child: posts(),
+      child: posts(context),
     );
   }
 
-  Widget posts() {
+  Widget posts(context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
-          HeaderCard(post: post),
-          BodyCard(post: post),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: HeaderCard(post: post),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+            child: BodyCard(post: post),
+          ),
+          SizedBox(
+            child: Container(
+              height: 10,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
         ],
       ),
     );
