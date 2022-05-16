@@ -93,15 +93,15 @@ class MyThemes {
       ),
       //Estilos Texto Perfil de usuario
       headline3: TextStyle(
-        fontSize: 20.0,
-        fontWeight: FontWeight.w800,
-        color: Colors.white,
+        fontSize: 24.0,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF5093FF),
       ),
       //Numeros perfil de usuario
       caption: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w600,
-        color: Colors.grey,
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+        color: Color(0xFFD6D6D6),
       ),
       //text style Sing up and login
       overline: TextStyle(
@@ -184,15 +184,15 @@ class MyThemes {
       ),
       //Estilos Texto Perfil de usuario
       headline3: TextStyle(
-        fontSize: 20.0,
-        fontWeight: FontWeight.w800,
-        color: Colors.black,
+        fontSize: 24.0,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF4B3BAB),
       ),
       //Numeros perfil de usuario
       caption: TextStyle(
-        fontSize: 15.0,
-        fontWeight: FontWeight.w600,
-        color: Colors.grey,
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+        color: Color(0xFF9A9C9E),
       ),
       //text style Sing up and login
       overline: TextStyle(

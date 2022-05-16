@@ -1,15 +1,15 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class AuthCubit extends Cubit<AuthState> {
   final AuthServiceBase _authService;
   late StreamSubscription _authSubscription;
 
-  AuthCubit(this._authService) : super(AuthInitialState()){
+  AuthCubit(this._authService) : super(AuthInitialState()) {
     getUsersList();
   }
 
@@ -60,15 +60,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> getUsersList() async {
     List<AuthUser> users = [];
     _list = await _authService.getUsersList();
-    _list.forEach((user) { 
+    _list.forEach((user) {
       users.add(user);
     });
   }
 
-  AuthUser getUserByPost(String userId){
+  AuthUser getUserByPost(String userId) {
     var user;
     _list.forEach((element) {
-      if(element.uid == userId){
+      if (element.uid == userId) {
         user = element;
       }
     });
@@ -108,8 +108,22 @@ class AuthCubit extends Cubit<AuthState> {
         (state as AuthSignedIn).user.copyWith(name: userName, image: avatar);
     _authService.updateUser(user).then((value) {
       emit(UpdateUser());
-
     });
+  }
+
+  String randomAvatar = "";
+
+  generateAvatar() {
+    var random = List.generate(12, (_) => Random().nextInt(100));
+    randomAvatar = random.join();
+  }
+
+  getAvatar(avatarUser) {
+    if (randomAvatar == "") {
+      return avatarUser;
+    } else {
+      return randomAvatar;
+    }
   }
 }
 
@@ -142,4 +156,4 @@ class AuthSignedIn extends AuthState {
   List<Object?> get props => [user];
 }
 
-class UpdateUser extends AuthState{}
+class UpdateUser extends AuthState {}
