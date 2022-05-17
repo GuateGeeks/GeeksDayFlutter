@@ -86,8 +86,10 @@ class AuthCubit extends Cubit<AuthState> {
     return super.close();
   }
 
-  AuthUser getUser() {
-    return (state as AuthSignedIn).user;
+  AuthUser? getUser() {
+    if (state is AuthSignedIn) {
+      return (state as AuthSignedIn).user;
+    }
   }
 
   String getUserImage() {

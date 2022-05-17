@@ -25,8 +25,7 @@ class PostList extends StatelessWidget {
             width: 150,
             fit: BoxFit.cover,
           ),
-          actions: [ 
-
+          actions: [
             Theme(
               data: Theme.of(context).copyWith(
                 highlightColor: Colors.transparent,

@@ -17,7 +17,7 @@ class MainEvent extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
-    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser()!;
     return BlocProvider(
       create: (_) => EventCubit(EventService(), user),
       child: Scaffold(

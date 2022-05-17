@@ -15,7 +15,7 @@ class PostOptions extends StatefulWidget {
 class _PostOptionsState extends State<PostOptions> {
   @override
   Widget build(BuildContext context) {
-    var userData = BlocProvider.of<AuthCubit>(context).getUser();
+    var userData = BlocProvider.of<AuthCubit>(context).getUser()!;
     PostCubit state = BlocProvider.of<PostCubit>(context);
     List<String> choices = [];
 
@@ -34,12 +34,11 @@ class _PostOptionsState extends State<PostOptions> {
       ),
       child: PopupMenuButton<String>(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        icon:  Icon(
-            Icons.more_vert_rounded,
-            color: Color(0xFF0E89AF),
-            size: 35,
-            textDirection: TextDirection.ltr,
-          
+        icon: Icon(
+          Icons.more_vert_rounded,
+          color: Color(0xFF0E89AF),
+          size: 35,
+          textDirection: TextDirection.ltr,
         ),
         tooltip: "Ver Opciones",
         itemBuilder: (BuildContext context) {

@@ -22,17 +22,17 @@ class _FormCreateEventState extends State<FormCreateEvent> {
   File? uploadedImage;
   @override
   Widget build(BuildContext context) {
-    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser()!;
     return BlocProvider(
       create: (_) => EventCubit(EventService(), user),
       child: bodyFormCreateEvent(),
     );
   }
 
-  Widget bodyFormCreateEvent(){
+  Widget bodyFormCreateEvent() {
     return BlocListener<EventCubit, EventState>(
-      listener: (context, state){
-        if(state is EventAdded){
+      listener: (context, state) {
+        if (state is EventAdded) {
           Navigator.pop(context);
           return;
         }
@@ -40,9 +40,10 @@ class _FormCreateEventState extends State<FormCreateEvent> {
       child: modalForm(),
     );
   }
-    //Function that shows the modal when clicking on the floatingActionButton
+
+  //Function that shows the modal when clicking on the floatingActionButton
   Widget modalForm() {
-    bool isAdmin = Provider.of<AuthCubit>(context).getUser().isadmin;
+    bool isAdmin = Provider.of<AuthCubit>(context).getUser()!.isadmin;
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
     return BlocBuilder<EventCubit, EventState>(builder: (context, state) {
@@ -87,7 +88,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     });
   }
 
-    //form to create a new event
+  //form to create a new event
   Widget formCreateEvent(BuildContext context, maxWidth) {
     return Container(
       width: maxWidth,
@@ -129,8 +130,7 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     );
   }
 
-
-    Widget formRegistrationEvent() {
+  Widget formRegistrationEvent() {
     return Form(
       child: TextFormField(
         autofocus: true,
@@ -143,10 +143,9 @@ class _FormCreateEventState extends State<FormCreateEvent> {
     );
   }
 
-  
   //button to save in new event
   Widget buttonSave(BuildContext context, EventState state) {
-    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser();
+    AuthUser user = BlocProvider.of<AuthCubit>(context).getUser()!;
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       child: ValueListenableBuilder<TextEditingValue>(
@@ -163,14 +162,16 @@ class _FormCreateEventState extends State<FormCreateEvent> {
               padding:
                   MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20)),
             ),
-            child: (state is AddingEvent) ? CircularProgressIndicator(color: Colors.white) : Text("Guardar"),
+            child: (state is AddingEvent)
+                ? CircularProgressIndicator(color: Colors.white)
+                : Text("Guardar"),
           );
         },
       ),
     );
   }
 
-    //Function to save an event
+  //Function to save an event
   void saveEvent(BuildContext context, TextEditingValue value, String userId) {
     //If the event name is empty, we validate that the user joins an event. If the event name  is not empty, we create an event
     if (value.text.isNotEmpty) {
@@ -178,13 +179,12 @@ class _FormCreateEventState extends State<FormCreateEvent> {
         BlocProvider.of<EventCubit>(context)
             .createEvent(nameEvent.text, codigoEvent.text);
       } else {
-        BlocProvider.of<EventCubit>(context)
-            .registerInEvent(codigoEvent.text);
+        BlocProvider.of<EventCubit>(context).registerInEvent(codigoEvent.text);
       }
     }
   }
-  
-    //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
+
+  //function that is responsible for sending the selected image to the cubit, and then that image is displayed in the modal by fetching it from the PreviewImage file
   uploadImage(BuildContext context) {
     var uploadInput = FileUploadInputElement()..accept = 'image/*';
     uploadInput.click();

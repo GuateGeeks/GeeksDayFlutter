@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
         if (state is AuthSignedOut) {
           locator<NavigationService>().navigateTo('/login');
         } else if (state is AuthSignedIn) {
-          locator<NavigationService>().navigateTo('/eventos');
+          locator<NavigationService>()
+              .navigateTo(locator<NavigationService>().currentRoute);
         }
       },
       child: MyApp(),

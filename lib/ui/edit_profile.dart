@@ -21,7 +21,7 @@ class EditProfile extends StatelessWidget {
         title: Text("Editar Perfil"),
         centerTitle: true,
         leading: ReturnButton(),
-      ), 
+      ),
       body: BodyEditUserProfile(),
     );
   }
@@ -41,14 +41,14 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    var userData = BlocProvider.of<AuthCubit>(context).getUser();
+    var userData = BlocProvider.of<AuthCubit>(context).getUser()!;
 
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 400 ? 400 : width;
 
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state){
-        if(state is UpdateUser){
+      listener: (context, state) {
+        if (state is UpdateUser) {
           locator<NavigationService>().navigateTo('/perfil/' + userData.uid);
         }
       },
@@ -92,6 +92,7 @@ class _BodyEditUserProfileState extends State<BodyEditUserProfile> {
       ),
     );
   }
+
   //Widget to display the user's avatar
   Widget avatarWidget(String randomAvatar) {
     String rawSvg = multiavatar(randomAvatar);

@@ -23,7 +23,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser();
+    AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser()!;
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 400 ? 400 : width;
 

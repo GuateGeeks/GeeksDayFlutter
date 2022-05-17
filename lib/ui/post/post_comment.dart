@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class PostComment extends StatelessWidget {
-    TextEditingController _controller = TextEditingController();
+  TextEditingController _controller = TextEditingController();
   //get the data from the posts
   String idPost;
   String idEvent;
@@ -36,11 +36,11 @@ class PostComment extends StatelessWidget {
         if (state is GetPostById) {
           Post post = state.post;
           //get user id
-          String user = BlocProvider.of<AuthCubit>(context).getUser().uid;
+          String user = BlocProvider.of<AuthCubit>(context).getUser()!.uid;
           return Center(
-            child: Container(  
+            child: Container(
               width: maxWidth,
-              child: Stack(  
+              child: Stack(
                 children: [
                   ListView(
                     children: [
@@ -140,7 +140,7 @@ class PostComment extends StatelessWidget {
     return post.commentList.map((comment) {
       AuthUser userData =
           BlocProvider.of<AuthCubit>(context).getUserByPost(comment.idUser);
-              return Container(
+      return Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +215,7 @@ class PostComment extends StatelessWidget {
   //function to delete comment
   Widget deleteCommentButton(commentId, commentUserId, context, post) {
     //validate if the user is an administrator or the user has made a comment to show the delete comment button
-    var user = BlocProvider.of<AuthCubit>(context).getUser();
+    var user = BlocProvider.of<AuthCubit>(context).getUser()!;
     if (user.uid == commentUserId || user.isadmin == true) {
       return Theme(
         data: Theme.of(context).copyWith(
@@ -237,7 +237,8 @@ class PostComment extends StatelessWidget {
             ),
           ],
           onSelected: (_) {
-            BlocProvider.of<FeedCubit>(context).commentDeletion(commentId, post);
+            BlocProvider.of<FeedCubit>(context)
+                .commentDeletion(commentId, post);
           },
         ),
       );
@@ -306,7 +307,7 @@ class PostComment extends StatelessWidget {
     );
   }
 
-    //function to know which user has liked the post
+  //function to know which user has liked the post
   void likePost(BuildContext context, post) {
     String userId = post.idUser;
     BlocProvider.of<FeedCubit>(context).toggleLikeToPost(post, userId);

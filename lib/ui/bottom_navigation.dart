@@ -155,7 +155,7 @@ class BottomNavigation extends StatelessWidget {
   Widget profilePage(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser();
+        AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser()!;
         locator<NavigationService>().navigateTo('/perfil/' + userData.uid);
       },
       child: Column(
