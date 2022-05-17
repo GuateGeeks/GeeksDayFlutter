@@ -71,7 +71,7 @@ class MyThemes {
       ),
       //Post Description
       bodyText1: TextStyle(
-        fontFamily: 'assets/fonts/Biryani-ExtraLight.ttf',
+        fontFamily: 'EmojiOne',
         fontSize: 12.0,
         fontWeight: FontWeight.w100,
         letterSpacing: 0.7,
@@ -163,6 +163,7 @@ class MyThemes {
       ),
       //Post Description
       bodyText1: TextStyle(
+        fontFamily: 'EmojiOne',
         fontSize: 12.0,
         fontWeight: FontWeight.w100,
         letterSpacing: 0.7,
