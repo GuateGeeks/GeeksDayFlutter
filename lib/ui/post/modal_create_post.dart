@@ -62,7 +62,8 @@ class ModalCreatePost extends StatelessWidget {
   Widget createPost(context) {
     return GestureDetector(
       onTap: () {
-        locator<NavigationService>().navigateTo("/evento/"+idEvent+"/publicacion");
+        locator<NavigationService>()
+            .navigateTo("/evento/" + idEvent + "/publicacion");
       },
       child: Row(
         children: [
@@ -79,7 +80,9 @@ class ModalCreatePost extends StatelessWidget {
 
   Widget createQuiz(context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        locator<NavigationService>().navigateTo("/evento/" + idEvent + "/quiz");
+      },
       child: Row(
         children: [
           Icon(

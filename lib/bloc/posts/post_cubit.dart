@@ -76,6 +76,20 @@ class PostCubit extends Cubit<PostState> {
     return state.post!.imageRoute;
   }
 
+  //create post or quiz
+  Future<void> createPost(String text, [List<Answer>? answers]) async {
+    state.post!.text = text;
+    if (state.post!.text.isEmpty || _pickedImage == null) {
+      emit(PostNotCreated(
+          state.post!, "La imagen y la descripción son requeridos"));
+    }
+    if (state.post!.quiz != null && answers != null) {
+      state.post!.quiz!.questions[0].answers = answers;
+    }
+    _postService.createPost(state.post!, _pickedImage!);
+    emit(PostCreated(state.post!));
+  }
+
   //function to save the id of the user who likes a post
   void toggleLikeToPost(String uid) {
     //We verify if the user had already liked it, if so, the id of the database is eliminated, otherwise it is added
@@ -132,6 +146,11 @@ class PostCubit extends Cubit<PostState> {
   //this function shows in the modal the option to  create a quiz
   void setQuiz(Quiz? quiz) {
     state.post!.quiz = quiz;
+    emit(PostSetQuiz(state.post));
+  }
+
+  void setupQuiz() {
+    state.post!.quiz = Quiz.newQuiz();
     emit(PostSetQuiz(state.post));
   }
 
@@ -250,6 +269,11 @@ class PostInitialState extends PostState {
 class PostLoaded extends PostState {
   final List<Post> listPost;
   PostLoaded({required Post post, required this.listPost}) : super(post);
+}
+
+class PostNotCreated extends PostState {
+  final String message;
+  PostNotCreated(Post post, this.message) : super(post);
 }
 
 class PostCreated extends PostState {
