@@ -38,24 +38,29 @@ class MyThemes {
   static final darkTheme = ThemeData(
     fontFamily: 'Biryani',
     //Color del AppBar
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color: Colors.black54,
       toolbarTextStyle: TextStyle(
         fontFamily: 'Abel',
         color: Colors.white,
-        fontWeight: FontWeight.w100,
         fontSize: 24,
       ),
       iconTheme: IconThemeData(
         color: Color(0xFF0E89AF),
       ),
+      titleTextStyle: TextStyle(
+        fontFamily: 'Biryani',
+        color: Colors.white,
+        fontWeight: FontWeight.w100,
+        fontSize: 24,
+      ),
     ),
     //BackgroundColor
-    scaffoldBackgroundColor: Color(0xFF2B2B2B),
+    scaffoldBackgroundColor: const Color(0xFF2B2B2B),
     // Thema Principal
-    colorScheme: ColorScheme.dark(),
+    colorScheme: const ColorScheme.dark(),
     //Estilos de texto
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       //Nombre de usuarios
       headline1: TextStyle(
         height: 1,
@@ -110,13 +115,13 @@ class MyThemes {
           fontWeight: FontWeight.w600),
     ),
     //Estilos inputs Crear Post/Quiz
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
         hintStyle: TextStyle(color: Colors.white),
         fillColor: Color.fromRGBO(74, 74, 74, 0.25)),
     //Color botones like y coment
     buttonColor: Color.fromRGBO(0, 0, 0, 0),
     //Icons Color
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Color(0xFFD6D6D6),
     ),
     //DropdownButton color (admin)
@@ -128,7 +133,7 @@ class MyThemes {
   static final lightTheme = ThemeData(
     fontFamily: 'Biryani',
     //Color del appbar
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       toolbarTextStyle: TextStyle(
         fontFamily: 'Abel',
@@ -147,7 +152,7 @@ class MyThemes {
     //BackgroundColor
     scaffoldBackgroundColor: Colors.white,
     //Estilos de texto
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       //Nombre de usuarios
       headline1: TextStyle(
         height: 1,
@@ -206,16 +211,16 @@ class MyThemes {
     //BottomNavbar Style
     backgroundColor: Color(0xFF4A4A4A),
     //Icons Color
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white,
     ),
 
     //Estilos inputs Crear Post/Quiz
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       fillColor: Color.fromRGBO(214, 214, 214, 1),
     ),
     //Color botones like y coment
-    buttonColor: Color.fromRGBO(235, 235, 235, .6),
+    buttonColor: const Color.fromRGBO(235, 235, 235, .6),
 
     //DropdownButton color (admin)
     selectedRowColor: Colors.black12,
@@ -223,11 +228,11 @@ class MyThemes {
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
       primary: Colors.black,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 17,
       ),
     )),
-    primaryColor: Color(0xFF4A4A4A),
+    primaryColor: const Color(0xFF4A4A4A),
   );
 }

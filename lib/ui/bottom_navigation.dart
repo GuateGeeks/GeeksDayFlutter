@@ -5,11 +5,19 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/locator.dart';
-import 'package:geeksday/ui/post/modal_create_post.dart';
+import 'package:get_it/get_it.dart';
+
+GetIt guateGeeksBottomNavigatonBar = GetIt.instance;
+void setupBottonNavigationLocator(idEvent) {
+  if (!guateGeeksBottomNavigatonBar.isRegistered<BottomNavigation>()) {
+    guateGeeksBottomNavigatonBar.registerLazySingleton<BottomNavigation>(
+        () => BottomNavigation(idEvent: idEvent));
+  }
+}
 
 class BottomNavigation extends StatelessWidget {
   final String idEvent;
-  BottomNavigation({required this.idEvent});
+  const BottomNavigation({Key? key, required this.idEvent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +25,7 @@ class BottomNavigation extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       elevation: 30,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,14 +50,14 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 1),
+            margin: const EdgeInsets.only(top: 1),
             child: SvgPicture.asset(
               "assets/icons/home.svg",
               height: 33,
               width: 32,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 1,
           ),
           Text(
@@ -67,14 +75,14 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 5),
+            margin: const EdgeInsets.only(top: 5),
             child: SvgPicture.asset(
               "assets/icons/search.svg",
               height: 24,
               width: 28,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6.0,
           ),
           Text(
@@ -107,14 +115,14 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 2),
+            margin: const EdgeInsets.only(top: 2),
             child: SvgPicture.asset(
               "assets/icons/plus.svg",
               height: 32,
               width: 32,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 1,
           ),
           Text(
@@ -135,14 +143,14 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 2.5),
+            margin: const EdgeInsets.only(top: 2.5),
             child: SvgPicture.asset(
               "assets/icons/events.svg",
               height: 30,
               width: 30,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Text(
@@ -164,14 +172,14 @@ class BottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 5.5),
+            margin: const EdgeInsets.only(top: 5.5),
             child: SvgPicture.asset(
               "assets/icons/user.svg",
               height: 26,
               width: 29,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           Text(

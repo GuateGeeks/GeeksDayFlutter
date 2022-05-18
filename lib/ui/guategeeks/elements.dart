@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/bottom_navigation.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/locator.dart';
 import 'package:rive/rive.dart' as rive;
@@ -8,27 +9,40 @@ class GuateGeeksScaffold extends StatelessWidget {
   final Widget body;
   Widget? floatingActionButton;
   Widget? bottomNavigationBar;
-  GuateGeeksScaffold(
-      {Key? key,
-      required this.body,
-      this.floatingActionButton,
-      this.bottomNavigationBar})
-      : super(key: key);
+  final String? idEvent;
+  GuateGeeksScaffold({
+    Key? key,
+    required this.body,
+    this.floatingActionButton,
+    this.bottomNavigationBar,
+    this.idEvent,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (idEvent != null && bottomNavigationBar == null) {
+      setupBottonNavigationLocator(idEvent);
+      bottomNavigationBar = BottomNavigation(idEvent: idEvent!);
+      bottomNavigationBar ??= guateGeeksBottomNavigatonBar<BottomNavigation>();
+    }
+
+    if (bottomNavigationBar == null &&
+        guateGeeksBottomNavigatonBar.isRegistered<BottomNavigation>()) {
+      bottomNavigationBar = guateGeeksBottomNavigatonBar<BottomNavigation>();
+    }
+
     return Scaffold(
       appBar: AppBar(
-        leading: ReturnButton(),
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Center(
+        leading: const ReturnButton(),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Center(
           child: SizedBox(
             width: 200,
             height: 37,
             child: rive.RiveAnimation.network(
-              '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
+              '/assets/rive/guategeeks_logo.riv',
               artboard: 'full_logo',
-              animations: const ['single_blink_loop'],
+              animations: ['single_blink_loop'],
             ),
           ),
         ),
@@ -40,7 +54,7 @@ class GuateGeeksScaffold extends StatelessWidget {
               hoverColor: Colors.transparent,
             ),
             child: IconButton(
-              padding: EdgeInsets.only(right: 15, left: 15),
+              padding: const EdgeInsets.only(right: 15, left: 15),
               icon: Icon(
                 Icons.menu,
                 color: Theme.of(context).appBarTheme.iconTheme!.color,
