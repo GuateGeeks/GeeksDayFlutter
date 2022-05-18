@@ -32,8 +32,13 @@ class QuizForm extends StatelessWidget {
                   BlocProvider.of<PostCubit>(context).unsetQuiz();
                 }
               }),
-          Column(
-            children: _questions,
+          Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.2),
+            child: ListView(
+              shrinkWrap: true,
+              children: _questions,
+            ),
           ),
           AbsorbPointer(
             absorbing: !cubit.isQuizEnabled(),

@@ -82,6 +82,7 @@ class PostCubit extends Cubit<PostState> {
     if (state.post!.text.isEmpty || _pickedImage == null) {
       emit(PostNotCreated(
           state.post!, "La imagen y la descripción son requeridos"));
+      return;
     }
     if (state.post!.quiz != null && answers != null) {
       state.post!.quiz!.questions[0].answers = answers;

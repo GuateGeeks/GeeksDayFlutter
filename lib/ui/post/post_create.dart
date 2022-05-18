@@ -57,9 +57,16 @@ class _PostCreateState extends State<PostCreate> {
             return Center(
               child: Container(
                 width: maxWidth,
+                height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.fromLTRB(45, 25, 45, 5),
                 alignment: Alignment.topCenter,
-                child: createPostBody(context, uploadedImage),
+                child: Stack(children: [
+                  createPostBody(context, uploadedImage),
+                  Positioned(
+                      bottom: 50,
+                      width: maxWidth - 90,
+                      child: Center(child: savePost())),
+                ]),
               ),
             );
           },
@@ -80,28 +87,30 @@ class _PostCreateState extends State<PostCreate> {
           ));
         }
       },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            descriptionAndImage(context, uploadedImage),
-            const SizedBox(
-              height: 40,
+      child: Column(
+        children: [
+          descriptionAndImage(context, uploadedImage),
+          const SizedBox(
+            height: 40,
+          ),
+          const Divider(
+            thickness: 1,
+            height: 1.5,
+            color: Color(0xFFE5E5E5),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5),
+            child: ListView(
+              children: [
+                QuizForm(),
+              ],
             ),
-            const Divider(
-              thickness: 1,
-              height: 1.5,
-              color: Color(0xFFE5E5E5),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            QuizForm(),
-            const SizedBox(
-              height: 10,
-            ),
-            savePost()
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
