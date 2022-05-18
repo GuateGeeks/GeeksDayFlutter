@@ -13,7 +13,8 @@ class PreviewImage extends StatelessWidget {
     if (uploadedImage != null) {
       BlobImage blobImage =
           new BlobImage(uploadedImage, name: uploadedImage!.name);
-      return Container(
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
         child: Image.network(
           blobImage.url,
           width: double.infinity,

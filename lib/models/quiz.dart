@@ -7,6 +7,10 @@ class Quiz extends Equatable {
   List<String> usersresponded;
   Quiz(this.questions, this.usersresponded);
 
+  factory Quiz.newQuiz() {
+    return Quiz([Question("", [])], []);
+  }
+
   Map<String, Object?> toFirebaseMap() {
     return <String, Object?>{
       'id': id,
@@ -21,11 +25,11 @@ class Quiz extends Equatable {
         .toList();
     var usersresponded = <String>[];
 
-    if(data['usersresponded'] != null){
+    if (data['usersresponded'] != null) {
       final list = data['usersresponded'];
-      if(list is List){
-        data["usersresponded"].forEach((value){
-          if(value is String){
+      if (list is List) {
+        data["usersresponded"].forEach((value) {
+          if (value is String) {
             usersresponded.add(value);
           }
         });
