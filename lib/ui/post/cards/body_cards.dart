@@ -32,6 +32,9 @@ class BodyCard extends StatelessWidget {
           ButtonWidget(post: post),
           postDescription(context),
           ProgressBar(post: post),
+          const SizedBox(
+            height: 30,
+          )
         ],
       ),
     );
