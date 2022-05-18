@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/bottom_navigation.dart';
+import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/post/post_card.dart';
 
@@ -16,36 +17,7 @@ class PostList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => FeedCubit(PostService(), this.idEvent),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          iconTheme: IconThemeData(color: Colors.white),
-          title: Image.asset(
-            'assets/guateGeeksLogo.png',
-            width: 150,
-            fit: BoxFit.cover,
-          ),
-          actions: [
-            Theme(
-              data: Theme.of(context).copyWith(
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-              ),
-              child: IconButton(
-                padding: EdgeInsets.only(right: 15),
-                onPressed: () {
-                  locator<NavigationService>().navigateTo('/configuracion');
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).appBarTheme.iconTheme!.color,
-                  size: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
+      child: GuateGeeksScaffold(
         bottomNavigationBar: BottomNavigation(idEvent: idEvent),
         body: Builder(
           builder: (context) {

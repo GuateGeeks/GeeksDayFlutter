@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/locator.dart';
 
 class ReturnButton extends StatelessWidget {
   const ReturnButton({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class ReturnButton extends StatelessWidget {
           color: Theme.of(context).appBarTheme.iconTheme!.color,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          locator<NavigationService>().goBack();
         },
         tooltip: 'Regresar',
       );

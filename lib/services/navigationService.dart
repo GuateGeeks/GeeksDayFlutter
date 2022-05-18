@@ -14,7 +14,9 @@ class NavigationService {
 
   String get currentRoute => _currentRoute;
 
-  void goBack(String routeName) {
-    return navigatorKey.currentState!.pop();
+  void goBack() {
+    if (navigatorKey.currentState!.canPop()) {
+      navigatorKey.currentState!.pop();
+    }
   }
 }

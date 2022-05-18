@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatefulWidget {
@@ -30,7 +31,7 @@ class _UserProfileState extends State<UserProfile> {
     String randomAvatar =
         BlocProvider.of<AuthCubit>(context).getAvatar(userData.image);
 
-    return Scaffold(
+    return GuateGeeksScaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [

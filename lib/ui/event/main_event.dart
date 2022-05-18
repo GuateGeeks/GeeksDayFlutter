@@ -7,6 +7,7 @@ import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/implementation/event_service.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/event/form_create_event.dart';
+import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/setting.dart';
 
@@ -20,35 +21,7 @@ class MainEvent extends StatelessWidget {
     AuthUser user = BlocProvider.of<AuthCubit>(context).getUser()!;
     return BlocProvider(
       create: (_) => EventCubit(EventService(), user),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Image.asset(
-            'assets/guateGeeksLogo.png',
-            width: 150,
-            fit: BoxFit.cover,
-          ),
-          actions: [
-            Theme(
-              data: Theme.of(context).copyWith(
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-              ),
-              child: IconButton(
-                padding: EdgeInsets.only(right: 15),
-                onPressed: () {
-                  locator<NavigationService>().navigateTo('/configuracion');
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).appBarTheme.iconTheme!.color,
-                  size: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
+      child: GuateGeeksScaffold(
         floatingActionButton: floatingButton(context),
         body: Builder(
           builder: (context) {
@@ -127,26 +100,29 @@ class MainEvent extends StatelessWidget {
                       locator<NavigationService>()
                           .navigateTo('/evento/' + event.id);
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(22),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black38,
-                            spreadRadius: 0,
-                            blurRadius: 7,
-                            offset: Offset(0, 7), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      width: double.infinity,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          child: Image.network(
-                            event.image,
-                            height: 262,
-                            fit: BoxFit.cover,
+                    child: AspectRatio(
+                      aspectRatio: 3 / 2,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black38,
+                              spreadRadius: 0,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 7), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            child: Image.network(
+                              event.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

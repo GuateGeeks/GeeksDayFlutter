@@ -9,6 +9,7 @@ import 'package:geeksday/bloc/posts/quiz_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
 import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/helpers/preview_images.dart';
 import 'package:geeksday/ui/locator.dart';
 
@@ -31,14 +32,7 @@ class _PostCreateState extends State<PostCreate> {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
 
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Image.asset(
-          "assets/guateGeeksLogo.png",
-          width: 150,
-        ),
-      ),
+    return GuateGeeksScaffold(
       body: MultiBlocProvider(
         providers: [
           BlocProvider<PostCubit>(create: (_) {
