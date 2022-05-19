@@ -20,7 +20,7 @@ const RESOURCES = {
 "version.json": "5fb9b9333e4f055a8847cb92bfb74be8",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
-"assets/AssetManifest.json": "f9be15bfb9069df1f2b648ac87274933",
+"assets/AssetManifest.json": "aaf26b6dd31744c650523699b306455d",
 "assets/NOTICES": "bb89bc7e346afeaa2ebe7560f6d2625b",
 "assets/FontManifest.json": "26be0fe0a0291aab5d0be165f0db29ad",
 "assets/assets/prueba.jpg": "07b405dbf42fbad21f4255a804c59cef",
@@ -44,6 +44,7 @@ const RESOURCES = {
 "assets/assets/icons/user.svg": "1acd64a4893d4eced9cdf04226e8f283",
 "assets/assets/icons/search.svg": "119cb00d694da2af81c8e0220bbec50e",
 "assets/assets/icon_question.png": "f113f43571c39cb02a19246fb1663113",
+"assets/assets/guateGeeksLogo.svg": "42bcb7f99cf21682a5c367b8a0f6bc30",
 "assets/assets/logo.png": "7ae9268be56ac553cc479ece48e05991",
 "assets/assets/guateGeeksLogo.png": "c50ee6617a91e4c9527da1a055cfddbd",
 "assets/assets/icon_google.png": "28b51fa69f1f0cb8a8f7a4bdd8e173c9",
@@ -53,8 +54,8 @@ const RESOURCES = {
 "assets/assets/rive/guategeeks_logo.riv": "4f2f8c386e574601cc9ec83f849d23f2",
 "assets/assets/icon_email.png": "37f207403ee19ea3f7b9e72200462eac",
 "flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
-"index.html": "763f442584891ab66d713ad38403ad48",
-"/": "763f442584891ab66d713ad38403ad48",
+"index.html": "f26c526a4c33b899551ad21713ab16fc",
+"/": "f26c526a4c33b899551ad21713ab16fc",
 "manifest.json": "319edca442278260d562f567020c332d"
 };
 
