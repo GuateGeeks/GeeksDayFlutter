@@ -54,8 +54,8 @@ const RESOURCES = {
 "assets/assets/rive/guategeeks_logo.riv": "4f2f8c386e574601cc9ec83f849d23f2",
 "assets/assets/icon_email.png": "37f207403ee19ea3f7b9e72200462eac",
 "flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
-"index.html": "f26c526a4c33b899551ad21713ab16fc",
-"/": "f26c526a4c33b899551ad21713ab16fc",
+"index.html": "7179c898f4a6bd88b9a9d26f6c20e3f4",
+"/": "7179c898f4a6bd88b9a9d26f6c20e3f4",
 "manifest.json": "319edca442278260d562f567020c332d"
 };
 
