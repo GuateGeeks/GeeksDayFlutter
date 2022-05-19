@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/helpers/return_button.dart';
 import 'package:geeksday/ui/locator.dart';
 import 'package:multiavatar/multiavatar.dart';
@@ -15,13 +16,7 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        title: Text("Editar Perfil"),
-        centerTitle: true,
-        leading: ReturnButton(),
-      ),
+    return GuateGeeksScaffold(
       body: BodyEditUserProfile(),
     );
   }

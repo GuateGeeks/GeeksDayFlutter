@@ -48,26 +48,26 @@ class BodyCard extends StatelessWidget {
         locator<NavigationService>().navigateTo(
             '/evento/' + post.idEvent + '/publicacion/' + post.id + '/imagen');
       },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10, top: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black38,
-              spreadRadius: 0,
-              blurRadius: 7,
-              offset: Offset(0, 7), // changes position of shadow
-            ),
-          ],
-        ),
-        width: double.infinity,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(22.0),
-          child: Container(
+      child: AspectRatio(
+        aspectRatio: 3 / 2,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10, top: 10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            boxShadow: [
+              const BoxShadow(
+                color: Colors.black38,
+                spreadRadius: 0,
+                blurRadius: 7,
+                offset: Offset(0, 7), // changes position of shadow
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22.0),
             child: Image.network(
               post.imageRoute!,
-              height: height,
               fit: BoxFit.cover,
             ),
           ),

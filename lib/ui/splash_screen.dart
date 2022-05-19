@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
+import 'guategeeks/elements.dart';
+
 class SplashScreen extends StatelessWidget {
   static Widget create(BuildContext context) => SplashScreen();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GuateGeeksScaffold(
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 15),
-              child: Text('Estamos preparando todo', 
+              child: Text(
+                'Estamos preparando todo',
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -21,7 +24,6 @@ class SplashScreen extends StatelessWidget {
               fontSize: 30.0,
               color: Theme.of(context).primaryColor,
             ),
-            
           ],
         ),
       ),
