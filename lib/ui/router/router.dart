@@ -9,6 +9,12 @@ class Flurorouter {
     //Login route
     router.define('/login',
         handler: loginHandler, transitionType: TransitionType.none);
+    //Admin route
+    router.define('/admin',
+        handler: adminHandler, transitionType: TransitionType.none);
+    //Admin route
+    router.define('/socialMetrics',
+        handler: socialMetricsHandler, transitionType: TransitionType.none);
     //Registration route
     router.define('/registrarse',
         handler: registrationHandler, transitionType: TransitionType.none);

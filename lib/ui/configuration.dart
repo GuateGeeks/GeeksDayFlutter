@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/guategeeks/elements.dart';
@@ -20,24 +22,49 @@ class Configuration extends StatelessWidget {
 
   Widget settings(maxWidth, context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: maxWidth,
         child: Column(
           children: [
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
             ),
             account(context),
-            Divider(
+            const Divider(
               height: 30,
               thickness: 1,
             ),
             application(context),
+            ...admin(context)
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> admin(context) {
+    AuthUser? user = BlocProvider.of<AuthCubit>(context).getUser();
+    return !user!.isadmin
+        ? [Container()]
+        : [
+            ListTile(
+              title: Text(
+                "Administración",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, "/socialMetrics");
+              },
+              leading: const Icon(Icons.bar_chart),
+              title: Text(
+                "Social Metrics",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            )
+          ];
   }
 
   Widget account(context) {
@@ -48,13 +75,6 @@ class Configuration extends StatelessWidget {
           title: Text(
             "Cuenta",
             style: Theme.of(context).textTheme.headline4,
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
           ),
         ),
         ListTile(

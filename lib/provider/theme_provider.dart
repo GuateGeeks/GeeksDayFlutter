@@ -56,7 +56,7 @@ class MyThemes {
       ),
     ),
     //BackgroundColor
-    scaffoldBackgroundColor: const Color(0xFF2B2B2B),
+    scaffoldBackgroundColor: const Color(0xFF2D2D2D),
     // Thema Principal
     colorScheme: const ColorScheme.dark(),
     //Estilos de texto
@@ -127,7 +127,7 @@ class MyThemes {
     //DropdownButton color (admin)
     selectedRowColor: Colors.white10,
 
-    primaryColor: Colors.black,
+    primaryColor: Color(0xFF2D2D2D),
   );
 
   static final lightTheme = ThemeData(
