@@ -52,9 +52,7 @@ class Configuration extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () {
-                Navigator.pushNamed(context, "/socialMetrics");
-              },
+              onTap: () {},
               leading: const Icon(Icons.bar_chart),
               title: Text(
                 "Social Metrics",

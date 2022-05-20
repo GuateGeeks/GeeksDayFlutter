@@ -40,38 +40,79 @@ class _SocialMetricsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => AdminCubit(
-            AdminService(), PostService(), AuthService(), QuizRecordsService()),
-        child: BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
-          // BlocProvider.of<AdminCubit>(context)
-          //     .sortPostList(PostFilterOptions.MOST_POST, eventId);
-          return Column(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  BlocProvider.of<AdminCubit>(context)
-                      .sortPostList(PostFilterOptions.MOST_POST, eventId);
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Con mas likes"),
-                        const Icon(Icons.arrow_drop_down_rounded)
-                      ]),
-                ),
-              ),
-              const _TopThee(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Expanded(
-                child: _Leaderboard(),
-              ),
+      create: (_) => AdminCubit(
+          AdminService(), PostService(), AuthService(), QuizRecordsService()),
+      child: BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
+        // BlocProvider.of<AdminCubit>(context)
+        //     .sortPostList(PostFilterOptions.MOST_POST, eventId);
+        return Column(
+          children: const <Widget>[
+            Center(child: MetricsOptions()),
+            _TopThee(),
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: _Leaderboard(),
+            ),
+          ],
+        );
+      }),
+    );
+  }
+}
+
+class MetricsOptions extends StatelessWidget {
+  const MetricsOptions({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      padding: const EdgeInsets.all(0),
+      child: Container(
+          height: 50,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Text("Actualizar este valor"),
+              Icon(Icons.arrow_drop_down_rounded),
             ],
-          );
-        }));
+          )),
+      // icon: Row(children: [Text("h"), Icon(Icons.arrow_drop_down_rounded)]),
+      tooltip: "Ver Opciones",
+      itemBuilder: (BuildContext context) {
+        return [
+          PopupMenuItem<String>(
+            value: "Ver Optiones",
+            onTap: () {},
+            child: const Text("Con mas likes"),
+          ),
+          PopupMenuItem<String>(
+            value: "Ver Optiones",
+            onTap: () {},
+            child: const Text("Con mas likes"),
+          ),
+          PopupMenuItem<String>(
+            value: "Ver Optiones",
+            onTap: () {},
+            child: const Text("Con mas likes"),
+          ),
+          PopupMenuItem<String>(
+            value: "Ver Optiones",
+            onTap: () {},
+            child: const Text("Con mas likes"),
+          ),
+        ];
+      },
+      onSelected: (String choice) {
+        // TODO
+        print(choice);
+      },
+    );
   }
 }
 
