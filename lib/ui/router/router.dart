@@ -12,7 +12,7 @@ class Flurorouter {
     //Admin route
     router.define('/admin',
         handler: adminHandler, transitionType: TransitionType.none);
-    //Admin route
+    //Admin Social Metrics route
     router.define('/socialMetrics',
         handler: socialMetricsHandler, transitionType: TransitionType.none);
     //Registration route

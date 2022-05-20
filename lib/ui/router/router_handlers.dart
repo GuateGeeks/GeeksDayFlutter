@@ -18,21 +18,29 @@ import 'package:geeksday/ui/user_profile.dart';
 
 //Login handler
 final loginHandler = Handler(handlerFunc: (context, _) {
-  return EmailSignIn();
+  locator<NavigationService>().setCurrentRoute("/eventos");
+  return const EmailSignIn();
 });
 //Admin handler
 final adminHandler = Handler(handlerFunc: (context, _) {
   locator<NavigationService>().setCurrentRoute("/admin");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null && user!.isadmin) {
-    return AdminPage();
+    return const AdminPage();
+  } else {
+    return const EmailSignIn();
   }
 });
+//Social metrics handler
 final socialMetricsHandler = Handler(handlerFunc: (context, _) {
   locator<NavigationService>().setCurrentRoute("/socialMetrics");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null && user!.isadmin) {
-    return SocialMetrics();
+    return SocialMetrics(
+      eventId: '17c5f760-7f94-11ec-86c5-b9c9fddb7248',
+    );
+  } else {
+    return const EmailSignIn();
   }
 });
 //Registration Handler
@@ -41,14 +49,20 @@ final registrationHandler = Handler(handlerFunc: (context, _) {
 });
 //Configuration page handler
 final configurationHandler = Handler(handlerFunc: (context, _) {
-  return Configuration();
+  locator<NavigationService>().setCurrentRoute("/configuracion");
+  AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
+  if (user != null) {
+    return const Configuration();
+  }
 });
 //Events page handler
 final eventsHandler = Handler(handlerFunc: (context, _) {
   locator<NavigationService>().setCurrentRoute("/eventos");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null) {
-    return MainEvent();
+    return const MainEvent();
+  } else {
+    return const EmailSignIn();
   }
 });
 final createPostHandler = Handler(handlerFunc: (context, params) {
@@ -64,6 +78,8 @@ final postsHandler = Handler(handlerFunc: (context, params) {
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null) {
     return PostList(idEvent: params['id']!.first);
+  } else {
+    return const EmailSignIn();
   }
 });
 

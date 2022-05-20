@@ -18,7 +18,7 @@ void main() async {
   runApp(
     BlocProvider(
       create: (_) => authCubit..init(),
-      child: MyApp.create(),
+      child: GuateGeeksApp.create(),
     ),
   );
 }
