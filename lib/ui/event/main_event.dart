@@ -6,10 +6,10 @@ import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/event.dart';
 import 'package:geeksday/services/implementation/event_service.dart';
 import 'package:geeksday/services/navigationService.dart';
+import 'package:geeksday/ui/event/event_options.dart';
 import 'package:geeksday/ui/event/form_create_event.dart';
 import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/locator.dart';
-import 'package:geeksday/ui/setting.dart';
 
 class MainEvent extends StatelessWidget {
   const MainEvent({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class MainEvent extends StatelessWidget {
             BlocProvider.of<EventCubit>(context).getEventList();
             return Center(
               child: Container(
-                margin: EdgeInsets.only(top: 6),
+                margin: const EdgeInsets.only(top: 6),
                 width: maxWidth,
                 child: eventListBody(context),
               ),
@@ -130,6 +130,12 @@ class MainEvent extends StatelessWidget {
                   ),
                 ),
                 textImage(context, event),
+                BlocProvider.of<AuthCubit>(context).getUser()!.isadmin
+                    ? Positioned(
+                        top: 20,
+                        right: 20,
+                        child: EventOptions(eventId: event.id))
+                    : Container()
               ],
             );
           }).toList(),

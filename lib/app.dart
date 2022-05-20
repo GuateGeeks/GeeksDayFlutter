@@ -7,18 +7,21 @@ import 'package:geeksday/ui/locator.dart';
 import 'package:geeksday/ui/router/router.dart';
 import 'package:provider/provider.dart';
 
-class MyApp extends StatelessWidget {
+class GuateGeeksApp extends StatelessWidget {
+  const GuateGeeksApp({Key? key}) : super(key: key);
+
   static Widget create() {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSignedOut) {
           locator<NavigationService>().navigateTo('/login');
         } else if (state is AuthSignedIn) {
-          locator<NavigationService>()
-              .navigateTo(locator<NavigationService>().currentRoute);
+          locator<NavigationService>().navigateTo(
+              locator<NavigationService>().currentRoute,
+              clearStack: true);
         }
       },
-      child: MyApp(),
+      child: GuateGeeksApp(),
     );
   }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/provider/theme_provider.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
+import 'package:geeksday/services/navigationService.dart';
 import 'package:geeksday/ui/guategeeks/elements.dart';
-import 'package:geeksday/ui/helpers/return_button.dart';
+import 'package:geeksday/ui/locator.dart';
 import 'package:provider/provider.dart';
 
 class Configuration extends StatelessWidget {
@@ -20,24 +23,45 @@ class Configuration extends StatelessWidget {
 
   Widget settings(maxWidth, context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: maxWidth,
         child: Column(
           children: [
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
             ),
             account(context),
-            Divider(
-              height: 30,
-              thickness: 1,
-            ),
+            ...admin(context),
             application(context),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> admin(context) {
+    AuthUser? user = BlocProvider.of<AuthCubit>(context).getUser();
+    return !user!.isadmin
+        ? [Container()]
+        : [
+            ListTile(
+              title: Text(
+                "Administración",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, "/socialMetrics");
+              },
+              leading: const Icon(Icons.bar_chart),
+              title: Text(
+                "Social Metrics",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            )
+          ];
   }
 
   Widget account(context) {
@@ -51,16 +75,14 @@ class Configuration extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.home),
+          leading: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Theme.of(context).appBarTheme.backgroundColor),
+              child: const Icon(Icons.person)),
           title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
+            "Perfil",
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
@@ -87,21 +109,7 @@ class Configuration extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.home),
-          title: Text(
-            "Cuenta",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.logout),
+          leading: const Icon(Icons.logout),
           onTap: () {
             authCubit.signOut();
           },
@@ -118,7 +126,7 @@ class Configuration extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, notifier, child) {
         return Switch(
-          activeColor: Color(0xFF0E89AF),
+          activeColor: const Color(0xFF0E89AF),
           onChanged: (val) {
             notifier.toogleTheme();
           },

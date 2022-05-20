@@ -1,17 +1,16 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/services/navigationService.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:geeksday/bloc/auth_cubit.dart';
-import 'package:geeksday/routes.dart';
 import 'package:geeksday/ui/inputs_form/email_form.dart';
 import 'package:geeksday/ui/inputs_form/password_form.dart';
 import 'package:geeksday/ui/locator.dart';
 
 class EmailSignIn extends StatefulWidget {
-  static Widget create(BuildContext context) => EmailSignIn();
+  const EmailSignIn({Key? key}) : super(key: key);
+
+  static Widget create(BuildContext context) => const EmailSignIn();
 
   @override
   _EmailSignInState createState() => _EmailSignInState();
@@ -87,7 +86,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: RadialGradient(
             center: Alignment.topCenter,
             radius: 0.9,
@@ -110,18 +109,19 @@ class _EmailSignInState extends State<EmailSignIn> {
     return Center(
       child: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 90),
-          padding: EdgeInsets.fromLTRB(25, 15, 25, 35),
+          margin: const EdgeInsets.only(top: 90),
+          padding: const EdgeInsets.fromLTRB(25, 15, 25, 35),
           child: Stack(
             alignment: AlignmentDirectional.center,
             clipBehavior: Clip.none,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 30.0, horizontal: 20.0),
                 width: maxWidth,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromRGBO(255, 255, 255, 0.79)),
+                    color: const Color.fromRGBO(255, 255, 255, 0.79)),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -129,13 +129,13 @@ class _EmailSignInState extends State<EmailSignIn> {
                         "Iniciar Sesión",
                         style: Theme.of(context).textTheme.overline,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       formLogin(state),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       forgotPassword(),
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
                     ],
@@ -144,12 +144,12 @@ class _EmailSignInState extends State<EmailSignIn> {
               ),
               Positioned(
                 bottom: -20,
-                child: Container(
+                child: SizedBox(
                   width: 130,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      primary: Color(0xFF4B3BAB),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      primary: const Color(0xFF4B3BAB),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -157,7 +157,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                     onPressed: () {
                       locator<NavigationService>().navigateTo('/registrarse');
                     },
-                    child: Text(
+                    child: const Text(
                       "Registrarse",
                       style: TextStyle(
                         fontSize: 15.0,
@@ -205,19 +205,21 @@ class _EmailSignInState extends State<EmailSignIn> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (state is AuthSigningIn)
-            Center(child: CircularProgressIndicator()),
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
           if (state is AuthError)
             Text(
               state.message,
-              style: TextStyle(color: Colors.red, fontSize: 24),
+              style: const TextStyle(color: Colors.red, fontSize: 24),
             ),
           //Input email
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           EmailForm(emptyValidator, _emailController, submitForm),
           //Input Password
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           PasswordForm(passwordValidator, _passwordController, submitForm),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
           loginButton(),
         ],
       ),
@@ -226,18 +228,19 @@ class _EmailSignInState extends State<EmailSignIn> {
 
   Widget loginButton() {
     return Center(
+      // ignore: sized_box_for_whitespace
       child: Container(
         width: 180,
         height: 57,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            primary: Color(0xFF0E89AF),
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            primary: const Color(0xFF0E89AF),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Center(
+          child: const Center(
             child: Text(
               "Ingresar",
               style: TextStyle(
@@ -255,7 +258,7 @@ class _EmailSignInState extends State<EmailSignIn> {
   Widget forgotPassword() {
     return InkWell(
       onTap: () {},
-      child: Text(
+      child: const Text(
         "Recuperar contraseña",
         style: TextStyle(
           color: Color(0xFF4A4A4A),

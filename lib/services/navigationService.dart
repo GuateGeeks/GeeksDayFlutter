@@ -4,7 +4,8 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _currentRoute = '/eventos';
 
-  Future navigateTo(String routeName) {
+  Future navigateTo(String routeName, {bool clearStack = false}) {
+    clearStack ? navigatorKey.currentState!.popUntil((route) => false) : null;
     return navigatorKey.currentState!.pushNamed(routeName);
   }
 
