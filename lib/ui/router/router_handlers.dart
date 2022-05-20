@@ -32,12 +32,13 @@ final adminHandler = Handler(handlerFunc: (context, _) {
   }
 });
 //Social metrics handler
-final socialMetricsHandler = Handler(handlerFunc: (context, _) {
-  locator<NavigationService>().setCurrentRoute("/socialMetrics");
+final socialMetricsHandler = Handler(handlerFunc: (context, params) {
+  locator<NavigationService>()
+      .setCurrentRoute("/socialMetrics/${params['eventId']}");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
-  if (user != null && user!.isadmin) {
+  if (user != null && user.isadmin) {
     return SocialMetrics(
-      eventId: '17c5f760-7f94-11ec-86c5-b9c9fddb7248',
+      eventId: params['eventId']!.first,
     );
   } else {
     return const EmailSignIn();

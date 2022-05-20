@@ -83,8 +83,10 @@ class _TopThee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AdminCubit, AdminState>(builder: (context, state) {
-      if (state.postList.isEmpty) {
-        return Container();
+      if (state.postList.isEmpty || state.postList.length < 3) {
+        return const Center(
+          child: Text("No Records"),
+        );
       } else {
         var user1 = state.postList.entries.elementAt(0);
         var user2 = state.postList.entries.elementAt(1);
