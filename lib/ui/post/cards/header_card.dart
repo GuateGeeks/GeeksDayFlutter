@@ -4,8 +4,8 @@ import 'package:geeksday/bloc/auth_cubit.dart';
 import 'package:geeksday/bloc/posts/post_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/models/post.dart';
+import 'package:geeksday/ui/guategeeks/multiavatar.dart';
 import 'package:geeksday/ui/post/cards/post_options.dart';
-import 'package:multiavatar/multiavatar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HeaderCard extends StatelessWidget {
@@ -29,7 +29,9 @@ class HeaderCard extends StatelessWidget {
               Container(
                 width: 46,
                 height: 46,
-                child: SvgPicture.string(multiavatar(userData.image)),
+                child: SvgPicture.string(userData.image.length == 12
+                    ? multiavatar("", stringParts: userData.image)
+                    : multiavatar(userData.image)),
               ),
               SizedBox(
                 width: 10,
