@@ -33,7 +33,6 @@ class EventOptions extends StatelessWidget {
             PopupMenuItem<String>(
               value: "Admin",
               onTap: () {
-                print("admin");
                 locator<NavigationService>()
                     .navigateTo("/socialMetrics/$eventId");
                 Navigator.pushNamed(context, '/admin');
@@ -43,8 +42,9 @@ class EventOptions extends StatelessWidget {
           ];
         },
         onSelected: (String choice) {
-          // TODO
-          print(choice);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(choice),
+          ));
         },
       ),
     );

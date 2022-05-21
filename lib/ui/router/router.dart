@@ -34,7 +34,7 @@ class Flurorouter {
     router.define('/evento/:id/publicacion/:idPost/imagen',
         handler: singleImage, transitionType: TransitionType.none);
     //User profile page route
-    router.define('perfil/:idUser',
+    router.define('/perfil',
         handler: userProfileHandler, transitionType: TransitionType.none);
     //Comments page route
     router.define('/evento/:id/publicacion/:idPost/comentarios',
