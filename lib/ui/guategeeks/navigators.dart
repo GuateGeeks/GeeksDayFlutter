@@ -1,29 +1,10 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/bloc/navigation_cubit.dart';
-import 'package:get_it/get_it.dart';
-
-GetIt guateGeeksNavigatonBars = GetIt.instance;
-void setupBottonNavigationLocator(idEvent) {
-  if (!guateGeeksNavigatonBars.isRegistered<BottomNavigation>()) {
-    guateGeeksNavigatonBars.registerLazySingleton<BottomNavigation>(
-        () => BottomNavigation(idEvent: idEvent));
-  }
-}
-
-void setupSideNavigationLocator(idEvent) {
-  if (!guateGeeksNavigatonBars.isRegistered<SideNavigation>()) {
-    guateGeeksNavigatonBars.registerLazySingleton<SideNavigation>(
-        () => SideNavigation(idEvent: idEvent));
-  }
-}
 
 class BottomNavigation extends StatelessWidget {
-  final String? idEvent;
-  const BottomNavigation({Key? key, this.idEvent}) : super(key: key);
+  const BottomNavigation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +20,6 @@ class BottomNavigation extends StatelessWidget {
             Type _type = item.runtimeType;
             return _BottomNavigationItem(
               item: NavigationStates.getState(item),
-              idEvent: idEvent,
             );
           }).toList(),
         ),
@@ -52,10 +32,8 @@ class _BottomNavigationItem extends StatelessWidget {
   const _BottomNavigationItem({
     Key? key,
     required this.item,
-    this.idEvent,
   }) : super(key: key);
 
-  final String? idEvent;
   final NavigationState item;
 
   @override
@@ -71,7 +49,6 @@ class _BottomNavigationItem extends StatelessWidget {
     }
     return GestureDetector(
       onTap: () {
-        item.event = idEvent;
         BlocProvider.of<NavigationCubit>(context).navigateTo(item);
       },
       child: Column(
@@ -99,18 +76,17 @@ class _BottomNavigationItem extends StatelessWidget {
 }
 
 class SideNavigation extends StatelessWidget {
-  SideNavigation({
+  const SideNavigation({
     Key? key,
-    this.idEvent,
   }) : super(key: key);
 
-  final String? idEvent;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
       return NavigationRail(
-          labelType: NavigationRailLabelType.selected,
+          extended: BlocProvider.of<NavigationCubit>(context).isDesktop(),
+          minExtendedWidth: 180,
           destinations: NavigationStates.menu.map((item) {
             double iconHeight = 26;
             double iconWidth = 26;

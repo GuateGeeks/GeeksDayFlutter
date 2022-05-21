@@ -32,13 +32,30 @@ class NavigationStates {
 class NavigationCubit extends Cubit<NavigationState> {
   NavigationCubit() : super(NavigationHome());
 
+  void setMaxWidth(double maxWidth) {
+    state.maxWidth = maxWidth;
+    emit(state);
+  }
+
+  bool isDesktop() {
+    return state.maxWidth > 1200;
+  }
+
+  bool isTablet() {
+    return state.maxWidth > 730;
+  }
+
+  bool isMobile() {
+    return !isDesktop() && !isTablet();
+  }
+
   void setidEvent(idEvent) {
-    print("Setup evetn id: $idEvent");
     state.event = idEvent;
   }
 
   void navigateTo(NavigationState newState) {
     newState.event = state.event;
+    newState.maxWidth = state.maxWidth;
     switch (newState.runtimeType) {
       case NavigationHome:
         if (newState.event != null) {
@@ -77,6 +94,7 @@ abstract class NavigationState {
   final String icon;
   final String? userId;
   String? event;
+  double maxWidth = 400;
   NavigationState(
       {required this.index,
       required this.title,
