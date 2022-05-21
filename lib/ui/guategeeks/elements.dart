@@ -39,7 +39,7 @@ class GuateGeeksScaffold extends StatelessWidget {
                 width: 200,
                 height: 37,
                 child: rive.RiveAnimation.network(
-                  '/assets/rive/guategeeks_logo.riv',
+                  '/GeeksDayFlutter/assets/assets/rive/guategeeks_logo.riv',
                   artboard: 'full_logo',
                   animations: ['single_blink_loop'],
                 ),
