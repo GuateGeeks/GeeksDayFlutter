@@ -7,9 +7,8 @@ import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:multiavatar/multiavatar.dart';
 
 class UserProfile extends StatefulWidget {
-  final String idUser;
-
-  const UserProfile({Key? key, required this.idUser}) : super(key: key);
+  final String? idUser;
+  const UserProfile({Key? key, this.idUser}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -30,36 +29,34 @@ class _UserProfileState extends State<UserProfile> {
         BlocProvider.of<AuthCubit>(context).getAvatar(userData.image);
 
     return GuateGeeksScaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).appBarTheme.backgroundColor,
-                boxShadow: [
-                  const BoxShadow(
-                    color: Colors.black38,
-                    spreadRadius: 0,
-                    blurRadius: 1,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              height: 60,
-              child: navbar(randomAvatar),
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black38,
+                  spreadRadius: 0,
+                  blurRadius: 1,
+                  offset: Offset(0, 1), // changes position of shadow
+                ),
+              ],
             ),
-            bodyUserProfile(userData, randomAvatar),
-            const SizedBox(
-              height: 50,
-            ),
-            userDataProfile(context, userData, maxWidth),
-            const SizedBox(
-              height: 50,
-            ),
-            userInformation(context),
-          ],
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            height: 60,
+            child: navbar(randomAvatar),
+          ),
+          bodyUserProfile(userData, randomAvatar),
+          const SizedBox(
+            height: 50,
+          ),
+          userDataProfile(context, userData, maxWidth),
+          const SizedBox(
+            height: 50,
+          ),
+          userInformation(context),
+        ],
       ),
     );
   }
@@ -99,7 +96,9 @@ class _UserProfileState extends State<UserProfile> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is UpdateUser) {
-          print("Perfil editado");
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Usuario actualizado"),
+          ));
         }
       },
       child: Container(

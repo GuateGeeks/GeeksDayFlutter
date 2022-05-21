@@ -1,5 +1,6 @@
 import 'package:geeksday/app.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/navigation_cubit.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,8 @@ void main() async {
 
   final authCubit = AuthCubit(AuthService());
 
-  runApp(
-    BlocProvider(
-      create: (_) => authCubit..init(),
-      child: GuateGeeksApp.create(),
-    ),
-  );
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => NavigationCubit()),
+    BlocProvider(create: (_) => authCubit..init()),
+  ], child: GuateGeeksApp.create()));
 }

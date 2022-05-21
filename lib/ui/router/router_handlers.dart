@@ -94,11 +94,10 @@ final singleImage = Handler(handlerFunc: (context, params) {
 
 //User profile handler
 final userProfileHandler = Handler(handlerFunc: (context, params) {
-  locator<NavigationService>()
-      .setCurrentRoute("/perfil/${params['idUser']!.first}");
+  locator<NavigationService>().setCurrentRoute("/perfil");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null) {
-    return UserProfile(idUser: params['idUser']!.first);
+    return const UserProfile();
   }
 });
 

@@ -1,3 +1,4 @@
+import 'package:geeksday/bloc/navigation_cubit.dart';
 import 'package:geeksday/bloc/posts/feed_cubit.dart';
 import 'package:geeksday/models/post.dart';
 import 'package:geeksday/services/implementation/post_service.dart';
@@ -12,6 +13,7 @@ class PostList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<NavigationCubit>(context).setidEvent(idEvent);
     return BlocProvider(
       create: (_) => FeedCubit(PostService(), idEvent),
       child: GuateGeeksScaffold(

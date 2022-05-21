@@ -71,7 +71,7 @@ class MetricsOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       padding: const EdgeInsets.all(0),
-      child: Container(
+      child: SizedBox(
           height: 50,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,8 +109,9 @@ class MetricsOptions extends StatelessWidget {
         ];
       },
       onSelected: (String choice) {
-        // TODO
-        print(choice);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(choice),
+        ));
       },
     );
   }
