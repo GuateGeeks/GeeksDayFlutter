@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "14969e43dc550271f69e7aa9d3a51dcf",
+  "main.dart.js": "b8ce7673f4278a4d9c13825b39d68872",
 "canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
@@ -11,8 +11,8 @@ const RESOURCES = {
 "flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
 "firebase-config.js": "01ebaf1b69d2a21a35fc2537dfa5deaf",
 "favicon.svg": "3fbbfef3e6dff066ce8e4f4dcba38977",
-"index.html": "650ef6e0e1b71f8899a233e0af131ab2",
-"/": "650ef6e0e1b71f8899a233e0af131ab2",
+"index.html": "bdb0deba9b5d61d2e3e5a43118c65000",
+"/": "bdb0deba9b5d61d2e3e5a43118c65000",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "version.json": "5fb9b9333e4f055a8847cb92bfb74be8",
 "assets/AssetManifest.json": "aaf26b6dd31744c650523699b306455d",
@@ -47,7 +47,7 @@ const RESOURCES = {
 "assets/assets/fonts/biryani/Biryani-Bold.ttf": "7c32b0eca9e76ba41a4088d251088e1e",
 "assets/assets/fonts/biryani/Biryani-Regular.ttf": "eb0445cf4c23226181df62694d47a8e7",
 "assets/assets/fonts/abel/Abel-Regular.ttf": "1052d6ca3993ae24a932304560a4c8b4",
-"assets/NOTICES": "bb89bc7e346afeaa2ebe7560f6d2625b",
+"assets/NOTICES": "ba5351976c15c1af4c9aef561e9655d0",
 "assets/FontManifest.json": "26be0fe0a0291aab5d0be165f0db29ad",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "manifest.json": "319edca442278260d562f567020c332d",
