@@ -16,7 +16,7 @@ enum MultiAvatarPart {
   const MultiAvatarPart(this.label);
 }
 
-Map<String, dynamic> getPartDescriptor(String stringParts) {
+Map<String, String> getPartDescriptor(String stringParts) {
   if (stringParts.length == 12) {
     var pairs =
         partition(stringParts.split(""), 2).map((e) => "${e[0]}${e[1]}");
@@ -39,9 +39,6 @@ String multiavatar(String string,
     {bool trBackground = false,
     String? stringParts,
     Map<dynamic, dynamic>? parts}) {
-  print(
-      "Multiavatar: string: $string, trBackground: $trBackground, stringParts: $stringParts, parts: $parts");
-  print(string.length);
   string += '';
 
   Map<String, Map<String, Map<String, List<String>>>> themes = {
@@ -995,7 +992,6 @@ String multiavatar(String string,
   }
 
   if (parts == null) {
-    print("parts is null");
     String hash = '';
     if (string.length == 0) return hash;
 
@@ -1005,7 +1001,6 @@ String multiavatar(String string,
         sha256Hash.toString().replaceAll(RegExp(r'[^0-9]'), '');
 
     hash = sha256Numbers.substring(0, 12);
-    print(hash);
 
     p['env'] = hash[0] + '' + hash[1];
     p['env'] = ((47 / 100) * int.parse(p['env'])).round().toString() + '';
@@ -1025,10 +1020,9 @@ String multiavatar(String string,
     p['top'] = hash[10] + '' + hash[11];
     p['top'] = ((47 / 100) * int.parse(p['top'])).round().toString() + '';
   } else {
-    print("parts is not null");
     p = parts;
   }
-  print(p);
+
   for (var part in p.keys) {
     var nr = p[part];
 
@@ -1047,7 +1041,6 @@ String multiavatar(String string,
         p[part] = nr + 'A';
     }
   }
-  print(p);
 
   String getFinal(part, partV, theme) {
     List<String?>? colors = themes[partV]?[theme]?[part];
@@ -1061,10 +1054,8 @@ String multiavatar(String string,
         .toList()
         .map((e) => e.group(1))
         .toList();
-    // print(result);
 
     for (var i = 0; i < result.length; i++) {
-      // print("change: ${result[i]} ===> with: ${colors[i]}");
       resultFinal =
           resultFinal.replaceFirst(result[i] ?? "", (colors?[i] ?? "") + ';');
     }
@@ -1082,7 +1073,6 @@ String multiavatar(String string,
   }
 
   if (trBackground) _final['env'] = '';
-  print(_final);
 
   return (svgStart +
       _final['env'] +

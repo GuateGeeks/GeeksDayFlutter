@@ -7,14 +7,13 @@ import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/guategeeks/elements.dart';
 import 'package:geeksday/ui/guategeeks/multiavatar.dart';
+import 'package:deep_collection/deep_collection.dart';
 
 class UserProfile extends StatelessWidget {
   final String? idUser;
   UserProfile({Key? key, this.idUser}) : super(key: key);
 
   bool editionEnabled = false;
-  final _formKey = GlobalKey<FormState>();
-  var _usernameController = TextEditingController();
 
   // get sliderValues => sliders.reduce((value, element) => '$value$element');
 
@@ -24,12 +23,13 @@ class UserProfile extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 700 ? 700 : width;
 
-    String randomAvatar =
-        BlocProvider.of<AuthCubit>(context).getAvatar(userData.image);
     return BlocProvider(
         create: (context) => UserCubit(userData, AuthService()),
         child: GuateGeeksScaffold(
           body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+            if (state is UserCancelEditingState) {
+              BlocProvider.of<UserCubit>(context).setUser(userData);
+            }
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -47,7 +47,7 @@ class UserProfile extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     height: 60,
-                    child: navbar(context, randomAvatar),
+                    child: navbar(context),
                   ),
                   UserProfileHeader(),
                   const SizedBox(
@@ -71,8 +71,10 @@ class UserProfile extends StatelessWidget {
 
   Widget sliderWidgets(context) {
     List<Widget> widgets = [];
+
     var partDescriptor =
-        BlocProvider.of<UserCubit>(context).getPartDescriptor();
+        getPartDescriptor(BlocProvider.of<UserCubit>(context).getImage())
+            .deepReverse();
     partDescriptor.forEach((index, element) {
       widgets.add(
         Column(
@@ -82,7 +84,10 @@ class UserProfile extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 20),
-                  Text(index.label),
+                  Text(MultiAvatarPart.values
+                      .where((element) => element.name == index)
+                      .first
+                      .label),
                 ],
               ),
             ),
@@ -95,8 +100,10 @@ class UserProfile extends StatelessWidget {
               onChanged: (value) {
                 partDescriptor[index] =
                     value.round().toString().padLeft(2, '0');
-                BlocProvider.of<UserCubit>(context)
-                    .updatePartDescriptor(partDescriptor);
+
+                BlocProvider.of<UserCubit>(context).updateImage(partDescriptor
+                    .values
+                    .reduce((value, element) => '$value$element'));
               },
             ),
           ],
@@ -114,7 +121,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget navbar(context, randomAvatar) {
+  Widget navbar(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -223,35 +230,36 @@ class UserProfileHeader extends StatelessWidget {
                 Column(
                   children: [
                     SvgPicture.string(multiavatar("",
-                        parts: BlocProvider.of<UserCubit>(context)
-                            .getPartDescriptor()
-                            .map((key, value) => MapEntry(key.name, value)))),
+                        stringParts:
+                            BlocProvider.of<UserCubit>(context).getImage())),
                   ],
                 ),
                 Positioned(
                   right: 5,
                   bottom: 10,
-                  child: Visibility(
-                    visible: state is! UserEditingState,
-                    child: GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<UserCubit>(context).userEditing();
-                      },
-                      child: Container(
-                        width: 56,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(50)),
-                          border: Border.all(color: const Color(0xFFD3D3D3)),
-                        ),
-                        child: const Icon(
-                          Icons.edit,
-                          size: 40,
-                          color: Color(0xFF9A9C9E),
-                        ),
+                  child: GestureDetector(
+                    onTap: () {
+                      state is UserEditingState
+                          ? BlocProvider.of<UserCubit>(context).randomAvatar()
+                          : BlocProvider.of<UserCubit>(context).userEditing();
+                    },
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50)),
+                        border: Border.all(color: const Color(0xFFD3D3D3)),
                       ),
+                      child: state is UserEditingState
+                          ? const Icon(Icons.shuffle,
+                              size: 40, color: Color(0xFF9A9C9E))
+                          : const Icon(
+                              Icons.edit,
+                              size: 40,
+                              color: Color(0xFF9A9C9E),
+                            ),
                     ),
                   ),
                 ),

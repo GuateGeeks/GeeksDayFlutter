@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geeksday/models/auth_user.dart';
 import 'package:geeksday/services/auth_service.dart';
@@ -6,62 +8,62 @@ import 'package:quiver/iterables.dart';
 
 class UserCubit extends Cubit<UserState> {
   final AuthServiceBase _authService;
-  UserCubit(AuthUser user, this._authService) : super(UserInitialState(user));
+  AuthUser _originalUser;
+  UserCubit(this._originalUser, this._authService)
+      : super(UserInitialState(_originalUser));
 
   get isEditing => state is UserEditingState;
 
   void updateUser() {
-    state.user.image = state.partDescriptor?.values
-        .reduce((value, element) => "$value$element");
+    state.user.image = state.image!;
     _authService.updateUser(state.user).then((value) {
       emit(UserUpdatedState(state.user));
     });
   }
 
   void cancelEditing() {
-    emit(UserInitialState(state.user));
+    emit(UserCancelEditingState(_originalUser));
   }
 
   void userEditing() {
-    emit(UserEditingState(state.user, getPartDescriptor()));
-  }
-
-  Map<MultiAvatarPart, dynamic> getPartDescriptor() {
-    return state.partDescriptor ??
-        {
-          MultiAvatarPart.env: "00",
-          MultiAvatarPart.clo: "00",
-          MultiAvatarPart.head: "00",
-          MultiAvatarPart.mouth: "00",
-          MultiAvatarPart.eyes: "00",
-          MultiAvatarPart.top: "00",
-        };
-  }
-
-  void updatePartDescriptor(Map<MultiAvatarPart, dynamic> partDescriptor) {
-    emit(UserEditingState(state.user, partDescriptor));
+    emit(UserEditingState(state.user, state.image));
   }
 
   String getUserName() {
-    return state.user.name;
+    return state.name!;
   }
 
   void updateName(String text) {
-    state.user.name = text;
+    state.name = text;
+  }
+
+  void updateImage(String image) {
+    state.image = image;
+    emit(UserEditingState(state.user, state.image));
+  }
+
+  void randomAvatar() {
+    var random = List.generate(
+        6, (_) => Random().nextInt(47).toString().padLeft(2, '0'));
+    emit(UserEditingState(state.user, random.join()));
+  }
+
+  void setUser(AuthUser userData) {
+    emit(UserInitialState(userData));
+  }
+
+  String getImage() {
+    return state.image!;
   }
 }
 
 abstract class UserState {
-  final AuthUser user;
-  Map<MultiAvatarPart, dynamic>? partDescriptor;
-  UserState(this.user, {this.partDescriptor}) {
-    if (user.image.length == 12 && partDescriptor == null) {
-      var pairs =
-          partition(user.image.split(""), 2).map((e) => "${e[0]}${e[1]}");
-      partDescriptor = pairs.toList().asMap().map((index, value) {
-        return MapEntry(MultiAvatarPart.values[index], value);
-      });
-    }
+  AuthUser user;
+  String? name;
+  String? image;
+  UserState(this.user, {this.image}) {
+    name = user.name;
+    image ??= user.image;
   }
 }
 
@@ -69,9 +71,12 @@ class UserInitialState extends UserState {
   UserInitialState(super.user);
 }
 
+class UserCancelEditingState extends UserState {
+  UserCancelEditingState(super.user);
+}
+
 class UserEditingState extends UserState {
-  UserEditingState(user, partDescriptor)
-      : super(user, partDescriptor: partDescriptor);
+  UserEditingState(user, image) : super(user, image: image);
 }
 
 class UserUpdatedState extends UserState {
