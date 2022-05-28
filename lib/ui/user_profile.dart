@@ -2,84 +2,149 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geeksday/bloc/auth_cubit.dart';
+import 'package:geeksday/bloc/user_cubit.dart';
 import 'package:geeksday/models/auth_user.dart';
+import 'package:geeksday/services/implementation/auth_service.dart';
 import 'package:geeksday/ui/guategeeks/elements.dart';
-import 'package:multiavatar/multiavatar.dart';
+import 'package:geeksday/ui/guategeeks/multiavatar.dart';
+import 'package:deep_collection/deep_collection.dart';
 
-class UserProfile extends StatefulWidget {
+class UserProfile extends StatelessWidget {
   final String? idUser;
-  const UserProfile({Key? key, this.idUser}) : super(key: key);
+  UserProfile({Key? key, this.idUser}) : super(key: key);
 
-  @override
-  State<UserProfile> createState() => _UserProfileState();
-}
+  bool editionEnabled = false;
 
-class _UserProfileState extends State<UserProfile> {
-  bool isEdited = false;
-  final _formKey = GlobalKey<FormState>();
-  var _usernameController = TextEditingController();
+  // get sliderValues => sliders.reduce((value, element) => '$value$element');
 
   @override
   Widget build(BuildContext context) {
     AuthUser userData = BlocProvider.of<AuthCubit>(context).getUser()!;
     double width = MediaQuery.of(context).size.width;
-    double maxWidth = width > 400 ? 400 : width;
+    double maxWidth = width > 700 ? 700 : width;
 
-    String randomAvatar =
-        BlocProvider.of<AuthCubit>(context).getAvatar(userData.image);
+    return BlocProvider(
+        create: (context) => UserCubit(userData, AuthService()),
+        child: GuateGeeksScaffold(
+          body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+            if (state is UserCancelEditingState) {
+              BlocProvider.of<UserCubit>(context).setUser(userData);
+            }
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).appBarTheme.backgroundColor,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black38,
+                          spreadRadius: 0,
+                          blurRadius: 1,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    height: 60,
+                    child: navbar(context),
+                  ),
+                  UserProfileHeader(),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  state is UserEditingState
+                      ? SizedBox(
+                          width: maxWidth,
+                          child: sliderWidgets(context),
+                        )
+                      : const UserDetails(),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            );
+          }),
+        ));
+  }
 
-    return GuateGeeksScaffold(
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).appBarTheme.backgroundColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black38,
-                  spreadRadius: 0,
-                  blurRadius: 1,
-                  offset: Offset(0, 1), // changes position of shadow
-                ),
-              ],
+  Widget sliderWidgets(context) {
+    List<Widget> widgets = [];
+
+    var partDescriptor =
+        getPartDescriptor(BlocProvider.of<UserCubit>(context).getImage())
+            .deepReverse();
+    partDescriptor.forEach((index, element) {
+      widgets.add(
+        Column(
+          children: [
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                children: [
+                  const SizedBox(width: 20),
+                  Text(MultiAvatarPart.values
+                      .where((element) => element.name == index)
+                      .first
+                      .label),
+                ],
+              ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            height: 60,
-            child: navbar(randomAvatar),
-          ),
-          bodyUserProfile(userData, randomAvatar),
-          const SizedBox(
-            height: 50,
-          ),
-          userDataProfile(context, userData, maxWidth),
-          const SizedBox(
-            height: 50,
-          ),
-          userInformation(context),
-        ],
+            Slider(
+              value: double.parse(element),
+              min: 0,
+              max: 47,
+              label: element,
+              divisions: 48,
+              onChanged: (value) {
+                partDescriptor[index] =
+                    value.round().toString().padLeft(2, '0');
+
+                BlocProvider.of<UserCubit>(context).updateImage(partDescriptor
+                    .values
+                    .reduce((value, element) => '$value$element'));
+              },
+            ),
+          ],
+        ),
+      );
+    });
+
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 200,
+        child: Column(
+          children: widgets,
+        ),
       ),
     );
   }
 
-  Widget navbar(randomAvatar) {
+  Widget navbar(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        isEdited
-            ? Icon(
-                Icons.close,
-                size: 30,
-                color: Theme.of(context).appBarTheme.iconTheme!.color,
+        BlocProvider.of<UserCubit>(context).isEditing
+            ? GestureDetector(
+                onTap: () {
+                  BlocProvider.of<UserCubit>(context).cancelEditing();
+                },
+                child: Icon(
+                  Icons.close,
+                  size: 30,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                ),
               )
             : Container(),
         Text(
           "Perfil",
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
-        isEdited
+        BlocProvider.of<UserCubit>(context).isEditing
             ? GestureDetector(
                 onTap: () {
-                  saveUser(_usernameController.text, randomAvatar);
+                  BlocProvider.of<UserCubit>(context).updateUser();
                 },
                 child: Icon(
                   Icons.check,
@@ -91,101 +156,14 @@ class _UserProfileState extends State<UserProfile> {
       ],
     );
   }
+}
 
-  Widget bodyUserProfile(AuthUser userData, randomAvatar) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state is UpdateUser) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Usuario actualizado"),
-          ));
-        }
-      },
-      child: Container(
-        margin: const EdgeInsets.only(top: 80),
-        child: Stack(
-          children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: SizedBox(
-                    width: 228,
-                    height: 228,
-                    child: SvgPicture.string(multiavatar(randomAvatar)))),
-            Positioned(
-              right: 5,
-              bottom: 10,
-              child: GestureDetector(
-                onTap: () {
-                  BlocProvider.of<AuthCubit>(context).generateAvatar();
-                  setState(() {
-                    isEdited = true;
-                    avatarWidget(randomAvatar);
-                  });
-                },
-                child: Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    border: Border.all(color: const Color(0xFFD3D3D3)),
-                  ),
-                  child: const Icon(
-                    Icons.edit,
-                    size: 40,
-                    color: Color(0xFF9A9C9E),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+class UserDetails extends StatelessWidget {
+  const UserDetails({Key? key}) : super(key: key);
 
-  //function to display the user's name in an input, so that the user can edit their name
-  Widget userDataProfile(context, AuthUser userData, maxWidth) {
-    _usernameController = TextEditingController(text: userData.name);
-
-    String? usernameValidator(String? value) {
-      return (value == null || value.isEmpty)
-          ? 'This is a required field'
-          : null;
-    }
-
-    return Container(
-      width: maxWidth,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Column(
-        children: [
-          Form(
-            key: _formKey,
-            child: TextFormField(
-              controller: _usernameController,
-              onTap: () {
-                setState(() {
-                  isEdited = true;
-                });
-              },
-              validator: usernameValidator,
-              decoration: InputDecoration(
-                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget avatarWidget(randomAvatar) {
-    String rawSvg = multiavatar(randomAvatar);
-    return SvgPicture.string(rawSvg);
-  }
-
-  Widget userInformation(context) {
-    return Container(
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
       width: 300,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -224,8 +202,93 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
   }
+}
 
-  void saveUser(String userName, String userAvatar) {
-    BlocProvider.of<AuthCubit>(context).updateUser(userName, userAvatar);
+class UserProfileHeader extends StatelessWidget {
+  UserProfileHeader({Key? key}) : super(key: key);
+  var _usernameController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+      _usernameController = TextEditingController(text: state.user.name);
+      _usernameController.addListener(() {
+        BlocProvider.of<UserCubit>(context)
+            .updateName(_usernameController.text);
+      });
+      String? usernameValidator(String? value) {
+        return (value == null || value.isEmpty)
+            ? 'This is a required field'
+            : null;
+      }
+
+      return Container(
+        margin: const EdgeInsets.only(top: 80),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Column(
+                  children: [
+                    SvgPicture.string(multiavatar("",
+                        stringParts:
+                            BlocProvider.of<UserCubit>(context).getImage())),
+                  ],
+                ),
+                Positioned(
+                  right: 5,
+                  bottom: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      state is UserEditingState
+                          ? BlocProvider.of<UserCubit>(context).randomAvatar()
+                          : BlocProvider.of<UserCubit>(context).userEditing();
+                    },
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50)),
+                        border: Border.all(color: const Color(0xFFD3D3D3)),
+                      ),
+                      child: state is UserEditingState
+                          ? const Icon(Icons.shuffle,
+                              size: 40, color: Color(0xFF9A9C9E))
+                          : const Icon(
+                              Icons.edit,
+                              size: 40,
+                              color: Color(0xFF9A9C9E),
+                            ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: state is UserEditingState
+                  ? SizedBox(
+                      width: 200,
+                      child: TextFormField(
+                        controller: _usernameController,
+                        validator: usernameValidator,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            fillColor: Theme.of(context)
+                                .inputDecorationTheme
+                                .fillColor,
+                            contentPadding: EdgeInsets.zero),
+                      ),
+                    )
+                  : Text(
+                      BlocProvider.of<UserCubit>(context).getUserName(),
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

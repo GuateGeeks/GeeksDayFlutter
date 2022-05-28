@@ -97,7 +97,7 @@ final userProfileHandler = Handler(handlerFunc: (context, params) {
   locator<NavigationService>().setCurrentRoute("/perfil");
   AuthUser? user = BlocProvider.of<AuthCubit>(context!).getUser();
   if (user != null) {
-    return const UserProfile();
+    return UserProfile();
   }
 });
 
